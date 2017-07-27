@@ -16,8 +16,8 @@ ZSH_CUSTOM="$DOTFILES/zsh/custom"
 fpath=( "$DOTFILES/zsh/custom" $fpath)
 
 # -- Theme ---------------------------------------------------------------------
-export NVIM_TUI_ENABLE_TRUE_COLOR=1
-ZSH_THEME="pure"
+# export NVIM_TUI_ENABLE_TRUE_COLOR=1
+ZSH_THEME="amuse"
 
 # -- ZSH Plugins ---------------------------------------------------------------
 plugins=(git tmux npm bower vi-mode pj zsh-syntax-highlighting)
@@ -163,6 +163,9 @@ fi
 if [[ -f "$DOTFILES/aliases" ]]; then
   source $DOTFILES/aliases
 fi
+# Set CLICOLOR if you want Ansi Colors in iTerm2 
+export CLICOLOR=1
+export TERM=xterm-256color
 
 # -- Local Configuration (After Default) ---------------------------------------
 if [[ -f "$DOTFILES/zsh/zshrc.local" ]]; then

@@ -120,8 +120,10 @@ Plug 'retorillo/airline-tablemode.vim'
 Plug 'edkolev/tmuxline.vim'               " Make the Tmux bar match Vim
 Plug 'ryanoasis/vim-webdevicons'
 Plug 'junegunn/goyo.vim'
+Plug 'mklabs/split-term.vim'
 
 " Project Navigation {{{3
+Plug 'scrooloose/nerdtree'
 Plug 'junegunn/fzf',                      { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
 Plug 'mhinz/vim-grepper'
@@ -197,10 +199,10 @@ Plug 'hail2u/vim-css3-syntax',            { 'for': 'css' }
 Plug 'cakebaker/scss-syntax.vim'
 
 " Ruby {{{4
-Plug 'vim-ruby/vim-ruby',                 { 'for': 'ruby' }
-Plug 'tpope/vim-rails'
-Plug 'tpope/vim-bundler'
-Plug 'tpope/vim-endwise'
+" Plug 'vim-ruby/vim-ruby',                 { 'for': 'ruby' }
+" Plug 'tpope/vim-rails'
+" Plug 'tpope/vim-bundler'
+" Plug 'tpope/vim-endwise'
 
 " Python {{{4
 Plug 'klen/python-mode',                  { 'for': 'python' }
@@ -249,6 +251,13 @@ let g:ranger_replace_netrw = 1 " open ranger when vim open a directory
 
 " Section: Remaps {{{1
 
+map <C-n> :NERDTreeToggle<CR>
+
+" Disable arrow movement, resize splits instead.
+nnoremap <Up>    :resize +2<CR>
+nnoremap <Down>  :resize -2<CR>
+nnoremap <Left>  :vertical resize +2<CR>
+nnoremap <Right> :vertical resize -2<CR>
 " Normal Mode Remaps {{{2
 
 nnoremap <silent> <Space> :nohlsearch<Bar>:echo<CR>
@@ -343,7 +352,11 @@ endif
 " DANIELO customizations
 " Built in tree file configuration
  let g:netrw_liststyle = 3 " Width tree
- let g:netrw_winsize = 25 " 25% of editor size
+ let g:netrw_winsize = 15 " 15% of editor size
  let g:netrw_browse_split = 4 " Open file on existing window
  "  control p configs
 let g:ctrlp_custom_ignore = 'node_modules\|DS_Store\|git' " Ignore those folders
+" Terminal splitting
+" Javascript
+let g:javascript_plugin_jsdoc = 1
+set nofoldenable
