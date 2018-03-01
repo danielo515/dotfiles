@@ -69,18 +69,18 @@ if has("autocmd")
   filetype plugin indent on
 
   autocmd BufReadPost * " {{{2
-    " When editing a file, always jump to the last known cursor position.
-    " Don't do it for commit messages, when the position is invalid, or when
-    " inside an event handler (happens when dropping a file on gvim).
-    \ if &ft != 'gitcommit' && line("'\"") > 0 && line("'\"") <= line("$") |
-    \   exe "normal g`\"" |
-    \ endif "}}}2
+  " When editing a file, always jump to the last known cursor position.
+  " Don't do it for commit messages, when the position is invalid, or when
+  " inside an event handler (happens when dropping a file on gvim).
+        \ if &ft != 'gitcommit' && line("'\"") > 0 && line("'\"") <= line("$") |
+        \   exe "normal g`\"" |
+        \ endif "}}}2
 
   " Automatically clean trailing whitespace
   autocmd BufWritePre * :%s/\s\+$//e
 
   autocmd BufRead,BufNewFile COMMIT_EDITMSG call pencil#init({'wrap': 'soft'})
-                                        \ | set textwidth=0
+        \ | set textwidth=0
 
   autocmd BufRead,BufNewFile *.md set filetype=markdown
 
@@ -238,10 +238,10 @@ let g:airline_powerline_fonts = 1 " Enable the patched Powerline fonts
 let g:user_emmet_leader_key='<C-E>'
 
 let g:user_emmet_settings = {
-  \    'html' : {
-  \        'quote_char': "'"
-  \    }
-  \}
+      \    'html' : {
+      \        'quote_char': "'"
+      \    }
+      \}
 " }}}3
 
 " ranger.vim {{{3
@@ -340,3 +340,10 @@ if filereadable($DOTFILES . "/nvim/init.local.vim")
   source $DOTFILES/nvim/init.local.vim
 endif
 " }}}
+" DANIELO customizations
+" Built in tree file configuration
+ let g:netrw_liststyle = 3 " Width tree
+ let g:netrw_winsize = 25 " 25% of editor size
+ let g:netrw_browse_split = 4 " Open file on existing window
+ "  control p configs
+let g:ctrlp_custom_ignore = 'node_modules\|DS_Store\|git' " Ignore those folders

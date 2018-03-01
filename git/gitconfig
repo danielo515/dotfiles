@@ -1,7 +1,7 @@
 [user]
   editor = /usr/local/bin/nvim
-  email = alex@lafroscia.com
-  name = Alex LaFroscia
+  email = rdanielo@gmail.com
+  name = Danielo Rodriguez
 
 [alias]
   # Add
@@ -89,7 +89,7 @@
   meta = red bold
   frag = black bold
   func = blue
-  old = red strike
+  old = red bold
   new = cyan
   commit = blue
   whitespace = red
@@ -157,7 +157,7 @@
   required = true
 
 [github]
-  user = alexlafroscia
+  user = danielo515
 
 [credential]
   helper = osxkeychain

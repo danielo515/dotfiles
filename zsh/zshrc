@@ -54,7 +54,7 @@ alias vim=nvim
 alias vi=nvim
 alias dm=docker-machine
 alias dc=docker-compose
-alias docker-cleanup=docker ps -a | grep Exit | cut -d ' ' -f 1 | xargs docker rm
+alias docker-cleanup='docker ps -a | grep Exit | cut -d " " -f 1 | xargs docker rm'
 
 # -- Aliases -------------------------------------------------------------------
 if [[ -f "$DOTFILES/aliases" ]]; then
@@ -156,6 +156,12 @@ export PATH="$PATH:$GOPATH/bin"
 # -- Kubectl
 if exists "kubectl"; then
   source <(kubectl completion zsh)
+fi
+
+# -- Env variables and that stuff ---------------------------------------
+
+if [[ -f "$DOTFILES/aliases" ]]; then
+  source $DOTFILES/aliases
 fi
 
 # -- Local Configuration (After Default) ---------------------------------------
