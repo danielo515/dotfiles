@@ -163,7 +163,10 @@ fi
 if [[ -f "$DOTFILES/aliases" ]]; then
   source $DOTFILES/aliases
 fi
-# Set CLICOLOR if you want Ansi Colors in iTerm2 
+if [[ -f "$HOME/.env" ]]; then
+  source $HOME/.env
+fi
+# Set CLICOLOR if you want Ansi Colors in iTerm2
 export CLICOLOR=1
 export TERM=xterm-256color
 
@@ -171,3 +174,4 @@ export TERM=xterm-256color
 if [[ -f "$DOTFILES/zsh/zshrc.local" ]]; then
   source $DOTFILES/zsh/zshrc.local
 fi
+unalias grv

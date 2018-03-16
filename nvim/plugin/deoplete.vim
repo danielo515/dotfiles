@@ -1,4 +1,4 @@
-call deoplete#enable()
+"call deoplete#enable()
 
 let g:deoplete#ignore_sources = {}
 let g:deoplete#ignore_sources.go = ['around', 'buffer', 'member']
