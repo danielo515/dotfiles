@@ -69,3 +69,36 @@ confirm() {
             ;;
     esac
 }
+
+# ----- npm related
+
+init_packages(){
+  for d in $(ls); do
+    (cd $d && npm init -y)
+  done
+}
+
+inject_in_pkg_json(){
+  node -e "const [,key,val]=process.argv,pkg=require('./package');
+  pkg[key] = val
+  require('fs').writeFileSync('package.json',JSON.stringify(pkg,null,2),'utf8')
+  " $1 $2
+}
+
+inject_script(){
+  node -e "const [,name,val]=process.argv,pkg=require('./package');
+  pkg.scripts[name] = val
+  require('fs').writeFileSync('package.json',JSON.stringify(pkg,null,2),'utf8')
+  " $1 $2
+}
+
+fake_monorepo(){
+  mkdir $1
+  cd $1
+  npm init -y
+  inject_script publish "lerna publish"
+  inject_in_pkg_json author "Danielo Rodríguez"
+  npm i -D lerna
+  npx lerna init --independent
+  ( cd packages && mkdir {alpha,bravo,charlie,tango} && init_packages)
+}
