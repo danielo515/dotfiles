@@ -23,6 +23,8 @@ alias gc='git commit -m '
 alias gac='ga && gc'
 alias bashrc='vi ~/.bashrc && refresh'
 alias lgrep=' ls -la | grep'
+alias push='git push'
+alias pushu='git push -u origin HEADER'
 # ---- NPM 
 alias npm-i='npm i --registry=https://registry.npmjs.org/'
 alias npr='npm run'
