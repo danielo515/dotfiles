@@ -9,9 +9,9 @@
 #
 
 
-if [ "$(uname)" == "Darwin" ]; then
+if [[ "$(uname)" == "Darwin" ]]; then
   __ESCAPESEQ="\x1b"
-elif [ "$(expr substr $(uname -s) 1 5)" == "Linux" ]; then
+elif [[ "$(expr substr $(uname -s) 1 5)" == "Linux" ]]; then
   __ESCAPESEQ="\e"
 fi
 

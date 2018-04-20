@@ -10,9 +10,9 @@ echo_header() {
 }
 
 echo_item() {
-  if [ "$2" == "green" ]; then
+  if [[ "$2" == "green" ]]; then
     echogreen "---> $1"
-  elif [ "$2" == "red" ]; then
+  elif [[ "$2" == "red" ]]; then
     echored "---> $1"
   else
     echo "---> $1"
@@ -31,7 +31,7 @@ get_boolean_response() {
 }
 
 system_is_OSX() {
-  if [ "$(uname)" == "Darwin" ]; then
+  if [[ "$(uname)" == "Darwin" ]]; then
     return 0
   else
     return 1
@@ -39,7 +39,7 @@ system_is_OSX() {
 }
 
 system_is_linux() {
-  if [ "$(expr substr $(uname -s) 1 5)" == "Linux" ]; then
+  if [[ "$(expr substr $(uname -s) 1 5)" == "Linux" ]]; then
     return 0
   else
     return 1
