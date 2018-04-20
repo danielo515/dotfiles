@@ -45,3 +45,27 @@ system_is_linux() {
     return 1
   fi
 }
+
+# ----- Danielo custom
+
+clean_docker() {
+	docker rmi -f $(docker images | grep none | awk '{ print $3 }')
+}
+
+# Executes last command as sudo.
+__executeLastCommandAsSuperUser() {
+  sudo $(history -p \!\!)
+}
+
+confirm() {
+    # call with a prompt string or use a default
+    read -r -p "${1:-Are you sure? [y/N]} " response
+    case $response in
+        [yY][eE][sS]|[yY])
+            true
+            ;;
+        *)
+            false
+            ;;
+    esac
+}

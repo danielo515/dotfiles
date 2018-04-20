@@ -10,6 +10,8 @@ alias dimg='docker images'
 alias dimgs='dimg | sort -n -k 7' # sort by size
 alias dimgst='dimg | head -1 && dimg | sort -r -k 1' # sort by title
 alias drim='docker rmi'
+alias dps='docker ps -a --format "table {{.Names}}\t\t{{.Image}}"'
+alias docker-cleanup='docker ps -a | grep Exit | grep months | cut -d " " -f 1 | xargs docker rm'
 # ---- System aliases
 alias chx='chmod 755'
 alias chr='chmod 644'
@@ -29,4 +31,4 @@ alias pushu='git push -u origin HEADER'
 alias npm-i='npm i --registry=https://registry.npmjs.org/'
 alias npr='npm run'
 alias startElastic='docker run -p 9200:9200 -p 9300:9300 -e "discovery.type=single-node" docker.elastic.co/elasticsearch/elasticsearch:5.4.3'
-alias dps='docker ps -a --format "table {{.Names}}\t\t{{.Image}}"'
+alias milis='echo $(($(date +%s%N)/1000000))'

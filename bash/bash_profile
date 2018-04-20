@@ -1,0 +1,37 @@
+# -- Dotfiles Directory --------------------------------------------------------
+export XDG_CONFIG_HOME="$HOME/.config"
+export DOTFILES="$HOME/.dotfiles"
+
+# -- Import HELPER scripts -------------------------------------------------
+source "$DOTFILES/scripts/helpers/functions.sh"
+source "$DOTFILES/scripts/helpers/colors.sh"
+
+# -- Aliases -------------------------------------------------------------------
+if [[ -f "$DOTFILES/aliases" ]]; then
+  source $DOTFILES/aliases
+fi
+
+if [[ -f "$HOME/.aliases" ]]; then
+    source $HOME/.aliases
+fi
+
+alias reload='source $DOTFILES/bash/bash_profile'
+
+# -- Env variables and that stuff ---------------------------------------
+if [[ -f "$HOME/.env" ]]; then
+  source $HOME/.env
+fi
+
+branchrm(){
+  BRANCHES=$(git branch | grep $1)
+  echo "You are going to delete the following branches: $BRANCHES"
+  if confirm; then
+    git branch -d $BRANCHES
+  fi
+}
+
+commit() {
+  git commit -a -m "$1"
+}
+
+[ -f ~/.fzf.bash ] && source ~/.fzf.bash
