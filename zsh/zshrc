@@ -2,8 +2,9 @@
 export XDG_CONFIG_HOME="$HOME/.config"
 export DOTFILES="$HOME/.dotfiles"
 
-# Helper scripts
+# -- Import HELPER scripts -------------------------------------------------
 source "$DOTFILES/scripts/helpers/functions.sh"
+source "$DOTFILES/scripts/helpers/colors.sh"
 
 # -- Local Configuration (Before Default) --------------------------------------
 if [[ -f "$DOTFILES/zsh/zshrc.local.pre" ]]; then
@@ -64,6 +65,8 @@ fi
 if [[ -f "$HOME/.aliases" ]]; then
     source $HOME/.aliases
 fi
+
+alias reload='source $DOTFILES/zsh/zshrc'
 
 if exists "hub"; then alias git=hub; fi
 
