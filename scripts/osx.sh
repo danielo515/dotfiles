@@ -45,6 +45,19 @@ fi
 
 echo ""
 
+# -- Fonts -----------------------------------------------------------------------
+
+
+if get_boolean_response "Do you want to install brew fonts?"; then
+  brew tap caskroom/fonts
+  brew cask install font-inconsolata-nerd-font
+else
+  echo_item "Skipping fonts install" red
+fi
+
+
+echo ""
+
 # -- zsh -----------------------------------------------------------------------
 
 if exists "zsh"; then
