@@ -7,13 +7,13 @@ My dotfile configuration. Covers Neovim, TMUX, Git, ZSH and some other things, t
 
 1. Pull the project into your home directory
    ```bash
-   git clone https://github.com/alexlafroscia/dotfiles.git ~/.dotfiles
+   git clone https://github.com/danielo515/dotfiles.git ~/.dotfiles
    git submodule update --init --recursive
    ```
 
 2. Run the installation script
    ```bash
-   ~/.dotfiles/install.sh
+   cd ~/.dotfiles && ./install.sh
    ```
 
 3. Unless you're me, change the Git configuration to your own name and email address
