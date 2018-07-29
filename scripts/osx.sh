@@ -44,6 +44,32 @@ else
 fi
 
 echo ""
+# -- rlwrap -----------------------------------------------------------------------
+
+if exists "rlwrap"; then
+  echo_item "rlwrap is already installed" green
+else
+  if get_boolean_response "Do you want to install rlwrap?"; then
+    brew install rlwrap
+  else
+    echo_item "Skipping rlwrap install" red
+  fi
+fi
+
+echo ""
+# -- telnet -----------------------------------------------------------------------
+
+if exists "telnet"; then
+  echo_item "telnet is already installed" green
+else
+  if get_boolean_response "Do you want to install telnet?"; then
+    brew install telnet
+  else
+    echo_item "Skipping telnet install" red
+  fi
+fi
+
+echo ""
 
 # -- Fonts -----------------------------------------------------------------------
 
