@@ -9,6 +9,7 @@
   else
     echo_item "Skip changing default screenshots folder" "red"
   fi
+  
 # -- Homebrew ------------------------------------------------------------------
 
 if exists "brew"; then
@@ -42,18 +43,6 @@ if exists "brew"; then
     brew cask install visual-studio-code
   else
     echo_item "Skipping visual studio code install" red
-  fi
-fi
-# -- rbenv ---------------------------------------------------------------------
-
-if exists "rbenv"; then
-  echo_item "rbenv is already installed" green
-else
-  if get_boolean_response "Do you want to install rbenv?"; then
-    brew install rbenv ruby-install
-    rbenv rehash
-  else
-    echo_item "Skipping rbenv install" red
   fi
 fi
 
@@ -128,5 +117,15 @@ else
     curl -fLo ~/.config/nvim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
   else
     echo_item "Skipping Neovim install" red
+  fi
+fi
+
+# -- ssh --------------------------------------------------------------------
+if test -f ~/.ssh/id_rsa; then
+  if get_boolean_response "Seems there is an existing id_rsa key, do you want to import it ?"; then
+    eval "$(ssh-agent -s)"
+    ssh-add -K ~/.ssh/id_rsa
+  else
+    echo_item "Skipping ssh keys import" red
   fi
 fi
