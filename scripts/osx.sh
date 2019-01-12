@@ -44,6 +44,8 @@ if exists "brew"; then
   else
     echo_item "Skipping visual studio code install" red
   fi
+else
+  echo_item "Brew is not installed, skipping fonts and desktop apps installation" red
 fi
 
 echo ""
