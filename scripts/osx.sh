@@ -35,6 +35,7 @@ if exists "brew"; then
   if get_boolean_response "Do you want to install some fonts?"; then
       brew cask install font-inconsolata-nerd-font
       brew cask install font-inconsolata
+      brew cask install font-fira-code
   else
     echo_item "Skipping fonts install" red
   fi
