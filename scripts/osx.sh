@@ -50,7 +50,7 @@ fi
 
 echo ""
 
-# -- npm -----------------------------------------------------------------------
+# -- Node/NPM/Yarn -----------------------------------------------------------------------
 
 if exists "npm"; then
   echo_item "npm is already installed" green
@@ -60,6 +60,16 @@ else
     source ./node.sh
   else
     echo_item "Skipping npm install" red
+  fi
+fi
+
+if exists "yarn"; then
+  echo_item "yarn is already installed" green
+else
+  if get_boolean_response "Do you want to install yarn?"; then
+    brew install yarn --without-node
+  else
+    echo_item "Skipping yarn install" red
   fi
 fi
 
