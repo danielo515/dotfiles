@@ -1,6 +1,14 @@
 #!/bin/bash
 # OSX.sh
 
+# -- Screenshots ------------------------------------------------------------------
+  screenshotsFolder="$HOME/Documents/screenshots"
+  if get_boolean_response "Create a folder for the screenshots at $screenshotsFolder?"; then
+   mkdir "$screenshotsFolder"
+   defaults write com.apple.screencapture location  "$screenshotsFolder"
+  else
+    echo_item "Skip changing default screenshots folder" "red"
+  fi
 # -- Homebrew ------------------------------------------------------------------
 
 if exists "brew"; then
@@ -15,6 +23,27 @@ fi
 
 echo ""
 
+if exists "brew"; then
+# -- Fonts ------------------------------------------------------------------
+  if get_boolean_response "Do you want to initialize cask fonts ?"; then
+    brew tap homebrew/cask-fonts                  # you only have to do this once!
+  else
+    echo_item "Skip font installation" "red"
+  fi
+  echo ""
+  if get_boolean_response "Do you want to install some fonts?"; then
+      brew cask install font-inconsolata-nerd-font
+      brew cask install font-inconsolata
+  else
+    echo_item "Skipping fonts install" red
+  fi
+# -- Software (desktop apps) ---------------------------------------------------------------------
+  if get_boolean_response "Do you want to install Visual Studio code?"; then
+    brew cask install visual-studio-code
+  else
+    echo_item "Skipping visual studio code install" red
+  fi
+fi
 # -- rbenv ---------------------------------------------------------------------
 
 if exists "rbenv"; then
@@ -71,15 +100,6 @@ fi
 
 echo ""
 
-# -- Fonts -----------------------------------------------------------------------
-
-
-if get_boolean_response "Do you want to install brew fonts?"; then
-  brew tap caskroom/fonts
-  brew cask install font-inconsolata-nerd-font
-else
-  echo_item "Skipping fonts install" red
-fi
 
 
 echo ""
