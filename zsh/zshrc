@@ -8,7 +8,7 @@ source "$DOTFILES/scripts/helpers/colors.sh"
 
 # -- Local Configuration (Before Default) --------------------------------------
 if [[ -f "$DOTFILES/zsh/zshrc.local.pre" ]]; then
-  source $DOTFILES/zsh/zshrc.local.pre
+    source $DOTFILES/zsh/zshrc.local.pre
 fi
 
 # -- Zsh -----------------------------------------------------------------------
@@ -18,10 +18,16 @@ fpath=( "$DOTFILES/zsh/custom" $fpath)
 
 # -- Theme ---------------------------------------------------------------------
 # export NVIM_TUI_ENABLE_TRUE_COLOR=1
-ZSH_THEME="amuse"
+SH_THEME="spaceship"
+SPACESHIP_PROMPT_ADD_NEWLINE="true"
+SPACESHIP_CHAR_SUFFIX=(" ")
+SPACESHIP_CHAR_COLOR_SUCCESS="yellow"
+SPACESHIP_PROMPT_DEFAULT_PREFIX="$USER"
+SPACESHIP_PROMPT_FIRST_PREFIX_SHOW="true"
+SPACESHIP_USER_SHOW="true"
 
 # -- ZSH Plugins ---------------------------------------------------------------
-plugins=(git tmux npm bower vi-mode pj zsh-syntax-highlighting)
+plugins=(git npm bower vi-mode pj zsh-syntax-highlighting)
 if exists "virtualenvwrapper"; then plugins+=virtualenvwrapper; fi
 
 fpath=($DOTFILES/zsh/custom/completion $fpath)
@@ -29,7 +35,7 @@ fpath=($DOTFILES/zsh/custom/completion $fpath)
 # Add Homebrew completions to config if they can be found
 local brew_completions="$(brew --prefix)/share/zsh/site-functions"
 if [[ -d $brew_completions ]]; then
-  fpath=($fpath $brew_completions)
+    fpath=($fpath $brew_completions)
 fi
 
 # -- Oh My Zsh -----------------------------------------------------------------
@@ -58,7 +64,7 @@ alias dc=docker-compose
 
 # -- Aliases -------------------------------------------------------------------
 if [[ -f "$DOTFILES/aliases" ]]; then
-  source $DOTFILES/aliases
+    source $DOTFILES/aliases
 fi
 
 if [[ -f "$HOME/.aliases" ]]; then
@@ -70,7 +76,7 @@ alias reload='source $DOTFILES/zsh/zshrc'
 if exists "hub"; then alias git=hub; fi
 
 codeclimate() {
-  docker run --interactive --tty --rm --env CODE_PATH="$PWD" --volume "$PWD":/code --volume /var/run/docker.sock:/var/run/docker.sock --volume /tmp/cc:/tmp/cc codeclimate/codeclimate "$@"
+    docker run --interactive --tty --rm --env CODE_PATH="$PWD" --volume "$PWD":/code --volume /var/run/docker.sock:/var/run/docker.sock --volume /tmp/cc:/tmp/cc codeclimate/codeclimate "$@"
 }
 
 export PATH="$PATH:/opt/vagrant/bin"
@@ -117,37 +123,37 @@ export PATH="$PATH:$DOTFILES/bin"
 
 # -- Xiki ----------------------------------------------------------------------
 if [[ -f "$HOME/.xsh" ]]; then
-  source $HOME/.xsh
+    source $HOME/.xsh
 fi
 
 # -- fzf -----------------------------------------------------------------------
 if [ -f ~/.fzf.zsh ]; then
-  source ~/.fzf.zsh
-  export FZF_TMUX=1
-  export FZF_DEFAULT_OPTS='--color 16,info:6,hl:13,hl+:13'
-  export FZF_DEFAULT_COMMAND="rg --files-with-matches --no-messages -F ''"
-  export FZF_CTRL_T_COMMAND="rg --files-with-matches --no-messages --hidden -F '' | grep -v .git/"
+    source ~/.fzf.zsh
+    export FZF_TMUX=1
+    export FZF_DEFAULT_OPTS='--color 16,info:6,hl:13,hl+:13'
+    export FZF_DEFAULT_COMMAND="rg --files-with-matches --no-messages -F ''"
+    export FZF_CTRL_T_COMMAND="rg --files-with-matches --no-messages --hidden -F '' | grep -v .git/"
 fi
 
 # -- OS-Specific Config --------------------------------------------------------
 if [[ $(uname) == 'Darwin' ]]; then
-  # Load OSX config
-  source $DOTFILES/zsh/zshrc.osx
-elif [ "$(expr substr $(uname -s) 1 5)" == "Linux" ]; then
-  # Load Linux config
+    # Load OSX config
+    source $DOTFILES/zsh/zshrc.osx
+    elif [ "$(expr substr $(uname -s) 1 5)" == "Linux" ]; then
+    # Load Linux config
 fi
 
 # -- asdf ---------------------------------------------------------------------
 if [[ -d "$HOME/.asdf" ]]; then
-  source $HOME/.asdf/asdf.sh
-  source $HOME/.asdf/completions/asdf.bash
+    source $HOME/.asdf/asdf.sh
+    source $HOME/.asdf/completions/asdf.bash
 fi
 
 # -- Yarn ---------------------------------------------------------------------
 # Make the shell aware of global packages installed by Yarn
 local yarn_global_modules="$XDG_CONFIG_HOME/yarn/global/node_modules"
 if [[ -d "$yarn_global_modules/.bin" ]]; then
-  export PATH="$PATH:$yarn_global_modules/.bin"
+    export PATH="$PATH:$yarn_global_modules/.bin"
 fi
 
 # -- Go ------------------------------------------------------------------------
@@ -157,12 +163,12 @@ export PATH="$PATH:$GOPATH/bin"
 
 # -- Kubectl
 if exists "kubectl"; then
-  source <(kubectl completion zsh)
+    source <(kubectl completion zsh)
 fi
 
 # -- Env variables and that stuff ---------------------------------------
 if [[ -f "$HOME/.env" ]]; then
-  source $HOME/.env
+    source $HOME/.env
 fi
 # Set CLICOLOR if you want Ansi Colors in iTerm2
 export CLICOLOR=1
@@ -173,7 +179,10 @@ zstyle ':completion:*' special-dirs true
 
 # -- Local Configuration (After Default) ---------------------------------------
 if [[ -f "$DOTFILES/zsh/zshrc.local" ]]; then
-  source $DOTFILES/zsh/zshrc.local
+    source $DOTFILES/zsh/zshrc.local
 fi
 unalias grv
 
+# Set Spaceship ZSH as a prompt
+autoload -U promptinit; promptinit
+prompt spaceship
