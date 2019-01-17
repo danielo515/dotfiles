@@ -115,6 +115,22 @@ fi
 
 echo ""
 
+# -- VSCode ----------------------------------------------------------------------
+if exists "code"; then
+    if get_boolean_response "You have VSCode installed, want to add some recommended extension ?"; then
+        code --install-extension editorconfig.editorconfig
+        code --install-extension dbaeumer.vscode-eslint
+        code --install-extension danielo515.danielo-node-snippets
+        code --install-extension robertohuertasm.vscode-icons
+    else
+        echo_item "Skip VSCode extensions installation" red
+    fi
+else
+    echo_item "VSCode not installed, skipping extensions installation" red
+fi
+
+
+
 # -- NEOVIM --------------------------------------------------------------------
 # Link the dotfiles
 
