@@ -122,6 +122,10 @@ if exists "code"; then
         code --install-extension dbaeumer.vscode-eslint
         code --install-extension danielo515.danielo-node-snippets
         code --install-extension robertohuertasm.vscode-icons
+        code --install-extension jpoissonnier.vscode-styled-components
+        code --install-extension lxspandora.vscode-styled-components-snippets
+        code --install-extension wooodhead.disable-eslint-rule
+
     else
         echo_item "Skip VSCode extensions installation" red
     fi
