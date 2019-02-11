@@ -28,7 +28,10 @@ alias pushu='git push -u origin HEAD'
 alias gundo='git reset HEAD~1'
 alias bashrc='vi ~/.bashrc && refresh'
 alias lgrep=' ls -la | grep'
-# ---- NPM 
+function rebaseN(){
+    noglob git rebase --interactive HEAD~$1
+}
+# ---- NPM
 alias npm-i='npm i --registry=https://registry.npmjs.org/'
 alias npr='npm run'
 alias startElastic='docker run -p 9200:9200 -p 9300:9300 -e "discovery.type=single-node" docker.elastic.co/elasticsearch/elasticsearch:5.4.3'
