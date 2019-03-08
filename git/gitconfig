@@ -147,6 +147,7 @@
 
 [core]
   excludesfile = ~/.gitignore_global
+	whitespace = cr-at-eol
 
 [rerere]
   enabled = 1
