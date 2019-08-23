@@ -38,3 +38,17 @@ alias startElastic='docker run -p 9200:9200 -p 9300:9300 -e "discovery.type=sing
 alias milis='echo $(($(date +%s%N)/1000000))'
 # ---- STUPID
 alias oraculo='node bin/oraculo.js'
+# ---- Aula
+create_component (){
+    mkdir $1 && cd $1
+    touch index.js
+    echo "import $1 from './$1.component';\n\nexport default $1;" > index.js
+    for i in styled.js component.jsx variants.js;do
+        touch "$1.$i" 
+    done
+    echo "
+    import styled from '@emotion/styled';
+    import COLORS from '$shared/variables/colors';
+    " > $1.styled.js
+    cd -
+}
