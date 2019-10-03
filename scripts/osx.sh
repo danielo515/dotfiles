@@ -1,6 +1,8 @@
 #!/bin/bash
 # OSX.sh
 
+# -- Avoid network temp files ------------------------------------------------------------------
+defaults write com.apple.desktopservices DSDontWriteNetworkStores true
 # -- Screenshots ------------------------------------------------------------------
 screenshotsFolder="$HOME/Documents/screenshots"
 if get_boolean_response "Create a folder for the screenshots at $screenshotsFolder?"; then
