@@ -36,6 +36,8 @@ alias npm-i='npm i --registry=https://registry.npmjs.org/'
 alias npr='npm run'
 alias startElastic='docker run -p 9200:9200 -p 9300:9300 -e "discovery.type=single-node" docker.elastic.co/elasticsearch/elasticsearch:5.4.3'
 alias milis='echo $(($(date +%s%N)/1000000))'
+# Systems
+alias who_uses_serial='lsof  | grep "/dev/cu"'
 # ---- STUPID
 alias oraculo='node bin/oraculo.js'
 # ---- Aula
@@ -44,11 +46,17 @@ create_component (){
     touch index.js
     echo "import $1 from './$1.component';\n\nexport default $1;" > index.js
     for i in styled.js component.jsx variants.js;do
-        touch "$1.$i" 
+        touch "$1.$i"
     done
     echo "
     import styled from '@emotion/styled';
     import COLORS from '$shared/variables/colors';
     " > $1.styled.js
     cd -
+}
+# ---- QMK
+checkout-danielo-ergodox(){
+    git checkout danielo515/ergodox_ez users/danielo515
+    git checkout danielo515/ergodox_ez quantum/process_keycode/process_leader.c
+    git checkout danielo515/ergodox_ez keyboards/ergodox_ez/keymaps/danielo515
 }
