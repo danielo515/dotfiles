@@ -79,8 +79,8 @@ if has("autocmd")
   " Automatically clean trailing whitespace
   autocmd BufWritePre * :%s/\s\+$//e
 
-  autocmd BufRead,BufNewFile COMMIT_EDITMSG call pencil#init({'wrap': 'soft'})
-        \ | set textwidth=0
+  "autocmd BufRead,BufNewFile COMMIT_EDITMSG call pencil#init({'wrap': 'soft'})
+  "     \ | set textwidth=0
 
   autocmd BufRead,BufNewFile *.md set filetype=markdown
 
