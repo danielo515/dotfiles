@@ -60,3 +60,9 @@ checkout-danielo-ergodox(){
     git checkout danielo515/ergodox_ez quantum/process_keycode/process_leader.c
     git checkout danielo515/ergodox_ez keyboards/ergodox_ez/keymaps/danielo515
 }
+port_used(){
+lsof -nP -i4TCP:$1
+}
+pport(){
+  lsof -nP -i4TCP:$1
+}
