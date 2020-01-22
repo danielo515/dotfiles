@@ -75,10 +75,6 @@ alias reload='source $DOTFILES/zsh/zshrc'
 
 if exists "hub"; then alias git=hub; fi
 
-codeclimate() {
-    docker run --interactive --tty --rm --env CODE_PATH="$PWD" --volume "$PWD":/code --volume /var/run/docker.sock:/var/run/docker.sock --volume /tmp/cc:/tmp/cc codeclimate/codeclimate "$@"
-}
-
 export PATH="$PATH:/opt/vagrant/bin"
 export PATH="/usr/local/sbin:$HOME/bin:$PATH"
 
@@ -182,6 +178,20 @@ if [[ -f "$DOTFILES/zsh/zshrc.local" ]]; then
     source $DOTFILES/zsh/zshrc.local
 fi
 unalias grv
+
+# -- Vim keybindings ---
+bindkey -v
+
+bindkey '^P' up-history
+bindkey '^N' down-history
+bindkey '^?' backward-delete-char
+bindkey '^h' backward-delete-char
+bindkey '^w' backward-kill-word
+bindkey '^r' history-incremental-search-backward
+
+zle -N zle-line-init
+zle -N zle-keymap-select
+export KEYTIMEOUT=1
 
 # Set Spaceship ZSH as a prompt
 autoload -U promptinit; promptinit
