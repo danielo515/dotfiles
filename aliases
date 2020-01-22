@@ -38,6 +38,10 @@ alias startElastic='docker run -p 9200:9200 -p 9300:9300 -e "discovery.type=sing
 alias milis='echo $(($(date +%s%N)/1000000))'
 # Systems
 alias who_uses_serial='lsof  | grep "/dev/cu"'
+port_used(){
+  lsof -nP -i4TCP:$1
+}
+alias pport='port_used'
 # ---- STUPID
 alias oraculo='node bin/oraculo.js'
 # ---- Aula
@@ -60,9 +64,4 @@ checkout-danielo-ergodox(){
     git checkout danielo515/ergodox_ez quantum/process_keycode/process_leader.c
     git checkout danielo515/ergodox_ez keyboards/ergodox_ez/keymaps/danielo515
 }
-port_used(){
-lsof -nP -i4TCP:$1
-}
-pport(){
-  lsof -nP -i4TCP:$1
-}
+alias docker-ps='docker ps --format "{{.Image}} \t\t {{.Names}}"'
