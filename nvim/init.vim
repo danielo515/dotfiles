@@ -50,18 +50,6 @@ endif " }}}2
 set splitbelow
 set splitright
 " }}}2
-" Point to the Python executables in `asdf` {{{2
-let g:python_host_prog = $HOME . '/.asdf/installs/python/2.7.10/bin/python'
-let g:python3_host_prog = $HOME . '/.asdf/installs/python/3.5.0/bin/python'
-" }}}2
-" Configure grep to use The Silver Searcher {{{2
-if executable('ag')
-  " Use ag over grep
-  set grepprg=ag\ --nogroup\ --nocolor
-
-  command -nargs=+ -complete=file -bar Ag silent! grep! <args>|cwindow|redraw!
-endif
-" }}}2
 " }}}1
 " Section: Autocommands {{{1
 " --------------------------
@@ -93,20 +81,6 @@ endif
 " }}}1
 " Section: External Functions {{{
 
-" Open current file in Marked {{{
-function! MarkedPreview()
-  :w
-  exec ':silent !open -a "Marked 2.app" ' . shellescape('%:p')
-  redraw!
-endfunction
-nnoremap <leader>md :call MarkedPreview()<CR>
-" }}}
-" Open current repo in Tower {{{
-function! OpenInGitTower()
-  call system('gittower ' . getcwd())
-endfunction
-nnoremap <leader>gt :call OpenInGitTower()<CR>
-" }}}
 " }}}
 " Section: Load vim-plug plugins {{{
 
@@ -166,9 +140,9 @@ Plug 'Olical/vim-enmasse'                 " Edit all files in a Quickfix list
 Plug 'janko-m/vim-test'
 
 " Autocomplete {{{3
-Plug 'Shougo/deoplete.nvim',              { 'do': ':UpdateRemotePlugins' }
-Plug 'zchee/deoplete-jedi'
-Plug 'carlitux/deoplete-ternjs'
+"Plug 'Shougo/deoplete.nvim',              { 'do': ':UpdateRemotePlugins' }
+" " Plug 'zchee/deoplete-jedi'
+" Plug 'carlitux/deoplete-ternjs'
 Plug 'alexlafroscia/deoplete-flow',       { 'branch': 'pass-filename-to-autocomplete' }
 
 " Language Support {{{3
@@ -225,8 +199,8 @@ Plug 'godlygeek/tabular',                 { 'for': 'markdown' } " Needed for vim
 Plug 'plasticboy/vim-markdown',           { 'for': 'markdown' }
 
 " Elixir {{{4
-Plug 'elixir-editors/vim-elixir'
-Plug 'slashmili/alchemist.vim'
+"Plug 'elixir-editors/vim-elixir'
+"Plug 'slashmili/alchemist.vim'
 
 call plug#end()
 " Load plugin configurations {{{2
@@ -291,8 +265,6 @@ nnoremap tn :tabnew<CR>
 nnoremap tc :CtrlSpaceTabLabel<CR>
 nnoremap td :tabclose<CR>
 
-nnoremap <silent> <c-j> :TmuxNavigateDown<cr>
-
 " }}}2
 " Insert Mode Remaps {{{2
 
@@ -307,7 +279,6 @@ let $NVIM_TUI_ENABLE_TRUE_COLOR=1
 set termguicolors
 set background=dark
 colorscheme kolor
-
 " Setup Terminal Colors For Neovim {{{
 if has('nvim')
   " dark0 + gray
@@ -360,3 +331,6 @@ let g:ctrlp_custom_ignore = 'node_modules\|DS_Store\|git' " Ignore those folders
 " Javascript
 let g:javascript_plugin_jsdoc = 1
 set nofoldenable
+
+
+noremap <leader>w :w
