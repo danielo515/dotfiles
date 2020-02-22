@@ -36,6 +36,7 @@ alias npm-i='npm i --registry=https://registry.npmjs.org/'
 alias npr='npm run'
 alias startElastic='docker run -p 9200:9200 -p 9300:9300 -e "discovery.type=single-node" docker.elastic.co/elasticsearch/elasticsearch:5.4.3'
 alias milis='echo $(($(date +%s%N)/1000000))'
+alias yarnd='yarn add -D'
 # Systems
 alias who_uses_serial='lsof  | grep "/dev/cu"'
 port_used(){
@@ -60,8 +61,9 @@ create_component (){
 }
 # ---- QMK
 checkout-danielo-ergodox(){
-    git checkout danielo515/ergodox_ez users/danielo515
-    git checkout danielo515/ergodox_ez quantum/process_keycode/process_leader.c
-    git checkout danielo515/ergodox_ez keyboards/ergodox_ez/keymaps/danielo515
+    read -r DANIELO_BRANCH
+    git checkout $DANIELO_BRANCH users/danielo515
+    git checkout $DANIELO_BRANCH  quantum/process_keycode/process_leader.c
+    git checkout $DANIELO_BRANCH keyboards/ergodox_ez/keymaps/danielo515
 }
 alias docker-ps='docker ps --format "{{.Image}} \t\t {{.Names}}"'
