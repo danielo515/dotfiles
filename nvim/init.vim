@@ -98,6 +98,7 @@ Plug 'mklabs/split-term.vim'
 
 " Project Navigation {{{3
 Plug 'scrooloose/nerdtree'
+Plug 'Xuyuanp/nerdtree-git-plugin', { 'on': 'NERDTreeToggle' }
 Plug 'junegunn/fzf',                      { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
 Plug 'mhinz/vim-grepper'
@@ -140,19 +141,13 @@ Plug 'Olical/vim-enmasse'                 " Edit all files in a Quickfix list
 Plug 'janko-m/vim-test'
 
 " Autocomplete {{{3
-"Plug 'Shougo/deoplete.nvim',              { 'do': ':UpdateRemotePlugins' }
-" " Plug 'zchee/deoplete-jedi'
-" Plug 'carlitux/deoplete-ternjs'
-Plug 'alexlafroscia/deoplete-flow',       { 'branch': 'pass-filename-to-autocomplete' }
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
 
 " Language Support {{{3
 " JavaScript {{{4
 Plug 'pangloss/vim-javascript'
 Plug 'mxw/vim-jsx'
 Plug 'rhysd/npm-debug-log.vim'
-Plug '~/projects/vim-plugins/vim-ember-cli'
-Plug 'AndrewRadev/ember_tools.vim'
-Plug 'neovim/node-host',                  { 'do': 'npm install' }
 
 " TypeScript {{{4
 Plug 'HerringtonDarkholme/yats.vim'
@@ -249,13 +244,6 @@ function! IndentWithI()
 endfunction
 nnoremap <expr> i IndentWithI()
 
-" Remap the increment and decrement features of Vim
-nnoremap <A-a> <C-a>
-nnoremap å <C-a>
-
-nnoremap <A-x> <C-x>
-nnoremap ≈ <C-x>
-
 " Tab Shortcuts
 nnoremap tk :tabfirst<CR>
 nnoremap tl :tabnext<CR>
@@ -333,4 +321,7 @@ let g:javascript_plugin_jsdoc = 1
 set nofoldenable
 
 
-noremap <leader>w :w
+noremap <leader>w :w<cr>
+noremap <leader>ww :wa<cr>
+map  <S-j> :tabn<CR>
+map  <S-k> :tabp<CR>
