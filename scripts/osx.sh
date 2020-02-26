@@ -51,8 +51,14 @@ if exists "brew"; then
             echo_item "Skipping visual studio code install" red
         fi
     fi
+    if get_boolean_response "Install silver_searcher? (required by fzf.vim)"; then
+      brew install the_silver_searcher
+    fi
+    if get_boolean_response "Install rigrep? (used by fzf.vim"; then
+      brew install ripgrep
+    fi
 else
-    echo_item "Brew is not installed, skipping fonts and desktop apps installation" red
+    echo_item "Brew is not installed, skipping installations that requires it" red
 fi
 
 echo ""

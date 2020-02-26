@@ -30,6 +30,14 @@ get_boolean_response() {
   done
 }
 
+do_if_yes() {
+  question=$1
+  cmd=$2
+  if get_boolean_response $question; then
+    "$cmd"
+  fi
+}
+
 system_is_OSX() {
   if [[ "$(uname)" == "Darwin" ]]; then
     return 0
