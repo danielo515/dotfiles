@@ -41,6 +41,9 @@ function! SetupCommandAbbrs(from, to)
 
 " Use C to open coc config
 call SetupCommandAbbrs('C', 'CocConfig')
+nmap <F2> <Plug>(coc-rename)
+
+" Suggestions tab navigation
 inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
 inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
 inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
