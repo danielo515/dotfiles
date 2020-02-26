@@ -32,6 +32,7 @@ nmap ]e <Plug>(coc-diagnostic-next-error)
 
 nmap <leader>fx <Plug>(coc-fix-current)
 vmap <leader>f  <Plug>(coc-format-selected)
+nnoremap <leader>f :CocCommand prettier.formatFile<CR>
 
 function! SetupCommandAbbrs(from, to)
     exec 'cnoreabbrev <expr> '.a:from

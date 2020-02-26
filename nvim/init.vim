@@ -315,10 +315,17 @@ let g:ctrlp_custom_ignore = 'node_modules\|DS_Store\|git' " Ignore those folders
 " Javascript
 let g:javascript_plugin_jsdoc = 1
 set nofoldenable
+set scrolloff=50
+set ignorecase
+set smartcase
 
-
-noremap <leader>w :w<cr>
-noremap <leader>ww :wa<cr>
-map  <S-j> :tabn<CR>
-map  <S-k> :tabp<CR>
-nmap <C-Tab> :Buffers<cr>
+nnoremap <leader>w :wa<CR>
+nnoremap <leader>ww :wq<CR>
+nnoremap  <S-j> :tabn<CR>
+nnoremap  <S-k> :tabp<CR>
+nmap <C-Tab> :Buffers<CR>
+let g:ranger_map_keys = 0
+nnoremap <leader>j o<Esc>
+nnoremap <leader>k O<Esc>
+nnoremap <leader>ff :Ranger<CR>
+nmap <leader>ga :Git add . <CR>
