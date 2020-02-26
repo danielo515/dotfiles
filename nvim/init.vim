@@ -154,7 +154,7 @@ Plug 'HerringtonDarkholme/yats.vim'
 Plug 'mhartington/nvim-typescript',       { 'do': ':UpdateRemotePlugins' }
 
 " Elm {{{4
-Plug 'ElmCast/elm-vim'
+"Plug 'ElmCast/elm-vim'
 
 " HTML {{{4
 Plug 'othree/html5.vim',                  { 'for': 'html' }
@@ -186,7 +186,6 @@ Plug 'cespare/vim-toml'
 " Go {{{4
 Plug 'fatih/vim-go'
 Plug 'nsf/gocode',                        { 'rtp': 'nvim', 'do': './nvim/symlink.sh' }
-Plug 'zchee/deoplete-go'
 
 " Markdown {{{4
 Plug 'reedes/vim-pencil'                  " Markdown, Writing
@@ -219,9 +218,6 @@ let g:user_emmet_settings = {
 let g:ranger_replace_netrw = 1 " open ranger when vim open a directory
 
 " Section: Remaps {{{1
-
-map <C-n> :NERDTreeToggle<CR>
-
 " Disable arrow movement, resize splits instead.
 nnoremap <Up>    :resize +2<CR>
 nnoremap <Down>  :resize -2<CR>
@@ -325,3 +321,4 @@ noremap <leader>w :w<cr>
 noremap <leader>ww :wa<cr>
 map  <S-j> :tabn<CR>
 map  <S-k> :tabp<CR>
+nmap <C-Tab> :Buffers<cr>

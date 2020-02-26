@@ -9,7 +9,26 @@ imap <c-x><c-j> <plug>(fzf-complete-file-ag)
 " Search for tasks across the current project
 nnoremap <C-t> :Files<cr>
 nmap <leader>o     :Files<cr>
+nmap <c-f> :Ag<Space>
+" sibling files search
+nnoremap <silent> <Leader>. :Files <C-r>=expand("%:h")<CR>/<CR>
 
+" note the space at the end
+nmap <silent> <leader>b :Buffers<CR>
+" search on changed files
+nnoremap <silent> <Leader>g :GFiles?
+" Show fuzzy search on a popup
+if has('nvim-0.4.0') || has("patch-8.2.0191")
+    let g:fzf_layout = { 'window': {
+                \ 'width': 0.9,
+                \ 'height': 0.7,
+                \ 'highlight': 'Comment',
+                \ 'rounded': v:false } }
+else
+    let g:fzf_layout = { "window": "silent botright 16split enew" }
+endif
+
+nnoremap <silent> <Leader>g :GFiles?
 " Custom colors to match theme
 let g:fzf_colors = {
 \   'bg+':     ['bg', 'Normal'],
