@@ -191,7 +191,9 @@ Plug 'nsf/gocode',                        { 'rtp': 'nvim', 'do': './nvim/symlink
 Plug 'reedes/vim-pencil'                  " Markdown, Writing
 Plug 'godlygeek/tabular',                 { 'for': 'markdown' } " Needed for vim-markdown
 Plug 'plasticboy/vim-markdown',           { 'for': 'markdown' }
-
+" Docker
+Plug 'ekalinin/dockerfile.vim'
+Plug 'jparise/vim-graphql'
 " Elixir {{{4
 "Plug 'elixir-editors/vim-elixir'
 "Plug 'slashmili/alchemist.vim'
@@ -216,43 +218,6 @@ let g:user_emmet_settings = {
 
 " ranger.vim {{{3
 let g:ranger_replace_netrw = 1 " open ranger when vim open a directory
-
-" Section: Remaps {{{1
-" Disable arrow movement, resize splits instead.
-nnoremap <Up>    :resize +2<CR>
-nnoremap <Down>  :resize -2<CR>
-nnoremap <Left>  :vertical resize +2<CR>
-nnoremap <Right> :vertical resize -2<CR>
-" Normal Mode Remaps {{{2
-
-nnoremap <silent> <Space> :nohlsearch<Bar>:echo<CR>
-
-" Smarter pasting
-nnoremap <Leader>p :set invpaste paste?<CR>
-
-" -- Smart indent when entering insert mode with i on empty lines --------------
-function! IndentWithI()
-  if len(getline('.')) == 0
-    return "\"_ddO"
-  else
-    return "i"
-  endif
-endfunction
-nnoremap <expr> i IndentWithI()
-
-" Tab Shortcuts
-nnoremap tk :tabfirst<CR>
-nnoremap tl :tabnext<CR>
-nnoremap th :tabprev<CR>
-nnoremap tj :tablast<CR>
-nnoremap tn :tabnew<CR>
-nnoremap tc :CtrlSpaceTabLabel<CR>
-nnoremap td :tabclose<CR>
-
-" }}}2
-" Insert Mode Remaps {{{2
-
-set completeopt-=preview
 
 " }}}2
 " }}}1
@@ -319,10 +284,38 @@ set scrolloff=50
 set ignorecase
 set smartcase
 
+" Section: Remaps {{{1
+" Disable arrow movement, resize splits instead.
+nnoremap <Up>    :resize +2<CR>
+nnoremap <Down>  :resize -2<CR>
+nnoremap <Left>  :vertical resize +2<CR>
+nnoremap <Right> :vertical resize -2<CR>
+" Normal Mode Remaps {{{2
+nnoremap <Leader>p :set invpaste paste?<CR>
+
+" -- Smart indent when entering insert mode with i on empty lines --------------
+function! IndentWithI()
+  if len(getline('.')) == 0
+    return "\"_ddO"
+  else
+    return "i"
+  endif
+endfunction
+nnoremap <expr> i IndentWithI()
+
+" Tab Shortcuts
+nnoremap tk :tabfirst<CR>
+nnoremap tl :tabnext<CR>
+nnoremap th :tabprev<CR>
+nnoremap tj :tablast<CR>
+nnoremap tn :tabnew<CR>
+nnoremap tc :CtrlSpaceTabLabel<CR>
+nnoremap td :tabclose<CR>
+
+set completeopt-=preview
+
 nnoremap <leader>w :wa<CR>
 nnoremap <leader>ww :wq<CR>
-nnoremap  <S-j> :tabn<CR>
-nnoremap  <S-k> :tabp<CR>
 nmap <C-Tab> :Buffers<CR>
 let g:ranger_map_keys = 0
 nnoremap <leader>j o<Esc>
@@ -330,3 +323,8 @@ nnoremap <leader>k O<Esc>
 nnoremap <leader>ff :Ranger<CR>
 nmap <leader>ga :Git add . <CR>
 nnoremap <leader>gg :Gcommit<CR>
+nnoremap <leader>gp :Gpush<CR>
+" Plug install
+nnoremap <leader>pi :w<CR>:so $MYVIMRC<CR>:PlugInstall<CR>
+nnoremap <leader>p "*p
+" }}}2
