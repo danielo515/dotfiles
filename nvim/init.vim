@@ -329,3 +329,4 @@ nnoremap <leader>j o<Esc>
 nnoremap <leader>k O<Esc>
 nnoremap <leader>ff :Ranger<CR>
 nmap <leader>ga :Git add . <CR>
+nnoremap <leader>gg :Gcommit<CR>
