@@ -57,6 +57,9 @@ if exists "brew"; then
     if get_boolean_response "Install rigrep? (used by fzf.vim"; then
       brew install ripgrep
     fi
+    if get_boolean_response "Install tmux?"; then
+      brew install tmux reattach-to-user-namespace
+    fi
 else
     echo_item "Brew is not installed, skipping installations that requires it" red
 fi

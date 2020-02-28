@@ -326,5 +326,6 @@ nnoremap <leader>gg :Gcommit<CR>
 nnoremap <leader>gp :Gpush<CR>
 " Plug install
 nnoremap <leader>pi :w<CR>:so $MYVIMRC<CR>:PlugInstall<CR>
+" Paste from system keyboard
 nnoremap <leader>p "*p
 " }}}2
