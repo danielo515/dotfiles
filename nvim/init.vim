@@ -131,7 +131,10 @@ Plug 'tpope/vim-fugitive'                 " Git stuff in Vim
 Plug 'airblade/vim-gitgutter'
 Plug 'junegunn/gv.vim',                   { 'on': 'GV' }
 Plug 'jez/vim-github-hub'
-
+Plug 'rhysd/committia.vim'
+Plug 'APZelos/blamer.nvim'
+" Blame on vim startup
+let g:blamer_enabled = 1
 " Task Running
 Plug 'tpope/vim-dispatch'                 " Run tasks asychronously in Tmux
 Plug 'w0rp/ale'                           " Linter

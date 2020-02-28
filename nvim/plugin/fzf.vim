@@ -14,6 +14,7 @@ nnoremap <silent> <Leader>. :Files <C-r>=expand("%:h")<CR>/<CR>
 nmap <silent> <leader>b :Buffers<CR>
 " search on changed files
 nnoremap <silent> <Leader>g :GFiles?<CR>
+nnoremap <silent> <Leader>pp :Commands<CR>
 nnoremap <silent> <Leader>l :Lines<CR>
 " Show fuzzy search on a popup
 if has('nvim-0.4.0') || has("patch-8.2.0191")
