@@ -93,7 +93,6 @@ Plug 'vim-airline/vim-airline'            " Handy info
 Plug 'retorillo/airline-tablemode.vim'
 Plug 'edkolev/tmuxline.vim'               " Make the Tmux bar match Vim
 Plug 'ryanoasis/vim-webdevicons'
-Plug 'junegunn/goyo.vim'
 Plug 'mklabs/split-term.vim'
 
 " Project Navigation {{{3
@@ -106,6 +105,7 @@ Plug 'vim-scripts/ctags.vim'              " ctags related stuff
 Plug 'majutsushi/tagbar'
 Plug 'rbgrouleff/bclose.vim'              " Required by ranger.vim
 Plug 'francoiscabrol/ranger.vim'
+Plug 'antoinemadec/coc-fzf'
 
 " File Navigation {{{3
 Plug 'vim-scripts/matchit.zip'            " More powerful % matching
@@ -206,9 +206,9 @@ call plug#end()
 " For some reason, a few plugins seem to have config options that cannot be
 " placed in the `plugins` directory. Those settings can be found here instead.
 
-" vim-airline {{{3
-let g:airline_powerline_fonts = 1 " Enable the patched Powerline fonts
 
+" This needs to live here or it will not work
+let g:airline_powerline_fonts = 1 " Enable the patched Powerline fonts
 " emmet-vim {{{3
 let g:user_emmet_leader_key='<C-E>'
 
@@ -297,8 +297,10 @@ nnoremap <Right> :vertical resize -2<CR>
 nnoremap <Leader>p :set invpaste paste?<CR>
 
 " -- Smart indent when entering insert mode with i on empty lines --------------
+
 function! IndentWithI()
   if len(getline('.')) == 0
+    "delete to the blackhole register the empty line, then add a line
     return "\"_ddO"
   else
     return "i"
@@ -319,16 +321,26 @@ set completeopt-=preview
 
 nnoremap <leader>w :wa<CR>
 nnoremap <leader>ww :wq<CR>
-nmap <C-Tab> :Buffers<CR>
+nmap <Tab> :bNext<CR>
 let g:ranger_map_keys = 0
 nnoremap <leader>j o<Esc>
 nnoremap <leader>k O<Esc>
 nnoremap <leader>ff :Ranger<CR>
 nmap <leader>ga :Git add . <CR>
-nnoremap <leader>gg :Gcommit<CR>
+nnoremap <leader>gg :w<CR>:Git add .<CR>:Gcommit<CR>
 nnoremap <leader>gp :Gpush<CR>
 " Plug install
 nnoremap <leader>pi :w<CR>:so $MYVIMRC<CR>:PlugInstall<CR>
 " Paste from system keyboard
 nnoremap <leader>p "*p
+" Convert slashes to backslashes for Windows.
+if has('win32')
+  nmap ,cf :let @*=substitute(expand("%"), "/", "\\", "g")<CR>
+  nmap ,cp :let @*=substitute(expand("%:p"), "/", "\\", "g")<CR>
+" This will copy the path in 8.3 short format, for DOS and Windows 9x
+  nmap ,c8 :let @*=substitute(expand("%:p:8"), "/", "\\", "g")<CR>
+else
+  nmap ,cf :let @*=expand("%")<CR>
+  nmap ,cp :let @*=expand("%:p")<CR>
+endif
 " }}}2
