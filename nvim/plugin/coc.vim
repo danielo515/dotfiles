@@ -20,12 +20,13 @@ let g:coc_global_extensions = ['coc-tsserver',
                               \'https://github.com/xabikos/vscode-javascript',
                               \'https://github.com/danielo515/vscode-node-snippets',
                               \'https://github.com/andys8/vscode-jest-snippets',
+                              \'https://github.com/dsznajder/vscode-es7-javascript-react-snippets',
                               \]
 
 nmap gd <Plug>(coc-definition)
 nmap gy <Plug>(coc-type-definition)
-nmap gi <Plug>(coc-implementation)
-nmap gr <Plug>(coc-references)
+nmap <leader>i <Plug>(coc-implementation)
+nmap <leader>r <Plug>(coc-references)
 
 nmap [e <Plug>(coc-diagnostic-prev-error)
 nmap ]e <Plug>(coc-diagnostic-next-error)
