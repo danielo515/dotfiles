@@ -65,4 +65,4 @@ nmap s <Plug>(easymotion-s2)
 " buffer delete
 nnoremap <leader>bd :bd<CR>
 " json annotate for go
-nnoremap <leader>ja :normal ^yiwA `json:""<Esc>P`
+nnoremap <leader>ja :normal ^yiwA `json:""<Esc>P<CR>
