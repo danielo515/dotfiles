@@ -293,20 +293,6 @@ nnoremap <Up>    :resize +2<CR>
 nnoremap <Down>  :resize -2<CR>
 nnoremap <Left>  :vertical resize +2<CR>
 nnoremap <Right> :vertical resize -2<CR>
-" Normal Mode Remaps {{{2
-nnoremap <Leader>p :set invpaste paste?<CR>
-
-" -- Smart indent when entering insert mode with i on empty lines --------------
-
-function! IndentWithI()
-  if len(getline('.')) == 0
-    "delete to the blackhole register the empty line, then add a line
-    return "\"_ddO"
-  else
-    return "i"
-  endif
-endfunction
-nnoremap <expr> i IndentWithI()
 
 " Tab Shortcuts
 nnoremap tk :tabfirst<CR>
@@ -329,10 +315,10 @@ nnoremap <leader>ff :Ranger<CR>
 nmap <leader>ga :Git add . <CR>
 nnoremap <leader>gg :w<CR>:Git add .<CR>:Gcommit<CR>
 nnoremap <leader>gp :Gpush<CR>
+" Windows equal size
+nnoremap <leader>we <C-w>=
 " Plug install
 nnoremap <leader>pi :w<CR>:so $MYVIMRC<CR>:PlugInstall<CR>
-" Paste from system keyboard
-nnoremap <leader>p "*p
 " Convert slashes to backslashes for Windows.
 if has('win32')
   nmap ,cf :let @*=substitute(expand("%"), "/", "\\", "g")<CR>
@@ -344,3 +330,10 @@ else
   nmap ,cp :let @*=expand("%:p")<CR>
 endif
 " }}}2
+" faster clipboard copying/pastig
+nnoremap <leader>y "*y
+nnoremap <leader>Y "+Y
+nnoremap <leader>p "*p
+nnoremap <leader>P "+P
+" Easy motion
+nmap s <Plug>(easymotion-s2)
