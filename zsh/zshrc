@@ -155,6 +155,7 @@ fi
 # -- Go ------------------------------------------------------------------------
 # Add $GOTPATH/bin to the $PATH
 export GOPATH=$HOME/Code/go
+export GOBIN=$GOPATH/bin
 export PATH="$PATH:$GOPATH/bin"
 
 # -- Kubectl
