@@ -1,7 +1,7 @@
 let g:airline_section_x = '%{PencilMode()}'
 
 " Configure the Tabline
-let g:airline_statusline_ontop=1 " leave the bottom for other plugins
+
 let g:airline#extensions#tmuxline#enabled = 0
 let g:airline#extensions#neomake#enabled = 1
 let g:airline#extensions#tabline#enabled = 1
