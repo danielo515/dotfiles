@@ -21,3 +21,5 @@ function! ToggleNerdTree()
   set eventignore=
 endfunction
 nmap <C-n> :call ToggleNerdTree()<CR>
+let NERDTreeShowHidden=1 " show hidden by default
+
