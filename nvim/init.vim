@@ -112,7 +112,6 @@ Plug 'vim-scripts/matchit.zip'            " More powerful % matching
 Plug 'Lokaltog/vim-easymotion'            " Move like the wind!
 Plug 'jeffkreeftmeijer/vim-numbertoggle'  " Smarter line numbers
 Plug 'wellle/targets.vim'
-Plug 'kshenoy/vim-signature'
 Plug 'haya14busa/incsearch.vim'           " Better search highlighting
 
 " Editing {{{3
@@ -123,7 +122,6 @@ Plug 'dhruvasagar/vim-table-mode',        { 'on': 'TableModeEnable' }
 Plug 'kana/vim-textobj-user'
 Plug 'sgur/vim-textobj-parameter'
 Plug 'jasonlong/vim-textobj-css'
-Plug 'Konfekt/FastFold'
 Plug 'editorconfig/editorconfig-vim'
 
 " Git
@@ -188,7 +186,7 @@ Plug 'cespare/vim-toml'
 
 " Go {{{4
 Plug 'fatih/vim-go'
-Plug 'nsf/gocode',                        { 'rtp': 'nvim', 'do': './nvim/symlink.sh' }
+" Plug 'nsf/gocode',                        { 'rtp': 'nvim', 'do': './nvim/symlink.sh' }
 
 " Markdown {{{4
 Plug 'reedes/vim-pencil'                  " Markdown, Writing
@@ -230,7 +228,7 @@ syntax enable
 let $NVIM_TUI_ENABLE_TRUE_COLOR=1
 set termguicolors
 set background=dark
-colorscheme kolor
+colorscheme darkblue
 " Setup Terminal Colors For Neovim {{{
 if has('nvim')
   " dark0 + gray
@@ -277,63 +275,12 @@ endif
  let g:netrw_liststyle = 3 " Width tree
  let g:netrw_winsize = 15 " 15% of editor size
  let g:netrw_browse_split = 4 " Open file on existing window
- "  control p configs
-let g:ctrlp_custom_ignore = 'node_modules\|DS_Store\|git' " Ignore those folders
 " Terminal splitting
 " Javascript
 let g:javascript_plugin_jsdoc = 1
 set nofoldenable
 set scrolloff=50
+" Both required for intuitive search
 set ignorecase
 set smartcase
 
-" Section: Remaps {{{1
-" Disable arrow movement, resize splits instead.
-nnoremap <Up>    :resize +2<CR>
-nnoremap <Down>  :resize -2<CR>
-nnoremap <Left>  :vertical resize +2<CR>
-nnoremap <Right> :vertical resize -2<CR>
-
-" Tab Shortcuts
-nnoremap tk :tabfirst<CR>
-nnoremap tl :tabnext<CR>
-nnoremap th :tabprev<CR>
-nnoremap tj :tablast<CR>
-nnoremap tn :tabnew<CR>
-nnoremap tc :CtrlSpaceTabLabel<CR>
-nnoremap td :tabclose<CR>
-
-set completeopt-=preview
-
-nnoremap <leader>w :wa<CR>
-nnoremap <leader>ww :wq<CR>
-nmap <Tab> :bNext<CR>
-let g:ranger_map_keys = 0
-nnoremap <leader>j o<Esc>
-nnoremap <leader>k O<Esc>
-nnoremap <leader>ff :Ranger<CR>
-nmap <leader>ga :Git add . <CR>
-nnoremap <leader>gg :w<CR>:Git add .<CR>:Gcommit<CR>
-nnoremap <leader>gp :Gpush<CR>
-" Windows equal size
-nnoremap <leader>we <C-w>=
-" Plug install
-nnoremap <leader>pi :w<CR>:so $MYVIMRC<CR>:PlugInstall<CR>
-" Convert slashes to backslashes for Windows.
-if has('win32')
-  nmap ,cf :let @*=substitute(expand("%"), "/", "\\", "g")<CR>
-  nmap ,cp :let @*=substitute(expand("%:p"), "/", "\\", "g")<CR>
-" This will copy the path in 8.3 short format, for DOS and Windows 9x
-  nmap ,c8 :let @*=substitute(expand("%:p:8"), "/", "\\", "g")<CR>
-else
-  nmap ,cf :let @*=expand("%")<CR>
-  nmap ,cp :let @*=expand("%:p")<CR>
-endif
-" }}}2
-" faster clipboard copying/pastig
-nnoremap <leader>y "*y
-nnoremap <leader>Y "+Y
-nnoremap <leader>p "*p
-nnoremap <leader>P "+P
-" Easy motion
-nmap s <Plug>(easymotion-s2)
