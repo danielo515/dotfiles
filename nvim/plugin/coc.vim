@@ -47,6 +47,8 @@ nmap <F2> <Plug>(coc-rename)
 
 " Suggestions tab navigation
 inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
-inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+inoremap <expr> <C-j> pumvisible() ? "\<C-p>" : "\<C-j>"
 inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
-
+nnoremap <leader>di :CocList diagnostics<CR>
+set cmdheight=2 " Better display for messages
+let g:go_def_mapping_enabled = 0 " do not let vim-go use their own goto definition
