@@ -168,11 +168,10 @@ Plug 'hail2u/vim-css3-syntax',            { 'for': 'css' }
 " Sass {{{4
 Plug 'cakebaker/scss-syntax.vim'
 
-" Ruby {{{4
-" Plug 'vim-ruby/vim-ruby',                 { 'for': 'ruby' }
-" Plug 'tpope/vim-rails'
-" Plug 'tpope/vim-bundler'
-" Plug 'tpope/vim-endwise'
+" VIM
+Plug 'Shougo/neco-vim'
+Plug 'neoclide/coc-neco'
+
 
 " Python {{{4
 Plug 'klen/python-mode',                  { 'for': 'python' }
