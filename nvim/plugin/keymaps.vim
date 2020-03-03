@@ -3,6 +3,8 @@ let vimrc_path = expand('<sfile>:p:h')
 " source a vimrc file
 nnoremap <expr> <leader>so ":source " . vimrc_path
 nnoremap <leader>si :w<CR>:source %
+" edit vimrc stuff
+nnoremap <expr> <leader>ve ":e " . vimrc_path
 " Disable arrow movement, resize splits instead.
 nnoremap <Up>    :resize +2<CR>
 nnoremap <Down>  :resize -2<CR>
