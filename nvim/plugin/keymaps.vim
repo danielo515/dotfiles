@@ -28,9 +28,10 @@ nmap <Tab> :bnext<CR>
 nmap <c-j><c-j> :bprev<CR>
 let g:ranger_map_keys = 0
 
-" insert line behind below
+" insert line behind below and split line
 nnoremap <leader>j o<Esc>
 nnoremap <leader>k O<Esc>
+nnoremap <leader><CR> i<cr><esc>
 
 " Ranger file explorer
 nnoremap <leader>ff :Ranger<CR>
@@ -56,7 +57,9 @@ else
   nmap ,cf :let @*=expand("%")<CR>
   nmap ,cp :let @*=expand("%:p")<CR>
 endif
-
+"==================== Ide like mappings
+" Mirror of cmd+p
+nnoremap <c-q> :Commands<cr>
 " faster clipboard copying/pastig
 nnoremap <leader>y "*y
 nnoremap <leader>Y "+Y
@@ -67,5 +70,6 @@ nnoremap <leader>P "+P
 nmap s <Plug>(easymotion-s2)
 " buffer delete from fzf
 nnoremap <leader>bd :BD<cr>
+" ====================
 " json annotate for go
 nnoremap <leader>ja :normal ^yiwA `json:""<Esc>P<CR>
