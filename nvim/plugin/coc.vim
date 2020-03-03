@@ -44,11 +44,29 @@ function! SetupCommandAbbrs(from, to)
 " Use C to open coc config
 call SetupCommandAbbrs('C', 'CocConfig')
 nmap <F2> <Plug>(coc-rename)
-
-" Suggestions tab navigation
-inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
-inoremap <expr> <C-j> pumvisible() ? "\<C-p>" : "\<C-j>"
-inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
+nnoremap <leader>c :<C-u>CocList commands<cr>
 nnoremap <leader>di :CocList diagnostics<CR>
-set cmdheight=2 " Better display for messages
 let g:go_def_mapping_enabled = 0 " do not let vim-go use their own goto definition
+" Better display for messages
+set cmdheight=2
+" Smaller updatetime for CursorHold & CursorHoldI
+set updatetime=300
+" don't give |ins-completion-menu| messages.
+set shortmess+=c
+" always show signcolumns
+set signcolumn=yes
+
+" Use tab for trigger completion with characters ahead and navigate.
+" Use command ':verbose imap <tab>' to make sure tab is not mapped by other plugin.
+inoremap <silent><expr> <TAB>
+      \ pumvisible() ? "\<C-n>" :
+      \ <SID>check_back_space() ? "\<TAB>" :
+      \ coc#refresh()
+inoremap <expr><C-j> pumvisible() ? "\<C-p>" : "\<C-h>"
+inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
+
+function! s:check_back_space() abort
+  let col = col('.') - 1
+  return !col || getline('.')[col - 1]  =~# '\s'
+endfunction
+
