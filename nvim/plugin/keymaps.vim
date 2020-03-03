@@ -25,6 +25,7 @@ set completeopt-=preview
 nnoremap <leader>w :wa<CR>
 nnoremap <leader>ww :wq<CR>
 nmap <Tab> :bnext<CR>
+nmap <c-j><c-j> :bprev<CR>
 let g:ranger_map_keys = 0
 
 " insert line behind below
@@ -64,7 +65,7 @@ nnoremap <leader>P "+P
 " Easy motion
 " Sneak like
 nmap s <Plug>(easymotion-s2)
-" buffer delete
-nnoremap <leader>bd :bd<CR>
+" buffer delete from fzf
+nnoremap <leader>bd :BD<cr>
 " json annotate for go
 nnoremap <leader>ja :normal ^yiwA `json:""<Esc>P<CR>
