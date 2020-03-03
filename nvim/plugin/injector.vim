@@ -6,3 +6,4 @@ function! ComboRead(targetKey)
   echo "\nGenerated combo: \n" . @a
 endfunction
 
+command! -nargs=1 QmkCombo :call ComboRead(<args>)
