@@ -57,6 +57,20 @@ function! s:show_branches_fzf(bang)
 endfunction
 command! -bang -nargs=0 FzGCheckout call <SID>show_branches_fzf(<bang>0)
 " ====================
+" ==================== fzf for deleting buffers!
+function! Bufs()
+  redir => list
+  silent ls
+  redir END
+  return split(list, "\n")
+endfunction
+
+command! BD call fzf#run(fzf#wrap({
+  \ 'source': Bufs(),
+  \ 'sink*': { lines -> execute('bwipeout '.join(map(lines, {_, line -> split(line)[0]}))) },
+  \ 'options': '--multi --reverse --bind ctrl-a:select-all+accept'
+\ }))
+"=========================
 
 
 " limit the ag search to provided dir with auto completion
