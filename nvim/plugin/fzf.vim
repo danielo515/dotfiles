@@ -42,20 +42,22 @@ let g:fzf_colors = {
 "========== use fzf to checkout branches!
 " Stolen from https://github.com/stsewd/dotfiles/blob/7a9a8972c8a994abf42d87814980dc92cdce9a22/config/nvim/init.vim#L419-L434
 function! s:open_branch_fzf(line)
-  let l:branch = a:line
-  execute 'split | terminal git checkout ' . l:branch
-  call feedkeys('i', 'n')
+  let l:parser = split(a:line)
+  let l:branch = l:parser[0]
+  if l:branch ==? '*'
+    let l:branch = l:parser[1]
+  endif
+  execute '!git checkout ' . l:branch
 endfunction
-
-function! s:show_branches_fzf(bang)
-  let l:current = system('git symbolic-ref --short HEAD')
-  let l:current = substitute(l:current, '\n', '', 'g')
-  let l:current_scaped = substitute(l:current, '/', '\\/', 'g')
-  call fzf#vim#grep(
-    \ "git branch -r --no-color | sed -r -e 's/^[^/]*\\///' -e '/^" . l:current_scaped . "$/d' -e '/^HEAD/d' | sort -u", 0,
-    \ { 'sink': function('s:open_branch_fzf'), 'options': ['--no-multi', '--header='.l:current] }, a:bang)
-endfunction
-command! -bang -nargs=0 FzGCheckout call <SID>show_branches_fzf(<bang>0)
+" Command
+command! -bang -nargs=0 GCheckout
+  \ call fzf#vim#grep(
+  \   'git branch -v', 0,
+  \   {
+  \     'sink': function('s:open_branch_fzf')
+  \   },
+  \   <bang>0
+  \ )
 " ====================
 " ==================== fzf for deleting buffers!
 function! Bufs()
