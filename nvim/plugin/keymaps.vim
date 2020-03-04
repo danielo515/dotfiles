@@ -40,7 +40,9 @@ nnoremap <leader>ff :Ranger<CR>
 nnoremap <leader>ga :Git add . <CR>
 nnoremap <leader>gg :w<CR>:Git add .<CR>:Gcommit<CR>
 nnoremap <leader>gp :Gpush<CR>
-nnoremap <leader>gs :tabnew<CR>:leftabove Git<CR>
+nnoremap <Leader>gs :tabnew<bar>leftabove vertical Gstatus<CR>
+nnoremap <leader>xs :tab Gstatus<bar>botright vsplit<CR>
+nnoremap <leader>gc :GCheckout<CR>
 
 " Windows equal size
 nnoremap <leader>we <C-w>=
