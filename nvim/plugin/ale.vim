@@ -7,8 +7,6 @@ let g:ale_fixers = {
 \   'javascript': ['eslint']
 \}
 
-nmap <leader>d <Plug>(ale_fix)
-
 " Use a slightly slimmer error pointer
 let g:ale_sign_error = '✖'
 hi ALEErrorSign guifg=#DF8C8C
