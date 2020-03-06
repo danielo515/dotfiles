@@ -17,12 +17,16 @@ let g:coc_global_extensions = ['coc-tsserver',
                               \'coc-github',
                               \'coc-snippets',
                               \'coc-prettier',
-                              \ 'coc-html',
+                              \'coc-html',
+                              \'coc-flow',
                               \'https://github.com/xabikos/vscode-javascript',
                               \'https://github.com/danielo515/vscode-node-snippets',
                               \'https://github.com/andys8/vscode-jest-snippets',
                               \'https://github.com/dsznajder/vscode-es7-javascript-react-snippets',
                               \]
+
+" Highlight symbol under cursor on CursorHold
+autocmd CursorHold * silent call CocActionAsync('highlight')
 
 nmap gd <Plug>(coc-definition)
 nmap gy <Plug>(coc-type-definition)
@@ -46,7 +50,7 @@ function! SetupCommandAbbrs(from, to)
 call SetupCommandAbbrs('C', 'CocConfig')
 nmap <F2> <Plug>(coc-rename)
 nnoremap <leader>c :<C-u>CocList commands<cr>
-nnoremap <leader>di :CocList diagnostics<CR>
+nnoremap <leader>di :CocFzfListDiagnostics<CR>
 let g:go_def_mapping_enabled = 0 " do not let vim-go use their own goto definition
 " Better display for messages
 set cmdheight=2
@@ -70,4 +74,16 @@ function! s:check_back_space() abort
   let col = col('.') - 1
   return !col || getline('.')[col - 1]  =~# '\s'
 endfunction
-
+" Coc actions
+" Remap for do codeAction of selected region
+function! s:cocActionsOpenFromSelected(type) abort
+  execute 'CocCommand actions.open ' . a:type
+endfunction
+xmap <silent> <leader>a :<C-u>execute 'CocCommand actions.open ' . visualmode()<CR>
+nmap <silent> <leader>a :<C-u>set operatorfunc=<SID>cocActionsOpenFromSelected<CR>g@
+" Remap for do codeAction of current line
+nmap <leader>ac  <Plug>(coc-codeaction)
+" Use `:Format` to format current buffer
+command! -nargs=0 Format :call CocAction('format')
+" Use `:Fold` to fold current buffer
+command! -nargs=? Fold :call     CocAction('fold', <f-args>)
