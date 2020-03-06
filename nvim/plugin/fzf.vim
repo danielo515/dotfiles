@@ -80,5 +80,8 @@ function! s:ag_in(...)
     call fzf#vim#ag(join(a:000[1:], ' '), extend({'dir': a:1}, g:fzf_layout))
   endfunction
 
+"Search in a directory
 command! -nargs=+ -complete=dir AgIn call s:ag_in(<f-args>)
+"Search on the current directory
+command! -nargs=+ AgDir call s:ag_in(expand("%:p:h"),<f-args>)
 
