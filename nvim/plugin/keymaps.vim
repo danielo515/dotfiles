@@ -34,7 +34,7 @@ nnoremap <leader>k O<Esc>
 nnoremap <leader><CR> i<cr><esc>
 
 " Ranger file explorer
-nnoremap <leader>ff :Ranger<CR>
+nnoremap <leader>rr :Ranger<CR>
 
 " Git related
 nnoremap <leader>ga :Git add . <CR>
