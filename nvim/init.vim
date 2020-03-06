@@ -121,7 +121,7 @@ Plug 'tpope/vim-repeat'
 Plug 'dhruvasagar/vim-table-mode',        { 'on': 'TableModeEnable' }
 Plug 'kana/vim-textobj-user'
 Plug 'sgur/vim-textobj-parameter'
-Plug 'jasonlong/vim-textobj-css'
+Plug 'rhysd/vim-textobj-anyblock'
 Plug 'editorconfig/editorconfig-vim'
 
 " Git
