@@ -19,21 +19,22 @@ nnoremap tj :tablast<CR>
 nnoremap tn :tabnew<CR>
 nnoremap tc :CtrlSpaceTabLabel<CR>
 nnoremap td :tabclose<CR>
-
+nnoremap bd :bd<CR>
 set completeopt-=preview
 
 nnoremap <leader>w :wa<CR>
 nnoremap <leader>ww :wq<CR>
 nmap <Tab> :bnext<CR>
 nmap <c-j><c-j> :bprev<CR>
-let g:ranger_map_keys = 0
 
 " insert line behind below and split line
 nnoremap <leader>j o<Esc>
 nnoremap <leader>k O<Esc>
+"split at cursor position
 nnoremap <leader><CR> i<cr><esc>
 
 " Ranger file explorer
+let g:ranger_map_keys = 0
 nnoremap <leader>rr :Ranger<CR>
 
 " Git related
