@@ -25,8 +25,6 @@ let g:coc_global_extensions = ['coc-tsserver',
                               \'https://github.com/dsznajder/vscode-es7-javascript-react-snippets',
                               \]
 
-" Highlight symbol under cursor on CursorHold
-autocmd CursorHold * silent call CocActionAsync('highlight')
 
 nmap gd <Plug>(coc-definition)
 nmap gy <Plug>(coc-type-definition)
@@ -40,6 +38,11 @@ nmap <leader>fx <Plug>(coc-fix-current)
 vmap <leader>f  <Plug>(coc-format-selected)
 nnoremap <leader>f :CocCommand prettier.formatFile<CR>
 
+nmap <F2> <Plug>(coc-rename)
+nnoremap <leader>c :<C-u>CocList commands<cr>
+nnoremap <leader>di :CocFzfListDiagnostics<CR>
+let g:go_def_mapping_enabled = 0 " do not let vim-go use their own goto definition
+" ========================= Not my customizations
 function! SetupCommandAbbrs(from, to)
     exec 'cnoreabbrev <expr> '.a:from
             \ .' ((getcmdtype() ==# ":" && getcmdline() ==# "'.a:from.'")'
@@ -48,10 +51,6 @@ function! SetupCommandAbbrs(from, to)
 
 " Use C to open coc config
 call SetupCommandAbbrs('C', 'CocConfig')
-nmap <F2> <Plug>(coc-rename)
-nnoremap <leader>c :<C-u>CocList commands<cr>
-nnoremap <leader>di :CocFzfListDiagnostics<CR>
-let g:go_def_mapping_enabled = 0 " do not let vim-go use their own goto definition
 " Better display for messages
 set cmdheight=2
 " Smaller updatetime for CursorHold & CursorHoldI
@@ -87,3 +86,17 @@ nmap <leader>ac  <Plug>(coc-codeaction)
 command! -nargs=0 Format :call CocAction('format')
 " Use `:Fold` to fold current buffer
 command! -nargs=? Fold :call     CocAction('fold', <f-args>)
+
+" Use K for show documentation in preview window
+nnoremap <silent> K :call <SID>show_documentation()<CR>
+
+function! s:show_documentation()
+  if &filetype == 'vim'
+    execute 'h '.expand('<cword>')
+  else
+    call CocAction('doHover')
+  endif
+endfunction
+
+" Highlight symbol under cursor on CursorHold
+autocmd CursorHold * silent call CocActionAsync('highlight')
