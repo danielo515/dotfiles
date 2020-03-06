@@ -21,11 +21,12 @@ alias lsh='ls -lhXG'
 alias g='git status'
 alias ga='git add --all'
 alias gb='git branch'
+alias gc='git checkout'
 alias gcm='git commit -m '
 alias gac='ga && gcm'
 alias push='git push'
 alias pushu='git push -u origin HEAD'
-alias gundo='git reset HEAD~1'
+alias gundo='git reset --soft HEAD~1'
 #----- Other stuff
 alias bashrc='vi ~/.bashrc && refresh'
 alias lgrep=' ls -la | grep'
@@ -46,7 +47,7 @@ port_used(){
 alias pport='port_used'
 # ---- STUPID
 alias oraculo='node bin/oraculo.js'
-# ---- Aula
+# ---- WORK related
 create_component (){
     mkdir $1 && cd $1
     touch index.js
@@ -60,6 +61,7 @@ create_component (){
     " > $1.styled.js
     cd -
 }
+alias pentodir='cd ~/mega/trabajo/GIT/pento/Pento'
 # ---- QMK
 checkout-danielo-ergodox(){
     read -r DANIELO_BRANCH

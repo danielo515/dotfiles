@@ -73,8 +73,6 @@ fi
 
 alias reload='source $DOTFILES/zsh/zshrc'
 
-if exists "hub"; then alias git=hub; fi
-
 export PATH="$PATH:/opt/vagrant/bin"
 export PATH="/usr/local/sbin:$HOME/bin:$PATH"
 
