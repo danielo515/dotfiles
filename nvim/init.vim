@@ -96,7 +96,7 @@ Plug 'ryanoasis/vim-webdevicons'
 Plug 'mklabs/split-term.vim'
 Plug 'mhinz/vim-startify'
 Plug 'ryanoasis/vim-devicons'
-Plug 'tyru/open-browser'
+Plug 'tyru/open-browser.vim'
 
 " Project Navigation {{{3
 Plug 'scrooloose/nerdtree'
