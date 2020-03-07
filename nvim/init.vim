@@ -95,7 +95,8 @@ Plug 'edkolev/tmuxline.vim'               " Make the Tmux bar match Vim
 Plug 'ryanoasis/vim-webdevicons'
 Plug 'mklabs/split-term.vim'
 Plug 'mhinz/vim-startify'
-
+Plug 'ryanoasis/vim-devicons'
+Plug 'tyru/open-browser'
 
 " Project Navigation {{{3
 Plug 'scrooloose/nerdtree'
