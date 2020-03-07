@@ -94,6 +94,8 @@ Plug 'retorillo/airline-tablemode.vim'
 Plug 'edkolev/tmuxline.vim'               " Make the Tmux bar match Vim
 Plug 'ryanoasis/vim-webdevicons'
 Plug 'mklabs/split-term.vim'
+Plug 'mhinz/vim-startify'
+
 
 " Project Navigation {{{3
 Plug 'scrooloose/nerdtree'
@@ -227,7 +229,7 @@ syntax enable
 let $NVIM_TUI_ENABLE_TRUE_COLOR=1
 set termguicolors
 set background=dark
-colorscheme darkblue
+colorscheme codeschool
 " Setup Terminal Colors For Neovim {{{
 if has('nvim')
   " dark0 + gray
