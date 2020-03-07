@@ -22,7 +22,7 @@ set shiftwidth=2
 set shiftround
 set expandtab
 set scrolloff=3
-set list listchars=tab:»·,trail:·  " Display extra whitespace characters
+set list listchars=tab:Â»Â·,trail:Â·  " Display extra whitespace characters
 set hidden
 set inccommand=nosplit
 
@@ -126,6 +126,9 @@ Plug 'kana/vim-textobj-user'
 Plug 'sgur/vim-textobj-parameter'
 Plug 'rhysd/vim-textobj-anyblock'
 Plug 'editorconfig/editorconfig-vim'
+" On-demand lazy load
+Plug 'liuchengxu/vim-which-key', { 'on': ['WhichKey', 'WhichKey!'] }
+
 
 " Git
 Plug 'tpope/vim-fugitive'                 " Git stuff in Vim
