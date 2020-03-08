@@ -1,7 +1,7 @@
 " Section: Remaps {{{1
-let vimrc_path = expand('<sfile>:p:h')
+let s:vimrc_path = expand('<sfile>:p:h')
 " source a vimrc file
-nnoremap <expr> <leader>so ":source " . vimrc_path
+nnoremap <expr> <leader>so ":source " . <SID>vimrc_path
 nnoremap <leader>si :w<CR>:source %
 " edit vimrc stuff
 nnoremap <expr> <leader>ve ":e " . vimrc_path
