@@ -22,7 +22,7 @@ set shiftwidth=2
 set shiftround
 set expandtab
 set scrolloff=3
-set list listchars=tab:Â»Â·,trail:Â·  " Display extra whitespace characters
+set list listchars=tab:»·,trail:·  " Display extra whitespace characters
 set hidden
 set inccommand=nosplit
 
@@ -107,7 +107,7 @@ Plug 'mhinz/vim-grepper'
 Plug 'vim-scripts/ctags.vim'              " ctags related stuff
 Plug 'majutsushi/tagbar'
 Plug 'rbgrouleff/bclose.vim'              " Required by ranger.vim
-Plug 'francoiscabrol/ranger.vim'
+" Plug 'francoiscabrol/ranger.vim'
 Plug 'antoinemadec/coc-fzf'
 
 " File Navigation {{{3
@@ -129,13 +129,25 @@ Plug 'editorconfig/editorconfig-vim'
 " On-demand lazy load
 Plug 'liuchengxu/vim-which-key', { 'on': ['WhichKey', 'WhichKey!'] }
 
+" Denite!
+" Don't forget to install
+" pip3 install --user pynvim
+" pip3 install neovim
+if has('nvim')
+  Plug 'Shougo/denite.nvim', { 'do': ':UpdateRemotePlugins' }
+else
+  Plug 'Shougo/denite.nvim'
+  Plug 'roxma/nvim-yarp'
+  Plug 'roxma/vim-hug-neovim-rpc'
+endif
+Plug 'chemzqm/denite-extra'
 
 " Git
 Plug 'tpope/vim-fugitive'                 " Git stuff in Vim
 Plug 'airblade/vim-gitgutter'
 Plug 'junegunn/gv.vim',                   { 'on': 'GV' }
 Plug 'jez/vim-github-hub'
-Plug 'rhysd/committia.vim'
+Plug 'rhysd/committia.vim' " good layout when you open vim as commit editor
 Plug 'APZelos/blamer.nvim'
 " Blame on vim startup
 let g:blamer_enabled = 1

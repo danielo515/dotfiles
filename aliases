@@ -70,3 +70,5 @@ checkout-danielo-ergodox(){
     git checkout $DANIELO_BRANCH keyboards/ergodox_ez/keymaps/danielo515
 }
 alias docker-ps='docker ps --format "{{.Image}} \t\t {{.Names}}"'
+alias spacevim=vim -u ~/.space-vim/init.vim
+alias spacevim='vim -u ~/.space-vim/init.vim'
