@@ -12,12 +12,12 @@ nnoremap <silent> <Leader>. :Files <C-r>=expand("%:h")<CR>/<CR>
 nnoremap <silent> <Leader>, :Files <C-r>=expand("%:h:h")<CR>/<CR>
 nnoremap <silent> <leader>b :Buffers<CR>
 " search on changed files
-nnoremap <silent> <Leader>g :GFiles?<CR>
 nnoremap <silent> <Leader>h :History<CR>
 nnoremap <silent> <Leader>pp :Commands<CR>
 nnoremap <silent> <Leader>l :Lines<CR>
-" Show fuzzy search on a popup
+" Show fzf on a popup
 if has('nvim-0.4.0') || has("patch-8.2.0191")
+    let $FZF_DEFAULT_OPTS = '--layout=reverse'
     let g:fzf_layout = { 'window': {
                 \ 'width': 0.9,
                 \ 'height': 0.7,
