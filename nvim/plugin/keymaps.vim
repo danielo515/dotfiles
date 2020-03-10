@@ -34,7 +34,7 @@ nmap <c-j><c-j> :bprev<CR>
 nnoremap zj o<Esc>
 nnoremap zk O<Esc>
 "split at cursor position
-nnoremap <leader><CR> i<cr><esc>
+nnoremap zi i<cr><esc>
 
 " Ranger file explorer
 let g:ranger_map_keys = 0
