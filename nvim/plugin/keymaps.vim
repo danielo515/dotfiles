@@ -31,8 +31,8 @@ nmap <Tab> :bnext<CR>
 nmap <c-j><c-j> :bprev<CR>
 
 " insert line behind below and split line
-nnoremap <leader>j o<Esc>
-nnoremap <leader>k O<Esc>
+nnoremap zj o<Esc>
+nnoremap zk O<Esc>
 "split at cursor position
 nnoremap <leader><CR> i<cr><esc>
 
@@ -45,7 +45,6 @@ nnoremap <leader>ga :Git add . <CR>
 nnoremap <leader>gg :w<CR>:Git add .<CR>:Gcommit<CR>
 nnoremap <leader>gp :Gpush<CR>
 nnoremap <Leader>gs :tabnew<bar>leftabove vertical Gstatus<CR>
-nnoremap <leader>xs :tab Gstatus<bar>botright vsplit<CR>
 nnoremap <leader>gc :GCheckout<CR>
 
 " Windows equal size
