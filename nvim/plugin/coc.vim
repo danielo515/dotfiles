@@ -19,6 +19,7 @@ let g:coc_global_extensions = ['coc-tsserver',
                               \'coc-prettier',
                               \'coc-html',
                               \'coc-flow',
+                              \'coc-vimlsp',
                               \'https://github.com/xabikos/vscode-javascript',
                               \'https://github.com/danielo515/vscode-node-snippets',
                               \'https://github.com/andys8/vscode-jest-snippets',
@@ -36,7 +37,7 @@ nmap ]e <Plug>(coc-diagnostic-next-error)
 
 nmap <leader>fx <Plug>(coc-fix-current)
 vmap <leader>f  <Plug>(coc-format-selected)
-nnoremap <leader>f :CocCommand prettier.formatFile<CR>
+nnoremap <leader>ff :CocCommand prettier.formatFile<CR>
 
 nmap <F2> <Plug>(coc-rename)
 nnoremap <leader>c :<C-u>CocList commands<cr>
