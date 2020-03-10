@@ -96,19 +96,18 @@ Plug 'ryanoasis/vim-webdevicons'
 Plug 'mklabs/split-term.vim'
 Plug 'mhinz/vim-startify'
 Plug 'ryanoasis/vim-devicons'
-Plug 'tyru/open-browser.vim'
+Plug 'liuchengxu/space-vim-dark'
 
 " Project Navigation {{{3
 Plug 'scrooloose/nerdtree'
+Plug 'tyru/open-browser.vim'
 Plug 'Xuyuanp/nerdtree-git-plugin', { 'on': 'NERDTreeToggle' }
 Plug 'junegunn/fzf',                      { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
-Plug 'mhinz/vim-grepper'
-Plug 'vim-scripts/ctags.vim'              " ctags related stuff
-Plug 'majutsushi/tagbar'
+Plug 'antoinemadec/coc-fzf'
 Plug 'rbgrouleff/bclose.vim'              " Required by ranger.vim
 " Plug 'francoiscabrol/ranger.vim'
-Plug 'antoinemadec/coc-fzf'
+" let g:ranger_replace_netrw = 1 " open ranger when vim open a directory
 
 " File Navigation {{{3
 Plug 'vim-scripts/matchit.zip'            " More powerful % matching
@@ -149,8 +148,7 @@ Plug 'junegunn/gv.vim',                   { 'on': 'GV' }
 Plug 'jez/vim-github-hub'
 Plug 'rhysd/committia.vim' " good layout when you open vim as commit editor
 Plug 'APZelos/blamer.nvim'
-" Blame on vim startup
-let g:blamer_enabled = 1
+let g:blamer_enabled = 1 " Blame on vim startup
 " Task Running
 Plug 'tpope/vim-dispatch'                 " Run tasks asychronously in Tmux
 Plug 'w0rp/ale'                           " Linter
@@ -212,9 +210,6 @@ Plug 'plasticboy/vim-markdown',           { 'for': 'markdown' }
 " Docker
 Plug 'ekalinin/dockerfile.vim'
 Plug 'jparise/vim-graphql'
-" Elixir {{{4
-"Plug 'elixir-editors/vim-elixir'
-"Plug 'slashmili/alchemist.vim'
 
 call plug#end()
 " Load plugin configurations {{{2
@@ -234,8 +229,6 @@ let g:user_emmet_settings = {
       \}
 " }}}3
 
-" ranger.vim {{{3
-let g:ranger_replace_netrw = 1 " open ranger when vim open a directory
 
 " }}}2
 " }}}1
@@ -290,7 +283,7 @@ endif
 " DANIELO customizations
 " Built in tree file configuration
  let g:netrw_liststyle = 3 " Width tree
- let g:netrw_winsize = 15 " 15% of editor size
+ let g:netrw_winsize = 17 " 15% of editor size
  let g:netrw_browse_split = 4 " Open file on existing window
 " Terminal splitting
 " Javascript
