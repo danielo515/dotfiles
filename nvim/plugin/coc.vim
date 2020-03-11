@@ -42,8 +42,8 @@ nnoremap <leader>ff :CocCommand prettier.formatFile<CR>
 nmap <F2> <Plug>(coc-rename)
 nnoremap <leader>c :<C-u>CocFzfList<cr>
 " Diagnostics for the currnt file and the whole repo
-nnoremap <leader>di :CocFzfList diagnostics --current-buf
-nnoremap <leader>dia :CocFzfList diagnostics
+nnoremap <leader>di :CocFzfList diagnostics --current-buf<CR>
+nnoremap <leader>dia :CocFzfList diagnostics<CR>
 let g:go_def_mapping_enabled = 0 " do not let vim-go use their own goto definition
 " ========================= Not my customizations
 function! SetupCommandAbbrs(from, to)
