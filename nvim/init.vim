@@ -1,6 +1,5 @@
 " Section: General Config {{{1
 " ----------------------------
-let mapleader = " "
 let &runtimepath .= "," . $DOTFILES . "/nvim"  " Add DOTFILES to runtimepath
 let &packpath .= "," . $DOTFILES . "/nvim"
 
@@ -200,7 +199,7 @@ Plug 'wting/rust.vim'
 Plug 'cespare/vim-toml'
 
 " Go {{{4
-Plug 'fatih/vim-go'
+" Plug 'fatih/vim-go'
 " Plug 'nsf/gocode',                        { 'rtp': 'nvim', 'do': './nvim/symlink.sh' }
 
 " Markdown {{{4

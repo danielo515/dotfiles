@@ -1,4 +1,5 @@
 " Section: Remaps {{{1
+let mapleader = " "
 let s:vimrc_path = expand('<sfile>:p:h')
 function! s:get_vimrc_path()
       return s:vimrc_path
@@ -22,7 +23,6 @@ nnoremap tj :tablast<CR>
 nnoremap tn :tabnew<CR>
 nnoremap tc :CtrlSpaceTabLabel<CR>
 nnoremap td :tabclose<CR>
-nnoremap bd :bd<CR>
 set completeopt-=preview
 
 nnoremap <leader>w :wa<CR>
@@ -54,13 +54,13 @@ nnoremap <leader>we <C-w>=
 nnoremap <leader>pi :w<CR>:so $MYVIMRC<CR>:PlugInstall<CR>
 " Convert slashes to backslashes for Windows.
 if has('win32')
-  nmap ,cf :let @*=substitute(expand("%"), "/", "\\", "g")<CR>
-  nmap ,cp :let @*=substitute(expand("%:p"), "/", "\\", "g")<CR>
+  nmap <leader>fcf :let @*=substitute(expand("%"), "/", "\\", "g")<CR>
+  nmap <leader>fcp :let @*=substitute(expand("%:p"), "/", "\\", "g")<CR>
 " This will copy the path in 8.3 short format, for DOS and Windows 9x
-  nmap ,c8 :let @*=substitute(expand("%:p:8"), "/", "\\", "g")<CR>
+  nmap <leader>fc8 :let @*=substitute(expand("%:p:8"), "/", "\\", "g")<CR>
 else
-  nmap ,cf :let @*=expand("%")<CR>
-  nmap ,cp :let @*=expand("%:p")<CR>
+  nmap <leader>fcf :let @*=expand("%")<CR>
+  nmap <leader>fcp :let @*=expand("%:p")<CR>
 endif
 "==================== Ide like mappings
 " Mirror of cmd+p
