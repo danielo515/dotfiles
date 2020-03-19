@@ -22,4 +22,4 @@ function! ToggleNerdTree()
 endfunction
 nmap <C-n> :call ToggleNerdTree()<CR>
 let NERDTreeShowHidden=1 " show hidden by default
-
+let NERDTreeWinSize=40
