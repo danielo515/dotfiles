@@ -18,9 +18,16 @@ let g:which_key_map =  {}
 
 " =======================================================
 " Create menus based on existing mappings
+" Mappings are defined on the keymaps.vim file
 " =======================================================
 " You can pass a descriptive text to an existing mapping.
 
+let g:which_key_map.g = { 'name' : '+git' }
+let g:which_key_map.g.a = 'git add all'
+let g:which_key_map.g.g = 'git add all and commit'
+let g:which_key_map.g.p = 'git push'
+let g:which_key_map.g.s = 'git status'
+let g:which_key_map.g.c = 'git gheckout with fzf'
 let g:which_key_map.f = { 'name' : '+file' }
 
 nnoremap <silent> <leader>fs :update<CR>
