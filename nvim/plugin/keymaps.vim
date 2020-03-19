@@ -1,5 +1,4 @@
 " Section: Remaps {{{1
-let mapleader = " "
 let s:vimrc_path = expand('<sfile>:p:h')
 function! s:get_vimrc_path()
       return s:vimrc_path

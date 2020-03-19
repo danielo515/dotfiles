@@ -1,5 +1,7 @@
 " Section: General Config {{{1
 " ----------------------------
+"  leader mapping needs to be the very first thing
+let mapleader = " "
 let &runtimepath .= "," . $DOTFILES . "/nvim"  " Add DOTFILES to runtimepath
 let &packpath .= "," . $DOTFILES . "/nvim"
 
