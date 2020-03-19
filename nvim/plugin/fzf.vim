@@ -5,12 +5,15 @@ omap <leader><tab> <plug>(fzf-maps-o)
 inoremap <expr> <c-x><c-k> fzf#vim#complete#word({'left': '15%'})
 imap <c-x><c-f> <plug>(fzf-complete-path)
 imap <c-x><c-j> <plug>(fzf-complete-file-ag)
+" Search and search in local dir
 nmap <c-f> :Ag<Space>
+nmap <c-f><c-f> :AgDir<Space>
 nmap <leader>o     :Files<cr>
 " sibling files search
 nnoremap <silent> <Leader>. :Files <C-r>=expand("%:h")<CR>/<CR>
 nnoremap <silent> <Leader>, :Files <C-r>=expand("%:h:h")<CR>/<CR>
-nnoremap <silent> <leader>b :Buffers<CR>
+nnoremap <silent> <leader>bb :Buffers<CR>
+nnoremap <silent> <c-b> :Buffers<CR>
 " search on changed files
 nnoremap <silent> <Leader>h :History<CR>
 nnoremap <silent> <Leader>pp :Commands<CR>
