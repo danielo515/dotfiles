@@ -7,7 +7,7 @@ endfunction
 nnoremap <expr> <leader>so ":source " . <SID>get_vimrc_path()
 nnoremap <leader>si :w<CR>:source %
 " edit vimrc stuff
-nnoremap <expr> <leader>ve ":e " . <SID>get_vimrc_path()
+nnoremap <expr> <leader>fp ":e " . <SID>get_vimrc_path()
 " Disable arrow movement, resize splits instead.
 nnoremap <Up>    :resize +2<CR>
 nnoremap <Down>  :resize -2<CR>
@@ -25,7 +25,6 @@ nnoremap td :tabclose<CR>
 set completeopt-=preview
 
 nnoremap <leader>w :wa<CR>
-nnoremap <leader>ww :wq<CR>
 nmap <Tab> :bnext<CR>
 nmap <c-j><c-j> :bprev<CR>
 
