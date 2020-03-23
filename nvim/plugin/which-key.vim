@@ -39,3 +39,5 @@ let g:which_key_map.f.d = 'open-vimrc'
 let g:which_key_map.f.c = {'name': '+copy'}
 let g:which_key_map.f.c.f = 'copy relative path'
 let g:which_key_map.f.c.p = 'copy full path'
+let g:which_key_map.f.p = 'edit vimrc plugin'
+let g:which_key_map.w.e = 'equal windows'
