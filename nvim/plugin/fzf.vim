@@ -29,6 +29,9 @@ if has('nvim-0.4.0') || has("patch-8.2.0191")
 else
     let g:fzf_layout = { "window": "silent botright 16split enew" }
 endif
+" files window with preview
+command! -bang -nargs=? -complete=dir Files
+        \ call fzf#vim#files(<q-args>, fzf#vim#with_preview(), <bang>0)
 
 " Custom colors to match theme
 let g:fzf_colors = {
@@ -41,7 +44,6 @@ let g:fzf_colors = {
 \   'prompt':  ['fg', 'Normal'],
 \   'marker':  ['fg', 'MatchParen']
 \ }
-
 "========== use fzf to checkout branches!
 " Stolen from https://github.com/stsewd/dotfiles/blob/7a9a8972c8a994abf42d87814980dc92cdce9a22/config/nvim/init.vim#L419-L434
 function! s:open_branch_fzf(line)
@@ -76,7 +78,6 @@ command! BD call fzf#run(fzf#wrap({
   \ 'options': '--multi --reverse --bind ctrl-a:select-all+accept'
 \ }))
 "=========================
-
 
 " limit the ag search to provided dir with auto completion
 function! s:ag_in(...)
