@@ -25,7 +25,7 @@ nnoremap td :tabclose<CR>
 set completeopt-=preview
 
 nnoremap <leader>w :wa<CR>
-nmap <Tab> :bnext<CR>
+nmap <Tab> <C-^>
 nmap <c-j><c-j> :bprev<CR>
 
 " insert line behind below and split line
@@ -71,6 +71,9 @@ nnoremap <leader>P "+P
 " Easy motion
 " Sneak like
 nmap s <Plug>(easymotion-s2)
+nmap mw <Plug>(easymotion-bd-w)
+nmap me <Plug>(easymotion-bd-e)
+nmap ml <Plug>(easymotion-bd-jk)
 " buffer delete from fzf
 nnoremap <leader>bd :BD<cr>
 " ====================
