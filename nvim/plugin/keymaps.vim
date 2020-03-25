@@ -40,7 +40,8 @@ nnoremap <leader>rr :Ranger<CR>
 
 " Git related
 nnoremap <leader>ga :Git add . <CR>
-nnoremap <leader>gg :w<CR>:Git add .<CR>:Gcommit<CR>
+nnoremap <silent> <leader>gg :Gcommit %<CR>
+nnoremap <silent> <leader>gaf :Git add %<bar>Git commit --amend<CR>
 nnoremap <leader>gp :Gpush<CR>
 nnoremap <Leader>gs :tabnew<bar>leftabove vertical Gstatus<CR>
 nnoremap <leader>gc :GCheckout<CR>
@@ -76,6 +77,5 @@ nmap me <Plug>(easymotion-bd-e)
 nmap ml <Plug>(easymotion-bd-jk)
 " buffer delete from fzf
 nnoremap <leader>bd :BD<cr>
-" ====================
-" json annotate for go
-nnoremap <leader>ja :normal ^yiwA `json:""<Esc>P<CR>
+
+nnoremap <leader>ju :FzfPreviewJumps<cr>

@@ -24,7 +24,7 @@ let g:which_key_map =  {}
 
 let g:which_key_map.g = { 'name' : '+git' }
 let g:which_key_map.g.a = 'git add all'
-let g:which_key_map.g.g = 'git add all and commit'
+let g:which_key_map.g.g = 'git commit current file'
 let g:which_key_map.g.p = 'git push'
 let g:which_key_map.g.s = 'git status'
 let g:which_key_map.g.c = 'git gheckout with fzf'
@@ -39,5 +39,5 @@ let g:which_key_map.f.d = 'open-vimrc'
 let g:which_key_map.f.c = {'name': '+copy'}
 let g:which_key_map.f.c.f = 'copy relative path'
 let g:which_key_map.f.c.p = 'copy full path'
-let g:which_key_map.f.p = 'edit vimrc plugin'
-let g:which_key_map.w.e = 'equal windows'
+let g:which_key_map.f.v = 'edit vimrc plugin'
+" let g:which_key_map.w.e = 'equal windows'
