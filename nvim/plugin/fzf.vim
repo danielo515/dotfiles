@@ -12,7 +12,7 @@ nmap <leader>o     :Files<cr>
 " sibling files search
 nnoremap <silent> <Leader>. :Files <C-r>=expand("%:h")<CR>/<CR>
 nnoremap <silent> <Leader>, :Files <C-r>=expand("%:h:h")<CR>/<CR>
-nnoremap <silent> <leader>b :Buffers<CR>
+nnoremap <silent> <leader>b :FzfPreviewBuffers<CR>
 nnoremap <silent> <c-b> :Buffers<CR>
 " search on changed files
 nnoremap <silent> <Leader>h :History<CR>
@@ -75,7 +75,7 @@ endfunction
 command! BD call fzf#run(fzf#wrap({
   \ 'source': Bufs(),
   \ 'sink*': { lines -> execute('bwipeout '.join(map(lines, {_, line -> split(line)[0]}))) },
-  \ 'options': '--multi --reverse --bind ctrl-a:select-all+accept'
+  \ 'options': '--multi --bind ctrl-a:select-all+accept'
 \ }))
 "=========================
 
