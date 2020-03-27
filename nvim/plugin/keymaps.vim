@@ -7,7 +7,7 @@ endfunction
 nnoremap <expr> <leader>so ":source " . <SID>get_vimrc_path()
 nnoremap <leader>si :w<CR>:source %
 " edit vimrc stuff
-nnoremap <expr> <leader>fp ":e " . <SID>get_vimrc_path()
+nnoremap <expr> <leader>fv ":e " . <SID>get_vimrc_path()
 " Disable arrow movement, resize splits instead.
 nnoremap <Up>    :resize +2<CR>
 nnoremap <Down>  :resize -2<CR>

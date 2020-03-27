@@ -28,6 +28,7 @@ let g:which_key_map.g.g = 'git commit current file'
 let g:which_key_map.g.p = 'git push'
 let g:which_key_map.g.s = 'git status'
 let g:which_key_map.g.c = 'git gheckout with fzf'
+let g:which_key_map.g.af = 'git ammend current file'
 let g:which_key_map.f = { 'name' : '+file' }
 
 nnoremap <silent> <leader>fs :update<CR>
