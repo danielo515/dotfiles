@@ -81,3 +81,5 @@ nnoremap <leader>bd :BD<cr>
 nnoremap <leader>ju :FzfPreviewJumps<cr>
 "Delete current buffer without closing the window
 command Bd :bp<bar>bd#<cr>
+" Delete all buffers except current one
+command BOnly :up | %bd | e#
