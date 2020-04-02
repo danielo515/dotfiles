@@ -14,6 +14,8 @@ nnoremap <Down>  :resize -2<CR>
 nnoremap <Left>  :vertical resize +2<CR>
 nnoremap <Right> :vertical resize -2<CR>
 
+nnoremap <c-s> :%s/
+
 " Tab Shortcuts
 nnoremap tk :tabfirst<CR>
 nnoremap tl :tabnext<CR>
@@ -79,6 +81,6 @@ nnoremap <leader>bd :BD<cr>
 
 nnoremap <leader>ju :FzfPreviewJumps<cr>
 "Delete current buffer without closing the window
-command Bd :bp<bar>bd#<cr>
+command! Bd :bp<bar>bd#<cr>
 " Delete all buffers except current one
-command BOnly :up | %bd | e#
+command! BOnly :up | %bd | e#
