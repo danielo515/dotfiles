@@ -70,8 +70,7 @@ nnoremap <leader>Y "+Y
 nnoremap <leader>p "*p
 nnoremap <leader>P "+P
 " Easy motion
-" Sneak like
-nmap s <Plug>(easymotion-s2)
+nmap s <Plug>(easymotion-sn)
 nmap mw <Plug>(easymotion-bd-w)
 nmap me <Plug>(easymotion-bd-e)
 nmap ml <Plug>(easymotion-bd-jk)
