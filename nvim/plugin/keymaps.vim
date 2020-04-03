@@ -73,6 +73,7 @@ nnoremap <leader>p "*p
 nnoremap <leader>P "+P
 " Easy motion
 nmap s <Plug>(easymotion-sn)
+vmap s <Plug>(easymotion-sn)
 nmap mw <Plug>(easymotion-bd-w)
 nmap me <Plug>(easymotion-bd-e)
 nmap ml <Plug>(easymotion-bd-jk)
