@@ -39,6 +39,7 @@ nmap ]e <Plug>(coc-diagnostic-next-error)
 nmap <leader>fx <Plug>(coc-fix-current)
 vmap <leader>f  <Plug>(coc-format-selected)
 nnoremap <leader>ff :CocCommand prettier.formatFile<CR>
+command! -nargs=0 Prettier :CocCommand prettier.formatFile
 
 nmap <F2> <Plug>(coc-rename)
 nnoremap <leader>c :<C-u>CocFzfList<cr>
