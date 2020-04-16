@@ -24,7 +24,7 @@ set shiftround
 set expandtab
 set scrolloff=3
 set list listchars=tab:»·,trail:·  " Display extra whitespace characters
-set hidden
+" set hidden
 set inccommand=nosplit
 
 " Line numbers
@@ -91,7 +91,7 @@ call plug#begin()
 " UI {{{3
 Plug 'trevordmiller/nova-vim'
 Plug 'vim-airline/vim-airline'            " Handy info
-Plug 'retorillo/airline-tablemode.vim'
+" Plug 'retorillo/airline-tablemode.vim'
 Plug 'edkolev/tmuxline.vim'               " Make the Tmux bar match Vim
 Plug 'ryanoasis/vim-webdevicons'
 Plug 'mklabs/split-term.vim'
@@ -111,13 +111,11 @@ Plug 'yuki-ycino/fzf-preview.vim'
 Plug 'antoinemadec/coc-fzf'
 Plug 'rbgrouleff/bclose.vim'              " Required by ranger.vim
 " Plug 'francoiscabrol/ranger.vim'
-" let g:ranger_replace_netrw = 1 " open ranger when vim open a directory
 
 " File Navigation {{{3
 Plug 'vim-scripts/matchit.zip'            " More powerful % matching
 Plug 'Lokaltog/vim-easymotion'            " Move like the wind!
 Plug 'jeffkreeftmeijer/vim-numbertoggle'  " Smarter line numbers
-Plug 'wellle/targets.vim'
 Plug 'haya14busa/incsearch.vim'           " Better search highlighting
 
 " Editing {{{3
@@ -125,9 +123,10 @@ Plug 'tpope/vim-surround'                 " Change word surroundings
 Plug 'tpope/vim-commentary'               " Comments stuff
 Plug 'tpope/vim-repeat'
 Plug 'dhruvasagar/vim-table-mode',        { 'on': 'TableModeEnable' }
-Plug 'kana/vim-textobj-user'
-Plug 'sgur/vim-textobj-parameter'
-Plug 'rhysd/vim-textobj-anyblock'
+Plug 'wellle/targets.vim'                 " More text target like `,`
+" Plug 'kana/vim-textobj-user'              " Create custom text objects base plugin
+" Plug 'sgur/vim-textobj-parameter'
+" Plug 'rhysd/vim-textobj-anyblock'
 Plug 'editorconfig/editorconfig-vim'
 " On-demand lazy load
 Plug 'liuchengxu/vim-which-key', { 'on': ['WhichKey', 'WhichKey!'] }
@@ -154,21 +153,21 @@ Plug 'rhysd/committia.vim' " good layout when you open vim as commit editor
 Plug 'APZelos/blamer.nvim'
 let g:blamer_enabled = 1 " Blame on vim startup
 " Task Running
-Plug 'tpope/vim-dispatch'                 " Run tasks asychronously in Tmux
+" Plug 'tpope/vim-dispatch'                 " Run tasks asychronously in Tmux
 Plug 'w0rp/ale'                           " Linter
-Plug 'wincent/terminus'
+Plug 'wincent/terminus'                   " Better integratio with terminal
 Plug 'christoomey/vim-tmux-navigator'
 Plug 'Olical/vim-enmasse'                 " Edit all files in a Quickfix list
-Plug 'janko-m/vim-test'
+Plug 'janko-m/vim-test'                   " Run test fro vim (detected automatically)
 
 " Autocomplete {{{3
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 
 " Language Support {{{3
 " JavaScript {{{4
-Plug 'pangloss/vim-javascript'
+" Plug 'pangloss/vim-javascript'
 Plug 'mxw/vim-jsx'
-Plug 'rhysd/npm-debug-log.vim'
+Plug 'rhysd/npm-debug-log.vim'           " Highlight vim logs
 
 " TypeScript {{{4
 Plug 'HerringtonDarkholme/yats.vim'
@@ -189,8 +188,8 @@ Plug 'hail2u/vim-css3-syntax',            { 'for': 'css' }
 Plug 'cakebaker/scss-syntax.vim'
 
 " VIM
-Plug 'Shougo/neco-vim'
-Plug 'neoclide/coc-neco'
+Plug 'Shougo/neco-vim'       " Vim language autocomplete
+Plug 'neoclide/coc-neco'     " Integrate neco-vim with coc
 
 
 " Python {{{4
