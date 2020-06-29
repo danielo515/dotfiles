@@ -13,6 +13,7 @@ alias drim='docker rmi'
 alias dps='docker ps --format "table {{.Names}}\t\t{{.Image}}"'
 alias dpsa='docker ps -a --format "table {{.Names}}\t\t{{.Image}}"'
 alias docker-cleanup='docker ps -a | grep Exit | grep months | cut -d " " -f 1 | xargs docker rm'
+alias dcreset='docker-compose stop && docker-compose rm -f'
 # ---- System aliases
 alias chx='chmod 755'
 alias chr='chmod 644'
@@ -37,6 +38,7 @@ function rebaseN(){
 # ---- NPM
 alias npm-i='npm i --registry=https://registry.npmjs.org/'
 alias npr='npm run'
+alias npmd='npm i -D'
 alias startElastic='docker run -p 9200:9200 -p 9300:9300 -e "discovery.type=single-node" docker.elastic.co/elasticsearch/elasticsearch:5.4.3'
 alias milis='echo $(($(date +%s%N)/1000000))'
 alias yarnd='yarn add -D'
