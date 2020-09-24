@@ -21,6 +21,8 @@ let g:which_key_map =  {}
 " Mappings are defined on the keymaps.vim file
 " =======================================================
 " You can pass a descriptive text to an existing mapping.
+let g:which_key_map[','] = 'Find file in parent dir'
+let g:which_key_map['.'] = 'Find file in current dir'
 
 let g:which_key_map.g = { 'name' : '+git' }
 let g:which_key_map.g.a = 'git add all'
@@ -31,6 +33,7 @@ let g:which_key_map.g.c = 'git gheckout with fzf'
 let g:which_key_map.g.af = 'git ammend current file'
 let g:which_key_map.f = { 'name' : '+file',
       \'n': [':e %:h/filename','new file in current directory'],
+      \ 'h': [':History', 'Fuzzy history search'],
       \}
 
 nnoremap <silent> <leader>fs :update<CR>
