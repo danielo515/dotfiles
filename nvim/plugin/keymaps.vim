@@ -1,13 +1,13 @@
 " Section: Remaps {{{1
-let s:vimrc_path = expand('<sfile>:p:h')
+let s:vimrc_path = expand('<sfile>:p:h:h')
 function! s:get_vimrc_path()
       return s:vimrc_path
 endfunction
 " source a vimrc file
 nnoremap <expr> <leader>so ":source " . <SID>get_vimrc_path()
-nnoremap <leader>si :w<CR>:source %
-" edit vimrc stuff
-nnoremap <expr> <leader>fv ":e " . <SID>get_vimrc_path()
+nnoremap <leader>si :w<CR>:source %<CR>
+" edit vimrc stuff with fzf
+nnoremap <leader>fv :call fzf#run({'options': '--reverse --prompt "VimFiles"', 'down': 20, 'dir': <SID>get_vimrc_path(), 'sink': 'e' })<CR>
 " Disable arrow movement, resize splits instead.
 nnoremap <Up>    :resize +2<CR>
 nnoremap <Down>  :resize -2<CR>
@@ -35,10 +35,6 @@ nnoremap zj o<Esc>
 nnoremap zk O<Esc>
 "split at cursor position
 nnoremap zi i<cr><esc>
-
-" Ranger file explorer
-let g:ranger_map_keys = 0
-nnoremap <leader>rr :Ranger<CR>
 
 " Git related
 nnoremap <leader>ga :Git add . <CR>
@@ -85,3 +81,6 @@ nnoremap <leader>ju :FzfPreviewJumps<cr>
 command! Bd :bp<bar>bd#<cr>
 " Delete all buffers except current one
 command! BOnly :up | %bd | e#
+
+" COC explorer
+:nmap <leader>e :CocCommand explorer<CR>
