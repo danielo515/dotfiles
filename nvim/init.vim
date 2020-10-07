@@ -24,7 +24,7 @@ set shiftround
 set expandtab
 set scrolloff=3
 set list listchars=tab:»·,trail:·  " Display extra whitespace characters
-" set hidden
+set hidden
 set inccommand=nosplit
 
 " Line numbers
@@ -165,7 +165,7 @@ Plug 'neoclide/coc.nvim', {'branch': 'release'}
 
 " Language Support {{{3
 " JavaScript {{{4
-" Plug 'pangloss/vim-javascript'
+Plug 'pangloss/vim-javascript'
 Plug 'mxw/vim-jsx'
 Plug 'rhysd/npm-debug-log.vim'           " Highlight vim logs
 
@@ -203,7 +203,7 @@ Plug 'wting/rust.vim'
 Plug 'cespare/vim-toml'
 
 " Go {{{4
-" Plug 'fatih/vim-go'
+Plug 'fatih/vim-go'
 " Plug 'nsf/gocode',                        { 'rtp': 'nvim', 'do': './nvim/symlink.sh' }
 
 " Markdown {{{4
@@ -241,7 +241,7 @@ syntax enable
 let $NVIM_TUI_ENABLE_TRUE_COLOR=1
 set termguicolors
 set background=dark
-colorscheme codeschool
+colorscheme space-vim-dark
 " Setup Terminal Colors For Neovim {{{
 if has('nvim')
   " dark0 + gray
@@ -297,3 +297,6 @@ set scrolloff=50
 set ignorecase
 set smartcase
 
+" DAnielo macros
+let @m="/name=\<CR>da\"O{...field({name:\<ESC>pa,})\<ESC>jdd"
+let @v="/validate={\<CR>di{?,}\<CR>avalidation:\<ESC>pdd"

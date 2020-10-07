@@ -215,3 +215,8 @@ test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell
 # tabtab source for packages
 # uninstall by removing these lines
 [[ -f ~/.config/tabtab/__tabtab.zsh ]] && . ~/.config/tabtab/__tabtab.zsh || true
+export PATH="/usr/local/opt/ruby/bin:$PATH"
+
+# added by travis gem
+[ ! -s /Users/danielo/.travis/travis.sh ] || source /Users/danielo/.travis/travis.sh
+export PATH="/usr/local/opt/ruby/bin:$PATH"
