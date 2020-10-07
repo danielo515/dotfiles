@@ -24,6 +24,9 @@ let g:which_key_map =  {}
 let g:which_key_map[','] = 'Find file in parent dir'
 let g:which_key_map['.'] = 'Find file in current dir'
 
+let g:which_key_map.j = { 'name' : '+jumps' }
+let g:which_key_map.s = { 'name' : 'source' }
+
 let g:which_key_map.g = { 'name' : '+git' }
 let g:which_key_map.g.a = 'git add all'
 let g:which_key_map.g.g = 'git commit current file'
