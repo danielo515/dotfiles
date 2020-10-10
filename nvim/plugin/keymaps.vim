@@ -84,3 +84,15 @@ command! BOnly :up | %bd | e#
 
 " COC explorer
 :nmap <leader>e :CocCommand explorer<CR>
+
+" Cut texts to a cycling number of registers
+let g:regCount = 1
+function CutText(textObject)
+  let buffers = ["a", "s", "d", "f", "g"]
+  let g:regCount += 1
+  let g:regCount %= 5
+  echo "Using ".buffers[g:regCount]
+  return 'normal "' . buffers[g:regCount] . "d" . a:textObject
+endfunction
+nnoremap <leader>dw :execute CutText("iw")<CR>
+nnoremap <leader>d$ :execute CutText("$")<CR>
