@@ -68,9 +68,6 @@ if has("autocmd")
   " Automatically clean trailing whitespace
   autocmd BufWritePre * :%s/\s\+$//e
 
-  "autocmd BufRead,BufNewFile COMMIT_EDITMSG call pencil#init({'wrap': 'soft'})
-  "     \ | set textwidth=0
-
   autocmd BufRead,BufNewFile *.md set filetype=markdown
 
   autocmd BufRead,BufNewFile .eslintrc,.jscsrc,.jshintrc,.babelrc set ft=json
@@ -110,7 +107,6 @@ Plug 'junegunn/fzf.vim'
 Plug 'yuki-ycino/fzf-preview.vim'
 Plug 'antoinemadec/coc-fzf'
 Plug 'rbgrouleff/bclose.vim'              " Required by ranger.vim
-" Plug 'francoiscabrol/ranger.vim'
 
 " File Navigation {{{3
 Plug 'vim-scripts/matchit.zip'            " More powerful % matching
@@ -217,12 +213,10 @@ call plug#end()
 " For some reason, a few plugins seem to have config options that cannot be
 " placed in the `plugins` directory. Those settings can be found here instead.
 
-
 " This needs to live here or it will not work
 let g:airline_powerline_fonts = 1 " Enable the patched Powerline fonts
 " emmet-vim {{{3
 let g:user_emmet_leader_key='<C-E>'
-
 let g:user_emmet_settings = {
       \    'html' : {
       \        'quote_char': "'"
@@ -233,50 +227,9 @@ let g:user_emmet_settings = {
 
 " }}}2
 " }}}1
-" Section: Theme {{{
-
-syntax enable
-let $NVIM_TUI_ENABLE_TRUE_COLOR=1
-set termguicolors
-set background=dark
-colorscheme space-vim-dark
-" Setup Terminal Colors For Neovim {{{
-if has('nvim')
-  " dark0 + gray
-  let g:terminal_color_0 = "#282828"
-  let g:terminal_color_8 = "#928374"
-
-  " neurtral_red + bright_red
-  let g:terminal_color_1 = "#cc241d"
-  let g:terminal_color_9 = "#fb4934"
-
-  " neutral_green + bright_green
-  let g:terminal_color_2 = "#98971a"
-  let g:terminal_color_10 = "#b8bb26"
-
-  " neutral_yellow + bright_yellow
-  let g:terminal_color_3 = "#d79921"
-  let g:terminal_color_11 = "#fabd2f"
-
-  " neutral_blue + bright_blue
-  let g:terminal_color_4 = "#458588"
-  let g:terminal_color_12 = "#83a598"
-
-  " neutral_purple + bright_purple
-  let g:terminal_color_5 = "#b16286"
-  let g:terminal_color_13 = "#d3869b"
-
-  " neutral_aqua + faded_aqua
-  let g:terminal_color_6 = "#689d6a"
-  let g:terminal_color_14 = "#8ec07c"
-
-  " light4 + light1
-  let g:terminal_color_7 = "#a89984"
-  let g:terminal_color_15 = "#ebdbb2"
-endif " }}}
-" }}}
+" Theme specific
+source $DOTFILES/nvim/theme.vim
 " Section: Local-Machine Config {{{
-
 if filereadable($DOTFILES . "/nvim/init.local.vim")
   source $DOTFILES/nvim/init.local.vim
 endif
@@ -286,7 +239,6 @@ endif
  let g:netrw_liststyle = 3 " Width tree
  let g:netrw_winsize = 17 " 15% of editor size
  let g:netrw_browse_split = 4 " Open file on existing window
-" Terminal splitting
 " Javascript
 let g:javascript_plugin_jsdoc = 1
 set nofoldenable
