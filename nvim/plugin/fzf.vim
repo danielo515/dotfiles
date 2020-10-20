@@ -12,6 +12,7 @@ nmap <leader>o     :Files<cr>
 " sibling files search
 nnoremap <silent> <Leader>. :Files <C-r>=expand("%:h")<CR>/<CR>
 nnoremap <silent> <Leader>, :Files <C-r>=expand("%:h:h")<CR>/<CR>
+" Preview buffers
 nnoremap <silent> <leader>b :FzfPreviewBuffers<CR>
 nnoremap <silent> <c-b> :Buffers<CR>
 " search on changed files
