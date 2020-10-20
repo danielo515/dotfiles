@@ -124,9 +124,7 @@ Plug 'tpope/vim-commentary'               " Comments stuff
 Plug 'tpope/vim-repeat'
 Plug 'dhruvasagar/vim-table-mode',        { 'on': 'TableModeEnable' }
 Plug 'wellle/targets.vim'                 " More text target like `,`
-" Plug 'kana/vim-textobj-user'              " Create custom text objects base plugin
-" Plug 'sgur/vim-textobj-parameter'
-" Plug 'rhysd/vim-textobj-anyblock'
+Plug 'tommcdo/vim-exchange' " Exchange two text objects
 Plug 'editorconfig/editorconfig-vim'
 " On-demand lazy load
 Plug 'liuchengxu/vim-which-key', { 'on': ['WhichKey', 'WhichKey!'] }
@@ -297,6 +295,4 @@ set scrolloff=50
 set ignorecase
 set smartcase
 
-" DAnielo macros
-let @m="/name=\<CR>da\"O{...field({name:\<ESC>pa,})\<ESC>jdd"
-let @v="/validate={\<CR>di{?,}\<CR>avalidation:\<ESC>pdd"
+set cursorline
