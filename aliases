@@ -2,8 +2,10 @@ alias gohome='cd ~/'
 alias homestate='(gohome && git status)'
 alias refresh='source ~/.bashrc'
 alias please='__executeLastCommandAsSuperUser'
+alias dotvim='vim ~/.dotfiles'
 # ---- Docker aliases
 alias drun='docker run -it --rm -e NPM_TOKEN=${NPM_TOKEN}'
+alias drunvol='docker run -it --rm -v $PWD:/home -e NPM_TOKEN=${NPM_TOKEN}'
 alias dex='docker exec -it '
 alias cordova='drun --privileged -v /dev/bus/usb:/dev/bus/usb -v $PWD:/src --name cordova beevelop/cordova'
 alias dimg='docker images'
@@ -11,12 +13,17 @@ alias dimgs='dimg | sort -n -k 7' # sort by size
 alias dimgst='dimg | head -1 && dimg | sort -r -k 1' # sort by title
 alias drim='docker rmi'
 alias dps='docker ps --format "table {{.Names}}\t\t{{.Image}}"'
+alias docker-ps='docker ps --format "{{.Image}} \t\t {{.Names}}"'
 alias dpsa='docker ps -a --format "table {{.Names}}\t\t{{.Image}}"'
 alias docker-cleanup='docker ps -a | grep Exit | grep months | cut -d " " -f 1 | xargs docker rm'
 alias dcreset='docker-compose stop && docker-compose rm -f'
+dimg-repofilter(){
+ docker images --format "{{.Repository}} {{.ID}}" | grep $1
+}
 # ---- System aliases
 alias chx='chmod 755'
 alias chr='chmod 644'
+alias l='ls -l'
 alias ll='ls -la'
 alias lsh='ls -lhXG'
 # ---- Git
@@ -72,6 +79,5 @@ checkout-danielo-ergodox(){
     git checkout $DANIELO_BRANCH  quantum/process_keycode/process_leader.c
     git checkout $DANIELO_BRANCH keyboards/ergodox_ez/keymaps/danielo515
 }
-alias docker-ps='docker ps --format "{{.Image}} \t\t {{.Names}}"'
 alias spacevim=vim -u ~/.space-vim/init.vim
 alias spacevim='vim -u ~/.space-vim/init.vim'
