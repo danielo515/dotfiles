@@ -80,13 +80,38 @@ command! BD call fzf#run(fzf#wrap({
 \ }))
 "=========================
 
-" limit the ag search to provided dir with auto completion
-function! s:ag_in(...)
-    call fzf#vim#ag(join(a:000[1:], ' '), extend({'dir': a:1}, g:fzf_layout))
-  endfunction
-
 "Search in a directory
-command! -nargs=+ -complete=dir AgIn call s:ag_in(<f-args>)
+command! -bang -nargs=+ -complete=dir AgIn call s:ag_in(<bang>0, <f-args>)
 "Search on the current directory
-command! -nargs=+ AgDir call s:ag_in(expand("%:p:h"),<f-args>)
+command! -nargs=+ AgDir call s:ag_in(<bang>0, expand("%:p:h"), <f-args>)
+
+
+" "Raw" version of ag; arguments directly passed to ag
+"
+" e.g.
+"   " Search 'foo bar' in ~/projects
+"   :Ag "foo bar" ~/projects
+"
+"   " Start in fullscreen mode
+"   :Ag! "foo bar"
+command! -bang -nargs=+ -complete=file Ag call fzf#vim#ag_raw(<q-args>, <bang>0)
+
+" Raw version with preview
+command! -bang -nargs=+ -complete=file Ag call fzf#vim#ag_raw(<q-args>, fzf#vim#with_preview(), <bang>0)
+
+
+" AgIn: Start ag in the specified directory
+"
+" e.g.
+"   :AgIn .. foo
+function! s:ag_in(bang, ...)
+  if !isdirectory(a:1)
+    throw 'not a valid directory: ' .. a:1
+  endif
+  " Press `?' to enable preview window.
+  call fzf#vim#ag(join(a:000[1:], ' '), fzf#vim#with_preview({'dir': a:1}, 'up:50%:hidden', '?'), a:bang)
+
+  " If you don't want preview option, use this
+  " call fzf#vim#ag(join(a:000[1:], ' '), {'dir': a:1}, a:bang)
+endfunction
 
