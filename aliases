@@ -2,7 +2,10 @@ alias gohome='cd ~/'
 alias homestate='(gohome && git status)'
 alias refresh='source ~/.bashrc'
 alias please='__executeLastCommandAsSuperUser'
-alias dotvim='vim ~/.dotfiles'
+alias dotvim='(cd ~/.dotfiles && vim )'
+alias vimalias='vim ~/.dotfiles/aliases'
+alias vialias='vim ~/.dotfiles/aliases'
+alias aliassource='source ~/.dotfiles/aliases'
 # ---- Docker aliases
 alias drun='docker run -it --rm -e NPM_TOKEN=${NPM_TOKEN}'
 alias drunvol='docker run -it --rm -v $PWD:/home -e NPM_TOKEN=${NPM_TOKEN}'
@@ -16,6 +19,7 @@ alias dps='docker ps --format "table {{.Names}}\t\t{{.Image}}"'
 alias docker-ps='docker ps --format "{{.Image}} \t\t {{.Names}}"'
 alias dpsa='docker ps -a --format "table {{.Names}}\t\t{{.Image}}"'
 alias docker-cleanup='docker ps -a | grep Exit | grep months | cut -d " " -f 1 | xargs docker rm'
+alias dctail='docker-compose logs -f --tail=50'
 alias dcreset='docker-compose stop && docker-compose rm -f'
 dimg-repofilter(){
  docker images --format "{{.Repository}} {{.ID}}" | grep $1
@@ -41,6 +45,12 @@ alias bashrc='vi ~/.bashrc && refresh'
 alias lgrep=' ls -la | grep'
 function rebaseN(){
     noglob git rebase --interactive HEAD~$1
+}
+
+function pushSnippets(){
+ cd ~/mega/programacion/node/vscodePlugins/vscode-node-snippets/
+ git add . && git commit -m "Added more stuff" && git push
+ cd -
 }
 # ---- NPM
 alias npm-i='npm i --registry=https://registry.npmjs.org/'
