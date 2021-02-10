@@ -1,0 +1,22 @@
+{
+  "files.associations": {
+    "*.yaml": "home-assistant"
+  },
+  "javascript.validate.enable": false,
+  "eslint.workingDirectories": ["./client", "./spring"],
+  // Ego custom commands
+  "ego.power-tools": {
+    "commands": {
+      "spring-input": {
+        "script": "input-to-spring.js"
+      },
+      "graphql-to-flow": {
+        "script": "graphql-to-flow.js"
+      },
+      "go-struct-getters": {
+        "script": "resolvers-from-struct.js"
+      }
+    }
+  },
+  "cSpell.words": ["pentoapp"]
+}
