@@ -18,7 +18,7 @@ nnoremap <c-s> :%s/
 
 " Tab Shortcuts
 nnoremap tk :tabfirst<CR>
-nnoremap tl :tabnext<CR>
+nnoremap tl :tab<CR>
 nnoremap th :tabprev<CR>
 nnoremap tj :tablast<CR>
 nnoremap tn :tabnew<CR>
@@ -27,7 +27,7 @@ nnoremap td :tabclose<CR>
 set completeopt-=preview
 
 nnoremap <leader>w :wa<CR>
-nmap <Tab> <C-^>
+nmap <Tab> :bnext<CR>
 nmap <c-j><c-j> :bprev<CR>
 
 " insert line behind below and split line
