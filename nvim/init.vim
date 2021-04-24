@@ -99,14 +99,13 @@ Plug 'psliwka/vim-smoothie'                             " some very smooth ass s
 Plug 'farmergreg/vim-lastplace'                         " open files at the last edited place
 
 " Project Navigation {{{3
-Plug 'scrooloose/nerdtree'
+" Plug 'scrooloose/nerdtree'
 Plug 'tyru/open-browser.vim'
-Plug 'Xuyuanp/nerdtree-git-plugin', { 'on': 'NERDTreeToggle' }
+" Plug 'Xuyuanp/nerdtree-git-plugin', { 'on': 'NERDTreeToggle' }
 Plug 'junegunn/fzf',                      { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
 Plug 'yuki-ycino/fzf-preview.vim'
 Plug 'antoinemadec/coc-fzf'
-Plug 'rbgrouleff/bclose.vim'              " Required by ranger.vim
 
 " File Navigation {{{3
 Plug 'vim-scripts/matchit.zip'            " More powerful % matching
