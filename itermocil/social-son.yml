@@ -1,0 +1,10 @@
+windows:
+  - name: social-son-name
+    root: ~/mega/programacion/node/social-son-name
+    layout: main-vertical-flipped
+    panes:
+      - yarn start
+      - cd functions
+      - name: right
+        commands:
+          - vim
