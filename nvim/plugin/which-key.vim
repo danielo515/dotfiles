@@ -27,6 +27,24 @@ let g:which_key_map['.'] = 'Find file in current dir'
 let g:which_key_map.j = { 'name' : '+jumps' }
 let g:which_key_map.s = { 'name' : 'source' }
 
+"Delete current buffer without closing the window
+command! Bd :bp<bar>bd#<cr>
+
+let g:which_key_map.b = {
+      \ 'name' : '+buffer' ,
+      \ '1' : ['b1'        , 'buffer 1']        ,
+      \ '2' : ['b2'        , 'buffer 2']        ,
+      \ 'd' : ['BD'       , 'delete buffer FZF']   ,
+      \ 'k' : ['bdel'     , 'kill buffer']   ,
+      \ 'f' : ['bfirst'    , 'first-buffer']    ,
+      \ 'h' : ['Startify'  , 'home-buffer']     ,
+      \ 'l' : ['blast'     , 'last-buffer']     ,
+      \ 'n' : ['bnext'     , 'next-buffer']     ,
+      \ 'p' : ['bprevious' , 'previous-buffer'] ,
+      \ '?' : ['Buffers'   , 'fzf-buffer']      ,
+      \ 'z' : ['FzfPreviewBuffers'   , 'fzf-buffer']      ,
+      \ }
+
 let g:which_key_map.g = { 'name' : '+git' }
 let g:which_key_map.g.a = 'git add all'
 let g:which_key_map.g.g = 'git commit current file'
@@ -40,7 +58,6 @@ let g:which_key_map.f = { 'name' : '+file',
       \}
 
 nnoremap <silent> <leader>fs :update<CR>
-let g:which_key_map.f.s = 'save-file'
 
 nnoremap <silent> <leader>fd :e $MYVIMRC<CR>
 let g:which_key_map.f.d = 'open-vimrc'

@@ -73,12 +73,8 @@ vmap s <Plug>(easymotion-sn)
 nmap mw <Plug>(easymotion-bd-w)
 nmap me <Plug>(easymotion-bd-e)
 nmap ml <Plug>(easymotion-bd-jk)
-" buffer delete from fzf
-nnoremap <leader>bd :BD<cr>
 
 nnoremap <leader>ju :FzfPreviewJumps<cr>
-"Delete current buffer without closing the window
-command! Bd :bp<bar>bd#<cr>
 " Delete all buffers except current one
 command! BOnly :up | %bd | e#
 
