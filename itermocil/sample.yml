@@ -1,0 +1,7 @@
+windows:
+  - name: node-programming
+    root: ~/mega/programacion/node
+    layout: even-horizontal
+    panes:
+      - ls
+      - name: right

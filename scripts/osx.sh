@@ -157,3 +157,10 @@ if test -f ~/.ssh/id_rsa; then
         echo_item "Skipping ssh keys import" red
     fi
 fi
+
+if get_boolean_response "Do you want to install itermocil?"; then
+    brew install TomAnthony/brews/itermocil
+    ln -s $DOTFILES/itermocil ~/.itermocil
+else
+    echo_item "Skipping itermocil install" red
+fi
