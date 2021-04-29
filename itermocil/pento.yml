@@ -1,0 +1,9 @@
+windows:
+  - name: Pento
+    root: ~/mega/trabajo/GIT/pento/Pento
+    layout: even-horizontal
+    panes:
+      - dc up -d
+      - cd client
+      - cd spring
+      - name: right
