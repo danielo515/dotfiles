@@ -100,8 +100,8 @@ Plug 'farmergreg/vim-lastplace'                         " open files at the last
 
 " Project Navigation {{{3
 " Plug 'scrooloose/nerdtree'
-Plug 'tyru/open-browser.vim'
 " Plug 'Xuyuanp/nerdtree-git-plugin', { 'on': 'NERDTreeToggle' }
+Plug 'tyru/open-browser.vim'
 Plug 'junegunn/fzf',                      { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
 Plug 'yuki-ycino/fzf-preview.vim'
@@ -164,7 +164,7 @@ Plug 'rhysd/npm-debug-log.vim'           " Highlight vim logs
 
 " TypeScript {{{4
 Plug 'HerringtonDarkholme/yats.vim'
-Plug 'mhartington/nvim-typescript',       { 'do': ':UpdateRemotePlugins' }
+" Plug 'mhartington/nvim-typescript', { 'do': './install.sh' }
 
 " Elm {{{4
 "Plug 'ElmCast/elm-vim'
@@ -247,3 +247,10 @@ set ignorecase
 set smartcase
 
 set cursorline
+" Edit macros fast and easy. `crq` to edit macro q, for exapmle
+" Borrowed from https://www.reddit.com/r/vim/comments/7yn0xa/editing_macros_easily_in_vim/duie7s4?utm_source=share&utm_medium=web2x&context=3
+fun! ChangeReg() abort
+  let x = nr2char(getchar())
+  call feedkeys("q:ilet @" . x . " = \<c-r>\<c-r>=string(@" . x . ")\<cr>\<esc>0f'", 'n')
+endfun
+nnoremap cr :call ChangeReg()<cr>
