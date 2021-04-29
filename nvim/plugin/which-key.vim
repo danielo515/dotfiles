@@ -25,7 +25,7 @@ let g:which_key_map[','] = 'Find file in parent dir'
 let g:which_key_map['.'] = 'Find file in current dir'
 
 let g:which_key_map.j = { 'name' : '+jumps' }
-let g:which_key_map.s = { 'name' : 'source' }
+let g:which_key_map.s = { 'name' : '+source' }
 
 "Delete current buffer without closing the window
 command! Bd :bp<bar>bd#<cr>
@@ -61,6 +61,10 @@ nnoremap <silent> <leader>fs :update<CR>
 
 nnoremap <silent> <leader>fd :e $MYVIMRC<CR>
 let g:which_key_map.f.d = 'open-vimrc'
+
+" ===== Requires FZF
+nnoremap <silent> <Leader>fh :History<CR>
+let g:which_key_map.f.h = 'file history'
 
 let g:which_key_map.f.c = {'name': '+copy'}
 let g:which_key_map.f.c.f = 'copy relative path'

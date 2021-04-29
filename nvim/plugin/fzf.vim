@@ -15,7 +15,6 @@ nnoremap <silent> <Leader>, :Files <C-r>=expand("%:h:h")<CR>/<CR>
 " Preview buffers
 nnoremap <silent> <c-b> :Buffers<CR>
 " search on changed files
-nnoremap <silent> <Leader>h :History<CR>
 nnoremap <silent> <Leader>pp :Commands<CR>
 nnoremap <silent> <Leader>l :Lines<CR>
 " Show fzf on a popup
