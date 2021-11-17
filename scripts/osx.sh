@@ -37,9 +37,9 @@ if exists "brew"; then
     fi
     echo ""
     if get_boolean_response "Do you want to install some fonts?"; then
-        brew cask install font-inconsolata-nerd-font
-        brew cask install font-inconsolata
-        brew cask install font-fira-code
+        brew install --cask font-inconsolata-nerd-font
+        brew install --cask font-inconsolata
+        brew install --cask font-fira-code
     else
         echo_item "Skipping fonts install" red
     fi
@@ -48,9 +48,18 @@ if exists "brew"; then
         echo_item "Visual studio Code is already installed" green
     else
         if get_boolean_response "Do you want to install Visual Studio code?"; then
-            brew cask install visual-studio-code
+            brew install visual-studio-code
         else
             echo_item "Skipping visual studio code install" red
+        fi
+    fi
+    if exists "chrome"; then
+        echo_item "Chrome is already installed" green
+    else
+        if get_boolean_response "Do you want to install Chrome?"; then
+            brew install google-chrome 
+        else
+            echo_item "Skipping google-chrome install" red
         fi
     fi
     if get_boolean_response "Install silver_searcher? (required by fzf.vim)"; then
