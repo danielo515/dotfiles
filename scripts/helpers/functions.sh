@@ -31,10 +31,12 @@ get_boolean_response() {
 }
 
 do_if_yes() {
-  question=$1
+  question="$1"
   cmd=$2
-  if get_boolean_response $question; then
-    "$cmd"
+  if get_boolean_response "$question"; then
+    eval $cmd
+  else
+    echo_item Skip "$question" red
   fi
 }
 

@@ -19,8 +19,9 @@ if system_is_OSX; then
 fi
 
 # -- GIT -----------------------------------------------------------------------
-
-if get_boolean_response "Do you want to install the Git configuration files?"
+if test -L $HOME/.gitignore_global; then
+	echo_item "Git config files already linked" green
+elif get_boolean_response "Do you want to install the Git configuration files?"
 then
     ln -sf $HOME/.dotfiles/git/gitignore_global $HOME/.gitignore_global
     echo_item "Linked global .gitignore" "green"
