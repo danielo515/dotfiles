@@ -35,6 +35,10 @@ if exists "brew"; then
     else
         echo_item "Skip font installation" "red"
     fi
+    
+    do_if_yes "Install python3 ?" "brew install python3"
+    do_if_yes "Install iterm ?" "brew install iterm2"
+    
     echo ""
     if get_boolean_response "Do you want to install some fonts?"; then
         brew install --cask font-inconsolata-nerd-font
@@ -63,13 +67,13 @@ if exists "brew"; then
         fi
     fi
     if get_boolean_response "Install silver_searcher? (required by fzf.vim)"; then
-      brew install the_silver_searcher
+        brew install the_silver_searcher
     fi
     if get_boolean_response "Install rigrep? (used by fzf.vim"; then
-      brew install ripgrep
+        brew install ripgrep
     fi
     if get_boolean_response "Install tmux?"; then
-      brew install tmux reattach-to-user-namespace
+        brew install tmux reattach-to-user-namespace
     fi
 else
     echo_item "Brew is not installed, skipping installations that requires it" red

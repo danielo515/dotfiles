@@ -20,7 +20,7 @@ fi
 
 # -- GIT -----------------------------------------------------------------------
 if test -L $HOME/.gitignore_global; then
-	echo_item "Git config files already linked" green
+    echo_item "Git config files already linked" green
 elif get_boolean_response "Do you want to install the Git configuration files?"
 then
     ln -sf $HOME/.dotfiles/git/gitignore_global $HOME/.gitignore_global
@@ -49,8 +49,9 @@ fi
 # -- ZSH Setup -----------------------------------------------------------------
 
 if exists "zsh"; then
-    if get_boolean_response "Do you want to install ZSH configuration files?"; then
-        
+    if test -L $HOME/.zshrc; then
+        echo_item "ZSH configuration files already linked" green
+        elif get_boolean_response "Do you want to install ZSH configuration files?"; then
         # -- ZSHRC
         ln -sf $HOME/.dotfiles/zsh/zshrc $HOME/.zshrc
         echo_item "Linked zshrc" "green"
@@ -79,7 +80,10 @@ echo ""
 
 # -- BASH Setup ----------------------------------------------------------------
 
-if get_boolean_response "Do you want to install Bash configuration files?"; then
+if test -L $HOME/.bash_profile; then
+    echo_item "Bash profile is already linked" green
+elif get_boolean_response "Do you want to install Bash configuration files?"
+then
     # -- BASH PROFILE
     ln -sf $HOME/.dotfiles/bash/bash_profile $HOME/.bash_profile
     echo_item "Linked bash_profile" "green"
@@ -90,7 +94,9 @@ fi
 echo ""
 
 # -- TMUX ----------------------------------------------------------------------
-if get_boolean_response "Do you want to install the Tmux configuration file?"
+if test -L $HOME/.tmux.conf; then
+    echo_item "Tmux configuration already linked" green
+elif get_boolean_response "Do you want to install the Tmux configuration file?"
 then
     ln -sf $HOME/.dotfiles/tmux/tmux.conf $HOME/.tmux.conf
     echo_item "Linked tmux configutation" "green"
@@ -126,7 +132,7 @@ if exists "code"; then
         code --install-extension jpoissonnier.vscode-styled-components
         code --install-extension lxspandora.vscode-styled-components-snippets
         code --install-extension wooodhead.disable-eslint-rule
-
+        
     else
         echo_item "Skip VSCode extensions installation" red
     fi
