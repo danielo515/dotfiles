@@ -61,7 +61,7 @@ if exists "brew"; then
         echo_item "Chrome is already installed" green
     else
         if get_boolean_response "Do you want to install Chrome?"; then
-            brew install google-chrome 
+            brew install google-chrome
         else
             echo_item "Skipping google-chrome install" red
         fi
