@@ -38,7 +38,7 @@ nnoremap zi i<cr><esc>
 
 " Git related
 nnoremap <leader>ga :Git add . <CR>
-nnoremap <silent> <leader>gg :Gcommit %<CR>
+nnoremap <silent> <leader>gg :Git commit %<CR>
 nnoremap <silent> <leader>gaf :Git add %<bar>Git commit --amend<CR>
 nnoremap <leader>gp :Gpush<CR>
 nnoremap <Leader>gs :tabnew<bar>leftabove vertical Gstatus<CR>
