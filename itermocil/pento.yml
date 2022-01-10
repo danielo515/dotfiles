@@ -1,6 +1,6 @@
 windows:
   - name: Pento
-    root: ~/mega/trabajo/GIT/pento/Pento
+    root: $PENTODIR
     layout: even-horizontal
     panes:
       - dc up -d
