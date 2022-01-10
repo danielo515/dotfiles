@@ -59,8 +59,6 @@ unsetopt correct
 export EDITOR="$(brew --prefix)/bin/nvim"
 alias vim=nvim
 alias vi=nvim
-alias dm=docker-machine
-alias dc=docker-compose
 
 # -- Aliases -------------------------------------------------------------------
 if [[ -f "$DOTFILES/aliases" ]]; then

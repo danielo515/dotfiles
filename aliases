@@ -19,6 +19,8 @@ alias dps='docker ps --format "table {{.Names}}\t\t{{.Image}}"'
 alias docker-ps='docker ps --format "{{.Image}} \t\t {{.Names}}"'
 alias dpsa='docker ps -a --format "table {{.Names}}\t\t{{.Image}}"'
 alias docker-cleanup='docker ps -a | grep Exit | grep months | cut -d " " -f 1 | xargs docker rm'
+alias dm='docker-machine'
+alias dc='docker-compose'
 alias dctail='docker-compose logs -f --tail=50'
 alias dcreset='docker-compose stop && docker-compose rm -f'
 dimg-repofilter(){
