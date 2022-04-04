@@ -42,6 +42,8 @@ lvim.plugins = {
 			})
 		end,
 	},
+        -- lua tools 
+{"rafcamlet/nvim-luapad"}
 }
 
 local formatters = require("lvim.lsp.null-ls.formatters")
