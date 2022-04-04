@@ -6,4 +6,23 @@ M.dotfiles = function()
 	telescope.find_files({ cwd = "~/.dotfiles/" })
 end
 
+-- Change Telescope navigation
+-- we use protected-mode (pcall) just in case the plugin wasn't loaded yet.
+local _, actions = pcall(require, "telescope.actions")
+lvim.builtin.telescope.defaults.mappings = {
+	-- for input mode
+	i = {
+		["<C-k>"] = actions.move_selection_previous,
+		["<C-j>"] = actions.move_selection_next,
+		["<C-n>"] = actions.cycle_history_next,
+		["<C-r>"] = actions.cycle_history_prev,
+	},
+	-- for normal mode
+	n = {
+		["j"] = actions.move_selection_next,
+		["k"] = actions.move_selection_previous,
+		["<C-r>"] = actions.cycle_history_prev,
+	},
+}
+
 return M

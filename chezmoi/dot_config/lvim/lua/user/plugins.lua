@@ -42,8 +42,12 @@ lvim.plugins = {
 			})
 		end,
 	},
-        -- lua tools 
-{"rafcamlet/nvim-luapad"}
+	-- lua tools
+	{ "rafcamlet/nvim-luapad" },
+	{
+		"pwntester/octo.nvim",
+		event = "BufRead",
+	},
 }
 
 local formatters = require("lvim.lsp.null-ls.formatters")
