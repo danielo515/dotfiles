@@ -5,7 +5,9 @@ lvim.plugins = {
 		"folke/trouble.nvim",
 		cmd = "TroubleToggle",
 	},
+	-- better surround options
 	{ "tpope/vim-surround", keys = { "c", "d", "y" } },
+	-- jump faster
 	{
 		"phaazon/hop.nvim",
 		branch = "v1", -- optional but strongly recommended
@@ -23,6 +25,7 @@ lvim.plugins = {
 			vim.g.matchup_matchparen_offscreen = { method = "popup" }
 		end,
 	},
+	-- explore LSP symbols
 	{
 		"simrat39/symbols-outline.nvim",
 		cmd = "SymbolsOutline",
@@ -33,6 +36,7 @@ lvim.plugins = {
 			})
 		end,
 	},
+	-- colors
 	{ "folke/lsp-colors.nvim", event = "BufRead" },
 	{ "ckipp01/stylua-nvim" },
 	-- sessions

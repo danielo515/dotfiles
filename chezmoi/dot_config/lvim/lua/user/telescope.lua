@@ -6,6 +6,12 @@ M.dotfiles = function()
 	telescope.find_files({ cwd = "~/.dotfiles/" })
 end
 
+M.find_siblings = function()
+	telescope.find_files({ cwd = vim.fn.expandcmd("%:h") })
+end
+M.find_on_parent = function()
+	telescope.find_files({ cwd = vim.fn.expandcmd("%:h:h") })
+end
 -- Change Telescope navigation
 -- we use protected-mode (pcall) just in case the plugin wasn't loaded yet.
 local _, actions = pcall(require, "telescope.actions")
