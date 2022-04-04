@@ -17,8 +17,8 @@ ZSH_CUSTOM="$DOTFILES/zsh/custom"
 fpath=( "$DOTFILES/zsh/custom" $fpath)
 
 # -- Theme ---------------------------------------------------------------------
-# export NVIM_TUI_ENABLE_TRUE_COLOR=1
-SH_THEME="spaceship"
+export NVIM_TUI_ENABLE_TRUE_COLOR=1
+ZSH_THEME="spaceship"
 SPACESHIP_PROMPT_ADD_NEWLINE="true"
 SPACESHIP_CHAR_SUFFIX=(" ")
 SPACESHIP_CHAR_COLOR_SUCCESS="yellow"
@@ -27,8 +27,9 @@ SPACESHIP_PROMPT_FIRST_PREFIX_SHOW="true"
 SPACESHIP_USER_SHOW="true"
 
 # -- ZSH Plugins ---------------------------------------------------------------
-plugins=(git npm bower vi-mode pj zsh-syntax-highlighting)
+plugins=(git npm bower vi-mode pj zsh-syntax-highlighting zsh-autosuggestions)
 if exists "virtualenvwrapper"; then plugins+=virtualenvwrapper; fi
+if exists "autojump"; then plugins+=autojump; fi
 
 fpath=($DOTFILES/zsh/custom/completion $fpath)
 
@@ -72,7 +73,8 @@ fi
 alias reload='source $DOTFILES/zsh/zshrc'
 
 export PATH="$PATH:/opt/vagrant/bin"
-export PATH="/usr/local/sbin:$HOME/bin:$PATH"
+# Add local bin folders to path
+export PATH="/usr/local/sbin:$HOME/bin:$HOME/.local/bin:$PATH"
 
 # -- Functions -----------------------------------------------------------------
 
@@ -122,7 +124,7 @@ fi
 if [ -f ~/.fzf.zsh ]; then
     source ~/.fzf.zsh
     export FZF_TMUX=1
-    export FZF_DEFAULT_OPTS='--color 16,info:6,hl:13,hl+:13'
+    export FZF_DEFAULT_OPTS="--color 16,info:6,hl:13,hl+:13"
     export FZF_DEFAULT_COMMAND="rg --files-with-matches --no-messages -F ''"
     export FZF_CTRL_T_COMMAND="rg --files-with-matches --no-messages --hidden -F '' | grep -v .git/"
 fi
@@ -192,11 +194,8 @@ export KEYTIMEOUT=1
 
 # Set Spaceship ZSH as a prompt
 autoload -U promptinit; promptinit
-prompt spaceship
-spaceship_vi_mode_disable
-# tabtab source for electron-forge package
-# uninstall by removing these lines or running `tabtab uninstall electron-forge`
-[[ -f /usr/local/lib/node_modules/electron-forge/node_modules/tabtab/.completions/electron-forge.zsh ]] && . /usr/local/lib/node_modules/electron-forge/node_modules/tabtab/.completions/electron-forge.zsh
+# prompt spaceship
+# spaceship_vi_mode_disable
 test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
 
 
