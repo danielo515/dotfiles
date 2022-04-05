@@ -9,7 +9,6 @@ lvim.builtin.lualine.sections.lualine_c = {
 	components.treesitter,
 }
 lvim.builtin.lualine.sections.lualine_x = {
-	require("auto-session-library").current_session_name,
 	components.filetype,
 }
 lvim.builtin.lualine.sections.lualine_y = { "location", "tabs", "windows" }

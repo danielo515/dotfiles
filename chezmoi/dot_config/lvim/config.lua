@@ -51,7 +51,7 @@ lvim.autocommands.custom_groups = {
 	{
 		"BufWritePost",
 		"$HOME/.local/share/chezmoi/chezmoi/*",
-		"execute '!chezmoi apply --source-path %' | LvimReload |<cmd>lua vim.notify('Config applied and reloaded')",
+		"execute '!chezmoi apply --source-path %' | LvimReload ",
 	},
 }
 -- You will likely want to reduce updatetime which affects CursorHold

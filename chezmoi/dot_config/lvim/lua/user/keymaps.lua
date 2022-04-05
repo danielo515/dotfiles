@@ -3,11 +3,14 @@ local M = {}
 local _, builtin = pcall(require, "telescope.builtin")
 local _, themes = pcall(require, "telescope.themes")
 local lv_which = lvim.builtin.which_key.mappings
+-- This config will be merged with the one that lvim has by default
 local whichConfig = {
-	-- search
+	-- extend search
 	s = {
 		d = { "<cmd>lua require('user.telescope').dotfiles()<cr>", "Search dotfiles" },
 		q = { "<cmd>Trouble quickfix<cr>", "QuickFix" },
+		c = { "<cmd>Telescope commands<cr>", "Commands" },
+		C = { "<cmd>Telescope colorscheme<cr>", "Colorscheme" },
 	},
 	["."] = {
 		"<cmd>lua require('user.telescope').find_siblings()<cr>",
@@ -19,19 +22,25 @@ local whichConfig = {
 		"Search files on parent folder",
 	},
 	["P"] = { "<cmd>Telescope projects<CR>", "Projects" },
+	["t"] = {
+		name = "+Trouble",
+		r = { "<cmd>Trouble lsp_references<cr>", "References" },
+		f = { "<cmd>Trouble lsp_definitions<cr>", "Definitions" },
+		d = { "<cmd>Trouble lsp_document_diagnostics<cr>", "Diagnostics" },
+		q = { "<cmd>Trouble quickfix<cr>", "QuickFix" },
+		l = { "<cmd>Trouble loclist<cr>", "LocationList" },
+		w = { "<cmd>Trouble workspace_diagnostics<cr>", "Workspace diagnostics" },
+	},
+	-- extend git
+	["g"] = {
+		S = { "<cmd>lua require 'gitsigns'.stage_hunk()<cr>", "Stage Hunk" },
+		s = { "<cmd>lua require 'gitsigns'.stage_buffer()<cr>", "Stage file" },
+		B = { "<cmd>lua require 'gitsigns'.toggle_current_line_blame()<cr>", "Togle blame" },
+	},
 }
 -- merge our custom config with the one from lvim
 lvim.builtin.which_key.mappings = vim.tbl_deep_extend("force", lv_which, whichConfig)
 
-lvim.builtin.which_key.mappings["t"] = {
-	name = "+Trouble",
-	r = { "<cmd>Trouble lsp_references<cr>", "References" },
-	f = { "<cmd>Trouble lsp_definitions<cr>", "Definitions" },
-	d = { "<cmd>Trouble lsp_document_diagnostics<cr>", "Diagnostics" },
-	q = { "<cmd>Trouble quickfix<cr>", "QuickFix" },
-	l = { "<cmd>Trouble loclist<cr>", "LocationList" },
-	w = { "<cmd>Trouble lsp_workspace_diagnostics<cr>", "Diagnostics" },
-}
 -- utility function for the <C-f> find key
 function M.grep_files(opts)
 	opts = opts or {}
@@ -46,12 +55,20 @@ function M.grep_files(opts)
 	builtin.live_grep(opts)
 end
 
+function M.add_which_map(definition)
+	if vim.tbl_isempty(definition) then
+		vim.notify("Can't use an empty list to extend which key")
+		return nil
+	end
+	lvim.builtin.which_key.mappings = vim.tbl_deep_extend("error", lvim.builtin.which_key.mappings, definition)
+end
+
 -- lvim.keys.normal_mode["<C-R>"] = "<cmd>LvimReload<cr>"
 lvim.keys.normal_mode["<C-f>"] = "<cmd>lua require('user.keymaps').grep_files()<cr>"
 lvim.keys.normal_mode["<C-x>"] = "<cmd>BufferKill<cr>"
 lvim.keys.normal_mode["kj"] = false
 lvim.keys.normal_mode["jk"] = false
-lvim.keys.normal_mode["s"] = ":HopChar1<cr>"
+lvim.keys.normal_mode["s"] = ":HopChar2<cr>"
 lvim.keys.normal_mode["<C-s>"] = ":w<cr>"
 -- insert_mode key bindings
 lvim.keys.insert_mode["<C-f>"] = lvim.keys.normal_mode["<C-f>"]
