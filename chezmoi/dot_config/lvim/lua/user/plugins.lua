@@ -1,8 +1,6 @@
 local persistence = require("user.persistence")
 
 lvim.plugins = {
-	--treesiter
-	require("user.textObjects").plugin,
 	{
 		"folke/trouble.nvim",
 		cmd = "TroubleToggle",
@@ -126,9 +124,19 @@ lvim.plugins = {
 		"sindrets/diffview.nvim",
 		event = "BufRead",
 	},
-
+	{
+		"AckslD/nvim-neoclip.lua",
+		config = function()
+			require("user.neoclip").config()
+		end,
+	},
+	--treesiter
+	require("user.textObjects").plugin,
+	-- sessions management
 	persistence.plugin,
 }
+
+vim.list_extend(lvim.plugins, require("user.telescope").plugins)
 
 require("user.keymaps").add_which_map(persistence.which_map)
 
