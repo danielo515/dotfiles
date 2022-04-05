@@ -1,17 +1,64 @@
-local telescope = require("telescope.builtin")
+local builtin = require("telescope.builtin")
+local _, themes = pcall(require, "telescope.themes")
 
 local M = {}
-
 M.dotfiles = function()
-	telescope.find_files({ cwd = "~/.dotfiles/" })
+	builtin.find_files({ cwd = "~/.dotfiles/" })
 end
 
 M.find_siblings = function()
-	telescope.find_files({ cwd = vim.fn.expandcmd("%:h") })
+	local opts = themes.get_dropdown({ cwd = vim.fn.expandcmd("%:h") })
+	builtin.find_files(opts)
 end
 M.find_on_parent = function()
-	telescope.find_files({ cwd = vim.fn.expandcmd("%:h:h") })
+	builtin.find_files(themes.vscode({ cwd = vim.fn.expandcmd("%:h:h") }))
 end
+
+-- utility function for the <C-f> find key
+function M.grep_files(opts)
+	opts = opts or {}
+	local cwd = vim.fn.getcwd()
+	local theme_opts = themes.get_ivy({
+		sorting_strategy = "ascending",
+		layout_strategy = "bottom_pane",
+		prompt_prefix = ">> ",
+		prompt_title = "~ Grep " .. cwd .. " ~",
+		search_dirs = { vim.fn.getcwd(0) },
+	})
+	opts = vim.tbl_deep_extend("force", theme_opts, opts)
+	builtin.live_grep(opts)
+end
+-- show code actions in a fancy floating window
+function M.code_actions()
+	local opts = {
+		layout_config = {
+			prompt_position = "top",
+			width = 80,
+			height = 12,
+		},
+		winblend = 0,
+		border = {},
+		borderchars = { "─", "│", "─", "│", "╭", "╮", "╯", "╰" },
+		previewer = false,
+		shorten_path = false,
+	}
+	builtin.lsp_code_actions(themes.get_dropdown(opts))
+end
+
+M.plugins = {
+	{
+		"nvim-telescope/telescope-frecency.nvim",
+		requires = { "tami5/sqlite.lua" },
+	},
+}
+
+lvim.builtin.telescope.path_display = "truncate"
+
+lvim.builtin.telescope.on_config_done = function(tele)
+	tele.load_extension("frecency")
+	tele.load_extension("command_palette")
+end
+
 -- Change Telescope navigation
 -- we use protected-mode (pcall) just in case the plugin wasn't loaded yet.
 local _, actions = pcall(require, "telescope.actions")

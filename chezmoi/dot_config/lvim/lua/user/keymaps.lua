@@ -43,20 +43,6 @@ local whichConfig = {
 -- merge our custom config with the one from lvim
 lvim.builtin.which_key.mappings = vim.tbl_deep_extend("force", lv_which, whichConfig)
 
--- utility function for the <C-f> find key
-function M.grep_files(opts)
-	opts = opts or {}
-	local theme_opts = themes.get_ivy({
-		sorting_strategy = "ascending",
-		layout_strategy = "bottom_pane",
-		prompt_prefix = ">> ",
-		prompt_title = "~ Grep files ~",
-		search_dirs = { vim.fn.getcwd(0) },
-	})
-	opts = vim.tbl_deep_extend("force", theme_opts, opts)
-	builtin.live_grep(opts)
-end
-
 function M.add_which_map(definition)
 	if vim.tbl_isempty(definition) then
 		vim.notify("Can't use an empty list to extend which key")
@@ -66,11 +52,11 @@ function M.add_which_map(definition)
 end
 
 -- lvim.keys.normal_mode["<C-R>"] = "<cmd>LvimReload<cr>"
-lvim.keys.normal_mode["<C-f>"] = "<cmd>lua require('user.keymaps').grep_files()<cr>"
+lvim.keys.normal_mode["<C-f>"] = "<cmd>lua require('user.telescope').grep_files()<cr>"
 lvim.keys.normal_mode["<C-x>"] = "<cmd>BufferKill<cr>"
 lvim.keys.normal_mode["kj"] = false
 lvim.keys.normal_mode["jk"] = false
-lvim.keys.normal_mode["s"] = ":HopChar2<cr>"
+lvim.keys.normal_mode["s"] = ":HopChar1<cr>"
 lvim.keys.normal_mode["<C-s>"] = ":w<cr>"
 lvim.keys.normal_mode["<Tab>"] = "<cmd>Telescope buffers<cr>"
 lvim.keys.visual_mode["p"] = '"0p'
