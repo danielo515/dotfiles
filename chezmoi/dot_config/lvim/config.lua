@@ -50,8 +50,8 @@ lvim.autocommands.custom_groups = {
 	-- Apply chezmoi whenever a dotfile is updated
 	{
 		"BufWritePost",
-		"~/.local/share/chezmoi/chezmoi/*",
-		"silent execute '!chezmoi apply --source-path %' | LvimReload",
+		"$HOME/.local/share/chezmoi/chezmoi/*",
+		"execute '!chezmoi apply --source-path %' | LvimReload | lua vim.notify('Config applied and reloaded')",
 	},
 }
 -- You will likely want to reduce updatetime which affects CursorHold

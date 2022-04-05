@@ -1,4 +1,6 @@
 lvim.plugins = {
+	--treesiter
+	require("user.textObjects").plugin,
 	{
 		"folke/trouble.nvim",
 		cmd = "TroubleToggle",
