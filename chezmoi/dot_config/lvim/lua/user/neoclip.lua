@@ -1,14 +1,16 @@
+local log = require("lvim.core.log")
 local M = {}
 
 M.config = function()
 	local status_ok, neoclip = pcall(require, "neoclip")
 	if not status_ok then
+		log:error("Could not load neoclip config")
 		return
 	end
 
 	neoclip.setup({
 		history = 50,
-		enable_persistent_history = false,
+		enable_persistent_history = true,
 		db_path = vim.fn.stdpath("data") .. "/neoclip.sqlite3",
 		keys = {
 			telescope = {
@@ -41,6 +43,7 @@ M.config = function()
 	end
 	local whk_status, whk = pcall(require, "which-key")
 	if not whk_status then
+		log:error("Could not load which-key")
 		return
 	end
 	whk.register({

@@ -57,6 +57,7 @@ lvim.builtin.telescope.path_display = "truncate"
 lvim.builtin.telescope.on_config_done = function(tele)
 	tele.load_extension("frecency")
 	tele.load_extension("command_palette")
+	tele.load_extension("notify")
 end
 
 -- Change Telescope navigation

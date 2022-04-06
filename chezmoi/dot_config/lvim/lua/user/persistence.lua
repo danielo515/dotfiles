@@ -13,7 +13,7 @@ local M = {
 	which_map = {
 		["S"] = {
 			name = "Session",
-			c = { "<cmd>lua require('persistence').load()<cr>", "Restore last session for current dir" },
+			r = { "<cmd>lua require('persistence').load()<cr>", "Restore last session for current dir" },
 			l = { "<cmd>lua require('persistence').load({ last = true })<cr>", "Restore last session" },
 			Q = { "<cmd>lua require('persistence').stop()<cr>", "Quit without saving session" },
 		},

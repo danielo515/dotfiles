@@ -145,6 +145,7 @@ lvim.plugins = {
 	},
 	{
 		"AckslD/nvim-neoclip.lua",
+		requires = { "tami5/sqlite.lua" },
 		config = function()
 			require("user.neoclip").config()
 		end,

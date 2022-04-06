@@ -1,7 +1,6 @@
+local log = require("lvim.core.log")
 local M = {}
 
-local _, builtin = pcall(require, "telescope.builtin")
-local _, themes = pcall(require, "telescope.themes")
 local lv_which = lvim.builtin.which_key.mappings
 -- This config will be merged with the one that lvim has by default
 local whichConfig = {
@@ -11,6 +10,8 @@ local whichConfig = {
 		q = { "<cmd>Trouble quickfix<cr>", "QuickFix" },
 		c = { "<cmd>Telescope commands<cr>", "Commands" },
 		C = { "<cmd>Telescope colorscheme<cr>", "Colorscheme" },
+		s = { "<cmd>Telescope lsp_dynamic_workspace_symbols<cr>", "Workspace symbols" },
+		n = { "<cmd>Telescope notify<cr>", "Notifications" },
 		["."] = { "<cmd>Telescope resume<cr>", "Repeat search" },
 	},
 	["."] = {
@@ -45,19 +46,20 @@ lvim.builtin.which_key.mappings = vim.tbl_deep_extend("force", lv_which, whichCo
 
 function M.add_which_map(definition)
 	if vim.tbl_isempty(definition) then
-		vim.notify("Can't use an empty list to extend which key")
+		log:error("Can't use an empty list to extend which key")
 		return nil
 	end
 	lvim.builtin.which_key.mappings = vim.tbl_deep_extend("error", lvim.builtin.which_key.mappings, definition)
 end
 
--- lvim.keys.normal_mode["<C-R>"] = "<cmd>LvimReload<cr>"
 lvim.keys.normal_mode["<C-f>"] = "<cmd>lua require('user.telescope').grep_files()<cr>"
 lvim.keys.normal_mode["<C-x>"] = "<cmd>BufferKill<cr>"
 lvim.keys.normal_mode["kj"] = false
 lvim.keys.normal_mode["jk"] = false
 lvim.keys.normal_mode["s"] = ":HopChar1<cr>"
 lvim.keys.normal_mode["<C-s>"] = ":w<cr>"
+lvim.keys.normal_mode["<F2>"] = "<cmd>lua vim.lsp.buf.rename()<cr>"
+lvim.keys.normal_mode["F"] = ":Telescope frecency<cr>"
 lvim.keys.normal_mode["<Tab>"] = "<cmd>Telescope buffers<cr>"
 lvim.keys.visual_mode["p"] = '"0p'
 -- Tab bindings
