@@ -54,6 +54,7 @@ end
 
 lvim.keys.normal_mode["<C-f>"] = "<cmd>lua require('user.telescope').grep_files()<cr>"
 lvim.keys.normal_mode["<C-x>"] = "<cmd>BufferKill<cr>"
+lvim.keys.normal_mode["<M-cr>"] = "<cmd>lua vim.lsp.codelens.run()<cr>"
 lvim.keys.normal_mode["kj"] = false
 lvim.keys.normal_mode["jk"] = false
 lvim.keys.normal_mode["s"] = ":HopChar1<cr>"
@@ -66,8 +67,10 @@ lvim.keys.visual_mode["p"] = '"0p'
 -- Tab bindings
 lvim.keys.normal_mode["tk"] = ":tabclose<cr>"
 lvim.keys.normal_mode["tn"] = ":tabnew<cr>"
-
+lvim.keys.normal_mode["tl"] = ":tabNext<cr>"
 -- insert_mode key bindings
 lvim.keys.insert_mode["<C-f>"] = lvim.keys.normal_mode["<C-f>"]
+lvim.keys.insert_mode["<C-y>"] =
+	"<cmd>lua require('telescope').extensions.neoclip.default(require('telescope.themes').get_cursor())<cr>"
 
 return M
