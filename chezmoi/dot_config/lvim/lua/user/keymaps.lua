@@ -60,7 +60,8 @@ lvim.keys.normal_mode["s"] = ":HopChar1<cr>"
 lvim.keys.normal_mode["<C-s>"] = ":w<cr>"
 lvim.keys.normal_mode["<F2>"] = "<cmd>lua vim.lsp.buf.rename()<cr>"
 lvim.keys.normal_mode["F"] = ":Telescope frecency<cr>"
-lvim.keys.normal_mode["<Tab>"] = "<cmd>Telescope buffers<cr>"
+lvim.keys.normal_mode["<Tab>"] = "<cmd>lua require('user.telescope').buffers()<cr>"
+
 lvim.keys.visual_mode["p"] = '"0p'
 -- Tab bindings
 lvim.keys.normal_mode["tk"] = ":tabclose<cr>"

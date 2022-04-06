@@ -45,6 +45,10 @@ function M.code_actions()
 	builtin.lsp_code_actions(themes.get_dropdown(opts))
 end
 
+function M.buffers()
+	require("telescope.builtin").buffers(require("telescope.themes").vscode())
+end
+
 M.plugins = {
 	{
 		"nvim-telescope/telescope-frecency.nvim",
