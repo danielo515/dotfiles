@@ -45,8 +45,29 @@ lvim.plugins = {
 		"pwntester/octo.nvim",
 		event = "BufRead",
 	},
+	-- Improve nvim interface for inputs and that stuff
+	{ "stevearc/dressing.nvim" },
+	-- Highlight parens and that stuff using treesitter
 	{
 		"p00f/nvim-ts-rainbow",
+		config = function()
+			require("nvim-treesitter.configs").setup({
+				rainbow = {
+					enable = true,
+					extended_mode = false,
+					max_file_lines = nil,
+					colors = {
+						"#ff0000",
+						"#ffa500",
+						"#ffff00",
+						"#008000",
+						"#0000ff",
+						"#4b0082",
+						"#ee82ee",
+					},
+				},
+			})
+		end,
 	},
 	-- Show current function at the top of the screen when function does not fit in screen
 	{
@@ -114,9 +135,7 @@ lvim.plugins = {
 		"kevinhwang91/nvim-bqf",
 		event = "BufReadPost",
 		config = function()
-			require("bqf").setup({
-				auto_enable = true,
-			})
+			require("user.bqf").config()
 		end,
 	},
 	-- Awesome diff view
