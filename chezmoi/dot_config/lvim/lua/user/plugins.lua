@@ -156,7 +156,8 @@ lvim.plugins = {
 	--treesiter
 	require("user.textObjects").plugin,
 	-- sessions management
-	persistence.plugin,
+	-- persistence.plugin,
+	require("user.autosession"),
 }
 
 vim.list_extend(lvim.plugins, require("user.telescope").plugins)
