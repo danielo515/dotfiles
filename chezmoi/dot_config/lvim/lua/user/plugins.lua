@@ -44,6 +44,9 @@ lvim.plugins = {
 	{
 		"pwntester/octo.nvim",
 		event = "BufRead",
+		config = function()
+			require("user.octo").setup()
+		end,
 	},
 	-- Improve nvim interface for inputs and that stuff
 	{ "stevearc/dressing.nvim" },
