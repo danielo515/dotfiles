@@ -44,16 +44,6 @@ lvim.builtin.treesitter.highlight.enabled = true
 -- generic LSP settings
 lvim.lsp.automatic_servers_installation = true
 
-lvim.autocommands.custom_groups = {
-	-- On entering a lua file, set the tab spacing and shift width to 8gg
-	{ "BufWinEnter", "*.lua", "setlocal ts=8 sw=8" },
-	-- Apply chezmoi whenever a dotfile is updated
-	{
-		"BufWritePost",
-		"$HOME/.local/share/chezmoi/chezmoi/*",
-		"execute '!chezmoi apply --source-path %' | LvimReload ",
-	},
-}
 -- You will likely want to reduce updatetime which affects CursorHold
 -- note: this setting is global and should be set only once
 vim.o.updatetime = 250
@@ -72,4 +62,6 @@ end
 require("user.keymaps")
 require("user.telescope")
 require("user.plugins")
-require("user.statusline")
+require("user.autocommands").configure()
+-- require("user.statusline")
+require("user.lualine").config()

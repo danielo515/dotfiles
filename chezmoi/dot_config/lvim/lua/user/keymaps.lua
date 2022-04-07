@@ -54,7 +54,7 @@ end
 
 lvim.keys.normal_mode["<C-f>"] = "<cmd>lua require('user.telescope').grep_files()<cr>"
 lvim.keys.normal_mode["<C-x>"] = "<cmd>BufferKill<cr>"
-lvim.keys.normal_mode["<M-cr>"] = "<cmd>lua vim.lsp.codelens.run()<cr>"
+lvim.keys.normal_mode["<M-cr>"] = "<cmd>lua require('lvim.core.telescope').code_actions()<cr>"
 lvim.keys.normal_mode["kj"] = false
 lvim.keys.normal_mode["jk"] = false
 lvim.keys.normal_mode["s"] = ":HopChar1<cr>"

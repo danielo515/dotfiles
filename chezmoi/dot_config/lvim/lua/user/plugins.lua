@@ -158,6 +158,7 @@ lvim.plugins = {
 	-- sessions management
 	-- persistence.plugin,
 	require("user.autosession"),
+	{ "kosayoda/nvim-lightbulb" },
 }
 
 vim.list_extend(lvim.plugins, require("user.telescope").plugins)
