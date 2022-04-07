@@ -60,8 +60,9 @@ for module, _ in pairs(package.loaded) do
 end
 
 require("user.keymaps")
-require("user.telescope")
 require("user.plugins")
+require("user.telescope")
 require("user.autocommands").configure()
 -- require("user.statusline")
 require("user.lualine").config()
+require("user.linters").config()
