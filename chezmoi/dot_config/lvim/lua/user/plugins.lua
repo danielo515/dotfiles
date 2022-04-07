@@ -153,8 +153,14 @@ lvim.plugins = {
 			require("user.neoclip").config()
 		end,
 	},
-	--treesiter
-	require("user.textObjects").plugin,
+	-- powerful search and replace
+	{
+		"windwp/nvim-spectre",
+		event = "BufRead",
+		config = function()
+			require("spectre").setup()
+		end,
+	},
 	-- sessions management
 	-- persistence.plugin,
 	require("user.autosession"),
@@ -168,6 +174,8 @@ lvim.plugins = {
 			require("nvim-ts-autotag").setup()
 		end,
 	},
+	--treesiter
+	require("user.textObjects").plugin,
 	{
 		"nvim-treesitter/playground",
 		cmd = "TSPlaygroundToggle",
@@ -175,6 +183,7 @@ lvim.plugins = {
 			lvim.builtin.treesitter.playground.enable = true
 		end,
 	},
+	-- show colors inline
 	{
 		"norcalli/nvim-colorizer.lua",
 		config = function()
@@ -190,8 +199,6 @@ lvim.plugins = {
 }
 
 vim.list_extend(lvim.plugins, require("user.telescope").plugins)
-
-require("user.keymaps").add_which_map(persistence.which_map)
 
 local formatters = require("lvim.lsp.null-ls.formatters")
 formatters.setup({
