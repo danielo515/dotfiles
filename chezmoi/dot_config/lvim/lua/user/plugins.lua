@@ -148,7 +148,7 @@ lvim.plugins = {
 	},
 	{
 		"AckslD/nvim-neoclip.lua",
-		requires = { "tami5/sqlite.lua" },
+		requires = { "tami5/sqlite.lua", "folke/which-key.nvim" },
 		config = function()
 			require("user.neoclip").config()
 		end,
@@ -197,8 +197,6 @@ lvim.plugins = {
 		end,
 	},
 }
-
-vim.list_extend(lvim.plugins, require("user.telescope").plugins)
 
 local formatters = require("lvim.lsp.null-ls.formatters")
 formatters.setup({

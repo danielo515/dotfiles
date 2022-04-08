@@ -1,7 +1,18 @@
-local builtin = require("telescope.builtin")
-local _, themes = pcall(require, "telescope.themes")
+local builtin_ok, builtin = pcall(require, "telescope.builtin")
+local themes_ok, themes = pcall(require, "telescope.themes")
+local log = require("lvim.core.log")
+local notify = require("notify")
+
+if not themes_ok then
+	log:warn("Could not load telescope themes")
+end
+
+if not builtin_ok then
+	log:warn("Could not load telescope builtin")
+end
 
 local M = {}
+
 M.dotfiles = function()
 	builtin.find_files({ cwd = "~/.dotfiles/" })
 end
@@ -49,7 +60,7 @@ function M.buffers()
 	require("telescope.builtin").buffers(require("telescope.themes").vscode())
 end
 
-M.plugins = {
+local plugins = {
 	{
 		"nvim-telescope/telescope-frecency.nvim",
 		requires = { "tami5/sqlite.lua" },
@@ -59,6 +70,8 @@ M.plugins = {
 	},
 }
 
+vim.list_extend(lvim.plugins, plugins)
+
 lvim.builtin.telescope.path_display = "truncate"
 
 lvim.builtin.telescope.on_config_done = function(tele)
@@ -66,6 +79,23 @@ lvim.builtin.telescope.on_config_done = function(tele)
 	tele.load_extension("command_palette")
 	tele.load_extension("notify")
 	tele.load_extension("file_browser")
+	local opts = {
+		pickers = {
+			lsp_workspace_symbols = {
+				mappings = {
+					i = {
+						["<cr>"] = function(prompt_bufnr)
+							local selection = require("telescope.actions.state").get_selected_entry()
+							print(vim.inspect(selection))
+						end,
+					},
+				},
+			},
+		},
+	}
+
+	notify(vim.inspect(opts))
+	tele.setup(opts)
 end
 
 -- Change Telescope navigation
@@ -74,7 +104,6 @@ local _, actions = pcall(require, "telescope.actions")
 lvim.builtin.telescope.defaults.mappings = {
 	-- for input mode
 	i = {
-		["<C-k>"] = actions.move_selection_previous,
 		["<C-j>"] = actions.move_selection_next,
 		["<C-n>"] = actions.cycle_history_next,
 		["<C-r>"] = actions.cycle_history_prev,
