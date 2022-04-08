@@ -23,9 +23,9 @@ function M.setup()
 					["ac"] = "@class.outer",
 					["ic"] = "@class.inner",
 
-					["ar"] = "@parameter.inner", -- "ap" is already used
+					["aa"] = "@parameter.inner", -- "ap" is already used
 
-					["ir"] = "@parameter.outer", -- "ip" is already used
+					["ia"] = "@parameter.outer", -- "ip" is already used
 					["."] = "textsubjects-smart",
 					[";"] = "textsubjects-big",
 				},
