@@ -21,6 +21,7 @@ M.find_siblings = function()
 	local opts = themes.get_dropdown({ cwd = vim.fn.expandcmd("%:h") })
 	builtin.find_files(opts)
 end
+
 M.find_on_parent = function()
 	builtin.find_files(themes.vscode({ cwd = vim.fn.expandcmd("%:h:h") }))
 end
@@ -39,6 +40,7 @@ function M.grep_files(opts)
 	opts = vim.tbl_deep_extend("force", theme_opts, opts)
 	builtin.live_grep(opts)
 end
+
 -- show code actions in a fancy floating window
 function M.code_actions()
 	local opts = {
@@ -59,61 +61,5 @@ end
 function M.buffers()
 	require("telescope.builtin").buffers(require("telescope.themes").vscode())
 end
-
-local plugins = {
-	{
-		"nvim-telescope/telescope-frecency.nvim",
-		requires = { "tami5/sqlite.lua" },
-	},
-	{
-		"nvim-telescope/telescope-file-browser.nvim",
-	},
-}
-
-vim.list_extend(lvim.plugins, plugins)
-
-lvim.builtin.telescope.path_display = "truncate"
-
-lvim.builtin.telescope.on_config_done = function(tele)
-	tele.load_extension("frecency")
-	tele.load_extension("command_palette")
-	tele.load_extension("notify")
-	tele.load_extension("file_browser")
-	local opts = {
-		pickers = {
-			lsp_workspace_symbols = {
-				mappings = {
-					i = {
-						["<cr>"] = function(prompt_bufnr)
-							local selection = require("telescope.actions.state").get_selected_entry()
-							print(vim.inspect(selection))
-						end,
-					},
-				},
-			},
-		},
-	}
-
-	notify(vim.inspect(opts))
-	tele.setup(opts)
-end
-
--- Change Telescope navigation
--- we use protected-mode (pcall) just in case the plugin wasn't loaded yet.
-local _, actions = pcall(require, "telescope.actions")
-lvim.builtin.telescope.defaults.mappings = {
-	-- for input mode
-	i = {
-		["<C-j>"] = actions.move_selection_next,
-		["<C-n>"] = actions.cycle_history_next,
-		["<C-r>"] = actions.cycle_history_prev,
-	},
-	-- for normal mode
-	n = {
-		["j"] = actions.move_selection_next,
-		["k"] = actions.move_selection_previous,
-		["<C-r>"] = actions.cycle_history_prev,
-	},
-}
 
 return M
