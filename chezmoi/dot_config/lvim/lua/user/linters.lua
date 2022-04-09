@@ -7,6 +7,7 @@ function M.config()
 			command = "eslint",
 			filetypes = { "typescript", "typescriptreact" },
 		},
+		{ exe = "stylua", filetypes = { "lua" } },
 	})
 
 	local linters = require("lvim.lsp.null-ls.linters")
