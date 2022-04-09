@@ -4,7 +4,7 @@ function M.setup()
 	require("nvim-treesitter.configs").setup({
 		ensure_installed = { "bash", "lua", "json", "javascript", "yaml", "css", "typescript" },
 
-		highlight = { enable = true },
+		highlight = { enable = false },
 		indent = { enable = true },
 		autotag = { enable = true },
 		rainbow = { enable = false },
