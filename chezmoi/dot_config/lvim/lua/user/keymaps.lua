@@ -43,7 +43,11 @@ local whichConfig = {
 	},
 }
 -- merge our custom config with the one from lvim
-lvim.builtin.which_key.mappings = vim.tbl_deep_extend("force", lv_which, whichConfig)
+-- lvim.builtin.which_key.mappings = vim.tbl_deep_extend("force", lv_which, whichConfig)
+
+lvim.builtin.which_key.on_config_done = function(which)
+	which.register(whichConfig, { prefix = "<leader>" })
+end
 
 function M.add_which_map(definition)
 	if vim.tbl_isempty(definition) then
