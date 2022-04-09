@@ -196,4 +196,5 @@ lvim.plugins = {
 			})
 		end,
 	},
+	{ "rlane/pounce.nvim" },
 }

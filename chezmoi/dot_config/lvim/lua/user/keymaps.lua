@@ -57,11 +57,12 @@ lvim.keys.normal_mode["<C-x>"] = "<cmd>BufferKill<cr>"
 lvim.keys.normal_mode["<M-cr>"] = "<cmd>lua require('lvim.core.telescope').code_actions()<cr>"
 lvim.keys.normal_mode["kj"] = false
 lvim.keys.normal_mode["jk"] = false
-lvim.keys.normal_mode["s"] = ":HopChar1<cr>"
+lvim.keys.normal_mode["s"] = ":Pounce<cr>"
 lvim.keys.normal_mode["<C-s>"] = ":w<cr>"
 lvim.keys.normal_mode["<F2>"] = "<cmd>lua vim.lsp.buf.rename()<cr>"
 lvim.keys.normal_mode["F"] = ":Telescope frecency<cr>"
 lvim.keys.normal_mode["<Tab>"] = "<cmd>lua require('user.telescope').buffers()<cr>"
+lvim.keys.normal_mode["<M-k>"] = ":Telescope builtin<cr>"
 
 lvim.keys.visual_mode["p"] = '"0p'
 -- Tab bindings
