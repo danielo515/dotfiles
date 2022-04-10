@@ -44,8 +44,8 @@ local whichConfig = {
 	},
 	-- file section
 	f = {
-		r = { "<cmd>:Telescope frecency default_workspace=CWD", "Browse recent files" },
-		R = { "<cmd>:Telescope frecency", "Browse recent files globally" },
+		r = { "<cmd>:Telescope frecency default_workspace=CWD<cr>", "Browse recent files" },
+		R = { "<cmd>:Telescope frecency<cr>", "Browse recent files globally" },
 		f = { require("lvim.core.telescope.custom-finders").find_project_files, "Find File" },
 	},
 }
