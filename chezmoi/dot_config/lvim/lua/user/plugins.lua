@@ -7,6 +7,7 @@ lvim.plugins = {
 	},
 	-- better surround options
 	{ "tpope/vim-surround", keys = { "c", "d", "y" } },
+	{ "tpope/vim-repeat" },
 	-- jump faster
 	{
 		"phaazon/hop.nvim",
@@ -16,6 +17,8 @@ lvim.plugins = {
 			require("hop").setup({ keys = "etovxqpdygfblzhckisuran" })
 		end,
 	},
+	-- fuzzy jummp on the file
+	{ "rlane/pounce.nvim" },
 
 	--#region better % navigation
 	{
@@ -94,6 +97,7 @@ lvim.plugins = {
 			})
 		end,
 	},
+	-- shows the function signatures when you are inside the parameter
 	{
 		"ray-x/lsp_signature.nvim",
 		event = "BufRead",
@@ -146,9 +150,11 @@ lvim.plugins = {
 		"sindrets/diffview.nvim",
 		event = "BufRead",
 	},
+	-- Clipboard history
 	{
 		"AckslD/nvim-neoclip.lua",
-		requires = { "tami5/sqlite.lua", "folke/which-key.nvim" },
+		requires = { "tami5/sqlite.lua" },
+		after = "which-key.nvim",
 		config = function()
 			require("user.neoclip").config()
 		end,
@@ -181,6 +187,8 @@ lvim.plugins = {
 		cmd = "TSPlaygroundToggle",
 		config = function()
 			lvim.builtin.treesitter.playground.enable = true
+			lvim.builtin.treesitter.playground.updatetime = 20
+			vim.cmd(":TSInstall query")
 		end,
 	},
 	-- show colors inline
@@ -196,5 +204,4 @@ lvim.plugins = {
 			})
 		end,
 	},
-	{ "rlane/pounce.nvim" },
 }
