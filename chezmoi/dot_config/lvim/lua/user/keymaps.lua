@@ -12,6 +12,7 @@ local whichConfig = {
 		C = { "<cmd>Telescope commands_history<cr>", "Commands history" },
 		s = { "<cmd>Telescope lsp_workspace_symbols<cr>", "Workspace symbols" },
 		n = { "<cmd>Telescope notify<cr>", "Notifications" },
+		j = { "<cmd>Telescope jumplist<cr>", "Jump list" },
 		["."] = { "<cmd>Telescope resume<cr>", "Repeat search" },
 	},
 	["."] = {
@@ -41,6 +42,12 @@ local whichConfig = {
 		d = { "<cmd>DiffviewOpen<cr>", "Open git diff" },
 		g = { ":Lazygit<cr>", "Open git diff" },
 	},
+	-- file section
+	f = {
+		r = { "<cmd>:Telescope frecency default_workspace=CWD", "Browse recent files" },
+		R = { "<cmd>:Telescope frecency", "Browse recent files globally" },
+		f = { require("lvim.core.telescope.custom-finders").find_project_files, "Find File" },
+	},
 }
 -- merge our custom config with the one from lvim
 -- lvim.builtin.which_key.mappings = vim.tbl_deep_extend("force", lv_which, whichConfig)
@@ -67,9 +74,10 @@ lvim.keys.normal_mode["<C-s>"] = ":w<cr>"
 lvim.keys.normal_mode["<F2>"] = "<cmd>lua vim.lsp.buf.rename()<cr>"
 lvim.keys.normal_mode["F"] = ":Telescope frecency<cr>"
 lvim.keys.normal_mode["<Tab>"] = "<cmd>lua require('user.telescope').buffers()<cr>"
-lvim.keys.normal_mode["<M-k>"] = ":Telescope builtin<cr>"
-
+lvim.keys.normal_mode["<M-k>"] = ":Telescope builtin include_extensions=true<cr>"
+lvim.keys.normal_mode["ml"] = "dd<C-W><C-l>p<C-w><C-h>"
 lvim.keys.visual_mode["p"] = '"0p'
+lvim.keys.visual_mode["s"] = ":Pounce<cr>"
 -- Tab bindings
 lvim.keys.normal_mode["tk"] = ":tabclose<cr>"
 lvim.keys.normal_mode["tn"] = ":tabnew<cr>"

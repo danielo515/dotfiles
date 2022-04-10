@@ -7,6 +7,7 @@ local plugins = {
 		"nvim-telescope/telescope-file-browser.nvim",
 	},
 	{ "kdheepak/lazygit.nvim" },
+	{ "nvim-telescope/telescope-packer.nvim" },
 }
 
 vim.list_extend(lvim.plugins, plugins)
@@ -19,6 +20,7 @@ lvim.builtin.telescope.on_config_done = function(tele)
 	tele.load_extension("notify")
 	tele.load_extension("file_browser")
 	tele.load_extension("lazygit")
+	tele.load_extension("packer")
 	local opts = {
 		pickers = {
 			lsp_workspace_symbols = {
