@@ -2,12 +2,16 @@ local M = {}
 
 function M.setup()
 	require("nvim-treesitter.configs").setup({
-		ensure_installed = { "bash", "lua", "json", "javascript", "yaml", "css", "typescript" },
-
 		highlight = { enable = false },
 		indent = { enable = true },
 		autotag = { enable = true },
 		rainbow = { enable = false },
+
+		query_linter = {
+			enable = true,
+			use_virtual_text = true,
+			lint_events = { "BufWrite", "CursorHold" },
+		},
 
 		textobjects = {
 			select = {
@@ -20,12 +24,14 @@ function M.setup()
 					-- You can use the capture groups defined in textobjects.scm
 					["af"] = "@function.outer",
 					["if"] = "@function.inner",
-					["ac"] = "@class.outer",
-					["ic"] = "@class.inner",
+					["ac"] = "@conditional.outer",
+					["ic"] = "@conditional.inner",
 
-					["aa"] = "@parameter.inner", -- "ap" is already used
+					["ia"] = "@parameter.inner", -- "ap" is already used
 
-					["ia"] = "@parameter.outer", -- "ip" is already used
+					["aa"] = "@parameter.outer", -- "ip" is already used
+					["al"] = "@loop.outer",
+					["il"] = "@loop.inner",
 					["."] = "textsubjects-smart",
 					[";"] = "textsubjects-big",
 				},
