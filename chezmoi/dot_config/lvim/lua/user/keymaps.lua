@@ -9,6 +9,7 @@ local whichConfig = {
 		s = { "<cmd>Telescope lsp_workspace_symbols<cr>", "Workspace symbols" },
 		n = { "<cmd>Telescope notify<cr>", "Notifications" },
 		j = { "<cmd>Telescope jumplist<cr>", "Jump list" },
+		P = { "<cmd>Telescope packer<cr>", "Packer search" },
 		["."] = { "<cmd>Telescope resume<cr>", "Repeat search" },
 	},
 	["."] = {
@@ -40,8 +41,9 @@ local whichConfig = {
 	},
 	-- file section
 	f = {
-		r = { "<cmd>:Telescope frecency default_workspace=CWD<cr>", "Browse recent files" },
-		R = { "<cmd>:Telescope frecency<cr>", "Browse recent files globally" },
+		r = { "<cmd>Telescope frecency default_workspace=CWD<cr>", "Browse recent files" },
+		R = { "<cmd>Telescope frecency<cr>", "Browse recent files globally" },
+		b = { "<cmd>Telescope file_browser<cr>", "Browse file tree" },
 		f = { require("lvim.core.telescope.custom-finders").find_project_files, "Find File" },
 	},
 }
