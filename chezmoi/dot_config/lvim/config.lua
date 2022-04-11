@@ -15,6 +15,7 @@ lvim.builtin.terminal.active = true
 lvim.builtin.nvimtree.setup.view.side = "left"
 lvim.builtin.nvimtree.show_icons.git = 1
 lvim.builtin.which_key.setup.plugins.presets.motions = true
+lvim.builtin.treesitter.rainbow.enable = true
 
 -- You will likely want to reduce updatetime which affects CursorHold
 -- note: this setting is global and should be set only once

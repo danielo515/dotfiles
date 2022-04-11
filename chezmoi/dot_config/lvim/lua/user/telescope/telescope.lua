@@ -35,10 +35,12 @@ function M.grep_files(opts)
 		layout_strategy = "bottom_pane",
 		prompt_prefix = ">> ",
 		prompt_title = "~ Grep " .. cwd .. " ~",
-		search_dirs = { vim.fn.getcwd(0) },
+		search_dirs = { cwd },
 	})
 	opts = vim.tbl_deep_extend("force", theme_opts, opts)
-	builtin.live_grep(opts)
+	vim.ui.input({}, function(text)
+		builtin.grep_string(vim.tbl_extend("force", opts, { search = text }))
+	end)
 end
 
 -- show code actions in a fancy floating window
