@@ -3,7 +3,7 @@ lvim.lsp.automatic_servers_installation = true
 -- general
 lvim.log.level = "debug"
 lvim.format_on_save = true
-lvim.colorscheme = "onedarker"
+lvim.colorscheme = "dracula"
 lvim.builtin.nvimtree.setup.open_on_setup = false
 lvim.builtin.nvimtree.setup.view.auto_resize = true
 lvim.builtin.nvimtree.setup.view.side = "left"
@@ -15,19 +15,11 @@ lvim.builtin.terminal.active = true
 lvim.builtin.nvimtree.setup.view.side = "left"
 lvim.builtin.nvimtree.show_icons.git = 1
 lvim.builtin.which_key.setup.plugins.presets.motions = true
-lvim.builtin.treesitter.rainbow.enable = true
 
 -- You will likely want to reduce updatetime which affects CursorHold
 -- note: this setting is global and should be set only once
 vim.o.updatetime = 250
 vim.cmd([[autocmd! CursorHold,CursorHoldI * lua vim.diagnostic.open_float(nil, {focus=false})]])
-
--- hot reload
-for module, _ in pairs(package.loaded) do
-	if module:match("user") then
-		_G.require_clean(module)
-	end
-end
 
 require("user.keymaps")
 require("user.plugins")

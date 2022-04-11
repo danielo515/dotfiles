@@ -1,5 +1,3 @@
-local persistence = require("user.persistence")
-
 lvim.plugins = {
 	{ "Mofiqul/dracula.nvim" },
 	{
