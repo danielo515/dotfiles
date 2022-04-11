@@ -40,7 +40,7 @@ local whichConfig = {
 		s = { "<cmd>lua require 'gitsigns'.stage_buffer()<cr>", "Stage file" },
 		B = { "<cmd>lua require 'gitsigns'.toggle_current_line_blame()<cr>", "Togle blame" },
 		d = { "<cmd>DiffviewOpen<cr>", "Open git diff" },
-		g = { ":Lazygit<cr>", "Open git diff" },
+		g = { "<cmd>lua require 'lazygit'.lazygit()<cr>", "Open git diff" },
 	},
 	-- file section
 	f = {
