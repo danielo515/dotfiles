@@ -64,10 +64,10 @@ lvim.plugins = {
 					extended_mode = true,
 					max_file_lines = 1500,
 					colors = {
-						"#ff0000",
+						"#f30f3f",
 						"#ffa500",
 						"#ffff00",
-						"#008000",
+						"#018000",
 						"#0af34f",
 						"#cf4eea",
 						"#ee82ee",
