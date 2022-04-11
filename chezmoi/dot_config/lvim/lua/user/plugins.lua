@@ -1,6 +1,7 @@
 local persistence = require("user.persistence")
 
 lvim.plugins = {
+	{ "Mofiqul/dracula.nvim" },
 	{
 		"folke/trouble.nvim",
 		cmd = "TroubleToggle",
@@ -60,15 +61,15 @@ lvim.plugins = {
 			require("nvim-treesitter.configs").setup({
 				rainbow = {
 					enable = true,
-					extended_mode = false,
-					max_file_lines = nil,
+					extended_mode = true,
+					max_file_lines = 1500,
 					colors = {
 						"#ff0000",
 						"#ffa500",
 						"#ffff00",
 						"#008000",
-						"#0000ff",
-						"#4b0082",
+						"#0af34f",
+						"#cf4eea",
 						"#ee82ee",
 					},
 				},
@@ -119,7 +120,15 @@ lvim.plugins = {
 		end,
 	},
 	-- Smooth scrolling
-	{ "psliwka/vim-smoothie" },
+	-- { "psliwka/vim-smoothie" },
+	{
+		"karb94/neoscroll.nvim",
+		config = function()
+			require("neoscroll").setup({
+				hide_cursor = false, -- Hide cursor while scrolling
+			})
+		end,
+	},
 	--- Pick the file where you edited last time
 	{
 		"ethanholz/nvim-lastplace",
