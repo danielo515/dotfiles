@@ -1,7 +1,3 @@
-local log = require("lvim.core.log")
-local M = {}
-
-local lv_which = lvim.builtin.which_key.mappings
 -- This config will be merged with the one that lvim has by default
 local whichConfig = {
 	-- extend search
@@ -56,14 +52,6 @@ lvim.builtin.which_key.on_config_done = function(which)
 	which.register(whichConfig, { prefix = "<leader>" })
 end
 
-function M.add_which_map(definition)
-	if vim.tbl_isempty(definition) then
-		log:error("Can't use an empty list to extend which key")
-		return nil
-	end
-	lvim.builtin.which_key.mappings = vim.tbl_deep_extend("error", lvim.builtin.which_key.mappings, definition)
-end
-
 lvim.keys.normal_mode["<C-f>"] = "<cmd>lua require('user.telescope').grep_files()<cr>"
 lvim.keys.normal_mode["<C-x>"] = "<cmd>BufferKill<cr>"
 lvim.keys.normal_mode["<M-cr>"] = "<cmd>lua require('lvim.core.telescope').code_actions()<cr>"
@@ -86,5 +74,3 @@ lvim.keys.normal_mode["tl"] = ":tabNext<cr>"
 lvim.keys.insert_mode["<C-f>"] = lvim.keys.normal_mode["<C-f>"]
 lvim.keys.insert_mode["<C-y>"] =
 	"<cmd>lua require('telescope').extensions.neoclip.default(require('telescope.themes').get_cursor())<cr>"
-
-return M
