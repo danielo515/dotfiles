@@ -1,9 +1,6 @@
 local M = {}
 
 M.config = {
-	indent = { enable = true },
-	autotag = { enable = true },
-	rainbow = { enable = false },
 
 	query_linter = {
 		enable = true,

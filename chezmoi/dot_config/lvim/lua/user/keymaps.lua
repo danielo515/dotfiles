@@ -41,10 +41,9 @@ local whichConfig = {
 	},
 	-- file section
 	f = {
-		r = { "<cmd>Telescope frecency default_workspace=CWD<cr>", "Browse recent files" },
+		f = { "<cmd>Telescope frecency default_workspace=CWD<cr>", "Browse recent files" },
 		R = { "<cmd>Telescope frecency<cr>", "Browse recent files globally" },
 		b = { "<cmd>Telescope file_browser<cr>", "Browse file tree" },
-		f = { require("lvim.core.telescope.custom-finders").find_project_files, "Find File" },
 	},
 }
 -- merge our custom config with the one from lvim
