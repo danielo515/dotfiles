@@ -1,3 +1,4 @@
+local concat_lists = require("user.util").concat_lists
 -- generic LSP settings
 lvim.lsp.automatic_servers_installation = true
 -- general
@@ -22,7 +23,6 @@ vim.o.updatetime = 250
 vim.cmd([[autocmd! CursorHold,CursorHoldI * lua vim.diagnostic.open_float(nil, {focus=false})]])
 
 require("user.keymaps")
-require("user.plugins")
 require("user.telescope")
 require("user.autocommands").config()
 -- require("user.statusline")
@@ -31,4 +31,5 @@ require("user.linters").config()
 require("luasnip.loaders.from_snipmate").lazy_load()
 local treesitter = require("user.treesitter")
 treesitter.config()
-vim.list_extend(lvim.plugins, treesitter.plugins)
+local plugins = require("user.plugins")
+lvim.plugins = concat_lists(plugins, treesitter.plugins, require("user.telescope.settings"))

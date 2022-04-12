@@ -10,8 +10,6 @@ local plugins = {
 	{ "nvim-telescope/telescope-packer.nvim" },
 }
 
-vim.list_extend(lvim.plugins, plugins)
-
 lvim.builtin.telescope.path_display = "truncate"
 
 lvim.builtin.telescope.on_config_done = function(tele)
@@ -56,3 +54,4 @@ lvim.builtin.telescope.defaults.mappings = {
 		["<C-r>"] = actions.cycle_history_prev,
 	},
 }
+return plugins

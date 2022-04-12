@@ -1,4 +1,4 @@
-lvim.plugins = {
+local plugins = {
 	{ "Mofiqul/dracula.nvim" },
 	{
 		"folke/trouble.nvim",
@@ -75,15 +75,15 @@ lvim.plugins = {
 		end,
 	},
 	-- Smooth scrolling
-	-- { "psliwka/vim-smoothie" },
-	{
-		"karb94/neoscroll.nvim",
-		config = function()
-			require("neoscroll").setup({
-				hide_cursor = false, -- Hide cursor while scrolling
-			})
-		end,
-	},
+	{ "psliwka/vim-smoothie" },
+	-- {
+	-- 	"karb94/neoscroll.nvim",
+	-- 	config = function()
+	-- 		require("neoscroll").setup({
+	-- 			hide_cursor = false, -- Hide cursor while scrolling
+	-- 		})
+	-- 	end,
+	-- },
 	--- Pick the file where you edited last time
 	{
 		"ethanholz/nvim-lastplace",
@@ -158,3 +158,4 @@ lvim.plugins = {
 		end,
 	},
 }
+return plugins
