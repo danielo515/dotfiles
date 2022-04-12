@@ -1,7 +1,7 @@
 -- generic LSP settings
 lvim.lsp.automatic_servers_installation = true
 -- general
-lvim.log.level = "debug"
+lvim.log.level = "trace"
 lvim.format_on_save = true
 lvim.colorscheme = "dracula"
 lvim.builtin.nvimtree.setup.open_on_setup = false
@@ -24,7 +24,7 @@ vim.cmd([[autocmd! CursorHold,CursorHoldI * lua vim.diagnostic.open_float(nil, {
 require("user.keymaps")
 require("user.plugins")
 require("user.telescope")
-require("user.autocommands").configure()
+require("user.autocommands").config()
 -- require("user.statusline")
 require("user.linters").config()
 -- require("user.lualine").config()

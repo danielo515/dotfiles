@@ -1,6 +1,6 @@
 local M = {}
 
-function M.configure()
+function M.config()
 	local codelens_viewer = "lua require('nvim-lightbulb').update_lightbulb()"
 	lvim.autocommands.custom_groups = {
 		-- On entering a lua file, set the tab spacing and shift width to 8gg
