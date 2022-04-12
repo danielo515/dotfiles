@@ -1,7 +1,7 @@
 -- generic LSP settings
 lvim.lsp.automatic_servers_installation = true
 -- general
-lvim.log.level = "trace"
+lvim.log.level = "debug"
 lvim.format_on_save = true
 lvim.colorscheme = "dracula"
 lvim.builtin.nvimtree.setup.open_on_setup = false

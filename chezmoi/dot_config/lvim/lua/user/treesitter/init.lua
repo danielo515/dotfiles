@@ -53,6 +53,7 @@ local playground_config = {
 	playground = {
 		enable = true,
 		updatetime = 20,
+		persist_queries = true,
 	},
 }
 
@@ -60,9 +61,7 @@ local settings = {
 	highlight = { enable = true },
 	indent = { enable = true },
 	autotag = { enable = true },
-	rainbow = { enable = true },
 	ignore_install = { "haskell" },
-
 	ensure_installed = {
 		"bash",
 		"c",
