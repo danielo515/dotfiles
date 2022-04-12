@@ -52,50 +52,7 @@ lvim.plugins = {
 	},
 	-- Improve nvim interface for inputs and that stuff
 	{ "stevearc/dressing.nvim" },
-	-- Highlight parens and that stuff using treesitter
-	{
-		"p00f/nvim-ts-rainbow",
-		config = function()
-			require("nvim-treesitter.configs").setup({
-				rainbow = {
-					enable = true,
-					extended_mode = true,
-					max_file_lines = 1500,
-					colors = {
-						"#f30f3f",
-						"#ffa500",
-						"#ffff00",
-						"#018000",
-						"#0af34f",
-						"#cf4eea",
-						"#ee82ee",
-					},
-				},
-			})
-		end,
-	},
-	-- Show current function at the top of the screen when function does not fit in screen
-	{
-		"romgrk/nvim-treesitter-context",
-		config = function()
-			require("treesitter-context").setup({
-				enable = true, -- Enable this plugin (Can be enabled/disabled later via commands)
-				throttle = true, -- Throttles plugin updates (may improve performance)
-				max_lines = 0, -- How many lines the window should span. Values <= 0 mean no limit.
-				patterns = { -- Match patterns for TS nodes. These get wrapped to match at word boundaries.
-					-- For all filetypes
-					-- Note that setting an entry here replaces all other patterns for this entry.
-					-- By setting the 'default' entry below, you can control which nodes you want to
-					-- appear in the context window.
-					default = {
-						"class",
-						"function",
-						"method",
-					},
-				},
-			})
-		end,
-	},
+
 	-- shows the function signatures when you are inside the parameter
 	{
 		"ray-x/lsp_signature.nvim",
@@ -185,17 +142,6 @@ lvim.plugins = {
 		event = "InsertEnter",
 		config = function()
 			require("nvim-ts-autotag").setup()
-		end,
-	},
-	--treesiter
-	require("user.textObjects").plugin,
-	{
-		"nvim-treesitter/playground",
-		cmd = "TSPlaygroundToggle",
-		config = function()
-			lvim.builtin.treesitter.playground.enable = true
-			lvim.builtin.treesitter.playground.updatetime = 20
-			vim.cmd(":TSInstall query")
 		end,
 	},
 	-- show colors inline
