@@ -157,5 +157,14 @@ local plugins = {
 			})
 		end,
 	},
+	{
+		"petertriho/nvim-scrollbar",
+		event = "BufWinEnter",
+		config = function()
+			require("scrollbar").setup()
+		end,
+	},
+	-- VSCode like omni bar
+	{ "mrjones2014/legendary.nvim", branch = "test-which-key-changes" },
 }
 return plugins
