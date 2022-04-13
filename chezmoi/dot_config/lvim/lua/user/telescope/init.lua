@@ -1,2 +1,2 @@
-local finders = require("user.telescope.telescope")
+local finders = require("user.telescope.finders")
 return finders
