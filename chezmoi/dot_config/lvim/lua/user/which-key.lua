@@ -62,6 +62,7 @@ local whichConfig = {
 lvim.builtin.which_key.on_config_done = function(which)
 	require("legendary").setup()
 	which.register(whichConfig, { prefix = "<leader>" })
+	vim.notify("Reloaded wich keys")
 end
 
 local ok, which = pcall(require, "wich-key")
