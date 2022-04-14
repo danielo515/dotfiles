@@ -165,6 +165,10 @@ local plugins = {
 		end,
 	},
 	-- VSCode like omni bar
-	{ "mrjones2014/legendary.nvim", branch = "test-which-key-changes" },
+	{
+		"mrjones2014/legendary.nvim",
+		branch = "matjones/which-key-handles-bindings",
+	},
+	require("user.harpoon").plugin,
 }
 return plugins
