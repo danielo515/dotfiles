@@ -1,4 +1,5 @@
 local components = require("lvim.core.lualine.components")
+local ts = require("nvim-treesitter")
 
 lvim.builtin.lualine.sections.lualine_a = {
 	function()
@@ -14,5 +15,6 @@ lvim.builtin.lualine.sections.lualine_c = {
 }
 lvim.builtin.lualine.sections.lualine_x = {
 	components.filetype,
+	ts.statusline,
 }
 lvim.builtin.lualine.sections.lualine_y = { "location", "tabs", "windows" }
