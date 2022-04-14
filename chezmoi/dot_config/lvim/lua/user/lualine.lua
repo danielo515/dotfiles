@@ -147,7 +147,6 @@ M.config = function()
 		no = colors.magenta,
 		s = colors.orange,
 		S = colors.orange,
-		[""] = colors.orange,
 		ic = colors.yellow,
 		R = colors.violet,
 		Rv = colors.violet,
