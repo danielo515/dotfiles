@@ -1,3 +1,8 @@
+function yank_file_name()
+	local path = vim.fn.expand("%")
+	vim.fn.setreg("*", path)
+	vim.notify(path .. " yanked to keyboard")
+end
 -- This config will be merged with the one that lvim has by default
 local whichConfig = {
 	-- extend search
@@ -46,14 +51,16 @@ local whichConfig = {
 	-- file section
 	f = {
 		f = { "<cmd>Telescope frecency default_workspace=CWD<cr>", "Browse recent files" },
-		R = { "<cmd>Telescope frecency<cr>", "Browse recent files globally" },
+		r = { "<cmd>Telescope frecency<cr>", "Browse recent files globally" },
 		b = { "<cmd>Telescope file_browser<cr>", "Browse file tree cool" },
+		y = { "<cmd>lua yank_file_name()<CR>", "Yank current file path" },
 	},
 }
 -- merge our custom config with the one from lvim
 -- lvim.builtin.which_key.mappings = vim.tbl_deep_extend("force", lv_which, whichConfig)
 
 lvim.builtin.which_key.on_config_done = function(which)
+	require("legendary").setup()
 	which.register(whichConfig, { prefix = "<leader>" })
 end
 
