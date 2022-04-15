@@ -19,6 +19,7 @@ lvim.builtin.telescope.on_config_done = function(tele)
 	tele.load_extension("file_browser")
 	tele.load_extension("lazygit")
 	tele.load_extension("packer")
+	tele.load_extension("luasnip")
 	local opts = {
 		pickers = {
 			lsp_workspace_symbols = {

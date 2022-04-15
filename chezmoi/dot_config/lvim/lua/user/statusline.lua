@@ -12,9 +12,9 @@ lvim.builtin.lualine.sections.lualine_c = {
 	components.lsp,
 	components.diagnostics,
 	components.treesitter,
+	ts.statusline,
 }
 lvim.builtin.lualine.sections.lualine_x = {
 	components.filetype,
-	ts.statusline,
 }
 lvim.builtin.lualine.sections.lualine_y = { "location", "tabs", "windows" }
