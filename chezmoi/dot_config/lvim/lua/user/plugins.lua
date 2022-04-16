@@ -169,5 +169,7 @@ local plugins = {
 		branch = "matjones/which-key-handles-bindings",
 	},
 	require("user.harpoon").plugin,
+	-- themes
+	"folke/tokyonight.nvim",
 }
 return plugins

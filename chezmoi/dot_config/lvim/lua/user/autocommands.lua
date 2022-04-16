@@ -16,14 +16,6 @@ function M.config()
 		-- dashboard
 		{ "FileType", "alpha", "nnoremap <silent> <buffer> q :q<CR>" },
 
-		-- rust
-		{ "Filetype", "rust", "nnoremap <leader>lm <Cmd>RustExpandMacro<CR>" },
-		{ "Filetype", "rust", "nnoremap <leader>lH <Cmd>RustToggleInlayHints<CR>" },
-		{ "Filetype", "rust", "nnoremap <leader>le <Cmd>RustRunnables<CR>" },
-		{ "Filetype", "rust", "nnoremap <leader>lh <Cmd>RustHoverActions<CR>" },
-		{ "Filetype", "rust", "nnoremap <leader>lc <Cmd>RustOpenCargo<CR>" },
-		{ "Filetype", "rust", "nnoremap gA <Cmd>RustHoverActions<CR>" },
-
 		-- typescript
 		{ "Filetype", "typescript,typescriptreact", "nnoremap gA <Cmd>TSLspImportAll<CR>" },
 		{ "Filetype", "typescript,typescriptreact", "nnoremap gr <Cmd>TSLspRenameFile<CR>" },
