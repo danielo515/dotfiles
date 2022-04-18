@@ -6,6 +6,7 @@ local plugins = {
 	},
 	-- better surround options
 	{ "tpope/vim-surround", keys = { "c", "d", "y" } },
+	"wellle/targets.vim",
 	{ "tpope/vim-repeat" },
 	-- jump faster
 	{
@@ -166,11 +167,22 @@ local plugins = {
 	-- VSCode like omni bar
 	{
 		"mrjones2014/legendary.nvim",
-		branch = "matjones/which-key-handles-bindings",
 	},
+	-- automatically resize windows to better fir the content
+	-- {
+	-- 	"beauwilliams/focus.nvim",
+	-- 	config = function()
+	-- 		-- require("focus").setup()
+	-- 		require("focus").setup({
+	-- 			hybridnumber = true,
+	-- 			excluded_filetypes = { "toggleterm", "diffview", "DiffviewFiles", "diffviewfiles" },
+	-- 		})
+	-- 	end,
+	-- },
 	require("user.harpoon").plugin,
 	-- highlight nicely the search results
 	require("user.hlslens").plugin,
+	-- require("user.lspsaga").plugin,
 	-- themes
 	"folke/tokyonight.nvim",
 }
