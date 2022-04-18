@@ -27,8 +27,8 @@ M.config = {
 				["aa"] = "@parameter.outer", -- "ip" is already used
 				["al"] = "@loop.outer",
 				["il"] = "@loop.inner",
-				["."] = "textsubjects-smart",
-				[";"] = "textsubjects-big",
+				-- ["iq"] = "@string.inner",
+				-- ["aq"] = "@string.outer",
 			},
 		},
 	},

@@ -1,8 +1,10 @@
 local textObjects = require("user.treesitter.textObjects")
+local textSubjects = require("user.treesitter.textSubjects")
 local M = {}
 --treesiter related plugins
 M.plugins = {
 	textObjects.plugin,
+	textSubjects.plugin,
 	-- Show current function at the top of the screen when function does not fit in screen
 	{
 		"romgrk/nvim-treesitter-context",
@@ -86,7 +88,8 @@ function M.config()
 		settings,
 		playground_config,
 		rainbow_config,
-		textObjects.config
+		textObjects.config,
+		textSubjects.config
 	)
 end
 
