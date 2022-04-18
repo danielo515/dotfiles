@@ -169,6 +169,8 @@ local plugins = {
 		branch = "matjones/which-key-handles-bindings",
 	},
 	require("user.harpoon").plugin,
+	-- highlight nicely the search results
+	require("user.hlslens").plugin,
 	-- themes
 	"folke/tokyonight.nvim",
 }
