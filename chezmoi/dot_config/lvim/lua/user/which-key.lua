@@ -60,7 +60,6 @@ local whichConfig = {
 -- lvim.builtin.which_key.mappings = vim.tbl_deep_extend("force", lv_which, whichConfig)
 
 lvim.builtin.which_key.on_config_done = function(which)
-	require("legendary").setup()
 	which.register(whichConfig, { prefix = "<leader>" })
 	vim.notify("Reloaded wich keys")
 end

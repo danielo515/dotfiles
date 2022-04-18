@@ -109,6 +109,7 @@ local plugins = {
 		config = function()
 			require("user.bqf").config()
 		end,
+		disable = false,
 	},
 	-- Awesome diff view
 	{
@@ -116,6 +117,7 @@ local plugins = {
 		event = "BufRead",
 	},
 	-- Clipboard history
+	{ "tami5/sqlite.lua" },
 	{
 		"AckslD/nvim-neoclip.lua",
 		requires = { "tami5/sqlite.lua" },
@@ -165,9 +167,9 @@ local plugins = {
 		end,
 	},
 	-- VSCode like omni bar
-	{
-		"mrjones2014/legendary.nvim",
-	},
+	-- {
+	-- 	"mrjones2014/legendary.nvim",
+	-- },
 	-- automatically resize windows to better fir the content
 	-- {
 	-- 	"beauwilliams/focus.nvim",
