@@ -24,10 +24,12 @@ lvim.builtin.which_key.setup.plugins.presets = {
 	z = true, -- bindings for folds, spelling and others prefixed with z
 	g = true, -- bindings for prefixed with g
 }
+lvim.builtin.gitsigns.opts.current_line_blame = true
 -- You will likely want to reduce updatetime which affects CursorHold
 -- note: this setting is global and should be set only once
 vim.o.updatetime = 250
 vim.cmd([[autocmd! CursorHold,CursorHoldI * lua vim.diagnostic.open_float(nil, {focus=false})]])
+vim.wo.relativenumber = true
 
 require("user.keymaps")
 require("user.which-key")
