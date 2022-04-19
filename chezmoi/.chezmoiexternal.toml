@@ -1,5 +1,6 @@
+# termux plugin manager
 [".tmux/plugins/tpm"]
 type = "git-repo"
 url = "https://github.com/tmux-plugins/tpm"
-refreshPeriod = "1h"
+refreshPeriod = "168h"
 exact = true
