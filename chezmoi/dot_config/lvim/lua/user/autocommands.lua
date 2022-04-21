@@ -9,9 +9,9 @@ function M.config()
 		{
 			"BufWritePost",
 			"$HOME/.local/share/chezmoi/chezmoi/*",
-			"execute '!chezmoi apply --source-path %' | LvimReload ",
+			"execute '!chezmoi apply -v --source-path %' | LvimReload ",
 		},
-		{ "CursorHold", "*.rs,*.go,*.ts,*.tsx", codelens_viewer },
+		{ "CursorHold", "*.rs,*.go,*.ts,*.tsx,*.lua", codelens_viewer },
 
 		-- dashboard
 		{ "FileType", "alpha", "nnoremap <silent> <buffer> q :q<CR>" },
