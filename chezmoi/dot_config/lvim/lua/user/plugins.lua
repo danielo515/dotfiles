@@ -8,15 +8,6 @@ local plugins = {
 	{ "tpope/vim-surround", keys = { "c", "d", "y" } },
 	"wellle/targets.vim",
 	{ "tpope/vim-repeat" },
-	-- jump faster
-	{
-		"phaazon/hop.nvim",
-		branch = "v1", -- optional but strongly recommended
-		config = function()
-			-- you can configure Hop the way you like here; see :h hop-config
-			require("hop").setup({ keys = "etovxqpdygfblzhckisuran" })
-		end,
-	},
 	-- fuzzy jummp on the file
 	{ "rlane/pounce.nvim" },
 
@@ -181,6 +172,13 @@ local plugins = {
 	-- 		})
 	-- 	end,
 	-- },
+	{
+		"gfeiyou/command-center.nvim",
+		config = function()
+		  require("user.command_center").config()
+		end,
+		requires = "nvim-telescope/telescope.nvim",
+	  },
 	require("user.harpoon").plugin,
 	-- highlight nicely the search results
 	require("user.hlslens").plugin,

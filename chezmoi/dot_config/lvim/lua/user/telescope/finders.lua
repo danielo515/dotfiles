@@ -61,7 +61,11 @@ function M.code_actions()
 end
 
 function M.buffers()
-	require("telescope.builtin").buffers(require("telescope.themes").vscode())
+	require("telescope.builtin").buffers(require("telescope.themes").vscode({
+		layout_config = {
+			height = 50,
+		},
+	}))
 end
 
 return M

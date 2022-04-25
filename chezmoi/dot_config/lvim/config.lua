@@ -25,6 +25,12 @@ lvim.builtin.which_key.setup.plugins.presets = {
 	g = true, -- bindings for prefixed with g
 }
 lvim.builtin.gitsigns.opts.current_line_blame = true
+lvim.builtin.nvimtree.on_config_done = function()
+	-- require("nvim-tree").setup({
+	-- 	renderer = { indent_markers = { enable = true } },
+	-- })
+	lvim.builtin.nvimtree.renderer = { indent_markers = { enable = true } }
+end
 -- You will likely want to reduce updatetime which affects CursorHold
 -- note: this setting is global and should be set only once
 vim.o.updatetime = 250
