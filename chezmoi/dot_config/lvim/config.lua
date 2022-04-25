@@ -25,17 +25,31 @@ lvim.builtin.which_key.setup.plugins.presets = {
 	g = true, -- bindings for prefixed with g
 }
 lvim.builtin.gitsigns.opts.current_line_blame = true
-lvim.builtin.nvimtree.on_config_done = function()
-	-- require("nvim-tree").setup({
-	-- 	renderer = { indent_markers = { enable = true } },
-	-- })
-	lvim.builtin.nvimtree.renderer = { indent_markers = { enable = true } }
+lvim.lsp.float.max_height = 20
+
+lvim.builtin.nvimtree.on_config_done = function(nvimtree)
+	print(nvimtree)
+	require("nvim-tree").setup({
+		renderer = {
+			indent_markers = {
+				enable = true,
+				icons = {
+					corner = "└ ",
+					edge = "│ ",
+					none = "  ",
+				},
+			},
+		},
+	})
 end
+
 -- You will likely want to reduce updatetime which affects CursorHold
 -- note: this setting is global and should be set only once
 vim.o.updatetime = 250
 vim.cmd([[autocmd! CursorHold,CursorHoldI * lua vim.diagnostic.open_float(nil, {focus=false})]])
 vim.wo.relativenumber = true
+-- This is required for vim-surround, otherwise it is too fast
+vim.o.timeoutlen = 500
 
 require("user.keymaps")
 require("user.which-key")
