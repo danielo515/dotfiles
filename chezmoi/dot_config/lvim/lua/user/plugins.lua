@@ -175,10 +175,27 @@ local plugins = {
 	{
 		"gfeiyou/command-center.nvim",
 		config = function()
-		  require("user.command_center").config()
+			require("user.command_center").config()
 		end,
 		requires = "nvim-telescope/telescope.nvim",
-	  },
+	},
+	-- tmux integration
+	{
+		"alexghergh/nvim-tmux-navigation",
+		config = function()
+			require("nvim-tmux-navigation").setup({
+				disable_when_zoomed = true, -- defaults to false
+				keybindings = {
+					left = "<C-h>",
+					down = "<C-j>",
+					up = "<C-k>",
+					right = "<C-l>",
+					last_active = "<C-\\>",
+					next = "<C-Space>",
+				},
+			})
+		end,
+	},
 	require("user.harpoon").plugin,
 	-- highlight nicely the search results
 	require("user.hlslens").plugin,
