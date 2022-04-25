@@ -10,8 +10,8 @@ M.config = function()
 		auto_resize_height = true,
 		func_map = {
 			tab = "st",
-			split = "sv",
-			vsplit = "sg",
+			split = "h",
+			vsplit = "v",
 
 			stoggleup = "K",
 			stoggledown = "J",

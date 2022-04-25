@@ -1,4 +1,6 @@
 local plugins = {
+	-- themes
+	"folke/tokyonight.nvim",
 	{ "Mofiqul/dracula.nvim" },
 	{
 		"folke/trouble.nvim",
@@ -126,7 +128,6 @@ local plugins = {
 		end,
 	},
 	-- sessions management
-	-- persistence.plugin,
 	require("user.autosession"),
 	{ "kosayoda/nvim-lightbulb" },
 
@@ -200,7 +201,12 @@ local plugins = {
 	-- highlight nicely the search results
 	require("user.hlslens").plugin,
 	-- require("user.lspsaga").plugin,
-	-- themes
-	"folke/tokyonight.nvim",
+	-- Extends the typescript LSP capabilities with things like file rename
+	{
+		"jose-elias-alvarez/typescript.nvim",
+		config = function()
+			require("typescript").setup({})
+		end,
+	},
 }
 return plugins
