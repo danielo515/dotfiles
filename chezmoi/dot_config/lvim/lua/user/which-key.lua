@@ -50,7 +50,7 @@ local whichConfig = {
 	},
 	-- file section
 	f = {
-		f = { "<cmd>Telescope frecency default_workspace=CWD<cr>", "Browse recent files" },
+		f = { "<cmd>Telescope frecency default_workspace='CWD'<cr>", "Browse recent files" },
 		r = { "<cmd>Telescope frecency<cr>", "Browse recent files globally" },
 		b = { "<cmd>Telescope file_browser<cr>", "Browse file tree cool" },
 		y = { "<cmd>lua yank_file_name()<CR>", "Yank current file path" },
