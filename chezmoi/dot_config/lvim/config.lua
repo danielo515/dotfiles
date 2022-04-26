@@ -27,8 +27,7 @@ lvim.builtin.which_key.setup.plugins.presets = {
 lvim.builtin.gitsigns.opts.current_line_blame = true
 lvim.lsp.float.max_height = 20
 
-lvim.builtin.nvimtree.on_config_done = function(nvimtree)
-	print(nvimtree)
+lvim.builtin.nvimtree.on_config_done = function()
 	require("nvim-tree").setup({
 		renderer = {
 			indent_markers = {
@@ -41,6 +40,16 @@ lvim.builtin.nvimtree.on_config_done = function(nvimtree)
 			},
 		},
 	})
+	lvim.builtin.nvimtree.setup.renderer = {
+		indent_markers = {
+			enable = true,
+			icons = {
+				corner = "└ ",
+				edge = "│ ",
+				none = "  ",
+			},
+		},
+	}
 end
 
 -- You will likely want to reduce updatetime which affects CursorHold

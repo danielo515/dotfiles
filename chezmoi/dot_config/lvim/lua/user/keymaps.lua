@@ -8,9 +8,10 @@ lvim.keys.normal_mode["<F2>"] = "<cmd>lua vim.lsp.buf.rename()<cr>"
 lvim.keys.normal_mode["F"] = ":Telescope frecency<cr>"
 lvim.keys.normal_mode["<Tab>"] = "<cmd>lua require('user.telescope').buffers()<cr>"
 lvim.keys.normal_mode["<M-k>"] = ":Telescope builtin include_extensions=true<cr>"
+lvim.keys.normal_mode["<C-N>"] = ":NvimTreeFindFile<cr>"
 lvim.keys.normal_mode["ml"] = "dd<C-W><C-l>p<C-w><C-h>"
 -- visual mode
-lvim.keys.visual_mode["p"] = [["_dP]]
+lvim.keys.visual_mode["p"] = [["_dP]] -- avoid override when pasting over seleted text
 lvim.keys.visual_mode["s"] = ":Pounce<cr>"
 -- Tab bindings
 lvim.keys.normal_mode["tk"] = ":tabclose<cr>"

@@ -17,9 +17,11 @@ function M.config()
 		{ "FileType", "alpha", "nnoremap <silent> <buffer> q :q<CR>" },
 
 		-- typescript
-		{ "Filetype", "typescript,typescriptreact", "nnoremap gA <Cmd>TSLspImportAll<CR>" },
-		{ "Filetype", "typescript,typescriptreact", "nnoremap gr <Cmd>TSLspRenameFile<CR>" },
-		{ "Filetype", "typescript,typescriptreact", "nnoremap gS <Cmd>TSLspOrganize<CR>" },
+		{ "Filetype", "typescript,typescriptreact", "nnoremap gA <Cmd>TypescriptAddMissingImports<CR>" },
+		{ "Filetype", "typescript,typescriptreact", "nnoremap gr <Cmd>TypescriptRenameFile<CR>" },
+		{ "Filetype", "typescript,typescriptreact", "nnoremap gS <Cmd>TypescriptOrganizeImports<CR>" },
+		{ "Filetype", "typescript,typescriptreact", "nnoremap gR <Cmd>TypescriptRemoveUnused<CR>" },
+		{ "Filetype", "typescript,typescriptreact", "nnoremap gx <Cmd>TypescriptFixAll<CR>" },
 
 		-- uncomment the following if you want to show diagnostics on hover
 		-- { "CursorHold", "*", "lua vim.diagnostic.open_float()" },
