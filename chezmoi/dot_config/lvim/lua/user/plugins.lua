@@ -198,7 +198,9 @@ local plugins = {
 	{
 		"jose-elias-alvarez/typescript.nvim",
 		config = function()
-			require("typescript").setup({})
+			require("typescript").setup({
+				disable_formatting = true, -- disable tsserver's formatting capabilities
+			})
 		end,
 	},
 }

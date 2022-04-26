@@ -4,10 +4,9 @@ function M.config()
 	local formatters = require("lvim.lsp.null-ls.formatters")
 	formatters.setup({
 		{
-			command = "eslint",
-			filetypes = { "typescript", "typescriptreact" },
+			name = "eslint_d",
 		},
-		{ exe = "stylua", filetypes = { "lua" } },
+		{ name = "stylua" },
 	})
 
 	local linters = require("lvim.lsp.null-ls.linters")
