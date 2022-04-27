@@ -27,6 +27,17 @@ lvim.builtin.which_key.setup.plugins.presets = {
 lvim.builtin.gitsigns.opts.current_line_blame = true
 lvim.lsp.float.max_height = 20
 
+lvim.builtin.nvimtree.setup.renderer = {
+	indent_markers = {
+		enable = true,
+		icons = {
+			corner = "└ ",
+			edge = "│ ",
+			none = "  ",
+		},
+	},
+}
+
 lvim.builtin.nvimtree.on_config_done = function()
 	require("nvim-tree").setup({
 		renderer = {
@@ -40,16 +51,6 @@ lvim.builtin.nvimtree.on_config_done = function()
 			},
 		},
 	})
-	lvim.builtin.nvimtree.setup.renderer = {
-		indent_markers = {
-			enable = true,
-			icons = {
-				corner = "└ ",
-				edge = "│ ",
-				none = "  ",
-			},
-		},
-	}
 end
 
 -- You will likely want to reduce updatetime which affects CursorHold
@@ -59,6 +60,17 @@ vim.cmd([[autocmd! CursorHold,CursorHoldI * lua vim.diagnostic.open_float(nil, {
 vim.wo.relativenumber = true
 -- This is required for vim-surround, otherwise it is too fast
 vim.o.timeoutlen = 500
+
+local options = {
+	foldmethod = "manual", -- folding, set to "expr" for treesitter based folding
+	foldexpr = "nvim_treesitter#foldexpr()", -- set to "nvim_treesitter#foldexpr()" for treesitter based folding
+	foldnestmax = 3,
+	foldlevel = 1,
+}
+
+for k, v in pairs(options) do
+	vim.opt[k] = v
+end
 
 require("user.keymaps")
 require("user.which-key")
