@@ -10,8 +10,8 @@ function M.concat_lists(...)
 end
 
 -- Resizes the current window to the maximum required width
-function M.resize_window()
-	local getOpt = nvim.api.nvim_win_get_option
+function M.resize_window_width()
+	local getOpt = vim.api.nvim_win_get_option
 	local lines_count = vim.api.nvim_buf_line_count(0)
 	local lines = vim.api.nvim_buf_get_lines(0, 0, lines_count, false)
 	local numbers_active = getOpt(0, "rnu") or getOpt(0, "number")
@@ -29,6 +29,6 @@ function M.resize_window()
 	vim.api.nvim_command(cmd)
 end
 
-vim.cmd('command! ResizeWindow :lua require("user.util").resize_window()')
+vim.cmd('command! ResizeWindow :lua require("user.util").resize_window_width()')
 
 return M
