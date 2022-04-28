@@ -16,7 +16,8 @@ function M.resize_window_width()
 	local lines = vim.api.nvim_buf_get_lines(0, 0, lines_count, false)
 	local numbers_active = getOpt(0, "rnu") or getOpt(0, "number")
 	local numwidth = numbers_active and getOpt(0, "nuw") or 0
-	local padding = numwidth + 1
+	local signwidth = getOpt(0, "signcolumn") == "yes" and 2 or 0
+	local padding = numwidth + 1 + getOpt(0, "foldcolumn") + signwidth
 
 	local longerLine = 0
 	for _, line in ipairs(lines) do
@@ -25,7 +26,12 @@ function M.resize_window_width()
 			longerLine = new_len
 		end
 	end
-	local cmd = (longerLine + padding) .. "wincmd |"
+	local current_width = vim.api.nvim_win_get_width(0)
+	local new_width = longerLine + padding
+	if current_width >= new_width then
+		return
+	end
+	local cmd = new_width .. "wincmd |"
 	vim.api.nvim_command(cmd)
 end
 
