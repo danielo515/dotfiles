@@ -170,7 +170,9 @@ local plugins = {
 		"gfeiyou/command-center.nvim",
 		config = function()
 			require("user.command_center").config()
+			require("telescope").load_extension("command_center")
 		end,
+		after = "telescope.nvim",
 		requires = "nvim-telescope/telescope.nvim",
 	},
 	-- tmux integration
