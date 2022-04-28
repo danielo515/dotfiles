@@ -53,6 +53,9 @@ lvim.builtin.telescope.defaults.mappings = {
 		["j"] = actions.move_selection_next,
 		["k"] = actions.move_selection_previous,
 		["<C-r>"] = actions.cycle_history_prev,
+		["q"] = actions.smart_send_to_qflist + actions.open_qflist,
+		["Q"] = actions.smart_add_to_qflist + actions.open_qflist,
+		["x"] = actions.delete_buffer,
 	},
 }
 return plugins
