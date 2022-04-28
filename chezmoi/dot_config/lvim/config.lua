@@ -27,6 +27,11 @@ lvim.builtin.which_key.setup.plugins.presets = {
 lvim.builtin.gitsigns.opts.current_line_blame = true
 lvim.lsp.float.max_height = 20
 
+-- Dashboard
+-- =========================================
+lvim.builtin.alpha.mode = "custom"
+local alpha_opts = require("user.dashboard").config()
+lvim.builtin.alpha["custom"] = { config = alpha_opts }
 lvim.builtin.nvimtree.setup.renderer = {
 	indent_markers = {
 		enable = true,
