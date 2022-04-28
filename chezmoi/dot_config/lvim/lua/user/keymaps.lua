@@ -1,12 +1,18 @@
 lvim.keys.normal_mode["<C-F>"] = "<cmd>lua require('user.telescope').grep_files()<cr>"
 lvim.keys.normal_mode["<C-x>"] = "<cmd>BufferKill<cr>"
-lvim.keys.normal_mode["<M-cr>"] = "<cmd>lua require('lvim.core.telescope').code_actions()<cr>"
 lvim.keys.normal_mode["kj"] = false
 lvim.keys.normal_mode["jk"] = false
+-- Navigation
 lvim.keys.normal_mode["s"] = ":Pounce<cr>"
+lvim.keys.visual_mode["s"] = "<cmd>Pounce<cr>"
+-- Lsp
 lvim.keys.normal_mode["<F2>"] = "<cmd>lua vim.lsp.buf.rename()<cr>"
+lvim.keys.normal_mode["<M-cr>"] = "<cmd>lua require('lvim.core.telescope').code_actions()<cr>"
+lvim.keys.visual_mode["<M-cr>"] = "<cmd>lua vim.lsp.buf.range_code_action()<cr>" -- Select and apply actions
+-- File
 lvim.keys.normal_mode["F"] = ":Telescope frecency<cr>"
 lvim.keys.normal_mode["<Tab>"] = "<cmd>lua require('user.telescope').buffers()<cr>"
+-- Other
 lvim.keys.normal_mode["<M-k>"] = ":Telescope builtin include_extensions=true<cr>"
 lvim.keys.normal_mode["<C-N>"] = ":NvimTreeFindFile<cr>"
 lvim.keys.normal_mode["ml"] = "dd<C-W><C-l>p<C-w><C-h>"
@@ -15,7 +21,6 @@ lvim.keys.normal_mode["+"] = "<cmd>3wincmd > <cr>"
 lvim.keys.normal_mode["-"] = "<cmd>3wincmd < <cr>"
 -- visual mode
 lvim.keys.visual_mode["p"] = [["_dP]] -- avoid override when pasting over seleted text
-lvim.keys.visual_mode["s"] = ":Pounce<cr>"
 -- Tab bindings
 lvim.keys.normal_mode["tk"] = ":tabclose<cr>"
 lvim.keys.normal_mode["tn"] = ":tabnew<cr>"
