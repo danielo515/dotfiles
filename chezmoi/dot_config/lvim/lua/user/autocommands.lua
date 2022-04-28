@@ -5,6 +5,8 @@ function M.config()
 	lvim.autocommands.custom_groups = {
 		-- On entering a lua file, set the tab spacing and shift width to 8gg
 		{ "BufWinEnter", "*.lua", "setlocal ts=8 sw=8" },
+		-- Automatically adjust the window width when you enter it
+		{ "WinEnter", "*", "ResizeWindow" },
 		-- Apply chezmoi whenever a dotfile is updated
 		{
 			"BufWritePost",
