@@ -4,3 +4,7 @@ type = "git-repo"
 url = "https://github.com/tmux-plugins/tpm"
 refreshPeriod = "168h"
 exact = true
+[".config/alacritty/colors/challenger_deep.yaml"]
+type = "file"
+url = "https://raw.githubusercontent.com/eendroroy/alacritty-theme/master/themes/challenger_deep.yaml"
+refreshPeriod = "168h"
