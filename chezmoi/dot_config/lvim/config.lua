@@ -64,6 +64,8 @@ for k, v in pairs(options) do
 	vim.opt[k] = v
 end
 
+vim.opt.cpoptions:append("y")
+
 require("user.keymaps")
 require("user.which-key")
 require("user.telescope")
