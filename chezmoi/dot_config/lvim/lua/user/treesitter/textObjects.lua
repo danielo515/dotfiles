@@ -31,6 +31,36 @@ M.config = {
 				-- ["aq"] = "@string.outer",
 			},
 		},
+		lsp_interop = {
+			enable = true,
+			border = "none",
+			peek_definition_code = {
+				["<leader>df"] = "@function.outer",
+				["<leader>dF"] = "@class.outer",
+			},
+		},
+		move = {
+			enable = true,
+			set_jumps = true, -- whether to set jumps in the jumplist
+			goto_next_start = {
+				["]p"] = "@parameter.inner",
+				["]f"] = "@function.outer",
+				-- ["]]"] = "@class.outer",
+			},
+			goto_next_end = {
+				["]F"] = "@function.outer",
+				-- ["]["] = "@class.outer",
+			},
+			goto_previous_start = {
+				["[p"] = "@parameter.inner",
+				["[f"] = "@function.outer",
+				-- ["[["] = "@class.outer",
+			},
+			goto_previous_end = {
+				["[F"] = "@function.outer",
+				-- ["[]"] = "@class.outer",
+			},
+		},
 	},
 }
 
