@@ -33,3 +33,5 @@ lvim.keys.insert_mode["<C-y>"] =
 lvim.keys.insert_mode["<C-s>"] = "<cmd>lua vim.lsp.buf.signature_help()<cr>"
 lvim.keys.insert_mode["<A-s>"] =
 	"<cmd>lua require('telescope').extensions.luasnip.luasnip(require('telescope.themes').get_cursor({}))<CR>"
+-- control a navigates to home in command mode
+vim.keymap.set("c", "<C-A>", "<Home>", { noremap = false })
