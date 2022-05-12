@@ -13,6 +13,11 @@ function M.config()
 	linters.setup({
 		{ command = "eslint", filetypes = { "typescript", "typescriptreact" } },
 	})
+	local graphql_lsp_opts = {
+		filetypes = { "graphql", "typescriptreact", "javascriptreact", "typescript" },
+	}
+
+	require("lvim.lsp.manager").setup("graphql", graphql_lsp_opts)
 end
 
 return M
