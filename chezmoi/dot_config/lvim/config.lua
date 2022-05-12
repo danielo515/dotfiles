@@ -5,16 +5,11 @@ lvim.lsp.automatic_servers_installation = true
 lvim.log.level = "debug"
 lvim.format_on_save = true
 lvim.colorscheme = "tokyonight"
-lvim.builtin.nvimtree.setup.open_on_setup = false
-lvim.builtin.nvimtree.setup.view.auto_resize = true
-lvim.builtin.nvimtree.setup.view.side = "left"
 lvim.leader = "space"
 lvim.builtin.alpha.active = true
 lvim.builtin.alpha.mode = "dashboard"
 lvim.builtin.notify.active = true
 lvim.builtin.terminal.active = true
-lvim.builtin.nvimtree.setup.view.side = "left"
-lvim.builtin.nvimtree.show_icons.git = 1
 lvim.builtin.which_key.setup.plugins.presets = {
 	operators = false, -- adds help for operators like d, y, ...
 	motions = false, -- adds help for motions
@@ -33,6 +28,12 @@ lvim.builtin.alpha.mode = "custom"
 local alpha_opts = require("user.dashboard").config()
 lvim.builtin.alpha["custom"] = { config = alpha_opts }
 
+-- Nvimtree
+-- =========================================
+lvim.builtin.nvimtree.setup.open_on_setup = false
+lvim.builtin.nvimtree.setup.view.auto_resize = true
+lvim.builtin.nvimtree.setup.view.side = "left"
+lvim.builtin.nvimtree.show_icons.git = 1
 lvim.builtin.nvimtree.setup.renderer = {
 	indent_markers = {
 		enable = true,
@@ -42,6 +43,22 @@ lvim.builtin.nvimtree.setup.renderer = {
 			none = "  ",
 		},
 	},
+}
+local function telescope_find_files(_)
+	require("lvim.core.nvimtree").start_telescope("find_files")
+end
+
+local function telescope_live_grep(_)
+	require("lvim.core.nvimtree").start_telescope("live_grep")
+end
+
+lvim.builtin.nvimtree.setup.view.mappings.list = {
+	{ key = { "l", "<CR>", "o" }, action = "edit", mode = "n" },
+	{ key = "h", action = "close_node" },
+	{ key = "v", action = "vsplit" },
+	{ key = "C", action = "cd" },
+	{ key = "f", action = "telescope_find_files", action_cb = telescope_find_files },
+	{ key = "gr", action = "telescope_live_grep", action_cb = telescope_live_grep },
 }
 
 -- You will likely want to reduce updatetime which affects CursorHold
