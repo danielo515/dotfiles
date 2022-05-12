@@ -37,4 +37,14 @@ end
 
 vim.cmd('command! ResizeWindow :lua require("user.util").resize_window_width()')
 
+function M.copy_messages_to_clipboard()
+	local cmd = [[
+redir @*
+messages
+redir END
+]]
+	vim.cmd(cmd)
+	vim.notify(":messages copied to the clipboard", "info")
+end
+
 return M
