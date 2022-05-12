@@ -211,5 +211,7 @@ local plugins = {
 			})
 		end,
 	},
+	-- run parts of code from the open file
+	{ "michaelb/sniprun", run = "bash ./install.sh" },
 }
 return plugins
