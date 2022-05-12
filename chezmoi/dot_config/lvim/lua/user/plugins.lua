@@ -122,6 +122,7 @@ local plugins = {
 	},
 	-- sessions management
 	require("user.autosession"),
+	require("user.persistence").plugin,
 	{ "kosayoda/nvim-lightbulb" },
 
 	-- auto close and rename markup tags
