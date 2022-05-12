@@ -96,6 +96,8 @@ key_bindings:
   # (macOS only)
   # make <C-6> work in NVim (CTRL-^)
   - { key: Key6,           mods: Control,                    chars: "\x1e"                 }
+  # Map alt on mac to proper key code
+  - { key: K,              mods: Option,                     chars: "\x1bk"                }
   - { key: Key9,           mods: Command,                    action: ResetFontSize         }
   - { key: Equals,         mods: Command,                    action: IncreaseFontSize      }
   - { key: Plus,           mods: Command,                    action: IncreaseFontSize      }
@@ -117,7 +119,7 @@ colors:
     # present. If the bright foreground color is not set, or
     # `draw_bold_text_with_bright_colors` is `false`, the normal foreground
     # color will be used.
-    dim_foreground: '#545554'
+    dim_foreground: '#545641'
     bright_foreground: '#DFEEDF'
 
   # Cursor colors
@@ -143,15 +145,15 @@ colors:
   # Search colors
   #
   # Colors used for the search bar and match highlighting.
-  #search:
+  search:
     # Allowed values are CellForeground/CellBackground, which reference the
     # affected cell, or hexadecimal colors like #ff00ff.
-    #matches:
-    #  foreground: '#000000'
-    #  background: '#ffffff'
-    #focused_match:
-    #  foreground: '#ffffff'
-    #  background: '#000000'
+    matches:
+     foreground: '#fffff0'
+     background: '#fff000'
+    focused_match:
+     foreground: '#ffffff'
+     background: '#ff00ff'
 
     #bar:
     #  background: '#c5c8c6'
@@ -208,8 +210,8 @@ colors:
 
   # Bright colors
   bright:
-  #  black:   '#666666'
-  #  red:     '#d54e53'
+    black:   '#656687'
+    red:     '#d54e54'
     green:   '#85e89d'
     yellow:  '#ffea7f'
     blue:    '#1e90ff'
@@ -221,15 +223,15 @@ colors:
   #
   # If the dim colors are not set, they will be calculated automatically based
   # on the `normal` colors.
-  #dim:
-  #  black:   '#131415'
-  #  red:     '#864343'
-  #  green:   '#777c44'
-  #  yellow:  '#9e824c'
-  #  blue:    '#556a7d'
-  #  magenta: '#75617b'
-  #  cyan:    '#5b7d78'
-  #  white:   '#828482'
+  dim:
+   black:   '#131415'
+   red:     '#864343'
+   green:   '#777c44'
+   yellow:  '#9e824c'
+   blue:    '#556a7d'
+   magenta: '#75617b'
+   cyan:    '#5b7d78'
+   white:   '#cecece'
 
   # Indexed Colors
   #
