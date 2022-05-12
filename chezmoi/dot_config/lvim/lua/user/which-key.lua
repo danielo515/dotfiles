@@ -1,4 +1,4 @@
-function yank_file_name()
+function Yank_file_name()
 	local path = vim.fn.expand("%")
 	vim.fn.setreg("*", path)
 	vim.notify(path .. " yanked to keyboard")
@@ -53,7 +53,7 @@ local whichConfig = {
 		f = { "<cmd>Telescope frecency default_workspace='CWD'<cr>", "Browse recent files" },
 		r = { "<cmd>Telescope frecency<cr>", "Browse recent files globally" },
 		b = { "<cmd>Telescope file_browser<cr>", "Browse file tree cool" },
-		y = { "<cmd>lua yank_file_name()<CR>", "Yank current file path" },
+		y = { "<cmd>lua Yank_file_name()<CR>", "Yank current file path" },
 	},
 }
 -- merge our custom config with the one from lvim
