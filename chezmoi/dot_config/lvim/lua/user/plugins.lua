@@ -211,6 +211,8 @@ local plugins = {
 			})
 		end,
 	},
+	-- registers UI
+	"tversteeg/registers.nvim",
 	-- run parts of code from the open file
 	{ "michaelb/sniprun", run = "bash ./install.sh" },
 }
