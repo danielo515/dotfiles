@@ -2,6 +2,7 @@ local plugins = {
 	-- themes
 	"folke/tokyonight.nvim",
 	{ "Mofiqul/dracula.nvim" },
+	-- some lsp diagnosis
 	{
 		"folke/trouble.nvim",
 		cmd = "TroubleToggle",
@@ -54,6 +55,12 @@ local plugins = {
 		config = function()
 			require("lsp_signature").setup()
 		end,
+	},
+	-- shows where you are using tree-siter
+	-- Lua
+	{
+		"SmiteshP/nvim-gps",
+		requires = "nvim-treesitter/nvim-treesitter",
 	},
 	-- Indent guides on every line
 	{
@@ -155,17 +162,6 @@ local plugins = {
 	-- VSCode like omni bar
 	-- {
 	-- 	"mrjones2014/legendary.nvim",
-	-- },
-	-- automatically resize windows to better fir the content
-	-- {
-	-- 	"beauwilliams/focus.nvim",
-	-- 	config = function()
-	-- 		-- require("focus").setup()
-	-- 		require("focus").setup({
-	-- 			hybridnumber = true,
-	-- 			excluded_filetypes = { "toggleterm", "diffview", "DiffviewFiles", "diffviewfiles" },
-	-- 		})
-	-- 	end,
 	-- },
 	{
 		"gfeiyou/command-center.nvim",

@@ -1,5 +1,21 @@
 local components = require("lvim.core.lualine.components")
-local ts = require("nvim-treesitter")
+local gps_ok, gps = pcall(require, "nvim-gps")
+
+local hide_in_width = function()
+	return vim.fn.winwidth(0) > 80
+end
+
+local nvim_gps = function()
+	if not gps_ok then
+		return "no gps"
+	end
+	local gps_location = gps.get_location()
+	if gps_location == "error" then
+		return "gps error"
+	else
+		return gps.get_location()
+	end
+end
 
 lvim.builtin.lualine.sections.lualine_a = {
 	{
@@ -23,7 +39,7 @@ lvim.builtin.lualine.sections.lualine_c = {
 	components.lsp,
 	components.diagnostics,
 	components.treesitter,
-	ts.statusline,
+	{ nvim_gps, cond = hide_in_width },
 }
 lvim.builtin.lualine.sections.lualine_x = {
 	components.filetype,
