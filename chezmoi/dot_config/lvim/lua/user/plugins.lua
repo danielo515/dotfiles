@@ -128,7 +128,7 @@ local plugins = {
 		end,
 	},
 	-- sessions management
-	require("user.autosession"),
+	-- require("user.autosession"),
 	require("user.persistence").plugin,
 	{ "kosayoda/nvim-lightbulb" },
 

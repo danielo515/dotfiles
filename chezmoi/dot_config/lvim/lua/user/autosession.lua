@@ -2,9 +2,9 @@ return {
 	"rmagatti/auto-session",
 	config = function()
 		require("auto-session").setup({
-			-- log_level = "info",
 			auto_session_enable_last_session = false,
 			auto_session_suppress_dirs = { "~/" },
+			auto_session_use_git_branch = true,
 		})
 		vim.o.sessionoptions = "blank,buffers,curdir,folds,help,tabpages,winsize,winpos,terminal"
 	end,
