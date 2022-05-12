@@ -1,5 +1,7 @@
 local M = {}
 
+local util = require("user.util")
+
 M.config = function()
 	local status_ok, command_center = pcall(require, "command_center")
 	if not status_ok then
@@ -21,6 +23,7 @@ M.config = function()
 		{ description = "Quit", command = "qa" },
 		{ description = "Save all files", command = "wa" },
 		{ description = "Save current file", command = "w" },
+		{ description = "Copy :messages to the clipboard", cmd = util.copy_messages_to_clipboard },
 		{ description = "Search word", command = "lua require('user.telescope').find_string()" },
 		{ description = "Format document", command = "lua vim.lsp.buf.formatting_seq_sync()" },
 		{ description = "Workspace diagnostics", command = "Telescope diagnostics" },
@@ -35,6 +38,7 @@ M.config = function()
 		{ description = "Switch colorschemes", command = "Telescope colorscheme" },
 		{ description = "Command history", command = "lua require('telescope.builtin').command_history()" },
 		{ description = "Show all available commands", command = "Telescope commands" },
+		{ description = "Show Telescope builtin commands", cmd = "Telescope builtin include_extensions=true" },
 		{ description = "Toggle cursor column", command = "set cursorcolumn!" },
 		{ description = "Toggle cursor line", command = "set cursorline!" },
 		{ description = "Show jumplist", command = "Telescope jumplist" },
