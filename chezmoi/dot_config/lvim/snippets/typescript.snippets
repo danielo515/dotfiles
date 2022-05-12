@@ -40,6 +40,22 @@ snippet tprmet "ts private method"
 	private ${1}(${2}): ${3:any} {
 		${0}
 	}
+
+snippet trfc "typescript react functional component"
+	import React from 'react'
+	type Props = {
+			$1
+		}
+
+	export const CustomizeDismissableBanner = ({$2}: Props) => {
+		return (
+			<div>
+				$0
+			</div>
+		)
+	}
+
+
 snippet tpromet "ts protected method"
 	protected ${1}(${2}): ${3:any} {
 		${0}
