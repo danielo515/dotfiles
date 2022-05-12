@@ -1,5 +1,24 @@
 local M = {}
 
+local function reloadSnippets()
+	require("luasnip").cleanup() -- opts can be ommited
+	require("luasnip.loaders.from_snipmate").load() -- opts can be ommited
+	require("luasnip.loaders.from_vscode").load() -- opts can be ommited
+end
+
+-- local danieloSnip = vim.api.nvim_create_namespace("danielo-snip")
+local danieloSnip = vim.api.nvim_create_augroup("danielo-snip", {
+	clear = true,
+})
+
+vim.api.nvim_create_autocmd({
+	"BufWritePost",
+}, {
+	pattern = { "*.snippets" },
+	callback = reloadSnippets,
+	group = danieloSnip,
+})
+
 function M.config()
 	local codelens_viewer = "lua require('nvim-lightbulb').update_lightbulb()"
 	lvim.autocommands.custom_groups = {
