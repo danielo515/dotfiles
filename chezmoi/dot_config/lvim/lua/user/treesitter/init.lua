@@ -73,6 +73,7 @@ local settings = {
 		"python",
 		"typescript",
 		"tsx",
+		"graphql",
 		"css",
 		"rust",
 		"java",
