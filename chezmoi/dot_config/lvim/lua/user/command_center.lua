@@ -38,7 +38,10 @@ M.config = function()
 		{ description = "Switch colorschemes", command = "Telescope colorscheme" },
 		{ description = "Command history", command = "lua require('telescope.builtin').command_history()" },
 		{ description = "Show all available commands", command = "Telescope commands" },
-		{ description = "Show Telescope builtin commands", cmd = "Telescope builtin include_extensions=true" },
+		{
+			description = "Show Telescope builtin commands",
+			cmd = "<cmd>Telescope builtin include_extensions=true<cr>",
+		},
 		{ description = "Toggle cursor column", command = "set cursorcolumn!" },
 		{ description = "Toggle cursor line", command = "set cursorline!" },
 		{ description = "Show jumplist", command = "Telescope jumplist" },
