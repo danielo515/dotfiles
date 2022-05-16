@@ -31,8 +31,31 @@ M.plugins = {
 		"nvim-treesitter/playground",
 		cmd = "TSPlaygroundToggle",
 	},
+	-- I'm not interested in the refactors, only in the navigations
+	"nvim-treesitter/nvim-treesitter-refactor",
 	-- Highlight parens and that stuff using treesitter
 	{ "p00f/nvim-ts-rainbow" },
+}
+
+local refactor_config = {
+	refactor = {
+		highlight_definitions = {
+			enable = true,
+			-- Set to false if you have an `updatetime` of ~100.
+			clear_on_cursor_move = true,
+		},
+		highlight_current_scope = { enable = true },
+		navigation = {
+			enable = true,
+			keymaps = {
+				goto_definition = "gnd",
+				list_definitions = "gnD",
+				list_definitions_toc = "gO",
+				goto_next_usage = "gnr",
+				goto_previous_usage = "gNr",
+			},
+		},
+	},
 }
 
 local rainbow_config = {
