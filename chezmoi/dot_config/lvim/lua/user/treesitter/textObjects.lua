@@ -27,8 +27,8 @@ M.config = {
 				["aa"] = "@parameter.outer", -- "ip" is already used
 				["al"] = "@loop.outer",
 				["il"] = "@loop.inner",
-				-- ["iq"] = "@string.inner",
-				-- ["aq"] = "@string.outer",
+				["iv"] = "@variable",
+				["av"] = "@variable",
 			},
 		},
 		lsp_interop = {
@@ -43,8 +43,9 @@ M.config = {
 			enable = true,
 			set_jumps = true, -- whether to set jumps in the jumplist
 			goto_next_start = {
-				["]p"] = "@parameter.inner",
-				["]f"] = "@function.outer",
+				["gnp"] = "@parameter.inner",
+				["gnf"] = "@function.outer",
+				["gnv"] = "@variable",
 				-- ["]]"] = "@class.outer",
 			},
 			goto_next_end = {
