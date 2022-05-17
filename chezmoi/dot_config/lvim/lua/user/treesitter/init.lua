@@ -51,7 +51,7 @@ local refactor_config = {
 				goto_definition = "gnd",
 				list_definitions = "gnD",
 				list_definitions_toc = "gO",
-				goto_next_usage = "gnr",
+				goto_next_usage = ",r",
 				goto_previous_usage = "gNr",
 			},
 		},
@@ -113,7 +113,8 @@ function M.config()
 		playground_config,
 		rainbow_config,
 		textObjects.config,
-		textSubjects.config
+		textSubjects.config,
+		refactor_config
 	)
 end
 
