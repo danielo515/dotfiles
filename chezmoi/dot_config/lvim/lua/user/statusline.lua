@@ -13,7 +13,11 @@ local nvim_gps = function()
 	if gps_location == "error" then
 		return "gps error"
 	else
-		return gps.get_location()
+		if gps_location == "" then
+			return "gps --"
+		else
+			return gps_location
+		end
 	end
 end
 
@@ -25,7 +29,7 @@ lvim.builtin.lualine.sections.lualine_a = {
 		-- 1: Relative path
 		-- 2: Absolute path
 
-		shorting_target = 40, -- Shortens path to leave 40 spaces in the window
+		shorting_target = 60, -- Shortens path to leave 40 spaces in the window
 		symbols = {
 			modified = "[+]", -- Text to show when the file is modified.
 			readonly = "[!]", -- Text to show when the file is non-modifiable or readonly.
@@ -44,4 +48,4 @@ lvim.builtin.lualine.sections.lualine_c = {
 lvim.builtin.lualine.sections.lualine_x = {
 	components.filetype,
 }
-lvim.builtin.lualine.sections.lualine_y = { "location", "tabs", "windows" }
+lvim.builtin.lualine.sections.lualine_y = { "location", "windows", "tabs" }
