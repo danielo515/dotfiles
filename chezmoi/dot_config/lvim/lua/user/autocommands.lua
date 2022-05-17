@@ -1,5 +1,10 @@
 local M = {}
 
+-- You will likely want to reduce updatetime which affects CursorHold
+-- note: this setting is global and should be set only once
+vim.o.updatetime = 250
+vim.cmd([[autocmd! CursorHold * lua vim.diagnostic.open_float(nil, {focus=false})]])
+
 local function reloadSnippets()
 	require("luasnip").cleanup() -- opts can be ommited
 	require("luasnip.loaders.from_snipmate").load() -- opts can be ommited
