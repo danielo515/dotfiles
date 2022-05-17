@@ -3,6 +3,17 @@ function Yank_file_name()
 	vim.fn.setreg("*", path)
 	vim.notify(path .. " yanked to keyboard")
 end
+
+lvim.builtin.which_key.setup.plugins.presets = {
+	operators = false, -- adds help for operators like d, y, ...
+	motions = false, -- adds help for motions
+	text_objects = false, -- help for text objects triggered after entering an operator
+	windows = true, -- default bindings on <c-w>
+	nav = true, -- misc bindings to work with windows
+	z = true, -- bindings for folds, spelling and others prefixed with z
+	g = true, -- bindings for prefixed with g
+}
+
 -- This config will be merged with the one that lvim has by default
 local whichConfig = {
 	-- extend search
@@ -57,7 +68,8 @@ local whichConfig = {
 	},
 }
 -- merge our custom config with the one from lvim
--- lvim.builtin.which_key.mappings = vim.tbl_deep_extend("force", lv_which, whichConfig)
+local lv_which = lvim.builtin.which_key.mappings
+lvim.builtin.which_key.mappings = vim.tbl_deep_extend("force", lv_which, whichConfig)
 
 lvim.builtin.which_key.on_config_done = function(which)
 	which.register(whichConfig, { prefix = "<leader>" })

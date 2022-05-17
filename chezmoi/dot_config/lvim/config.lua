@@ -10,15 +10,7 @@ lvim.builtin.alpha.active = true
 lvim.builtin.alpha.mode = "dashboard"
 lvim.builtin.notify.active = true
 lvim.builtin.terminal.active = true
-lvim.builtin.which_key.setup.plugins.presets = {
-	operators = false, -- adds help for operators like d, y, ...
-	motions = false, -- adds help for motions
-	text_objects = false, -- help for text objects triggered after entering an operator
-	windows = true, -- default bindings on <c-w>
-	nav = true, -- misc bindings to work with windows
-	z = true, -- bindings for folds, spelling and others prefixed with z
-	g = true, -- bindings for prefixed with g
-}
+-- Always show line blame like VSCode
 lvim.builtin.gitsigns.opts.current_line_blame = true
 lvim.lsp.float.max_height = 20
 
@@ -61,10 +53,9 @@ lvim.builtin.nvimtree.setup.view.mappings.list = {
 	{ key = "gr", action = "telescope_live_grep", action_cb = telescope_live_grep },
 }
 
--- You will likely want to reduce updatetime which affects CursorHold
--- note: this setting is global and should be set only once
-vim.o.updatetime = 250
-vim.cmd([[autocmd! CursorHold,CursorHoldI * lua vim.diagnostic.open_float(nil, {focus=false})]])
+-- Nvimtree end
+-- =========================================
+
 vim.wo.relativenumber = true
 vim.o.guifont = "Inconsolata Nerd Font"
 -- This is required for vim-surround, otherwise it is too fast
