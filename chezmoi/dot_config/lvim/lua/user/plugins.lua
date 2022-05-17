@@ -199,12 +199,13 @@ local plugins = {
 	-- highlight nicely the search results
 	require("user.hlslens").plugin,
 	-- require("user.lspsaga").plugin,
+	-- call any "make" program and populate location list with it
 	{
 		"neomake/neomake",
 		setup = function()
 			vim.g.neomake_open_list = 2 -- open the list automatically:
 		end,
-	}, -- call any "make" program and populate location list with it
+	},
 	-- Extends the typescript LSP capabilities with things like file rename
 	{
 		"jose-elias-alvarez/typescript.nvim",
