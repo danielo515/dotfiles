@@ -219,5 +219,7 @@ local plugins = {
 	"tversteeg/registers.nvim",
 	-- run parts of code from the open file
 	{ "michaelb/sniprun", run = "bash ./install.sh" },
+	-- Adds hop-like visual hints for selecting using treesitter
+	"mfussenegger/nvim-ts-hint-textobject",
 }
 return plugins
