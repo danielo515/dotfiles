@@ -2,6 +2,7 @@ local plugins = {
 	-- themes
 	"folke/tokyonight.nvim",
 	{ "Mofiqul/dracula.nvim" },
+	"marko-cerovac/material.nvim",
 	-- some lsp diagnosis
 	{
 		"folke/trouble.nvim",
