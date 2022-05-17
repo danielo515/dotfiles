@@ -166,9 +166,9 @@ local plugins = {
 		end,
 	},
 	-- VSCode like omni bar
-	-- {
-	-- 	"mrjones2014/legendary.nvim",
-	-- },
+	{
+		"mrjones2014/legendary.nvim",
+	},
 	{
 		"gfeiyou/command-center.nvim",
 		config = function()
