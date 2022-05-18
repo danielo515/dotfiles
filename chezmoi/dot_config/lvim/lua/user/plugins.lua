@@ -221,5 +221,7 @@ local plugins = {
 	{ "michaelb/sniprun", run = "bash ./install.sh" },
 	-- Adds hop-like visual hints for selecting using treesitter
 	"mfussenegger/nvim-ts-hint-textobject",
+	-- Json schemas
+	"b0o/schemastore.nvim",
 }
 return plugins

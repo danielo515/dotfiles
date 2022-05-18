@@ -18,6 +18,14 @@ function M.config()
 	}
 
 	require("lvim.lsp.manager").setup("graphql", graphql_lsp_opts)
+	require("lvim.lsp.manager").setup("jsonls", {
+		settings = {
+			json = {
+				schemas = require("schemastore").json.schemas(),
+				validate = { enable = true },
+			},
+		},
+	})
 end
 
 return M
