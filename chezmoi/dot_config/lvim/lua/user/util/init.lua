@@ -11,6 +11,7 @@ end
 
 -- Resizes the current window to the maximum required width
 function M.resize_window_width()
+	local terminalWidth = vim.opt.columns:get()
 	local getOpt = vim.api.nvim_win_get_option
 	local lines_count = vim.api.nvim_buf_line_count(0)
 	local lines = vim.api.nvim_buf_get_lines(0, 0, lines_count, false)
@@ -28,7 +29,10 @@ function M.resize_window_width()
 	end
 	local current_width = vim.api.nvim_win_get_width(0)
 	local new_width = longerLine + padding
-	if current_width >= new_width then
+	if current_width >= new_width then -- skip if window is width enough already
+		return
+	end
+	if new_width > (terminalWidth * 0.8) then -- skip if new width will be bigger than 80% of screen
 		return
 	end
 	local cmd = new_width .. "wincmd |"
