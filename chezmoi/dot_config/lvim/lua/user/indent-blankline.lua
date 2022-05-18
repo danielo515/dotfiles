@@ -3,6 +3,7 @@ local M = {}
 M.config = function()
 	local status_ok, bl = pcall(require, "indent_blankline")
 	if not status_ok then
+		vim.notify("Could not load indent_blankline", "warn")
 		return
 	end
 
