@@ -168,6 +168,18 @@ local plugins = {
 	-- VSCode like omni bar
 	{
 		"mrjones2014/legendary.nvim",
+		config = function()
+			require("legendary").setup({
+				which_key = {
+					mappings = lvim.builtin.which_key.mappings,
+					opts = lvim.builtin.which_key.opts,
+					-- false if which-key.nvim handles binding them,
+					-- set to true if you want legendary.nvim to handle binding
+					-- the mappings; if not passed, true by default
+					do_binding = false,
+				},
+			})
+		end,
 	},
 	{
 		"gfeiyou/command-center.nvim",

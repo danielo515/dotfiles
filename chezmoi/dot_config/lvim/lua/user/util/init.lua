@@ -51,4 +51,11 @@ redir END
 	vim.notify(":messages copied to the clipboard", "info")
 end
 
+pcall(function()
+	require("legendary").bind_command({
+		":CopyMessages",
+		M.copy_messages_to_clipboard,
+		description = "Copy the output of :messages to OS clipboard",
+	})
+end)
 return M
