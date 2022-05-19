@@ -72,7 +72,7 @@ local plugins = {
 	{
 		"lukas-reineke/indent-blankline.nvim",
 		event = "BufRead",
-		config = require("user.indent-blankline").config(),
+		config = require("user.indent-blankline").config,
 	},
 	-- Smooth scrolling
 	{ "psliwka/vim-smoothie" },
