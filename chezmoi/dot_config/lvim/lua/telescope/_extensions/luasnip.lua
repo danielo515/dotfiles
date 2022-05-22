@@ -127,7 +127,7 @@ local luasnip_fn = function(opts)
 					) .. " " .. filter_description(entry.context.name, entry.context.description),
 
 					preview_command = function(pvw_entry, bufnr)
-						local snippet = get_docstring(luasnip.snippets, entry.ft, entry.context)
+						local snippet = get_docstring(luasnip.available(), entry.ft, entry.context)
 						vim.api.nvim_buf_set_option(bufnr, "filetype", entry.ft)
 						if type(snippet) ~= "table" then
 							local lines = {}

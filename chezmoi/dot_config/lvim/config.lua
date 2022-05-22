@@ -66,6 +66,7 @@ local options = {
 	foldexpr = "nvim_treesitter#foldexpr()", -- set to "nvim_treesitter#foldexpr()" for treesitter based folding
 	foldnestmax = 3,
 	foldlevel = 1,
+	laststatus = 3,
 }
 
 for k, v in pairs(options) do
