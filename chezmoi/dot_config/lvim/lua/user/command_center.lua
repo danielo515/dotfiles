@@ -16,7 +16,7 @@ M.config = function()
 		{ description = "Show file browser", command = "Telescope file_browser" },
 		{ description = "Find files", command = "lua require('telescope.builtin').find_files()" },
 		{ description = "Find hidden files", command = "Telescope find_files hidden=true" },
-		{ description = "Find Git files", command = "lua require('user.telescope').git_files()" },
+		{ description = "Find Git files", command = "lua require('lvim.core.telescope').find_project_files()" },
 		{ description = "Show recent files", command = "Telescope oldfiles" },
 		{ description = "Rerun last search", command = "lua require('telescope.builtin').resume({cache_index=3})" },
 		{ description = "Search inside current buffer", command = "Telescope current_buffer_fuzzy_find" },
