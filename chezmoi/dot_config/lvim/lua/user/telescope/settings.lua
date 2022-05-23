@@ -33,10 +33,18 @@ lvim.builtin.telescope.on_config_done = function(tele)
 				},
 			},
 		},
+		extensions = {
+			frecency = {
+				auto_validate = false,
+				default_workspace = "CWD",
+			},
+		},
 	}
 
 	tele.setup(opts)
 end
+
+local user_telescope = require("user.telescope")
 
 -- Change Telescope navigation
 -- we use protected-mode (pcall) just in case the plugin wasn't loaded yet.
@@ -47,6 +55,10 @@ lvim.builtin.telescope.defaults.mappings = {
 		["<C-j>"] = actions.move_selection_next,
 		["<C-n>"] = actions.cycle_history_next,
 		["<C-r>"] = actions.cycle_history_prev,
+		["<cr>"] = user_telescope.multi_selection_open,
+		["<c-v>"] = user_telescope.multi_selection_open_vsplit,
+		["<c-s>"] = user_telescope.multi_selection_open_split,
+		["<c-t>"] = user_telescope.multi_selection_open_tab,
 	},
 	-- for normal mode
 	n = {
@@ -56,6 +68,10 @@ lvim.builtin.telescope.defaults.mappings = {
 		["q"] = actions.smart_send_to_qflist + actions.open_qflist,
 		["Q"] = actions.smart_add_to_qflist + actions.open_qflist,
 		["x"] = actions.delete_buffer,
+		["<cr>"] = user_telescope.multi_selection_open,
+		["<c-v>"] = user_telescope.multi_selection_open_vsplit,
+		["<c-s>"] = user_telescope.multi_selection_open_split,
+		["<c-t>"] = user_telescope.multi_selection_open_tab,
 	},
 }
 return plugins
