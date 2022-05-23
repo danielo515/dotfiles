@@ -210,6 +210,7 @@ local plugins = {
 	require("user.harpoon").plugin,
 	-- highlight nicely the search results
 	require("user.hlslens").plugin,
+	require("user.neo_tree").plugin,
 	-- require("user.lspsaga").plugin,
 	-- call any "make" program and populate location list with it
 	{
