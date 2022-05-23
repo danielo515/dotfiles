@@ -62,11 +62,12 @@ vim.o.guifont = "Inconsolata Nerd Font"
 vim.o.timeoutlen = 500
 
 local options = {
-	foldmethod = "manual", -- folding, set to "expr" for treesitter based folding
+	foldmethod = "expr", -- folding, set to "expr" for treesitter based folding
 	foldexpr = "nvim_treesitter#foldexpr()", -- set to "nvim_treesitter#foldexpr()" for treesitter based folding
 	foldnestmax = 3,
-	foldlevel = 1,
-	laststatus = 3,
+	foldlevel = 5,
+	foldlevelstart = 99,
+	foldenable = false,
 }
 
 for k, v in pairs(options) do
