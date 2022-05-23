@@ -64,6 +64,7 @@ vim.o.timeoutlen = 500
 local options = {
 	foldmethod = "expr", -- folding, set to "expr" for treesitter based folding
 	foldexpr = "nvim_treesitter#foldexpr()", -- set to "nvim_treesitter#foldexpr()" for treesitter based folding
+	laststatus = 3,
 	foldnestmax = 3,
 	foldlevel = 5,
 	foldlevelstart = 99,
