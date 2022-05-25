@@ -27,10 +27,10 @@ local whichConfig = {
 		j = { "<cmd>Telescope jumplist<cr>", "Jump list" },
 		P = { "<cmd>Telescope packer<cr>", "Packer search" },
 		["."] = { "<cmd>Telescope resume<cr>", "Repeat search" },
-	},
-	S = {
-		"<cmd>lua require('spectre').open_visual({select_word=true})<CR>",
-		"Spectre search",
+		S = {
+			"<cmd>lua require('spectre').open_visual({select_word=true})<CR>",
+			"Spectre search",
+		},
 	},
 	["."] = {
 		"<cmd>lua require('user.telescope').find_siblings()<cr>",
