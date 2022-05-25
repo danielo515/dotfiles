@@ -48,4 +48,4 @@ lvim.builtin.lualine.sections.lualine_c = {
 lvim.builtin.lualine.sections.lualine_x = {
 	components.filetype,
 }
-lvim.builtin.lualine.sections.lualine_y = { "location", "windows", "tabs" }
+lvim.builtin.lualine.sections.lualine_y = { "windows", "tabs", "location" }
