@@ -1,4 +1,5 @@
 local concat_lists = require("user.util").concat_lists
+require("settings.gui")
 -- generic LSP settings
 lvim.lsp.automatic_servers_installation = true
 -- general
@@ -57,7 +58,6 @@ lvim.builtin.nvimtree.setup.view.mappings.list = {
 -- =========================================
 
 vim.wo.relativenumber = true
-vim.o.guifont = "Inconsolata Nerd Font"
 -- This is required for vim-surround, otherwise it is too fast
 vim.o.timeoutlen = 500
 
