@@ -39,9 +39,16 @@ function M.grep_files(opts)
 		search_dirs = { cwd },
 	})
 	opts = vim.tbl_deep_extend("force", theme_opts, opts)
-	vim.ui.input({}, function(text)
+	vim.ui.input({
+		default = vim.fn.expand("<cword>"),
+	}, function(text)
 		builtin.grep_string(vim.tbl_extend("force", opts, { search = text }))
 	end)
+end
+
+function M.grep_open_files(opts)
+	opts = opts or {}
+	builtin.live_grep(vim.tbl_extend("force", opts, { grep_open_files = true, disable_coordinates = true }))
 end
 
 -- show code actions in a fancy floating window
@@ -66,6 +73,8 @@ function M.buffers()
 		layout_config = {
 			height = 50,
 		},
+		sort_last_used = true,
+		sort_mru = true,
 	}))
 end
 

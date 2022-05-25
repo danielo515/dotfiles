@@ -20,6 +20,10 @@ M.config = function()
 		{ description = "Show recent files", command = "Telescope oldfiles" },
 		{ description = "Rerun last search", command = "lua require('telescope.builtin').resume({cache_index=3})" },
 		{ description = "Search inside current buffer", command = "Telescope current_buffer_fuzzy_find" },
+		{
+			description = "Search/grep inside open buffers",
+			cmd = require("user.telescope.finders").grep_open_files,
+		},
 		{ description = "Quit", command = "qa" },
 		{ description = "Save all files", command = "wa" },
 		{ description = "Save current file", command = "w" },
