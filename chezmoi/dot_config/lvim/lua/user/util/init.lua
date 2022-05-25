@@ -9,8 +9,16 @@ function M.concat_lists(...)
 	return result
 end
 
+local resize_ignore = { "lazygit", "neo-tree", "NvimTree", "help", "terminal", "command", "toggleterm" }
+-- @TODO: take only visible portion into account
 -- Resizes the current window to the maximum required width
 function M.resize_window_width()
+	local bufType = vim.opt.filetype:get()
+	if vim.tbl_contains(resize_ignore, bufType) then
+		print("resize ignore")
+		return
+	end
+
 	local terminalWidth = vim.opt.columns:get()
 	local getOpt = vim.api.nvim_win_get_option
 	local lines_count = vim.api.nvim_buf_line_count(0)
