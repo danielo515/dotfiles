@@ -86,22 +86,8 @@ local settings = {
 	highlight = { enable = true },
 	indent = { enable = true },
 	autotag = { enable = true },
-	ignore_install = { "haskell" },
-	ensure_installed = {
-		"bash",
-		"c",
-		"javascript",
-		"json",
-		"lua",
-		"python",
-		"typescript",
-		"tsx",
-		"graphql",
-		"css",
-		"rust",
-		"java",
-		"yaml",
-	},
+	ignore_install = { "haskell", "php", "phpdoc" },
+	ensure_installed = "all",
 }
 -- Setup the required configs for treesitter plugins
 function M.config()
