@@ -8,6 +8,7 @@ local plugins = {
 	},
 	{ "kdheepak/lazygit.nvim" },
 	{ "nvim-telescope/telescope-packer.nvim" },
+	"nvim-telescope/telescope-live-grep-raw.nvim",
 }
 
 lvim.builtin.telescope.path_display = "truncate"
@@ -20,6 +21,7 @@ lvim.builtin.telescope.on_config_done = function(tele)
 	tele.load_extension("lazygit")
 	tele.load_extension("packer")
 	tele.load_extension("luasnip")
+	tele.load_extension("live_grep_raw")
 	local opts = {
 		pickers = {
 			lsp_workspace_symbols = {
@@ -33,12 +35,14 @@ lvim.builtin.telescope.on_config_done = function(tele)
 				},
 			},
 		},
-		extensions = {
-			frecency = {
-				auto_validate = false,
-				default_workspace = "CWD",
-			},
-		},
+		-- extensions = {
+		-- 	frecency = {
+		-- 		auto_validate = false,
+		-- 		default_workspace = "CWD",
+		-- 		show_unindexed = true,
+		-- 		show_scores = true,
+		-- 	},
+		-- },
 	}
 
 	tele.setup(opts)
@@ -73,5 +77,12 @@ lvim.builtin.telescope.defaults.mappings = {
 		["<c-s>"] = user_telescope.multi_selection_open_split,
 		["<c-t>"] = user_telescope.multi_selection_open_tab,
 	},
+}
+
+lvim.builtin.telescope.extensions.frecency = {
+	auto_validate = false,
+	default_workspace = "CWD",
+	show_unindexed = false,
+	show_scores = true,
 }
 return plugins

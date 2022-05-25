@@ -3,6 +3,14 @@ local plugins = {
 	"folke/tokyonight.nvim",
 	{ "Mofiqul/dracula.nvim" },
 	"marko-cerovac/material.nvim",
+	-- sessions management
+	require("user.persistence").plugin,
+	require("user.harpoon").plugin,
+	-- highlight nicely the search results
+	require("user.hlslens").plugin,
+	require("user.neo_tree").plugin,
+	require("user.goto_preview"),
+	-- require("user.lspsaga").plugin,
 	-- some lsp diagnosis
 	{
 		"folke/trouble.nvim",
@@ -145,9 +153,6 @@ local plugins = {
 			require("spectre").setup()
 		end,
 	},
-	-- sessions management
-	-- require("user.autosession"),
-	require("user.persistence").plugin,
 	{ "kosayoda/nvim-lightbulb" },
 
 	-- auto close and rename markup tags
@@ -180,6 +185,7 @@ local plugins = {
 	-- VSCode like omni bar
 	{
 		"mrjones2014/legendary.nvim",
+		after = "which-key.nvim",
 		config = function()
 			require("legendary").setup({
 				which_key = {
@@ -219,11 +225,6 @@ local plugins = {
 			})
 		end,
 	},
-	require("user.harpoon").plugin,
-	-- highlight nicely the search results
-	require("user.hlslens").plugin,
-	require("user.neo_tree").plugin,
-	-- require("user.lspsaga").plugin,
 	-- call any "make" program and populate location list with it
 	{
 		"neomake/neomake",
@@ -246,5 +247,9 @@ local plugins = {
 	{ "michaelb/sniprun", run = "bash ./install.sh" },
 	-- Adds hop-like visual hints for selecting using treesitter
 	"mfussenegger/nvim-ts-hint-textobject",
+	{
+		"felipec/vim-sanegx",
+		event = "BufRead",
+	},
 }
 return plugins

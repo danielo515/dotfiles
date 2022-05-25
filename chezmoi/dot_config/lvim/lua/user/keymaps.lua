@@ -15,7 +15,8 @@ lvim.keys.normal_mode["<Tab>"] = "<cmd>lua require('user.telescope').buffers()<c
 -- Other
 -- lvim.keys.normal_mode["<M-k>"] = ":Telescope builtin include_extensions=true<cr>"
 lvim.keys.normal_mode["<A-k>"] = ":Telescope command_center<CR>"
-lvim.keys.normal_mode["<C-N>"] = ":NvimTreeFindFile<cr>"
+-- lvim.keys.normal_mode["<C-N>"] = ":NvimTreeFindFileToggle<cr>"
+lvim.keys.normal_mode["<C-N>"] = ":Neotree toggle reveal<cr>"
 lvim.keys.normal_mode["ml"] = "dd<C-W><C-l>p<C-w><C-h>"
 lvim.keys.normal_mode[",n"] = "<cmd>lua vim.diagnostic.goto_next()<cr>"
 lvim.keys.normal_mode["+"] = "<cmd>3wincmd > <cr>"
@@ -37,6 +38,11 @@ lvim.keys.insert_mode["<A-s>"] =
 vim.keymap.set("c", "<C-A>", "<Home>", { noremap = false })
 
 -- omap     <silent> m :<C-U>lua require('tsht').nodes()<CR>
-vim.keymap.set("o", "m", ':<C-U>lua require("tsht").nodes()<CR>', { silent = true })
+vim.keymap.set("o", "m", ':<C-U>lua require("tsht").nodes()<CR>', { silent = true, desc = "Higlight nodes to jump to" })
 -- vnoremap <silent> m :lua require('tsht').nodes()<CR>
-vim.keymap.set("v", "m", ':<C-U>lua require("tsht").nodes()<CR>', { silent = true, noremap = false })
+vim.keymap.set(
+	"v",
+	"m",
+	':<C-U>lua require("tsht").nodes()<CR>',
+	{ silent = true, noremap = false, desc = "Higlight nodes to jump to" }
+)

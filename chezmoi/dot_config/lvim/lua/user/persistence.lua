@@ -10,14 +10,18 @@ local M = {
 			})
 		end,
 	},
-	which_map = {
-		["S"] = {
-			name = "Session",
-			r = { "<cmd>lua require('persistence').load()<cr>", "Restore last session for current dir" },
-			l = { "<cmd>lua require('persistence').load({ last = true })<cr>", "Restore last session" },
-			Q = { "<cmd>lua require('persistence').stop()<cr>", "Quit without saving session" },
-		},
+}
+local which_map = {
+	["S"] = {
+		name = "Session",
+		r = { "<cmd>lua require('persistence').load()<cr>", "Restore last session for current dir" },
+		l = { "<cmd>lua require('persistence').load({ last = true })<cr>", "Restore last session" },
+		Q = { "<cmd>lua require('persistence').stop()<cr>", "Quit without saving session" },
 	},
 }
+
+local builtin = lvim.builtin.which_key.mappings
+
+lvim.builtin.which_key.mappings = vim.tbl_deep_extend("error", builtin, which_map)
 
 return M
