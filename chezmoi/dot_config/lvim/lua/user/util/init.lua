@@ -66,4 +66,12 @@ pcall(function()
 		description = "Copy the output of :messages to OS clipboard",
 	})
 end)
+
+function M.bind(fn, ...)
+	local args = table.pack(...)
+	return function()
+		fn(unpack(args))
+	end
+end
+
 return M

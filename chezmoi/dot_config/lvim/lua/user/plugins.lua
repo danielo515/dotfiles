@@ -10,6 +10,7 @@ local plugins = {
 	require("user.hlslens").plugin,
 	require("user.neo_tree").plugin,
 	require("user.goto_preview"),
+	require("user.tabout"),
 	-- require("user.lspsaga").plugin,
 	-- some lsp diagnosis
 	{
