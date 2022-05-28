@@ -12,8 +12,7 @@ local function tab(fallback)
 		fallback()
 	else
 		print("not working at all")
-		fallback()
-		-- methods.feedkeys("<Plug>(Tabout)")
+		require("tabout").tabout()
 	end
 end
 
