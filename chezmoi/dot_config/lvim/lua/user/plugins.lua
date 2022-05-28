@@ -11,6 +11,13 @@ local plugins = {
 	require("user.neo_tree").plugin,
 	require("user.goto_preview"),
 	require("user.tabout"),
+
+	{ -- Navigation by jumping to LSP objects like hop.nvim
+		"ziontee113/syntax-tree-surfer",
+		config = function()
+			require("user.syntax_tree_surfer")
+		end,
+	},
 	-- require("user.lspsaga").plugin,
 	-- some lsp diagnosis
 	{

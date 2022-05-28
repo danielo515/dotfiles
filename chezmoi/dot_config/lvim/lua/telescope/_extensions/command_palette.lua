@@ -163,9 +163,9 @@ local function run()
 	categories(require("telescope.themes").vscode({}))
 end
 
-return require("telescope").register_extension({
-	exports = {
-		-- Default when to argument is given, i.e. :Telescope command_palette
-		command_palette = run,
-	},
-})
+-- return require("telescope").register_extension({
+-- 	exports = {
+-- 		-- Default when to argument is given, i.e. :Telescope command_palette
+-- 		command_palette = run-- ,
+-- 	},
+-- })
