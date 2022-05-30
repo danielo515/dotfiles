@@ -72,6 +72,7 @@ lvim.builtin.telescope.defaults.mappings = {
 		["q"] = actions.smart_send_to_qflist + actions.open_qflist,
 		["Q"] = actions.smart_add_to_qflist + actions.open_qflist,
 		["x"] = actions.delete_buffer,
+		["r"] = user_telescope.refine_search,
 		["<cr>"] = user_telescope.multi_selection_open,
 		["<c-v>"] = user_telescope.multi_selection_open_vsplit,
 		["<c-s>"] = user_telescope.multi_selection_open_split,

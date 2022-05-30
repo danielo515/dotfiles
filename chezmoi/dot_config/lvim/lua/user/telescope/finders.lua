@@ -122,4 +122,15 @@ function M.multi_selection_open(prompt_bufnr)
 	M._multiopen(prompt_bufnr, "edit")
 end
 
+function M.refine_search(propmpt_bufnr)
+	local picker = action_state.get_current_picker(propmpt_bufnr)
+	local files = vim.tbl_map(function(item)
+		return item.filename
+	end, picker:get_multi_selection())
+	vim.pretty_print(files)
+	builtin.live_grep({
+		search_dirs = files,
+	})
+end
+
 return M

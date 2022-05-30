@@ -41,6 +41,7 @@ lvim.builtin.lualine.sections.lualine_b = { components.branch }
 lvim.builtin.lualine.sections.lualine_c = {
 	components.diff,
 	components.lsp,
+	"windows",
 	components.diagnostics,
 	components.treesitter,
 	{ nvim_gps, cond = hide_in_width },
@@ -48,4 +49,4 @@ lvim.builtin.lualine.sections.lualine_c = {
 lvim.builtin.lualine.sections.lualine_x = {
 	components.filetype,
 }
-lvim.builtin.lualine.sections.lualine_y = { "windows", "tabs", "location" }
+lvim.builtin.lualine.sections.lualine_y = { "tabs", "location" }
