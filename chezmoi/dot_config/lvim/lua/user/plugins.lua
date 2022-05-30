@@ -12,7 +12,7 @@ local plugins = {
   require "user.goto_preview",
   require "user.tabout",
   require "user.cmp",
-
+  require "user.neogen",
   { -- Navigation by jumping to LSP objects like hop.nvim
     "ziontee113/syntax-tree-surfer",
     config = function()
