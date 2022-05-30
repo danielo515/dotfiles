@@ -9,6 +9,7 @@ local plugins = {
   { "kdheepak/lazygit.nvim" },
   { "nvim-telescope/telescope-packer.nvim" },
   "nvim-telescope/telescope-live-grep-raw.nvim",
+  "LinArcX/telescope-env.nvim",
 }
 
 lvim.builtin.telescope.path_display = "truncate"
@@ -22,6 +23,7 @@ lvim.builtin.telescope.on_config_done = function(tele)
   tele.load_extension "packer"
   tele.load_extension "luasnip"
   tele.load_extension "live_grep_raw"
+  tele.load_extension "env"
   local opts = {
     pickers = {
       lsp_workspace_symbols = {
