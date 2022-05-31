@@ -4,6 +4,12 @@ function Yank_file_name()
   vim.notify(path .. " yanked to keyboard")
 end
 
+function Yank_full_file_name()
+  local path = vim.fn.expand "%:p"
+  vim.fn.setreg("*", path)
+  vim.notify(path .. " yanked to keyboard")
+end
+
 lvim.builtin.which_key.setup.plugins.presets = {
   operators = false, -- adds help for operators like d, y, ...
   motions = false, -- adds help for motions
@@ -67,6 +73,7 @@ local whichConfig = {
     r = { "<cmd>Telescope frecency<cr>", "Browse recent files globally" },
     b = { "<cmd>Telescope file_browser<cr>", "Browse file tree cool" },
     y = { "<cmd>lua Yank_file_name()<CR>", "Yank current file path" },
+    Y = { "<cmd>lua Yank_full_file_name()<CR>", "Yank full file path" },
   },
 }
 -- merge our custom config with the one from lvim
@@ -77,9 +84,3 @@ lvim.builtin.which_key.on_config_done = function(which)
   which.register(whichConfig, { prefix = "<leader>" })
   vim.notify "Reloaded wich keys"
 end
-
-local ok, which = pcall(require, "wich-key")
-if not ok then
-  return
-end
-lvim.builtin.which_key.on_config_done(which)
