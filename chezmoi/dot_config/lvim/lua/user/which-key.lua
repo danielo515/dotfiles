@@ -23,6 +23,7 @@ local whichConfig = {
     c = { "<cmd>Telescope commands<cr>", "Commands" },
     C = { "<cmd>Telescope command_history<cr>", "Commands history" },
     s = { "<cmd>Telescope lsp_workspace_symbols<cr>", "Workspace symbols" },
+    g = { "<cmd>Telescope live_grep_raw<cr>", "Live grep with rg" },
     n = { "<cmd>Telescope notify<cr>", "Notifications" },
     j = { "<cmd>Telescope jumplist<cr>", "Jump list" },
     P = { "<cmd>Telescope packer<cr>", "Packer search" },
