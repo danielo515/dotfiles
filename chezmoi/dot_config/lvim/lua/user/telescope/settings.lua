@@ -15,6 +15,8 @@ local plugins = {
 lvim.builtin.telescope.path_display = "truncate"
 
 lvim.builtin.telescope.on_config_done = function(tele)
+  -- we use protected-mode (pcall) just in case the plugin wasn't loaded yet.
+  local _, actions = pcall(require, "telescope.actions")
   tele.load_extension "frecency"
   -- tele.load_extension("command_palette")
   tele.load_extension "notify"
@@ -33,6 +35,14 @@ lvim.builtin.telescope.on_config_done = function(tele)
               local selection = require("telescope.actions.state").get_selected_entry()
               print(vim.inspect(selection))
             end,
+          },
+        },
+      },
+      buffers = {
+        sort_lastused = true,
+        mappings = {
+          i = {
+            ["<c-d>"] = actions.delete_buffer,
           },
         },
       },
