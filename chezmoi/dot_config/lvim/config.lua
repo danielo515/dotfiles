@@ -1,5 +1,5 @@
 local concat_lists = require("user.util").concat_lists
-require("settings.gui")
+require "settings.gui"
 -- generic LSP settings
 lvim.lsp.automatic_servers_installation = true
 -- general
@@ -28,30 +28,30 @@ lvim.builtin.nvimtree.setup.view.auto_resize = true
 lvim.builtin.nvimtree.setup.view.side = "left"
 lvim.builtin.nvimtree.show_icons.git = 1
 lvim.builtin.nvimtree.setup.renderer = {
-	indent_markers = {
-		enable = true,
-		icons = {
-			corner = "└ ",
-			edge = "│ ",
-			none = "  ",
-		},
-	},
+  indent_markers = {
+    enable = true,
+    icons = {
+      corner = "└ ",
+      edge = "│ ",
+      none = "  ",
+    },
+  },
 }
 local function telescope_find_files(_)
-	require("lvim.core.nvimtree").start_telescope("find_files")
+  require("lvim.core.nvimtree").start_telescope "find_files"
 end
 
 local function telescope_live_grep(_)
-	require("lvim.core.nvimtree").start_telescope("live_grep")
+  require("lvim.core.nvimtree").start_telescope "live_grep"
 end
 
 lvim.builtin.nvimtree.setup.view.mappings.list = {
-	{ key = { "l", "<CR>", "o" }, action = "edit", mode = "n" },
-	{ key = "h", action = "close_node" },
-	{ key = "v", action = "vsplit" },
-	{ key = "C", action = "cd" },
-	{ key = "f", action = "telescope_find_files", action_cb = telescope_find_files },
-	{ key = "gr", action = "telescope_live_grep", action_cb = telescope_live_grep },
+  { key = { "l", "<CR>", "o" }, action = "edit", mode = "n" },
+  { key = "h", action = "close_node" },
+  { key = "v", action = "vsplit" },
+  { key = "C", action = "cd" },
+  { key = "f", action = "telescope_find_files", action_cb = telescope_find_files },
+  { key = "gr", action = "telescope_live_grep", action_cb = telescope_live_grep },
 }
 
 -- Nvimtree end
@@ -62,31 +62,31 @@ vim.wo.relativenumber = true
 vim.o.timeoutlen = 500
 
 local options = {
-	foldmethod = "expr", -- folding, set to "expr" for treesitter based folding
-	foldexpr = "nvim_treesitter#foldexpr()", -- set to "nvim_treesitter#foldexpr()" for treesitter based folding
-	laststatus = 3,
-	foldnestmax = 3,
-	foldlevel = 5,
-	foldlevelstart = 99,
-	foldenable = false,
+  foldmethod = "expr", -- folding, set to "expr" for treesitter based folding
+  foldexpr = "nvim_treesitter#foldexpr()", -- set to "nvim_treesitter#foldexpr()" for treesitter based folding
+  laststatus = 3,
+  foldnestmax = 3,
+  foldlevel = 5,
+  foldlevelstart = 99,
+  foldenable = false,
 }
 
 for k, v in pairs(options) do
-	vim.opt[k] = v
+  vim.opt[k] = v
 end
 
-vim.opt.cpoptions:append("y")
+vim.opt.cpoptions:append "y"
 
-require("user.keymaps")
-require("user.which-key")
-require("user.telescope")
+require "user.keymaps"
+require "user.which-key"
+require "user.telescope"
 require("user.autocommands").config()
-require("user.statusline")
-require("user.sniprun")
+require "user.statusline"
+require "user.sniprun"
 require("user.linters").config()
 -- require("user.lualine").config()
 require("luasnip.loaders.from_snipmate").lazy_load()
-local treesitter = require("user.treesitter")
+local treesitter = require "user.treesitter"
 treesitter.config()
-local plugins = require("user.plugins")
-lvim.plugins = concat_lists(plugins, treesitter.plugins, require("user.telescope.settings"))
+local plugins = require "user.plugins"
+lvim.plugins = concat_lists(plugins, treesitter.plugins, require "user.telescope.settings")
