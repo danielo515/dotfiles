@@ -27,32 +27,32 @@ Is this correct?";
 then
   # Global gitignore config
   rm $HOME/.gitignore_global
-  ln -sf $HOME/.dotfiles/git/gitignore_global $HOME/.gitignore_global
+  ln -sf $DOTFILES/git/gitignore_global $HOME/.gitignore_global
   echo_item "Updated global .gitignore" "green"
 
   # Global git config
   rm $HOME/.gitconfig
-  ln -sf $HOME/.dotfiles/git/gitconfig $HOME/.gitconfig
+  ln -sf $DOTFILES/git/gitconfig $HOME/.gitconfig
   echo_item "Updated gitconfig" "green"
 
   # ZSH config
   rm $HOME/.zshrc
-  ln -sf $HOME/.dotfiles/zsh/zshrc $HOME/.zshrc
+  ln -sf $DOTFILES/zsh/zshrc $HOME/.zshrc
   echo_item "Updated zshrc" "green"
 
   # Bash config
   rm $HOME/.bash_profile
-  ln -sf $HOME/.dotfiles/bash/bash_profile $HOME/.bash_profile
+  ln -sf $DOTFILES/bash/bash_profile $HOME/.bash_profile
   echo_item "Updated bash_profile" "green"
 
   # Tmux config
   rm $HOME/.tmux.conf
-  ln -sf $HOME/.dotfiles/tmux/tmux.conf $HOME/.tmux.conf
+  ln -sf $DOTFILES/tmux/tmux.conf $HOME/.tmux.conf
   echo_item "Updated tmux configutation" "green"
 
   # Vim config
   rm $HOME/.vimrc
-  ln -sf $HOME/.dotfiles/vim/vimrc $HOME/.vimrc
+  ln -sf $DOTFILES/vim/vimrc $HOME/.vimrc
   vim +PlugInstall
   echo_item "Updated vim configuration" "green"
 
