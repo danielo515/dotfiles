@@ -59,6 +59,7 @@ M.config = function()
     { description = "Show jumplist", command = "Telescope jumplist" },
     { description = "Show workspace git commits", command = "Telescope git_commits" },
     { description = "Show all key maps", command = "Telescope keymaps" },
+    { description = "Open buffers in a nice tree", cmd = "<cmd>Neotree float buffers<cr>" },
     { description = "Toggle paste mode", command = "set paste!" },
     { description = "Show registers", command = "lua require('telescope.builtin').registers()" },
     { description = "Toggle relative number", command = "set relativenumber!" },
