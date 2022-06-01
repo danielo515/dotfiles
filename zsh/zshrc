@@ -30,6 +30,7 @@ SPACESHIP_USER_SHOW="true"
 plugins=(git npm bower vi-mode pj zsh-syntax-highlighting zsh-autosuggestions)
 if exists "virtualenvwrapper"; then plugins+=virtualenvwrapper; fi
 if exists "autojump"; then plugins+=autojump; fi
+plugins+=(zsh-nvm)
 
 fpath=($DOTFILES/zsh/custom/completion $fpath)
 
@@ -198,7 +199,6 @@ autoload -U promptinit; promptinit
 # spaceship_vi_mode_disable
 test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
 
-
 # tabtab source for serverless package
 # uninstall by removing these lines or running `tabtab uninstall serverless`
 [[ -f /Users/danielo/.nvm/versions/node/v8.15.0/lib/node_modules/serverless/node_modules/tabtab/.completions/serverless.zsh ]] && . /Users/danielo/.nvm/versions/node/v8.15.0/lib/node_modules/serverless/node_modules/tabtab/.completions/serverless.zsh
@@ -217,3 +217,6 @@ export PATH="/usr/local/opt/ruby/bin:$PATH"
 # added by travis gem
 [ ! -s /Users/danielo/.travis/travis.sh ] || source /Users/danielo/.travis/travis.sh
 export PATH="/usr/local/opt/ruby/bin:$PATH"
+
+# opam configuration
+[[ ! -r /Users/danielo/.opam/opam-init/init.zsh ]] || source /Users/danielo/.opam/opam-init/init.zsh  > /dev/null 2> /dev/null
