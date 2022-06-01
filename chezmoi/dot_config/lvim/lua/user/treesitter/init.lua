@@ -26,9 +26,17 @@ M.plugins = {
         },
       }
 
-      -- This will make more visible which lines are part of the context-area
-      vim.cmd "highligh TreesitterContextLineNumber guifg='#00ff10'"
-      vim.cmd "highligh TreesitterContext guibg='#545c7e'"
+      local set_ok = pcall(function()
+        local colors = require("catppuccin.api.colors").get_colors() -- fetch colors with API
+        vim.api.nvim_set_hl(0, "TreesitterContext", { bg = colors.surface1 })
+        vim.api.nvim_set_hl(0, "TreesitterContextLineNumber", { bg = colors.overlay2, fg = colors.text })
+      end)
+      -- fallback
+      if not set_ok then
+        -- This will make more visible which lines are part of the context-area
+        vim.api.nvim_set_hl(0, "TreesitterContext", { bg = "#545c7e" })
+        vim.api.nvim_set_hl(0, "TreesitterContextLineNumber", { fg = "#00ff10" })
+      end
     end,
   },
   {

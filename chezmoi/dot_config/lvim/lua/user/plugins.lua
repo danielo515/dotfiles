@@ -2,6 +2,10 @@ local plugins = {
   -- themes
   "folke/tokyonight.nvim",
   { "Mofiqul/dracula.nvim" },
+  {
+    "catppuccin/nvim",
+    as = "catppuccin",
+  },
   "marko-cerovac/material.nvim",
   -- sessions management
   require("user.persistence").plugin,
