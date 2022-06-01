@@ -19,7 +19,7 @@ if exists "brew"; then
 else
     if get_boolean_response "Do you want to install Homebrew?"; then
         /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-        echo 'eval "$(/opt/homebrew/bin/brew shellenv)"' >> $DOTFILES/bash/bash_profile
+        echo 'eval "$(/opt/homebrew/bin/brew shellenv)"' >> "$DOTFILES/bash/bash_profile"
         eval "$(/opt/homebrew/bin/brew shellenv)"
     else
         echo_item "Skipping Homebrew install" "red"
