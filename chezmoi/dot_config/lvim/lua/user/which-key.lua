@@ -81,6 +81,10 @@ local lv_which = lvim.builtin.which_key.mappings
 lvim.builtin.which_key.mappings = vim.tbl_deep_extend("force", lv_which, whichConfig)
 
 lvim.builtin.which_key.on_config_done = function(which)
-  which.register(whichConfig, { prefix = "<leader>" })
+  -- Yes, it is possible to have both it as a namespace AND a single key-map
+  which.register(
+    { ["f"] = { require("lvim.core.telescope.custom-finders").find_project_files, "Find File" } },
+    { prefix = "<leader>" }
+  )
   vim.notify "Reloaded wich keys"
 end
