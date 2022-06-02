@@ -21,6 +21,19 @@ local nvim_gps = function()
   end
 end
 
+lvim.builtin.lualine.options = {
+  theme = "auto", -- lualine theme
+  component_separators = { left = "", right = "" },
+  section_separators = { left = "", right = "" },
+  disabled_filetypes = {}, -- Filetypes to disable lualine for.
+  always_divide_middle = false, -- When set to true, left sections i.e. 'a','b' and 'c'
+  -- can't take over the entire statusline even
+  -- if neither of 'x', 'y' or 'z' are present.
+  globalstatus = vim.opt.laststatus:get() == 3, -- enable global statusline (have a single statusline
+  -- at bottom of neovim instead of one for  every window).
+  -- This feature is only available in neovim 0.7 and higher.
+}
+
 lvim.builtin.lualine.sections.lualine_a = {
   {
     "filename",
