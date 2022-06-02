@@ -3,6 +3,7 @@ local themes_ok, themes = pcall(require, "telescope.themes")
 local log = require "lvim.core.log"
 local action_state = require "telescope.actions.state"
 local actions = require "telescope.actions"
+local dotfiles = require "user.util.dotfiles"
 
 if not themes_ok then
   log:warn "Could not load telescope themes"
@@ -15,7 +16,7 @@ end
 local M = {}
 
 M.dotfiles = function()
-  builtin.find_files { cwd = "~/.dotfiles/" }
+  builtin.find_files { cwd = dotfiles.path }
 end
 
 M.find_siblings = function()
