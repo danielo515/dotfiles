@@ -54,6 +54,11 @@ M.config = function()
       description = "Show Telescope builtin commands",
       cmd = "<cmd>Telescope builtin include_extensions=true<cr>",
     },
+
+    {
+      description = "Execute bash commands through telescope",
+      cmd = "<cmd>Telescope bashed list<cr>",
+    },
     { description = "Toggle cursor column", command = "set cursorcolumn!" },
     { description = "Toggle cursor line", command = "set cursorline!" },
     { description = "Show jumplist", command = "Telescope jumplist" },

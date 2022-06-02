@@ -10,6 +10,16 @@ local plugins = {
   { "nvim-telescope/telescope-packer.nvim" },
   "nvim-telescope/telescope-live-grep-raw.nvim",
   "LinArcX/telescope-env.nvim",
+  "Ezechi3l/telescope-bashed.nvim",
+}
+
+vim.g.bashed_commands = {
+  -- This is an example for now
+  http = {
+    { "fd", "-t", "f", "-e", "http" },
+    { ":e %s", 'lua require("rest-nvim").run()' },
+    "List all http files inside the project to run rest.nvim on one",
+  },
 }
 
 lvim.builtin.telescope.path_display = "truncate"
@@ -26,6 +36,7 @@ lvim.builtin.telescope.on_config_done = function(tele)
   tele.load_extension "luasnip"
   tele.load_extension "live_grep_raw"
   tele.load_extension "env"
+  tele.load_extension "bashed"
   local opts = {
     pickers = {
       lsp_workspace_symbols = {
