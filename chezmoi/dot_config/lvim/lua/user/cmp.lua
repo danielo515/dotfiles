@@ -12,7 +12,7 @@ local sources = {
       },
     },
   },
-  { name = "rg" },
+  -- { name = "rg" },
   { name = "emoji" },
 }
 
