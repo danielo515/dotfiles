@@ -10,7 +10,8 @@ lvim.keys.normal_mode["<F2>"] = "<cmd>lua vim.lsp.buf.rename()<cr>"
 lvim.keys.normal_mode["<M-cr>"] = "<cmd>lua vim.lsp.buf.code_action()<cr>"
 lvim.keys.visual_mode["<M-cr>"] = "<cmd>lua vim.lsp.buf.range_code_action()<cr>" -- Select and apply actions
 -- File
-lvim.keys.normal_mode["F"] = ":Telescope file_browser<cr>"
+lvim.keys.normal_mode["F"] =
+  '<cmd>lua require("telescope").extensions.file_browser.file_browser { cwd = vim.fn.expand "%:p:h:", grouped = true, depth= false, hidden = true }<CR>'
 lvim.keys.normal_mode["<Tab>"] = "<cmd>lua require('user.telescope').buffers()<cr>"
 -- Other
 -- lvim.keys.normal_mode["<M-k>"] = ":Telescope builtin include_extensions=true<cr>"
@@ -30,10 +31,10 @@ lvim.keys.normal_mode["tl"] = ":tabNext<cr>"
 -- insert_mode key bindings
 lvim.keys.insert_mode["<C-f>"] = lvim.keys.normal_mode["<C-F>"]
 lvim.keys.insert_mode["<C-y>"] =
-	"<cmd>lua require('telescope').extensions.neoclip.default(require('telescope.themes').get_cursor())<cr>"
+  "<cmd>lua require('telescope').extensions.neoclip.default(require('telescope.themes').get_cursor())<cr>"
 lvim.keys.insert_mode["<C-s>"] = "<cmd>lua vim.lsp.buf.signature_help()<cr>"
 lvim.keys.insert_mode["<A-s>"] =
-	"<cmd>lua require('telescope').extensions.luasnip.luasnip(require('telescope.themes').get_cursor({}))<CR>"
+  "<cmd>lua require('telescope').extensions.luasnip.luasnip(require('telescope.themes').get_cursor({}))<CR>"
 -- control a navigates to home in command mode
 vim.keymap.set("c", "<C-A>", "<Home>", { noremap = false })
 
@@ -41,8 +42,8 @@ vim.keymap.set("c", "<C-A>", "<Home>", { noremap = false })
 vim.keymap.set("o", "m", ':<C-U>lua require("tsht").nodes()<CR>', { silent = true, desc = "Higlight nodes to jump to" })
 -- vnoremap <silent> m :lua require('tsht').nodes()<CR>
 vim.keymap.set(
-	"v",
-	"m",
-	':<C-U>lua require("tsht").nodes()<CR>',
-	{ silent = true, noremap = false, desc = "Higlight nodes to jump to" }
+  "v",
+  "m",
+  ':<C-U>lua require("tsht").nodes()<CR>',
+  { silent = true, noremap = false, desc = "Higlight nodes to jump to" }
 )
