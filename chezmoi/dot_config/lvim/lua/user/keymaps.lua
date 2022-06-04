@@ -1,4 +1,5 @@
 lvim.keys.normal_mode["<C-F>"] = "<cmd>lua require('user.telescope').grep_files()<cr>"
+lvim.keys.normal_mode["<C-P>"] = "<C-W><C-P>"
 lvim.keys.normal_mode["<C-x>"] = "<cmd>BufferKill<cr>"
 lvim.keys.normal_mode["kj"] = false
 lvim.keys.normal_mode["jk"] = false
@@ -18,6 +19,7 @@ lvim.keys.normal_mode["<Tab>"] = "<cmd>lua require('user.telescope').buffers()<c
 lvim.keys.normal_mode["<A-k>"] = ":Telescope command_center<CR>"
 -- lvim.keys.normal_mode["<C-N>"] = ":NvimTreeFindFileToggle<cr>"
 lvim.keys.normal_mode["<C-N>"] = ":Neotree toggle reveal<cr>"
+lvim.keys.normal_mode["<C-;>"] = ":Telescope command_history<cr>"
 lvim.keys.normal_mode["ml"] = "dd<C-W><C-l>p<C-w><C-h>"
 lvim.keys.normal_mode[",n"] = "<cmd>lua vim.diagnostic.goto_next()<cr>"
 lvim.keys.normal_mode["+"] = "<cmd>3wincmd > <cr>"
@@ -28,6 +30,7 @@ lvim.keys.visual_mode["p"] = [["_dP]] -- avoid override when pasting over selete
 lvim.keys.normal_mode["tk"] = ":tabclose<cr>"
 lvim.keys.normal_mode["tn"] = ":tabnew<cr>"
 lvim.keys.normal_mode["tl"] = ":tabNext<cr>"
+lvim.keys.normal_mode["th"] = ":tabprev<cr>"
 -- insert_mode key bindings
 lvim.keys.insert_mode["<C-f>"] = lvim.keys.normal_mode["<C-F>"]
 lvim.keys.insert_mode["<C-y>"] =
