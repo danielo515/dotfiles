@@ -10,7 +10,6 @@ function M.concat_lists(...)
 end
 
 local resize_ignore = { "lazygit", "neo-tree", "NvimTree", "help", "terminal", "command", "toggleterm" }
--- @TODO: take only visible portion into account
 -- Resizes the current window to the maximum required width
 function M.resize_window_width()
   local bufType = vim.opt.filetype:get()
@@ -21,8 +20,10 @@ function M.resize_window_width()
 
   local terminalWidth = vim.opt.columns:get()
   local getOpt = vim.api.nvim_win_get_option
-  local lines_count = vim.api.nvim_buf_line_count(0)
-  local lines = vim.api.nvim_buf_get_lines(0, 0, lines_count, false)
+  -- Only account for visible lines
+  local win_start = vim.fn.line('w0')
+  local win_end = vim.fn.line('w$')
+  local lines = vim.api.nvim_buf_get_lines(0, win_start, win_end, false)
   local numbers_active = getOpt(0, "rnu") or getOpt(0, "number")
   local numwidth = numbers_active and getOpt(0, "nuw") or 0
   local signwidth = getOpt(0, "signcolumn") == "yes" and 2 or 0
