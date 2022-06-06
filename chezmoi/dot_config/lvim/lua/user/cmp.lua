@@ -20,6 +20,28 @@ for _, source in ipairs(sources) do
   table.insert(lvim.builtin.cmp.sources, source)
 end
 
+local cmdlineOk = pcall(function()
+  local cmp = require "cmp"
+
+  cmp.setup.cmdline("/", {
+    mapping = cmp.mapping.preset.cmdline(),
+    sources = {
+      { name = "buffer" },
+    },
+  })
+
+  cmp.setup.cmdline(":", {
+    mapping = cmp.mapping.preset.cmdline(),
+    sources = {
+      { name = "cmdline" },
+    },
+  })
+end)
+
+if not cmdlineOk then
+  vim.notify("Could not require cmp to setup cmdline", vim.log.levels.ERROR, { title = "Danielo" })
+end
+
 return {
   {
     "lukas-reineke/cmp-rg",
@@ -34,4 +56,5 @@ return {
     },
   },
   { "hrsh7th/cmp-emoji" },
+  { "hrsh7th/cmp-cmdline" },
 }
