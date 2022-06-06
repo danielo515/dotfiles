@@ -21,11 +21,12 @@ return {
         },
         file_panel = {
           ["j"] = actions.select_next_entry, -- Bring the cursor to the next file entry
-          ["<down>"] = actions.next_entry,
           ["k"] = actions.select_prev_entry, -- Bring the cursor to the previous file entry.
+          ["<down>"] = actions.next_entry,
           ["<up>"] = actions.prev_entry,
           ["<cr>"] = actions.select_entry, -- Open the diff for the selected entry.
           ["o"] = actions.select_entry,
+          ["<CR>"] = actions.select_entry,
           ["<2-LeftMouse>"] = actions.select_entry,
           ["<space>"] = actions.toggle_stage_entry, -- Stage / unstage the selected entry.
           ["-"] = actions.toggle_stage_entry, -- Stage / unstage the selected entry.
