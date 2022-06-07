@@ -3,3 +3,12 @@ snippet mod "lua module"
 	local M = {}
 	${0}
 	return M
+snippet plu "Plugin file template"
+	return {
+		'$1',
+		config = function()
+			require("$1").setup()
+ 	 	 	${0}
+		end
+	}
+
