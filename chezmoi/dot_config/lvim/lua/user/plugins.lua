@@ -17,7 +17,10 @@ local plugins = {
   require "user.tabout",
   require "user.cmp",
   require "user.neogen",
-  require("user.biscuits"),
+  require "user.biscuits",
+  require "user.bookmarks",
+  require "user.neozoom",
+  require "user.incline",
   { -- Navigation by jumping to LSP objects like hop.nvim
     "ziontee113/syntax-tree-surfer",
     config = function()
@@ -73,13 +76,13 @@ local plugins = {
   { "ckipp01/stylua-nvim" },
   -- lua tools
   { "rafcamlet/nvim-luapad" },
-  {
-    "pwntester/octo.nvim",
-    event = "BufRead",
-    config = function()
-      require("user.octo").setup()
-    end,
-  },
+  -- {
+  --   "pwntester/octo.nvim",
+  --   event = "BufRead",
+  --   config = function()
+  --     require("user.octo").setup()
+  --   end,
+  -- },
   -- Improve nvim interface for inputs and that stuff
   { "stevearc/dressing.nvim" },
 
