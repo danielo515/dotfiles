@@ -12,6 +12,7 @@ M.config = function()
   -- local silent_noremap = { noremap = true, silent = true }
   command_center.add({
     { description = "Search within the project (Live grep)", command = "Telescope live_grep" },
+    { description = "Live grep", cmd = ":Telescope live_grep_args<cr>" },
     { description = "Select entire text", command = ':call feedkeys("GVgg")' },
     { description = "Show file browser", command = "Telescope file_browser" },
     { description = "Find files", command = "lua require('telescope.builtin').find_files()" },
@@ -51,7 +52,7 @@ M.config = function()
     { description = "Command history", command = "lua require('telescope.builtin').command_history()" },
     { description = "Show all available commands", command = "Telescope commands" },
     {
-      description = "Show Telescope builtin commands",
+      description = "Telescope builtin commands",
       cmd = "<cmd>Telescope builtin include_extensions=true<cr>",
     },
 

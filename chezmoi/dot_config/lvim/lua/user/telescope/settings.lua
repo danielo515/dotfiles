@@ -8,7 +8,7 @@ local plugins = {
   },
   { "kdheepak/lazygit.nvim" },
   { "nvim-telescope/telescope-packer.nvim" },
-  "nvim-telescope/telescope-live-grep-raw.nvim",
+  "nvim-telescope/telescope-live-grep-args.nvim",
   "LinArcX/telescope-env.nvim",
   "Ezechi3l/telescope-bashed.nvim",
 }
@@ -38,7 +38,7 @@ lvim.builtin.telescope.on_config_done = function(tele)
   tele.load_extension "lazygit"
   tele.load_extension "packer"
   tele.load_extension "luasnip"
-  tele.load_extension "live_grep_raw"
+  tele.load_extension "live_grep_args"
   tele.load_extension "env"
   tele.load_extension "bashed"
   local opts = {
