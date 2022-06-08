@@ -11,6 +11,7 @@ local plugins = {
   "nvim-telescope/telescope-live-grep-args.nvim",
   "LinArcX/telescope-env.nvim",
   "Ezechi3l/telescope-bashed.nvim",
+  "nvim-telescope/telescope-symbols.nvim",
 }
 
 vim.g.bashed_commands = {
@@ -42,7 +43,19 @@ lvim.builtin.telescope.on_config_done = function(tele)
   tele.load_extension "env"
   tele.load_extension "bashed"
   local opts = {
+    defaults = {
+      mappings = {
+        i = { ['<c-h>'] = "which_key" }
+      }
+    },
     pickers = {
+      highlights = {
+        mappings = {
+          i = {
+            ["<cr>"] = 'paste_register'
+          }
+        }
+      },
       lsp_workspace_symbols = {
         mappings = {
           i = {
