@@ -15,11 +15,11 @@ return {
         groups = {
           InclineNormal = {
             default = true,
-            group = "NormalFloat"
+            group = "lualine_b_windows_active"
           },
           InclineNormalNC = {
             default = true,
-            group = "NormalFloat"
+            group = "lualine_b_windows_active"
           }
         }
       },
@@ -33,15 +33,15 @@ return {
       render = "basic",
       window = {
         margin = {
-          horizontal = 1,
-          vertical = 1
+          horizontal = 3,
+          vertical = 2
         },
         options = {
           signcolumn = "no",
           wrap = false
         },
         padding = 1,
-        padding_char = " ",
+        padding_char = "-",
         placement = {
           horizontal = "right",
           vertical = "top"
