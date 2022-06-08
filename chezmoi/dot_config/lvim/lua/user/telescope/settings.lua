@@ -44,11 +44,7 @@ lvim.builtin.telescope.on_config_done = function(tele)
   tele.load_extension "env"
   tele.load_extension "bashed"
   local opts = {
-    defaults = {
-      mappings = {
-        i = { ['<c-h>'] = "which_key" }
-      }
-    },
+    -- Default mappings are handled below
     pickers = {
       highlights = {
         mappings = {
@@ -108,6 +104,8 @@ lvim.builtin.telescope.defaults.mappings = {
     ["<c-v>"] = user_telescope.multi_selection_open_vsplit,
     ["<c-s>"] = user_telescope.multi_selection_open_split,
     ["<c-t>"] = user_telescope.multi_selection_open_tab,
+    ["<C-X>"] = actions.delete_buffer,
+    ['<c-h>'] = "which_key"
   },
   -- for normal mode
   n = {
