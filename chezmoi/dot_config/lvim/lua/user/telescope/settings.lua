@@ -32,6 +32,7 @@ lvim.builtin.telescope.path_display = "truncate"
 lvim.builtin.telescope.on_config_done = function(tele)
   -- we use protected-mode (pcall) just in case the plugin wasn't loaded yet.
   local _, actions = pcall(require, "telescope.actions")
+  local state = require("telescope.actions.state")
   tele.load_extension "frecency"
   -- tele.load_extension("command_palette")
   tele.load_extension "notify"
@@ -52,7 +53,11 @@ lvim.builtin.telescope.on_config_done = function(tele)
       highlights = {
         mappings = {
           i = {
-            ["<cr>"] = 'paste_register'
+            ["<cr>"] = function(prompt_bufnr)
+              local selection = state.get_selected_entry()
+              actions.close(prompt_bufnr)
+              vim.api.nvim_paste(selection.value, false, -1)
+            end
           }
         }
       },
