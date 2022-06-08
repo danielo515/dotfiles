@@ -5,7 +5,6 @@ local resize_ignore = { "lazygit", "neo-tree", "NvimTree", "help", "terminal", "
 function M.resize_window_width()
   local bufType = vim.opt.filetype:get()
   if vim.tbl_contains(resize_ignore, bufType) then
-    print "resize ignore"
     return
   end
 
