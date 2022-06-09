@@ -32,8 +32,8 @@ local options = {
   foldexpr = "nvim_treesitter#foldexpr()", -- set to "nvim_treesitter#foldexpr()" for treesitter based folding
   laststatus = 3,
   foldnestmax = 3,
-  foldlevel = 5,
-  foldlevelstart = 99,
+  foldlevel = 4,
+  foldlevelstart = 2,
   foldenable = false,
 }
 
