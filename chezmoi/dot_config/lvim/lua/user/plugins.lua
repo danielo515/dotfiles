@@ -22,6 +22,7 @@ local plugins = {
   require "user.neozoom",
   require "user.incline",
   require "user.colorbuddy",
+  require "user.treesitter-statusline",
   { -- Navigation by jumping to LSP objects like hop.nvim
     "ziontee113/syntax-tree-surfer",
     config = function()
