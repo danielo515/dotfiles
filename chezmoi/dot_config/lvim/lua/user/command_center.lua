@@ -82,21 +82,8 @@ M.config = function()
     { description = "Help tips", cmd = ":help tips<cr>" },
     { description = "Help tutorial", cmd = ":help tutor<cr>" },
     { description = "Typescript import all", cmd = "TypescriptAddMissingImports" },
-    -- { description = "List brakpoints", cmd = ":lua require'telescope'.extensions.dap.list_breakpoints{}<cr>" },
-    -- { description = "Clear breakpoints", cmd = ":lua require('dap.breakpoints').clear()<cr>" },
-    -- { description = "Close DAP repl", cmd = ":lua require'dap'.close(); require'dap'.repl.close()<cr>" },
-    -- { description = "Show DAP commands", cmd = ":lua require'telescope'.extensions.dap.commands{}<cr>" },
-    -- { description = "Show DAP configurations", cmd = ":lua require'telescope'.extensions.dap.configurations{}<cr>" },
-    -- { description = "DAP continue", cmd = ":lua require'dap'.continue()<cr>" },
-    -- { description = "Show DAP frames", cmd = ":lua require'telescope'.extensions.dap.frames{}<cr>" },
-    -- { description = "DAP pause", cmd = ":lua require'dap'.pause()<cr>" },
-    -- { description = "DAP repl", cmd = ":lua require'dap'.repl.open(); vim.cmd(\"wincmd w|resize 12\")<cr>" },
-    -- { description = "DAP run to cursor", cmd = ":lua require'dap'.run_to_cursor()<cr>" },
-    -- { description = "DAP step back", cmd = ":lua require'dap'.step_back()<cr>" },
-    -- { description = "DAP step into", cmd = ":lua require'dap'.step_into()<cr>" },
-    -- { description = "DAP step out", cmd = ":lua require'dap'.step_out()<cr>" },
-    -- { description = "DAP step over", cmd = ":lua require'dap'.step_over()<cr>" },
-    -- { description = "DAP toggle breakpoint", cmd = ":lua require'dap'.toggle_breakpoint()<cr>" },
+    -- TODO:
+    -- Search in parent directory and or sibling directory
   }, command_center.mode.ADD_ONLY)
 end
 
