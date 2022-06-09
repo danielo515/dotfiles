@@ -4,8 +4,8 @@ return {
   -- branch = 'neo-zoom-original', -- UNCOMMENT THIS, if you prefer the old one
   config = function()
     require('neo-zoom').setup { -- use the defaults or UNCOMMENT and change any one to overwrite
-      -- left_ratio = 0.2,
-      -- top_ratio = 0.03,
+      left_ratio = 0.01,
+      top_ratio = 0.03,
       -- width_ratio = 0.67,
       -- height_ratio = 0.9,
       -- border = 'double',
