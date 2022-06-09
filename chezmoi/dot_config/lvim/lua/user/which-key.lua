@@ -40,6 +40,10 @@ local whichConfig = {
       "<cmd>lua require('spectre').open_visual({select_word=true})<CR>",
       "Spectre search",
     },
+    [","] = {
+      "<cmd>lua require('user.telescope').grep_parent_directory()<cr>",
+      "Search files on parent folder",
+    },
   },
   ["."] = {
     "<cmd>lua require('user.telescope').find_siblings()<cr>",

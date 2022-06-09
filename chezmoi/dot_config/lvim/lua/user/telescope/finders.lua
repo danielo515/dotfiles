@@ -52,6 +52,11 @@ function M.grep_open_files(opts)
   builtin.live_grep(vim.tbl_extend("force", opts, { grep_open_files = true, disable_coordinates = true }))
 end
 
+function M.grep_parent_directory(opts)
+  opts = opts or {}
+  builtin.live_grep(vim.tbl_extend("force", opts, { cwd = vim.fn.expand "%:h:p" }))
+end
+
 -- show code actions in a fancy floating window
 function M.code_actions()
   local opts = {
