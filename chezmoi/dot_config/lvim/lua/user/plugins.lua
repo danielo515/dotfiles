@@ -18,11 +18,12 @@ local plugins = {
   require "user.cmp",
   require "user.neogen",
   require "user.biscuits",
-  require "user.bookmarks",
+  -- require "user.bookmarks",
   require "user.neozoom",
   require "user.incline",
   require "user.colorbuddy",
   require "user.treesitter-statusline",
+  require("user.plugins.pomodoro"),
   { -- Navigation by jumping to LSP objects like hop.nvim
     "ziontee113/syntax-tree-surfer",
     config = function()
