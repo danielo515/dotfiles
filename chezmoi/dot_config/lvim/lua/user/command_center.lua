@@ -1,6 +1,19 @@
 local M = {}
 
 local util = require "user.util"
+-- Add all available commands to command center
+local function addAllCommands()
+  local raw = vim.api.nvim_get_commands({})
+  local commands = vim.tbl_map(function(command)
+    return {
+      description = command.name,
+      cmd = string.format('<cmd>%s<cr>', command.definition)
+    }
+  end, raw)
+  local plain_table = vim.tbl_values(commands)
+  local cc = require "command_center"
+  cc.add(plain_table, cc.mode.ADD_ONLY)
+end
 
 M.config = function()
   local status_ok, command_center = pcall(require, "command_center")
@@ -8,8 +21,8 @@ M.config = function()
     vim.notify("Command center not loaded", "warn")
     return
   end
-  -- local noremap = { noremap = true }
-  -- local silent_noremap = { noremap = true, silent = true }
+  -- We schedule it to give other plugins the oportunity to load their commands
+  vim.schedule(addAllCommands)
   command_center.add({
     { description = "Search within the project (Live grep)", cmd = ":Telescope live_grep<cr>" },
     { description = "Live grep", cmd = ":Telescope live_grep_args<cr>" },
