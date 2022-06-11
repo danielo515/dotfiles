@@ -75,8 +75,8 @@ local whichConfig = {
   },
   -- file section
   f = {
-    f = { "<cmd>Telescope frecency default_workspace='CWD'<cr>", "Browse recent files" },
-    r = { "<cmd>Telescope frecency<cr>", "Browse recent files globally" },
+    f = { require("lvim.core.telescope.custom-finders").find_project_files, "Find project files" },
+    r = { "<cmd>Telescope frecency <cr>", "Browse recent files" },
     b = { "<cmd>Telescope file_browser<cr>", "Browse file tree cool" },
     y = { "<cmd>lua Yank_file_name()<CR>", "Yank current file path" },
     Y = { "<cmd>lua Yank_full_file_name()<CR>", "Yank full file path" },
