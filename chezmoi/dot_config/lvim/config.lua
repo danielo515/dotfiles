@@ -47,7 +47,6 @@ vim.opt.cpoptions:append "y"
 require "user.keymaps"
 require "user.which-key"
 require "user.telescope"
-require("user.autocommands").config()
 require "user.statusline"
 require "user.sniprun"
 require "user.builtin.nvimtree"
@@ -59,3 +58,4 @@ local treesitter = require "user.treesitter"
 treesitter.config()
 local plugins = require "user.plugins"
 lvim.plugins = concat_lists(plugins, treesitter.plugins, require "user.telescope.settings")
+require("user.autocommands").config()
