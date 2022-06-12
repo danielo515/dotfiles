@@ -3,7 +3,6 @@
 lvim.builtin.nvimtree.setup.open_on_setup = false
 lvim.builtin.nvimtree.setup.view.auto_resize = true
 lvim.builtin.nvimtree.setup.view.side = "left"
-lvim.builtin.nvimtree.show_icons.git = 1
 lvim.builtin.nvimtree.setup.renderer = {
   indent_markers = {
     enable = true,

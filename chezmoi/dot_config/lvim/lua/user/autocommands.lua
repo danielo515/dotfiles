@@ -26,7 +26,7 @@ vim.api.nvim_create_autocmd({
 
 function M.config()
     local codelens_viewer = "lua require('nvim-lightbulb').update_lightbulb()"
-    lvim.autocommands.custom_groups = {
+    autocommands = {
         -- Apply chezmoi whenever a dotfile is updated
         {
             "BufWritePost",
@@ -48,6 +48,11 @@ function M.config()
         -- uncomment the following if you want to show diagnostics on hover
         -- { "CursorHold", "*", "lua vim.diagnostic.open_float()" },
     }
+  local group = vim.api.nvim_create_augroup("Danielo", {})
+  for _, command in ipairs(autocommands) do
+    local name, pattern, cmd = unpack(command)
+    vim.api.nvim_create_autocmd(name, { command = cmd, pattern = pattern, group = group})
+  end
 end
 
 return M
