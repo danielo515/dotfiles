@@ -1,0 +1,46 @@
+name: CI-dots
+on:
+  workflow_dispatch:
+    inputs:
+      logLevel:
+        description: 'Log level'
+        required: false
+        default: 'warning'
+        type: choice
+        options:
+        - info
+        - warning
+        - debug
+  schedule:
+    # note: this will keep updating the existing branch
+    - cron: "*/15 10-14 * * 0,6"
+    - cron: "0 14 * * 1-5"
+jobs:
+  unixish:
+    name: ${{ matrix.os }} ${{ matrix.runner }}
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - runner: ubuntu-20.04
+            os: linux
+          - runner: macos-10.15
+            os: osx
+    runs-on: ${{ matrix.runner }}
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          path: .local/share/chezmoi
+      - name: Install chezmoi
+        run: sh -c "$(curl -fsLS chezmoi.io/get)" -- --apply
+      - name: Install neovim binary
+        uses: rhysd/action-setup-vim@v1
+        with:
+          neovim: true
+          version: v0.7.0
+      - name: Install LunarVim stable
+        timeout-minutes: 4
+        run: |
+         bash <(curl -s https://raw.githubusercontent.com/lunarvim/lunarvim/master/utils/installer/install.sh)
+      - name: run lvim!
+        run: lvim +q
