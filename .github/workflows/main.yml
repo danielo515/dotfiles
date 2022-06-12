@@ -45,4 +45,4 @@ jobs:
         run: |
          bash <(curl -s https://raw.githubusercontent.com/lunarvim/lunarvim/master/utils/installer/install.sh)
       - name: run lvim!
-        run: lvim +q
+        run: $GITHUB_WORKSPACE/.local/bin/lvim +PackerSync +qa
