@@ -29,10 +29,8 @@ jobs:
     runs-on: ${{ matrix.runner }}
     steps:
       - uses: actions/checkout@v3
-        with:
-          path: .local/share/chezmoi
       - name: Install chezmoi
-        run: sh -c "$(curl -fsLS chezmoi.io/get)" -- apply
+        run: sh -c "$(curl -fsLS chezmoi.io/get)" -- apply -b $GITHUB_WORKSPACE
       - name: Install neovim binary
         uses: rhysd/action-setup-vim@v1
         with:
