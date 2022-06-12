@@ -32,7 +32,7 @@ jobs:
         with:
           path: .local/share/chezmoi
       - name: Install chezmoi
-        run: sh -c "$(curl -fsLS chezmoi.io/get)" -- --apply
+        run: sh -c "$(curl -fsLS chezmoi.io/get)" -- apply
       - name: Install neovim binary
         uses: rhysd/action-setup-vim@v1
         with:
