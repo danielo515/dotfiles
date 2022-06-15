@@ -7,12 +7,12 @@ local sources = {
       option = {
         all_panes = true,
         label = "[tmux]",
-        trigger_characters = { "." },
+        trigger_characters = {},
         trigger_characters_ft = {}, -- { filetype = { '.' } }
       },
     },
   },
-  { name = "rg", option = { pattern = '[\\w ]+"' } },
+  { name = "rg", keyword_length = 3, option = { pattern = "[\\w ]+'" } },
   { name = "emoji" },
 }
 

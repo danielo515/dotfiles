@@ -28,6 +28,10 @@ M.find_on_parent = function()
   builtin.find_files(themes.vscode { cwd = vim.fn.expandcmd "%:h:h" })
 end
 
+function M.expand()
+  return vim.fn.expand("<cword>")
+end
+
 -- utility function for the <C-f> find key
 function M.grep_files(opts)
   opts = opts or {}
@@ -39,9 +43,18 @@ function M.grep_files(opts)
     prompt_title = "~ Grep " .. cwd .. " ~",
     search_dirs = { cwd },
   }
+
+  vim.cmd [[
+    function! Cword(A, L, P)
+        let word = expand("<cword>")
+        echo word
+        return word
+    endfunction
+]]
+
   opts = vim.tbl_deep_extend("force", theme_opts, opts)
   vim.ui.input({
-    default = vim.fn.expand "<cword>",
+    completion = "custom,v:lua.require'user.telescope.finders'.expand",
   }, function(text)
     builtin.grep_string(vim.tbl_extend("force", opts, { search = text }))
   end)

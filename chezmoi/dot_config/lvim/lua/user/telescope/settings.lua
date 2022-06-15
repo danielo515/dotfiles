@@ -25,6 +25,18 @@ vim.g.bashed_commands = {
     { "npm", "ls" },
     "List npm packages and filter them in telescope",
   },
+  chezmoi_diff = {
+    { "chezmoi", "diff" },
+    "Run chezmoi diff and see the diffs"
+  },
+  chezmoi_apply = {
+    { "chezmoi", "apply" },
+    "Run chezmoi diff and see the diffs"
+  },
+  normal_maps = {
+    { ":nmap" },
+    "Show normal maps"
+  }
 }
 
 lvim.builtin.telescope.path_display = "truncate"

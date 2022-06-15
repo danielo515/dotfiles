@@ -24,6 +24,7 @@ lvim.builtin.which_key.mappings.q = nil
 
 -- This config will be merged with the one that lvim has by default
 local whichConfig = {
+  ["<space>"] = { ":Telescope command_history<cr>", "Command history" },
   -- extend search
   s = {
     d = { "<cmd>lua require('user.telescope').dotfiles()<cr>", "Search dotfiles" },
