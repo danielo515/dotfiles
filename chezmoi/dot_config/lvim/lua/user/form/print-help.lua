@@ -9,7 +9,7 @@ local NuiText = require("nui.text")
 ---@return integer The length of the rendered text
 local function renderKey(key, description, bufnr, column, row)
 
-  local keyText = NuiText(' ' .. vim.fn.join(key, ',') .. ' ', "Error")
+  local keyText = NuiText(' ' .. vim.fn.join(key, ',') .. ' → ', "Error")
   print('bufnr', bufnr, 'row', row, 'col', column)
   keyText:render(bufnr, -1, row, column, row, column)
   column = column + keyText:length()
@@ -23,7 +23,7 @@ end
 ---@param bufnr number
 local function renderHelp(mappings, bufnr)
   local col = 0
-  for _, mapping in ipairs(vim.tbl_values(mappings)) do
+  for _, mapping in pairs(mappings) do
     local length = renderKey(mapping.keys, mapping.description, bufnr, col, 1)
     col = col + length
   end
