@@ -1,29 +1,32 @@
 --
 local NuiText = require("nui.text")
-local function ensureTable(val)
-  if vim.tbl_islist(val) then
-    return val
-  end
-  return { val }
+
+
+---Render a single key -> description entry
+---@param key string[]
+---@param description string
+---@param bufnr integer
+---@return integer The length of the rendered text
+local function renderKey(key, description, bufnr, column, row)
+
+  local keyText = NuiText(' ' .. vim.fn.join(key, ',') .. ' ', "Error")
+  print('bufnr', bufnr, 'row', row, 'col', column)
+  keyText:render(bufnr, -1, row, column, row, column)
+  column = column + keyText:length()
+  local descriptionText = NuiText(description)
+  descriptionText:render(bufnr, -1, row, column, row, column)
+  return keyText:length() + descriptionText:length()
 end
 
-local padding = 1
-
----comment
----@param mappings { switch_key : string|string[], exit_key : string }
+---Renders help for the provided key mappings
+---@param mappings Mappings
 ---@param bufnr number
-function renderHelp(mappings, bufnr)
-  local switch_keys = vim.fn.join(ensureTable(mappings.switch_key), ',')
-  local switch_keys_text = NuiText(switch_keys, "Error")
-  local switch_desc = NuiText(' Jump to next input')
-  local row, col = 1, 0
-  switch_keys_text:render(bufnr, -1, row, col, row, col)
-  col = col + switch_keys_text:length() + padding
-  switch_desc:render(bufnr, -1, row, col, row, col)
+local function renderHelp(mappings, bufnr)
+  local col = 0
+  for _, mapping in ipairs(vim.tbl_values(mappings)) do
+    local length = renderKey(mapping.keys, mapping.description, bufnr, col, 1)
+    col = col + length
+  end
 end
-
-local m = { switch_key = '<Tab>', exit_key = 'q' }
-
-renderHelp(m, 0)
 
 return renderHelp

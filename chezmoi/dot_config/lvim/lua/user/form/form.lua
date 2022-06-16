@@ -4,6 +4,32 @@ local event = require("nui.utils.autocmd").event
 local bind = require("user.util").bind
 local renderHelp = require_clean("user.form.print-help")
 
+local layout = {
+  popup = nil,
+  input = nil,
+  help = nil,
+}
+
+---@class Key_spec
+---@field keys string[]
+---@field description string
+---@field modes mode[]
+
+
+---@alias Mappings table<string, Key_spec>
+---@type Mappings
+local default_mappings = {
+  switch_key = {
+    keys = { '<Tab>', '<Enter>' },
+    description = ' Jump to next input',
+    modes = { 'n', 'i' }
+  },
+  exit_key = {
+    keys = { 'q' },
+    description = 'Exit the form',
+    modes = { 'n' }
+  } }
+
 
 local function bindExitEvents(popups)
   for _, popup in pairs(popups) do
@@ -15,12 +41,6 @@ local function bindExitEvents(popups)
   end
 end
 
-local layout = {
-  popup = nil,
-  input = nil,
-  help = nil,
-}
-
 local function exit()
   for _, popup in pairs(layout) do
     if popup ~= nil then
@@ -29,39 +49,33 @@ local function exit()
   end
 end
 
----Binds the requested keys to the available actions withinthe contex of the provided popup
----@param mode 'n'|'i'
----@param binds { switch_key: string|string[], exit_key: string }
+---@alias mode 'n'|'i'
+
+---Binds the requested keys t
+---@param binds Mappings
 ---@param popup nui.popup
 ---@param alt_win integer alternative window to jump on switch
-local function bindKeys(mode, binds, popup, alt_win)
+local function bindKeys(binds, popup, alt_win)
   local opts = { noremap = true }
   ---@param key string
   ---@param cb function
-  ---@param modes? string[]
+  ---@param modes mode[]
   local function map(key, cb, modes)
-    if vim.tbl_islist(modes) then
-      for _, m in ipairs(modes) do
-        popup:map(m, key, cb, opts)
-      end
-    else
-      popup:map(mode, key, cb, opts)
+    for _, m in ipairs(modes) do
+      popup:map(m, key, cb, opts)
     end
   end
 
-  if not vim.tbl_islist(binds.switch_key) then
-    binds.switch_key = { binds.switch_key }
-  end
-  for _, key in ipairs(binds.switch_key) do
+  for _, key in ipairs(binds.switch_key.keys) do
     -- Switch key is bound in input mode for convenience
     map(key, function()
       vim.api.nvim_set_current_win(alt_win)
       vim.schedule(function()
         vim.cmd('startinsert')
       end)
-    end, { 'i', 'n' })
+    end, binds.switch_key.modes)
   end
-  map(binds.exit_key, exit)
+  map(binds.exit_key.keys[1], exit, binds.exit_key.modes)
 end
 
 local width = 60
@@ -93,6 +107,7 @@ layout.input = Input(input_options, {
   default_value = "",
   on_close = function()
     print("Input closed!")
+    exit()
   end,
   on_submit = function(value)
     print("Value submitted: ", value)
@@ -162,16 +177,12 @@ layout.help = Popup({
 })
 
 
--- text:render(0, ns_id, linenr_start, byte_start)
-
-local default_mappings = { switch_key = '<Tab>', exit_key = 'q' }
-
 layout.input:mount()
 layout.popup:mount()
 layout.help:mount()
 
-bindKeys('n', default_mappings, layout.input, layout.popup.winid)
-bindKeys('n', default_mappings, layout.popup, layout.input.winid)
+bindKeys(default_mappings, layout.input, layout.popup.winid)
+bindKeys(default_mappings, layout.popup, layout.input.winid)
 bindExitEvents(vim.tbl_values(layout))
 
 vim.schedule(bind(renderHelp, default_mappings, layout.help.bufnr))

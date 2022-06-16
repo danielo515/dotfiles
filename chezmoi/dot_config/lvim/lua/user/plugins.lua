@@ -1,6 +1,4 @@
 local plugins = {
-
-
   -- themes
   "folke/tokyonight.nvim",
   { "Mofiqul/dracula.nvim" },
