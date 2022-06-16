@@ -9,7 +9,7 @@ local NuiText = require("nui.text")
 ---@return integer The length of the rendered text
 local function renderKey(key, description, bufnr, column, row)
 
-  local keyText = NuiText(' ' .. vim.fn.join(key, ',') .. ' → ', "Error")
+  local keyText = NuiText(' ' .. vim.fn.join(key, ',') .. ' → ', 'WhichKeyDesc')
   print('bufnr', bufnr, 'row', row, 'col', column)
   keyText:render(bufnr, -1, row, column, row, column)
   column = column + keyText:length()
