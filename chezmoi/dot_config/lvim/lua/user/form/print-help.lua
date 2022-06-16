@@ -8,14 +8,15 @@ local NuiText = require("nui.text")
 ---@param bufnr integer
 ---@return integer The length of the rendered text
 local function renderKey(key, description, bufnr, column, row)
-
-  local keyText = NuiText(' ' .. vim.fn.join(key, ',') .. ' → ', 'WhichKeyDesc')
-  print('bufnr', bufnr, 'row', row, 'col', column)
+  local keyText = NuiText(' ' .. vim.fn.join(key, ','), 'WhichKeyDesc')
+  local sep = NuiText(' → ', 'WhichKeySeparator')
   keyText:render(bufnr, -1, row, column, row, column)
   column = column + keyText:length()
+  sep:render(bufnr, -1, row, column, row, column)
+  column = column + sep:length()
   local descriptionText = NuiText(description)
   descriptionText:render(bufnr, -1, row, column, row, column)
-  return keyText:length() + descriptionText:length()
+  return keyText:length() + descriptionText:length() + sep:length()
 end
 
 ---Renders help for the provided key mappings
