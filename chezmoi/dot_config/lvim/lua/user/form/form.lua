@@ -4,6 +4,10 @@ local event = require("nui.utils.autocmd").event
 local bind = require("user.util").bind
 local renderHelp = require_clean("user.form.print-help")
 
+local width = 60
+local focus = vim.api.nvim_set_current_win
+local pprint = vim.pretty_print
+
 local layout = {
   popup = nil,
   input = nil,
@@ -22,6 +26,7 @@ local default_mappings = {
   switch_key = {
     keys = { '<Tab>', '<Enter>' },
     description = ' Jump to next input',
+    -- Switch key is bound in input mode for convenience
     modes = { 'n', 'i' }
   },
   exit_key = {
@@ -67,7 +72,6 @@ local function bindKeys(binds, popup, alt_win)
   end
 
   for _, key in ipairs(binds.switch_key.keys) do
-    -- Switch key is bound in input mode for convenience
     map(key, function()
       vim.api.nvim_set_current_win(alt_win)
       vim.schedule(function()
@@ -78,114 +82,111 @@ local function bindKeys(binds, popup, alt_win)
   map(binds.exit_key.keys[1], exit, binds.exit_key.modes)
 end
 
-local width = 60
-local focus = vim.api.nvim_set_current_win
-local pprint = vim.pretty_print
+---Renders a form
+---@alias cb fun(arg: { title: string, content: string }): any
+---@param o { onSubmit: cb, title: string } options for the form
+local function Form(o)
+  local onSubmit, title = o.onSubmit, o.title
+  local state = ''
 
-local input_options = {
-  relative = "editor",
-  position = {
-    row = '50%',
-    col = '50%',
-  },
-  size = width,
-  border = {
-    style = "rounded",
-    text = {
-      top = "[Input]",
-      top_align = "left",
+  local input_options = {
+    relative = "editor",
+    position = {
+      row = '50%',
+      col = '50%',
     },
-  },
-  win_options = {
-    winhighlight = "Normal:Normal",
-  },
-}
+    size = width,
+    border = {
+      style = "rounded",
+      text = {
+        top = title,
+        top_align = "left",
+      },
+    },
+    win_options = {
+      winhighlight = "Normal:Normal",
+    },
+  }
 
 
-layout.input = Input(input_options, {
-  prompt = "> ",
-  default_value = "",
-  on_close = function()
-    print("Input closed!")
-    exit()
-  end,
-  on_submit = function(value)
-    print("Value submitted: ", value)
-    focus(layout.popup.winid)
-  end,
-  -- on_change = function(value)
-  --   print("Value changed: ", value)
-  -- end,
-})
+  layout.input = Input(input_options, {
+    prompt = "> ",
+    default_value = "",
+    on_close = function()
+      print("Input closed!")
+      exit()
+    end,
+    on_change = function(value)
+      state = value
+    end,
+  })
+
+  layout.input:on({ event.InsertLeave, event.InsertEnter }, function()
+    vim.schedule(function()
+      vim.api.nvim_buf_set_lines(layout.help.bufnr, 0, 1, false, {})
+      renderHelp(default_mappings, layout.help.bufnr)
+    end)
+  end)
 
 
--- -- Mount the popup only after the input has been mounted
--- layout.input:on({ event.WinEnter },
---   function()
---     layout.popup:mount()
---     layout.help:mount()
---     -- bindKeys('n', { switch_key = '<Tab>', exit_key = 'q' }, layout.input, layout.popup.bufnr)
---     bindKeys('n', { switch_key = '<Tab>', exit_key = 'q' }, layout.popup, layout.input.bufnr)
---   end, { once = true })
-
-
-
--- POPUP
-layout.popup = Popup({
-  enter = false,
-  focusable = true,
-  relative = 'editor',
-  border = {
-    style = "rounded",
-  },
-  position = {
-    col = layout.input.win_config.col,
-    row = layout.input.win_config.row + layout.input.win_config.height + 2,
-  },
-  size = {
-    width = width,
-    height = 20,
-  },
-  buf_options = {
-    modifiable = true,
-    readonly = false,
-  },
-})
+  -- POPUP
+  layout.popup = Popup({
+    enter = false,
+    focusable = true,
+    relative = 'editor',
+    border = {
+      style = "rounded",
+    },
+    position = {
+      col = layout.input.win_config.col,
+      row = layout.input.win_config.row + layout.input.win_config.height + 2,
+    },
+    size = {
+      width = width,
+      height = 20,
+    },
+    buf_options = {
+      modifiable = true,
+      readonly = false,
+    },
+  })
 
 
 
--- Help window
-layout.help = Popup({
-  enter = false,
-  focusable = false,
-  relative = 'editor',
-  border = {
-    style = "rounded",
-  },
-  position = {
-    col = layout.popup.win_config.col,
-    row = layout.popup.win_config.row + layout.popup.win_config.height + 2,
-  },
-  size = {
-    width = width,
-    height = 2,
-  },
-  buf_options = {
-    modifiable = true,
-    readonly = false,
-  },
-})
+  -- Help window
+  layout.help = Popup({
+    enter = false,
+    focusable = false,
+    relative = 'editor',
+    border = {
+      style = "rounded",
+    },
+    position = {
+      col = layout.popup.win_config.col,
+      row = layout.popup.win_config.row + layout.popup.win_config.height + 2,
+    },
+    size = {
+      width = width,
+      height = 2,
+    },
+    buf_options = {
+      modifiable = true,
+      readonly = false,
+    },
+  })
 
 
-layout.input:mount()
-layout.popup:mount()
-layout.help:mount()
+  layout.input:mount()
+  layout.popup:mount()
+  layout.help:mount()
 
-bindKeys(default_mappings, layout.input, layout.popup.winid)
-bindKeys(default_mappings, layout.popup, layout.input.winid)
-bindExitEvents(vim.tbl_values(layout))
+  bindKeys(default_mappings, layout.input, layout.popup.winid)
+  bindKeys(default_mappings, layout.popup, layout.input.winid)
+  bindExitEvents(vim.tbl_values(layout))
 
-vim.schedule(bind(renderHelp, default_mappings, layout.help.bufnr))
--- vim.pretty_print(popup)
--- set content
--- vim.api.nvim_buf_set_lines(popup.bufnr, 0, 1, false, { "Hello World" })
+  vim.schedule(bind(renderHelp, default_mappings, layout.help.bufnr))
+end
+
+Form { title = 'new thing', onSubmit = pprint }
+
+return Form

@@ -23,6 +23,10 @@ end
 ---@param mappings Mappings
 ---@param bufnr number
 local function renderHelp(mappings, bufnr)
+  local mode = vim.fn.mode()
+  mappings = vim.tbl_filter(function(mapping)
+    return vim.tbl_contains(mapping.modes, mode)
+  end, mappings)
   local col = 0
   for _, mapping in pairs(mappings) do
     local length = renderKey(mapping.keys, mapping.description, bufnr, col, 1)
