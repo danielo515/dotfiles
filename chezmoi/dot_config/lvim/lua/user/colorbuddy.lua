@@ -9,6 +9,6 @@ local function setup()
   print "Colors are supposed to be customized now"
 end
 
-pcall(setup)
+vim.schedule_wrap(setup)
 
 return { 'tjdevries/colorbuddy.nvim' }
