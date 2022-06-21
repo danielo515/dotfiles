@@ -4,7 +4,7 @@ require "settings.gui"
 -- generic LSP settings
 lvim.lsp.automatic_servers_installation = true
 -- Project
-lvim.builtin.project.patterns = { ".git" }
+lvim.builtin.project.patterns = { ".git", "package.json" }
 -- general
 lvim.log.level = "debug"
 lvim.format_on_save = true
