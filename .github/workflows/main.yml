@@ -45,5 +45,5 @@ jobs:
         run: |
          bash <(curl -s https://raw.githubusercontent.com/lunarvim/lunarvim/master/utils/installer/install.sh)
       - name: run lvim!
-        run: $HOME/.local/bin/lvim -c 'autocmd User PackerComplete quitall' -c 'PackerSync'
+        run: $HOME/.local/bin/lvim -Es -c 'autocmd User PackerComplete quitall' -c 'PackerSync'
 
