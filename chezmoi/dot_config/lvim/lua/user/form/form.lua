@@ -121,12 +121,6 @@ local function Form(o)
     end,
   })
 
-  layout.input:on({ event.InsertLeave, event.InsertEnter }, function()
-    vim.schedule(function()
-      vim.api.nvim_buf_set_lines(layout.help.bufnr, 0, 1, false, {})
-      renderHelp(default_mappings, layout.help.bufnr)
-    end)
-  end)
 
 
   -- POPUP
@@ -150,7 +144,6 @@ local function Form(o)
       readonly = false,
     },
   })
-
 
 
   -- Help window
@@ -180,11 +173,17 @@ local function Form(o)
   layout.popup:mount()
   layout.help:mount()
 
+  layout.input:on({ event.InsertLeave, event.InsertEnter }, function()
+    vim.schedule(function()
+      renderHelp(default_mappings, layout.help.bufnr)
+    end)
+  end)
+
   bindKeys(default_mappings, layout.input, layout.popup.winid)
   bindKeys(default_mappings, layout.popup, layout.input.winid)
   bindExitEvents(vim.tbl_values(layout))
 
-  vim.schedule(bind(renderHelp, default_mappings, layout.help.bufnr))
+  -- vim.schedule(bind(renderHelp, default_mappings, layout.help.bufnr))
 end
 
 Form { title = 'new thing', onSubmit = pprint }
