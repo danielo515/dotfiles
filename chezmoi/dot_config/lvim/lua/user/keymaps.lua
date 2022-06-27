@@ -17,7 +17,7 @@ lvim.keys.normal_mode["<Tab>"] = "<cmd>lua require('user.telescope').buffers()<c
 -- lvim.keys.normal_mode["<M-k>"] = ":Telescope builtin include_extensions=true<cr>"
 lvim.keys.normal_mode["<A-k>"] = ":Telescope command_center<CR>"
 -- lvim.keys.normal_mode["<C-N>"] = ":NvimTreeFindFileToggle<cr>"
-lvim.keys.normal_mode["<C-N>"] = ":Neotree toggle reveal<cr>"
+lvim.keys.normal_mode["<C-N>"] = ":NvimTreeFindFileToggle<cr>"
 lvim.keys.normal_mode["<C-;>"] = ":Telescope command_history<cr>"
 lvim.keys.normal_mode["ml"] = "dd<C-W><C-l>p<C-w><C-h>"
 lvim.keys.normal_mode[",n"] = "<cmd>lua vim.diagnostic.goto_next()<cr>"
