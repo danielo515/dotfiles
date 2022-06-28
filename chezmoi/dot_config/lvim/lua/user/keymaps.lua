@@ -13,6 +13,7 @@ lvim.keys.visual_mode["<M-cr>"] = "<cmd>lua vim.lsp.buf.range_code_action()<cr>"
 -- File
 lvim.keys.normal_mode["<M-F>"] = '<cmd>lua require("telescope").extensions.file_browser.file_browser { cwd = vim.fn.expand "%:p:h:", grouped = true, depth= false, hidden = true }<CR>'
 lvim.keys.normal_mode["<Tab>"] = "<cmd>lua require('user.telescope').buffers()<cr>"
+lvim.keys.normal_mode["<S-Tab>"] = ":Neotree float reveal<cr>"
 -- Other
 -- lvim.keys.normal_mode["<M-k>"] = ":Telescope builtin include_extensions=true<cr>"
 lvim.keys.normal_mode["<A-k>"] = ":Telescope command_center<CR>"
