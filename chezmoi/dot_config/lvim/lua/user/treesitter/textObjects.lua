@@ -23,7 +23,6 @@ M.config = {
 				["ic"] = "@conditional.inner",
 
 				["ia"] = "@parameter.inner", -- "ap" is already used
-
 				["aa"] = "@parameter.outer", -- "ip" is already used
 				["al"] = "@loop.outer",
 				["il"] = "@loop.inner",
