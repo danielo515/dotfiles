@@ -16,7 +16,7 @@ local plugins = {
   require "user.goto_preview",
   require "user.tabout",
   require "user.cmp",
-  require "user.neogen",
+  require "user.plugins.neogen-config",
   require "user.biscuits",
   -- require "user.bookmarks",
   require "user.neozoom",
@@ -26,6 +26,8 @@ local plugins = {
   require "user.plugins.vim-firestore",
   -- require "user.treesitter-statusline",
   require("user.plugins.pomodoro"),
+  -- Awesome diff view
+  require "user.diffview",
   { -- Navigation by jumping to LSP objects like hop.nvim
     "ziontee113/syntax-tree-surfer",
     config = function()
@@ -144,8 +146,6 @@ local plugins = {
     end,
     disable = false,
   },
-  -- Awesome diff view
-  require "user.diffview",
   -- Clipboard history
   { "tami5/sqlite.lua" },
   {
@@ -175,18 +175,7 @@ local plugins = {
     end,
   },
   -- show colors inline
-  {
-    "norcalli/nvim-colorizer.lua",
-    config = function()
-      require("colorizer").setup({ "*" }, {
-        rgb_fn = true, -- CSS rgb() and rgba() functions
-        hsl_fn = true, -- CSS hsl() and hsla() functions
-        css = true, -- Enable all CSS features: rgb_fn, hsl_fn, names, RGB, RRGGBB
-        css_fn = true, -- Enable all CSS *functions*: rgb_fn, hsl_fn
-        mode = "background", -- Set the display mode.
-      })
-    end,
-  },
+  require"user.plugins.colorizer-config" ,
   {
     "petertriho/nvim-scrollbar",
     config = function()

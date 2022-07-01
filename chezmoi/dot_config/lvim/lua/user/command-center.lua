@@ -7,7 +7,7 @@ local function addAllCommands()
   local commands = vim.tbl_map(function(command)
     return {
       description = command.name,
-      cmd = string.format('<cmd>%s<cr>', command.definition)
+      cmd = string.format('<cmd>%s<cr>', command.name)
     }
   end, raw)
   local plain_table = vim.tbl_values(commands)

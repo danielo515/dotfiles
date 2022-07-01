@@ -1,5 +1,5 @@
 lvim.keys.normal_mode["<C-F>"] = "<cmd>lua require('user.telescope').grep_files()<cr>"
-lvim.keys.normal_mode["<C-P>"] = "<C-W><C-P>"
+-- lvim.keys.normal_mode["<C-P>"] = "<C-W><C-P>"
 lvim.keys.normal_mode["<C-x>"] = "<cmd>BufferKill<cr>"
 lvim.keys.normal_mode["kj"] = false
 lvim.keys.normal_mode["jk"] = false
@@ -57,3 +57,4 @@ end
 
 local bind = require "user.util".bind
 nmap('<C-C>', bind(vim.api.nvim_win_close, 0, false), 'Close current window')
+nmap("<C-P>", ":Telescope command_center<cr>",'Open command center')
