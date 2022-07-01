@@ -62,7 +62,7 @@ vim.keymap.set("n", "<A-p>", bind(stf.filtered_jump, "default", false), { desc =
 -- 	}, false, { destination = "siblings" })
 -- end, opts)
 -- Testing
-vim.keymap.set("n", "gk", bind(stf.surf, "next", "visual"), { desc = "Surf!" })
+vim.keymap.set("v", "gk", bind(stf.surf, "next", "visual"), { desc = "Surf!" })
 
 vim.keymap.set("n", "=", function()
 	stf.filtered_jump({ "if_statement", "else_clause", "else_statement" }, true, { destination = "siblings" })
