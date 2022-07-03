@@ -35,6 +35,7 @@ M.config = function()
     { description = "Show recent files", cmd = ":Telescope oldfiles<cr>" },
     { description = "Rerun last search", cmd = ":lua require('telescope.builtin').resume({cache_index=3})<cr>" },
     { description = "Search inside current buffer", cmd = ":Telescope current_buffer_fuzzy_find<cr>" },
+    { description = "Run neomake", cmd = ":Neomake<cr>" },
     {
       description = "Search/grep inside open buffers",
       cmd = require("user.telescope.finders").grep_open_files,
@@ -94,7 +95,8 @@ M.config = function()
     { description = "Help summary", cmd = ":help summary<cr>" },
     { description = "Help tips", cmd = ":help tips<cr>" },
     { description = "Help tutorial", cmd = ":help tutor<cr>" },
-    { description = "Typescript import all", cmd = "TypescriptAddMissingImports" },
+    { description = "Typescript import all", cmd = ":TypescriptAddMissingImports<CR>" },
+    { description = "Typescript remove unused", cmd = ":TypescriptRemoveUnused<CR>" },
     -- TODO:
     -- Search in parent directory and or sibling directory
   }, command_center.mode.ADD_ONLY)

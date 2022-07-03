@@ -17,7 +17,7 @@ local plugins = {
   require "user.tabout",
   require "user.cmp",
   require "user.plugins.neogen-config",
-  require "user.biscuits",
+  require "user.plugins.biscuits",
   -- require "user.bookmarks",
   require "user.neozoom",
   require "user.incline",
