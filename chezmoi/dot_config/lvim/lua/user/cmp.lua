@@ -12,7 +12,8 @@ local sources = {
       },
     },
   },
-  { name = "rg", keyword_length = 3, option = { pattern = "[\\w ]+'" } },
+  -- { name = "rg", keyword_length = 3, option = { pattern = "[\\w ]+'" } },
+  { name = "rg", keyword_length = 3 },
   { name = "emoji" },
 }
 
