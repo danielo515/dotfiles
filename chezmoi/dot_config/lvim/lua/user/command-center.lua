@@ -26,6 +26,7 @@ M.config = function()
   command_center.add({
     { description = "Search within the project (Live grep)", cmd = ":Telescope live_grep<cr>" },
     { description = "Live grep", cmd = ":Telescope live_grep_args<cr>" },
+    { description = "Show open buffers on tree", cmd = ":Neotree right buffers<cr>" },
     { description = "Search and replace", cmd = ":lua require('spectre').open()<cr>" },
     { description = "Select entire text", cmd = ':call feedkeys("GVgg")<cr>' },
     { description = "Show file browser", cmd = ":Telescope file_browser<cr>" },
