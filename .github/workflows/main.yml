@@ -33,6 +33,9 @@ jobs:
     runs-on: ${{ matrix.runner }}
     steps:
       - uses: actions/checkout@v3
+        with:
+         submodules: recursive
+
       - name: Install chezmoi
         run: sh -c "$(curl -fsLS chezmoi.io/get)" -- apply --source $GITHUB_WORKSPACE
       - name: Install neovim binary
