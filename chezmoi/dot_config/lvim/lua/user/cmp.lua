@@ -15,6 +15,7 @@ local sources = {
   -- { name = "rg", keyword_length = 3, option = { pattern = "[\\w ]+'" } },
   { name = "rg", keyword_length = 3 },
   { name = "emoji" },
+  { name = 'treesitter' },
 }
 
 for _, source in ipairs(sources) do
@@ -47,6 +48,7 @@ return {
   {
     "lukas-reineke/cmp-rg",
   },
+  "ray-x/cmp-treesitter",
   {
     "andersevenrud/cmp-tmux",
   },

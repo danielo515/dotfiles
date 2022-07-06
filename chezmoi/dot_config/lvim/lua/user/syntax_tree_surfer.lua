@@ -71,6 +71,7 @@ end, { desc = "jump to siblings" })
 -- jump to parent or child nodes only
 vim.keymap.set("n", "_", function()
 	stf.filtered_jump({
+    "function",
 		"if_statement",
 		"else_clause",
 		"else_statement",

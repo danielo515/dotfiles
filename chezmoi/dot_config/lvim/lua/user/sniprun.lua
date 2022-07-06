@@ -1,6 +1,7 @@
 local status_ok, sniprun = pcall(require, "sniprun")
 if not status_ok then
-	vim.notify("Sniprun not loaded", "warn")
+	-- vim.notify("Sniprun not loaded", "warn")
+	vim.schedule_wrap(function() vim.notify("Sniprun not loaded", "warn") end)
 	return
 end
 
