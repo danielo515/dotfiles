@@ -22,7 +22,7 @@ local plugins = {
   require "user.colorbuddy",
   require "user.plugins.vim-firestore",
   -- require "user.treesitter-statusline",
-  require("user.plugins.pomodoro"),
+  require("user.plugins.pomodoro-config"),
   -- Awesome diff view
   require "user.diffview",
   { -- Navigation by jumping to LSP objects like hop.nvim
