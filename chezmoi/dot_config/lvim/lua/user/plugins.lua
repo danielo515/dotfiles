@@ -2,10 +2,7 @@ local plugins = {
   -- themes
   "folke/tokyonight.nvim",
   { "Mofiqul/dracula.nvim" },
-  {
-    "catppuccin/nvim",
-    as = "catppuccin",
-  },
+  { "catppuccin/nvim", as = "catppuccin" },
   "marko-cerovac/material.nvim",
   -- sessions management
   require("user.persistence").plugin,
@@ -36,37 +33,15 @@ local plugins = {
   },
   -- require("user.lspsaga").plugin,
   -- some lsp diagnosis
-  {
-    "folke/trouble.nvim",
-    cmd = "TroubleToggle",
-  },
+  { "folke/trouble.nvim", cmd = "TroubleToggle" },
   -- better surround options
   { "tpope/vim-surround", keys = { "c", "d", "y" } },
   "wellle/targets.vim",
   { "tpope/vim-repeat" },
   -- fuzzy jummp on the file
   { "rlane/pounce.nvim" },
-
   --#region better % navigation
-  {
-    "andymass/vim-matchup",
-    event = "CursorMoved",
-    after = "nvim-treesitter",
-    config = function()
-      vim.g.matchup_matchparen_offscreen = { method = "popup" }
-      local treeOk = pcall(function()
-        require("nvim-treesitter.configs").setup {
-          matchup = {
-            enable = true, -- mandatory, false will disable the whole extension
-            disable = { "c", "ruby" }, -- optional, list of language that will be disabled
-          },
-        }
-      end)
-      if not treeOk then
-        vim.notify "Can not attach matchup to treesitter"
-      end
-    end,
-  },
+  require"user.plugins.vim-matchup",
   -- explore LSP symbols
   {
     "simrat39/symbols-outline.nvim",
@@ -81,7 +56,6 @@ local plugins = {
   -- colors
   { "folke/lsp-colors.nvim", event = "BufRead" },
   { "ckipp01/stylua-nvim" },
-  -- lua tools
   { "rafcamlet/nvim-luapad" },
   -- {
   --   "pwntester/octo.nvim",
@@ -108,10 +82,7 @@ local plugins = {
   },
   -- shows where you are using tree-siter
   -- Lua
-  {
-    "SmiteshP/nvim-gps",
-    requires = "nvim-treesitter/nvim-treesitter",
-  },
+  { "SmiteshP/nvim-gps", requires = "nvim-treesitter/nvim-treesitter" },
   -- Indent guides on every line
   {
     "lukas-reineke/indent-blankline.nvim",
@@ -121,31 +92,9 @@ local plugins = {
   -- Smooth scrolling
   { "psliwka/vim-smoothie" },
   --- Pick the file where you edited last time
-  {
-    "ethanholz/nvim-lastplace",
-    event = "BufRead",
-    config = function()
-      require("nvim-lastplace").setup {
-        lastplace_ignore_buftype = { "quickfix", "nofile", "help" },
-        lastplace_ignore_filetype = {
-          "gitcommit",
-          "gitrebase",
-          "svn",
-          "hgcommit",
-        },
-        lastplace_open_folds = true,
-      }
-    end,
-  },
+  require"user.plugins.nvim-lastplace-config",
   -- better quickfix
-  {
-    "kevinhwang91/nvim-bqf",
-    event = "BufReadPost",
-    config = function()
-      require("user.bqf").config()
-    end,
-    disable = false,
-  },
+  require"user.plugins.bqf",
   -- Clipboard history
   { "tami5/sqlite.lua" },
   {
@@ -159,7 +108,6 @@ local plugins = {
   -- powerful search and replace
   {
     "windwp/nvim-spectre",
-    event = "BufRead",
     config = function()
       require("spectre").setup()
     end,
@@ -209,22 +157,7 @@ local plugins = {
     requires = "nvim-telescope/telescope.nvim",
   },
   -- tmux integration
-  {
-    "alexghergh/nvim-tmux-navigation",
-    config = function()
-      require("nvim-tmux-navigation").setup {
-        disable_when_zoomed = true, -- defaults to false
-        keybindings = {
-          left = "<C-h>",
-          down = "<C-j>",
-          up = "<C-k>",
-          right = "<C-l>",
-          last_active = "<C-\\>",
-          next = "<C-Space>",
-        },
-      }
-    end,
-  },
+  require"user.plugins.tmux-navigation",
   -- call any "make" program and populate location list with it
   {
     "neomake/neomake",
@@ -243,13 +176,8 @@ local plugins = {
   },
   -- registers UI
   "tversteeg/registers.nvim",
-  -- run parts of code from the open file
-  { "michaelb/sniprun", run = "bash ./install.sh" },
   -- Adds hop-like visual hints for selecting using treesitter
   "mfussenegger/nvim-ts-hint-textobject",
-  {
-    "felipec/vim-sanegx",
-    event = "BufRead",
-  },
+  { "felipec/vim-sanegx", event = "BufRead" },
 }
 return plugins
