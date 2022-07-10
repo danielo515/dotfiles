@@ -44,14 +44,13 @@ if not cmdlineOk then
   vim.notify("Could not require cmp to setup cmdline", vim.log.levels.ERROR, { title = "Danielo" })
 end
 
+lvim.builtin.cmp.window.completion.max_height = 80
+lvim.builtin.cmp.formatting.source_names.rg = "(RG)"
+-- Return a list of plugins to install to insert in main plugins list
 return {
-  {
-    "lukas-reineke/cmp-rg",
-  },
+  { "lukas-reineke/cmp-rg" },
   "ray-x/cmp-treesitter",
-  {
-    "andersevenrud/cmp-tmux",
-  },
+  { "andersevenrud/cmp-tmux" },
   {
     "David-Kunz/cmp-npm",
     requires = {

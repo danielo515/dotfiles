@@ -51,6 +51,12 @@ vim.keymap.set(
   { silent = true, noremap = false, desc = "Higlight nodes to jump to" }
 )
 
+local function imap(lhs, rhs, desc)
+  vim.keymap.set('i', lhs, rhs, { silent = true, noremap = true, desc = desc })
+end
+
+imap("<C-N>","<cmd>lua require'cmp'.complete()<cr>","trigger autocomplete in insert mode")
+
 local function nmap(lhs, rhs, desc)
   vim.keymap.set('n', lhs, rhs, { silent = true, noremap = true, desc = desc })
 end
