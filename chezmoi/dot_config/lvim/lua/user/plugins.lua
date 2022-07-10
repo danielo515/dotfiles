@@ -43,16 +43,7 @@ local plugins = {
   --#region better % navigation
   require"user.plugins.vim-matchup",
   -- explore LSP symbols
-  {
-    "simrat39/symbols-outline.nvim",
-    cmd = "SymbolsOutline",
-    config = function()
-      vim.g.symbols_outline = {}
-      lvim.autocommands.custom_groups:append {
-        { "BufWinEnter", "*.ts,*.lua", "SymbolsOutline" },
-      }
-    end,
-  },
+  require"user.plugins.symbols-outline",
   -- colors
   { "folke/lsp-colors.nvim", event = "BufRead" },
   { "ckipp01/stylua-nvim" },
