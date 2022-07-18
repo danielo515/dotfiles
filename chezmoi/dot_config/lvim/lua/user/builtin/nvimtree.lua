@@ -41,7 +41,7 @@ lvim.builtin.nvimtree.setup.view.mappings.list = {
   { key = "<LeftMouse>", action = "open node", action_cb = handle_single_click },
 }
 
-lvim.builtin.nvimtree.setup.hijack_directories.ignore_list = { "help" }
+lvim.builtin.nvimtree.setup.view.width = 40
 lvim.builtin.nvimtree.setup.diagnostics.show_on_dirs = true
 lvim.builtin.nvimtree.setup.filters.custom = { "\\.cache" }
 -- Nvimtree end

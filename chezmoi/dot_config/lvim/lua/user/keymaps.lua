@@ -1,6 +1,6 @@
 lvim.keys.normal_mode["<C-F>"] = "<cmd>lua require('user.telescope').grep_files()<cr>"
 -- lvim.keys.normal_mode["<C-P>"] = "<C-W><C-P>"
-lvim.keys.normal_mode["<C-x>"] = "<cmd>BufferKill<cr>"
+lvim.keys.normal_mode["<S-X>"] = "<cmd>BufferKill<cr>"
 lvim.keys.normal_mode["kj"] = false
 lvim.keys.normal_mode["jk"] = false
 -- Navigation
