@@ -84,6 +84,8 @@ local whichConfig = {
     Y = { "<cmd>lua Yank_full_file_name()<CR>", "Yank full file path" },
   },
 }
+
+lvim.builtin.which_key.mappings["?"] = { "<cmd>Cheat<CR>", " Cheat.sh" }
 -- merge our custom config with the one from lvim
 local lv_which = lvim.builtin.which_key.mappings
 lvim.builtin.which_key.mappings = vim.tbl_deep_extend("force", lv_which, whichConfig)

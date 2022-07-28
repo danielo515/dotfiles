@@ -18,13 +18,18 @@ local plugins = {
   -- require "user.bookmarks",
   require "user.neozoom",
   require "user.incline",
-  require "user.vgit",
+  -- require "user.vgit",
   require "user.colorbuddy",
+  require "user.plugins.primeagen-refactoring",
   require "user.plugins.vim-firestore",
+  require "user.plugins.dial-config",
   -- require "user.treesitter-statusline",
-  require("user.plugins.pomodoro-config"),
+  require "user.plugins.pomodoro-config",
   -- Awesome diff view
   require "user.diffview",
+  require "user.plugins.cheat",
+  require "user.plugins.fidget-config",
+  { "mtdl9/vim-log-highlighting", ft = { "text", "log" } },
   { -- Navigation by jumping to LSP objects like hop.nvim
     "ziontee113/syntax-tree-surfer",
     config = function()
@@ -41,9 +46,9 @@ local plugins = {
   -- fuzzy jummp on the file
   { "rlane/pounce.nvim" },
   --#region better % navigation
-  require"user.plugins.vim-matchup",
+  require "user.plugins.vim-matchup",
   -- explore LSP symbols
-  require"user.plugins.symbols-outline",
+  require "user.plugins.symbols-outline",
   -- colors
   { "folke/lsp-colors.nvim", event = "BufRead" },
   { "ckipp01/stylua-nvim" },
@@ -83,9 +88,9 @@ local plugins = {
   -- Smooth scrolling
   { "psliwka/vim-smoothie" },
   --- Pick the file where you edited last time
-  require"user.plugins.nvim-lastplace-config",
+  require "user.plugins.nvim-lastplace-config",
   -- better quickfix
-  require"user.plugins.bqf",
+  require "user.plugins.bqf",
   -- Clipboard history
   { "tami5/sqlite.lua" },
   {
@@ -114,7 +119,7 @@ local plugins = {
     end,
   },
   -- show colors inline
-  require"user.plugins.colorizer-config" ,
+  require "user.plugins.colorizer-config",
   {
     "petertriho/nvim-scrollbar",
     config = function()
@@ -148,7 +153,7 @@ local plugins = {
     requires = "nvim-telescope/telescope.nvim",
   },
   -- tmux integration
-  require"user.plugins.tmux-navigation",
+  require "user.plugins.tmux-navigation",
   -- call any "make" program and populate location list with it
   {
     "neomake/neomake",
