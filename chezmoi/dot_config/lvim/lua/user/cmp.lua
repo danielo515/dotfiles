@@ -10,12 +10,13 @@ local sources = {
         trigger_characters = {},
         trigger_characters_ft = {}, -- { filetype = { '.' } }
       },
+      max_item_count = 10,
     },
   },
   -- { name = "rg", keyword_length = 3, option = { pattern = "[\\w ]+'" } },
-  { name = "rg", keyword_length = 3 },
+  { name = "rg", keyword_length = 3, max_item_count = 10 },
   { name = "emoji" },
-  { name = 'treesitter' },
+  { name = "treesitter", max_item_count = 10 },
 }
 
 for _, source in ipairs(sources) do
