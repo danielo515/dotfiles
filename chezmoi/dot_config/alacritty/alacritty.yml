@@ -1,7 +1,9 @@
+import:
+  - ./keys.yml
 window:
   position:
-   x: 450
-   y: 0
+    x: 550
+    y: 0
   # Window decorations
   #
   # Values for `decorations`:
@@ -11,7 +13,7 @@ window:
   # Values for `decorations` (macOS only):
   #     - transparent: Title bar, transparent background and title bar buttons
   #     - buttonless: Title bar, transparent background and no title bar buttons
-  decorations: buttonless
+  decorations: transparent
   opacity: 1.0
   # Spread additional padding evenly around the terminal content.
   dynamic_padding: true
@@ -25,7 +27,7 @@ scrolling:
 
 # Font configuration
 font:
-  size: 14.0
+  size: 13.5
   normal:
     family: Inconsolata Nerd Font Mono
     style: Medium
@@ -39,39 +41,33 @@ font:
   italic:
     family: Inconsolata
     style: ExtraLight
-
-  # Bold italic font face
-  #bold_italic:
+    # Bold italic font face
+    #bold_italic:
     #family: monospace
     #style: Bold Italic
-
   # Offset is the extra space around each character. `offset.y` can be thought
   # of as modifying the line spacing, and `offset.x` as modifying the letter
   # spacing.
   #offset:
   #  x: 0
   #  y: 0
-
   # Glyph offset determines the locations of the glyphs within their cells with
   # the default being at the bottom. Increasing `x` moves the glyph to the
   # right, increasing `y` moves the glyph upward.
   #glyph_offset:
   #  x: 0
   #  y: 0
-
   # Thin stroke font rendering (macOS only)
   #
   # Thin strokes are suitable for retina displays, but for non-retina screens
   # it is recommended to set `use_thin_strokes` to `false`.
   #use_thin_strokes: true
-
   # Use built-in font for box drawing characters.
   #
   # If `true`, Alacritty will use a custom built-in font for box drawing
   # characters (Unicode points 2500 - 259f).
   #
   #builtin_box_drawing: true
-
 # If `true`, bold text is drawn using the bright color variants.
 draw_bold_text_with_bright_colors: false
 cursor:
@@ -91,73 +87,29 @@ cursor:
 live_config_reload: true
 alt_send_esc: true
 
-
 key_bindings:
   # (macOS only)
   # make <C-6> work in NVim (CTRL-^)
-  - { key: Key6,           mods: Control,                    chars: "\x1e"                 }
+  - { key: Key6, mods: Control, chars: "\x1e" }
   # Map alt on mac to proper key code
-  - { key: K,              mods: Option,                     chars: "\x1bk"                }
-  - { key: Key9,           mods: Command,                    action: ResetFontSize         }
-  - { key: Equals,         mods: Command,                    action: IncreaseFontSize      }
-  - { key: Plus,           mods: Command,                    action: IncreaseFontSize      }
-  - { key: NumpadAdd,      mods: Command,                    action: IncreaseFontSize      }
-  - { key: Minus,          mods: Command,                    action: DecreaseFontSize      }
-  - { key: NumpadSubtract, mods: Command,                    action: DecreaseFontSize      }
-  - { key: V,              mods: Command,                    action: Paste                 }
-  - { key: C,              mods: Command,                    action: Copy                  }
+  - { key: K, mods: Option, chars: "\ek" }
+  - { key: Key9, mods: Command, action: ResetFontSize }
+  - { key: Equals, mods: Command, action: IncreaseFontSize }
+  - { key: Plus, mods: Command, action: IncreaseFontSize }
+  - {
+      key: NumpadAdd,
+      mods: Command,
+      action: IncreaseFontSize
+    }
+  - { key: Minus, mods: Command, action: DecreaseFontSize }
+  - {
+      key: NumpadSubtract,
+      mods: Command,
+      action: DecreaseFontSize
+    }
+  - { key: V, mods: Command, action: Paste }
+  - { key: C, mods: Command, action: Copy }
 
-colors:
-  # Default colors
-  primary:
-    background: '#121212'
-    foreground: '#D8DFD8'
-
-    # Bright and dim foreground colors
-    #
-    # The dimmed foreground color is calculated automatically if it is not
-    # present. If the bright foreground color is not set, or
-    # `draw_bold_text_with_bright_colors` is `false`, the normal foreground
-    # color will be used.
-    dim_foreground: '#545641'
-    bright_foreground: '#DFEEDF'
-
-  # Cursor colors
-  #
-  # Colors which should be used to draw the terminal cursor.
-  #
-  # Allowed values are CellForeground/CellBackground, which reference the
-  # affected cell, or hexadecimal colors like #ff00ff.
-  #cursor:
-  #  text: CellBackground
-  #  cursor: CellForeground
-
-  # Vi mode cursor colors
-  #
-  # Colors for the cursor when the vi mode is active.
-  #
-  # Allowed values are CellForeground/CellBackground, which reference the
-  # affected cell, or hexadecimal colors like #ff00ff.
-  vi_mode_cursor:
-  #  text: CellBackground
-    cursor: '#1e90ff'
-
-  # Search colors
-  #
-  # Colors used for the search bar and match highlighting.
-  search:
-    # Allowed values are CellForeground/CellBackground, which reference the
-    # affected cell, or hexadecimal colors like #ff00ff.
-    matches:
-     foreground: '#fffff0'
-     background: '#fff000'
-    focused_match:
-     foreground: '#ffffff'
-     background: '#ff00ff'
-
-    #bar:
-    #  background: '#c5c8c6'
-    #  foreground: '#1d1f21'
 # Regex hints
 #
 # Terminal hints can be used to find text in the visible part of the terminal
@@ -191,8 +143,8 @@ hints:
   #   - MoveViModeCursor
   #       Move the vi mode cursor to the beginning of the hint.
   enabled:
-    - regex: "(ipfs:|ipns:|magnet:|mailto:|gemini:|gopher:|https:|http:|news:|file:|git:|ssh:|ftp:)\
-              [^\u0000-\u001F\u007F-\u009F<>\"\\s{-}\\^⟨⟩`]+"
+    - regex: "(ipfs:|ipns:|magnet:|mailto:|gemini:|gopher:|https:|http:|news:|file:|g\
+        it:|ssh:|ftp:)[^\0-\x1f-<>\"\\s{-}\\^⟨⟩`]+"
       command: open
       post_processing: false
       mouse:
@@ -201,50 +153,47 @@ hints:
       binding:
         key: U
         mods: Control|Shift
-
-# Mouse bindings
-#
-# Mouse bindings are specified as a list of objects, much like the key
-# bindings further below.
-#
-# To trigger mouse bindings when an application running within Alacritty
-# captures the mouse, the `Shift` modifier is automatically added as a
-# requirement.
-#
-# Each mouse binding will specify a:
-#
-# - `mouse`:
-#
-#   - Middle
-#   - Left
-#   - Right
-#   - Numeric identifier such as `5`
-#
-# - `action` (see key bindings for actions not exclusive to mouse mode)
-#
-# - Mouse exclusive actions:
-#
-#   - ExpandSelection
-#       Expand the selection to the current mouse cursor location.
-#
-# And optionally:
-#
-# - `mods` (see key bindings)
-#mouse_bindings:
-#  - { mouse: Right,                 action: ExpandSelection }
-#  - { mouse: Right,  mods: Control, action: ExpandSelection }
-#  - { mouse: Middle, mode: ~Vi,     action: PasteSelection  }
-
-  # Keyboard regex hints
-  #hints:
+    # Mouse bindings
+    #
+    # Mouse bindings are specified as a list of objects, much like the key
+    # bindings further below.
+    #
+    # To trigger mouse bindings when an application running within Alacritty
+    # captures the mouse, the `Shift` modifier is automatically added as a
+    # requirement.
+    #
+    # Each mouse binding will specify a:
+    #
+    # - `mouse`:
+    #
+    #   - Middle
+    #   - Left
+    #   - Right
+    #   - Numeric identifier such as `5`
+    #
+    # - `action` (see key bindings for actions not exclusive to mouse mode)
+    #
+    # - Mouse exclusive actions:
+    #
+    #   - ExpandSelection
+    #       Expand the selection to the current mouse cursor location.
+    #
+    # And optionally:
+    #
+    # - `mods` (see key bindings)
+    #mouse_bindings:
+    #  - { mouse: Right,                 action: ExpandSelection }
+    #  - { mouse: Right,  mods: Control, action: ExpandSelection }
+    #  - { mouse: Middle, mode: ~Vi,     action: PasteSelection  }
+    # Keyboard regex hints
+    #hints:
     # First character in the hint label
     #
     # Allowed values are CellForeground/CellBackground, which reference the
-    # affected cell, or hexadecimal colors like #ff00ff.
+    # affected cell, or hexadecimal colors  gike #ff00ff.
     #start:
     #  foreground: '#1d1f21'
     #  background: '#e9ff5e'
-
     # All characters after the first one in the hint label
     #
     # Allowed values are CellForeground/CellBackground, which reference the
@@ -262,7 +211,6 @@ hints:
   #line_indicator:
   #  foreground: None
   #  background: None
-
   # Selection colors
   #
   # Colors which should be used to draw the selection area.
@@ -272,43 +220,41 @@ hints:
   #selection:
   #  text: CellBackground
   #  background: CellForeground
-
   # Normal colors
   normal:
-  #  black:   '#1d1f21'
-  #  red:     '#cc6666'
-    green:   '#59e858'
-    yellow:  '#ffea7f'
-    blue:    '#0fc9e4'
+    #  black:   '#1d1f21'
+    #  red:     '#cc6666'
+    green: '#59e858'
+    yellow: '#ffea7f'
+    blue: '#0fc9e4'
     magenta: '#b392f0'
-    cyan:    '#73e3ff'
-    white:   '#666666'
+    cyan: '#73e3ff'
+    white: '#666666'
 
   # Bright colors
   bright:
-    black:   '#656687'
-    red:     '#d54e54'
-    green:   '#85e89d'
-    yellow:  '#ffea7f'
-    blue:    '#1e90ff'
+    black: '#656687'
+    red: '#d54e54'
+    green: '#85e89d'
+    yellow: '#ffea7f'
+    blue: '#1e90ff'
     magenta: '#b392f0'
-    cyan:    '#1e90ff'
-    white:   '#f6f8fa'
+    cyan: '#1e90ff'
+    white: '#f6f8fa'
 
   # Dim colors
   #
   # If the dim colors are not set, they will be calculated automatically based
   # on the `normal` colors.
   dim:
-   black:   '#131415'
-   red:     '#864343'
-   green:   '#777c44'
-   yellow:  '#9e824c'
-   blue:    '#556a7d'
-   magenta: '#75617b'
-   cyan:    '#5b7d78'
-   white:   '#cecece'
-
+    black: '#131415'
+    red: '#864343'
+    green: '#777c44'
+    yellow: '#9e824c'
+    blue: '#556a7d'
+    magenta: '#75617b'
+    cyan: '#5b7d78'
+    white: '#cecece'
   # Indexed Colors
   #
   # The indexed colors include all colors from 16 to 256.
@@ -318,4 +264,31 @@ hints:
   #   `- { index: 16, color: '#ff00ff' }`
   #
   #indexed_colors: []
+colors:
+  # Default colors
+  primary:
+    background: '#282a36'
+    foreground: '#f8f8f2'
 
+  # Normal colors
+  normal:
+    black: '#000000'
+    red: '#ff5555'
+    green: '#50fa7b'
+    yellow: '#f1fa8c'
+    blue: '#caa9fa'
+    magenta: '#ff79c6'
+    cyan: '#8be9fd'
+    white: '#bfbfbf'
+
+  # Bright colors
+  bright:
+    black: '#575b70'
+    red: '#ff6e67'
+    green: '#5af78e'
+    yellow: '#f4f99d'
+    blue: '#caa9fa'
+    magenta: '#ff92d0'
+    cyan: '#9aedfe'
+    white: '#e6e6e6'
+theme: Dracula
