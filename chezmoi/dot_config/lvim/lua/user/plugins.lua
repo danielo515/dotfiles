@@ -25,6 +25,7 @@ local plugins = {
   require "user.plugins.dial-config",
   -- require "user.treesitter-statusline",
   require "user.plugins.pomodoro-config",
+  require "user.plugins.neogit-config",
   -- Awesome diff view
   require "user.diffview",
   require "user.plugins.cheat",
@@ -127,22 +128,7 @@ local plugins = {
     end,
   },
   -- VSCode like omni bar
-  {
-    "mrjones2014/legendary.nvim",
-    after = "which-key.nvim",
-    config = function()
-      require("legendary").setup {
-        which_key = {
-          mappings = lvim.builtin.which_key.mappings,
-          opts = lvim.builtin.which_key.opts,
-          -- false if which-key.nvim handles binding them,
-          -- set to true if you want legendary.nvim to handle binding
-          -- the mappings; if not passed, true by default
-          do_binding = false,
-        },
-      }
-    end,
-  },
+  require "user.plugins.legendary-config",
   {
     "gfeiyou/command-center.nvim",
     config = function()
