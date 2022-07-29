@@ -27,19 +27,19 @@ scrolling:
 
 # Font configuration
 font:
-  size: 13.5
+  size: 12.5
   normal:
-    family: Inconsolata Nerd Font Mono
-    style: Medium
+    family: "Hack Nerd Font Mono"
+    style: Regular
 
   # Bold font face
   bold:
-    family: Inconsolata Nerd Font Mono
+    family: "VictorMono Nerd Font" 
     style: Bold
 
   # Italic font face
   italic:
-    family: Inconsolata
+    family: "VictorMono Nerd Font"
     style: ExtraLight
     # Bold italic font face
     #bold_italic:
