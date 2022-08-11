@@ -11,25 +11,21 @@ M.plugin = {
   requires = "nvim-lua/plenary.nvim",
   after = { "telescope.nvim", "which-key.nvim" },
   config = function()
-    require("telescope").load_extension("harpoon")
-    -- set harpoon keymaps
-    lvim.builtin.which_key.mappings["a"] = { "<cmd>lua require('harpoon.mark').add_file()<CR>", " Add Mark" }
-    lvim.builtin.which_key.mappings["0"] = {
-      "<cmd>Telescope harpoon marks<CR>",
-      " Harpoon",
-    }
+    require("telescope").load_extension "harpoon"
 
     local whk_status, whk = pcall(require, "which-key")
     if not whk_status then
-      vim.notify("Coulr not load which key for harpoon", "warn")
+      vim.notify("Could not load which key for harpoon", "warn")
       return
     end
-    whk.register({
+    whk.register {
       ["<leader>1"] = { "<CMD>lua require('harpoon.ui').nav_file(1)<CR>", " goto1" },
       ["<leader>2"] = { "<CMD>lua require('harpoon.ui').nav_file(2)<CR>", " goto2" },
       ["<leader>3"] = { "<CMD>lua require('harpoon.ui').nav_file(3)<CR>", " goto3" },
       ["<leader>4"] = { "<CMD>lua require('harpoon.ui').nav_file(4)<CR>", " goto4" },
-    })
+      ["<leader>a"] = { "<cmd>lua require('harpoon.mark').add_file()<CR>", " Add Mark" },
+      ["<leader>0"] = { "<cmd>Telescope harpoon marks<CR>", " Harpoon" },
+    }
   end,
 }
 
