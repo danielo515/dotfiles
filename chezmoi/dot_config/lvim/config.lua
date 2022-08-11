@@ -2,7 +2,7 @@ local concat_lists = require("user.util").concat_lists
 -- Settings related to GUI clients like neovide
 require "settings.gui"
 -- generic LSP settings
-lvim.lsp.automatic_servers_installation = true
+lvim.lsp.installer.setup.automatic_installation = true
 -- Project
 lvim.builtin.project.patterns = { ".git", "package.json" }
 -- general
