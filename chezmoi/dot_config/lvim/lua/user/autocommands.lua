@@ -47,11 +47,12 @@ function M.config()
     { "FileType", "alpha", "nnoremap <silent> <buffer> q :q<CR>" },
 
     -- typescript
-    { "Filetype", "typescript,typescriptreact", "nnoremap gA <Cmd>TypescriptAddMissingImports<CR>" },
+    { "Filetype", "typescript,typescriptreact", "nnoremap ga <Cmd>TypescriptAddMissingImports<CR>" },
     { "Filetype", "typescript,typescriptreact", "nnoremap gr <Cmd>TypescriptRenameFile<CR>" },
     { "Filetype", "typescript,typescriptreact", "nnoremap gS <Cmd>TypescriptOrganizeImports<CR>" },
-    { "Filetype", "typescript,typescriptreact", "nnoremap gR <Cmd>TypescriptRemoveUnused<CR>" },
-    { "Filetype", "typescript,typescriptreact", "nnoremap gx <Cmd>TypescriptFixAll<CR>" },
+    { "Filetype", "typescript,typescriptreact", "nnoremap gx <Cmd>TypescriptRemoveUnused<CR>" },
+    { "BufWritePost", "typescript,typescriptreact", "TypescriptRemoveUnused" },
+    -- { "Filetype", "typescript,typescriptreact", "nnoremap gx <Cmd>TypescriptFixAll<CR>" },
 
     -- Populate node_modules .bin
     { "VimEnter", "", add_node_bin },
