@@ -21,7 +21,7 @@ function M.config()
   }
 
   require("lvim.lsp.manager").setup("graphql", graphql_lsp_opts)
-  require("lvim.lsp.manager").setup "marksman"
+  -- require("lvim.lsp.manager").setup "marksman"
   require("lvim.lsp.manager").setup("jsonls", {
     settings = {
       json = {
