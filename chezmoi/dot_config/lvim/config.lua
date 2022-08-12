@@ -5,6 +5,15 @@ require "settings.gui"
 lvim.lsp.installer.setup.automatic_installation = true
 -- Project
 lvim.builtin.project.patterns = { ".git", "package.json" }
+-- Packer fix
+local packer = require('packer')
+
+packer.init({
+  max_jobs = 10,
+  git = {
+    clone_timeout = 10, -- timeout in seconds
+  },
+})
 -- general
 lvim.log.level = "debug"
 lvim.format_on_save = true
@@ -50,7 +59,7 @@ require "user.telescope"
 require "user.statusline"
 require "user.sniprun"
 require "user.builtin.nvimtree"
-require("user.lsp").config()
+-- require("user.lsp").config()
 require("user.auto-resize-window").setup()
 -- require("user.lualine").config()
 require("luasnip.loaders.from_snipmate").lazy_load()
