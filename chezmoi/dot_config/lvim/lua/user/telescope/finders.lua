@@ -29,6 +29,7 @@ M.find_on_parent = function()
 end
 
 function M.expand()
+  ---@diagnostic disable-next-line: missing-parameter
   return vim.fn.expand("<cword>")
 end
 
@@ -67,6 +68,7 @@ end
 
 function M.grep_parent_directory(opts)
   opts = opts or {}
+  ---@diagnostic disable-next-line: missing-parameter
   builtin.live_grep(vim.tbl_extend("force", opts, { cwd = vim.fn.expand "%:h:p" }))
 end
 
