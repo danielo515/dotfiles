@@ -13,11 +13,10 @@ local function config()
       -- do_binding = false,
     },
   }
-  local compat = require "legendary.compat.which-key"
-  compat.parse_whichkey(mappings, wich_opts, false)
+  -- local compat = require "legendary.compat.which-key"
+  -- compat.parse_whichkey(mappings, wich_opts, false)
 end
 return {
   "mrjones2014/legendary.nvim",
-  -- after = "which-key.nvim",
   config = config,
 }
