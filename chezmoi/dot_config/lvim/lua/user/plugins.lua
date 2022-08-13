@@ -15,6 +15,7 @@ local plugins = {
   require "user.cmp",
   require "user.plugins.neogen-config",
   require "user.plugins.biscuits",
+  require "user.plugins.lsp-lines",
   -- require "user.bookmarks",
   require "user.neozoom",
   require "user.incline",
