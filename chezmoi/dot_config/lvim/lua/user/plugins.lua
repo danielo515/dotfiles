@@ -124,6 +124,7 @@ local plugins = {
   require "user.plugins.colorizer-config",
   {
     "petertriho/nvim-scrollbar",
+    commit = "ce0df69",
     config = function()
       require("scrollbar").setup()
     end,
@@ -158,7 +159,7 @@ local plugins = {
     end,
   },
   -- registers UI
-  "tversteeg/registers.nvim",
+  { "tversteeg/registers.nvim", commit = "949213e" },
   -- Adds hop-like visual hints for selecting using treesitter
   "mfussenegger/nvim-ts-hint-textobject",
   { "felipec/vim-sanegx", event = "BufRead" },
