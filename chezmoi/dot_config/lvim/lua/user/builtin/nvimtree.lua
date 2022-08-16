@@ -1,7 +1,6 @@
 -- Nvimtree
 -- =========================================
 lvim.builtin.nvimtree.setup.open_on_setup = false
-lvim.builtin.nvimtree.setup.view.auto_resize = true
 lvim.builtin.nvimtree.setup.view.side = "left"
 lvim.builtin.nvimtree.setup.renderer = {
   indent_markers = {
@@ -21,12 +20,12 @@ local function telescope_live_grep(_)
   require("lvim.core.nvimtree").start_telescope "live_grep"
 end
 
-local function handle_single_click(node)
-  local open = require("nvim-tree.actions.open-file").fn
-  vim.cmd [[
-  execute "normal! \<LeftMouse>"
-  ]]
-end
+-- local function handle_single_click(node)
+--   local open = require("nvim-tree.actions.open-file").fn
+--   vim.cmd [[
+--   execute "normal! \<LeftMouse>"
+--   ]]
+-- end
 
 lvim.builtin.nvimtree.setup.view.mappings.list = {
   { key = { "l", "<CR>" }, action = "edit", mode = "n" },
@@ -38,7 +37,7 @@ lvim.builtin.nvimtree.setup.view.mappings.list = {
   { key = "f", action = "telescope_find_files", action_cb = telescope_find_files },
   { key = "gr", action = "telescope_live_grep", action_cb = telescope_live_grep },
   -- { key = "<2-LeftMouse>", action = "" },
-  { key = "<LeftMouse>", action = "open node", action_cb = handle_single_click },
+  -- { key = "<LeftMouse>", action = "open node", action_cb = handle_single_click },
 }
 
 lvim.builtin.nvimtree.setup.view.width = 40
