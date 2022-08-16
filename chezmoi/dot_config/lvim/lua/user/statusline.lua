@@ -1,8 +1,12 @@
 local components = require "lvim.core.lualine.components"
-local gps_ok, gps = pcall(require, "nvim-gps")
+local gps_ok, gps = pcall(require, "nvim-navic")
 
 local hide_in_width = function()
   return vim.fn.winwidth(0) > 80
+end
+
+if gps_ok then
+  lvim.lsp.on_attach_callback = gps.attach
 end
 
 local nvim_gps = function()

@@ -46,7 +46,7 @@ if not cmdlineOk then
 end
 
 lvim.builtin.cmp.window.completion.max_height = 80
-vim.opt.pumheight = 0 -- use alla available space
+vim.opt.pumheight = 0 -- use all available space
 lvim.builtin.cmp.formatting.source_names.rg = "(RG)"
 -- Return a list of plugins to install to insert in main plugins list
 return {
@@ -60,5 +60,5 @@ return {
     },
   },
   { "hrsh7th/cmp-emoji" },
-  { "hrsh7th/cmp-cmdline" },
+  { "hrsh7th/cmp-cmdline", commit = "9c0e331" },
 }

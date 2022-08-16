@@ -12,7 +12,7 @@ local plugins = {
   require("user.neo_tree").plugin,
   require "user.goto_preview",
   require "user.tabout",
-  require "user.cmp",
+  require "user.plugins.cmp",
   require "user.plugins.neogen-config",
   require "user.plugins.biscuits",
   require "user.plugins.lsp-lines",
@@ -78,13 +78,13 @@ local plugins = {
       }
     end,
   },
-  -- shows where you are using tree-siter
-  -- Lua
-  { "SmiteshP/nvim-gps", requires = "nvim-treesitter/nvim-treesitter" },
+
+  { "SmiteshP/nvim-navic", requires = "neovim/nvim-lspconfig" },
   -- Indent guides on every line
   {
     "lukas-reineke/indent-blankline.nvim",
     event = "BufRead",
+    commit = "c15bbe9",
     config = require("user.indent-blankline").config,
   },
   -- Smooth scrolling
