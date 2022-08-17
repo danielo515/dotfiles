@@ -1,3 +1,5 @@
 #!/bin/bash
+{{ if eq .chezmoi.os "darwin" }}
 # After chezmoi setups the machine, run the brew bundle installation
 brew bundle "$(chezmoi source-path)/Brewfile"
+{{ end }}

@@ -1,3 +1,5 @@
+# -- Do not update oh-my-zsh, chezmoi will take care --
+DISABLE_AUTO_UPDATE="true"
 # -- Dotfiles Directory --------------------------------------------------------
 export XDG_CONFIG_HOME="$HOME/.config"
 export DOTFILES="$HOME/.dotfiles"
