@@ -1,0 +1,4 @@
+# -- Dotfiles Directory --------------------------------------------------------
+export XDG_CONFIG_HOME="$HOME/.config"
+export DOTFILES="{{ .dotfiles }}"
+{{ include (joinPath .chezmoi.workingTree "zsh" "zshrc") }}

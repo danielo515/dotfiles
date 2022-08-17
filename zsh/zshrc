@@ -1,9 +1,9 @@
-# -- Do not update oh-my-zsh, chezmoi will take care --
-DISABLE_AUTO_UPDATE="true"
-# -- Dotfiles Directory --------------------------------------------------------
-export XDG_CONFIG_HOME="$HOME/.config"
-export DOTFILES="$HOME/.dotfiles"
+# This variables are managed by chezmoi and injected at the top
+# export XDG_CONFIG_HOME="$HOME/.config"
+# export DOTFILES="$HOME/.dotfiles"
 
+# -- Do jnot update oh-my-zsh, chezmoi will take care --
+DISABLE_AUTO_UPDATE="true"
 # -- Import HELPER scripts -------------------------------------------------
 source "$DOTFILES/scripts/helpers/functions.sh"
 source "$DOTFILES/scripts/helpers/colors.sh"
