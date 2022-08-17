@@ -5,3 +5,4 @@
 *.local
 *.local.*
 secrets
+chezmoi/Brewfile.lock.json
