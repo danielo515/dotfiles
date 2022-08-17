@@ -19,14 +19,14 @@ if system_is_OSX; then
 fi
 
 # -- GIT -----------------------------------------------------------------------
-if test -L $HOME/.gitignore_global; then
+if test -L "$HOME/.gitignore_global"; then
     echo_item "Git config files already linked" green
 elif get_boolean_response "Do you want to install the Git configuration files?"
 then
-    ln -sf $DOTFILES/git/gitignore_global $HOME/.gitignore_global
+    ln -sf "$DOTFILES/git/gitignore_global" "$HOME/.gitignore_global"
     echo_item "Linked global .gitignore" "green"
     
-    ln -sf $DOTFILES/git/gitconfig $HOME/.gitconfig
+    ln -sf "$DOTFILES/git/gitconfig" "$HOME/.gitconfig"
     echo_item "Linked gitconfig" "green"
 else
     echo_item "Ignoring Git configuration" red
@@ -49,15 +49,15 @@ fi
 # -- ZSH Setup -----------------------------------------------------------------
 
 if exists "zsh"; then
-    if test -L $HOME/.zshrc; then
+    if test -L "$HOME/.zshrc"; then
         echo_item "ZSH configuration files already linked" green
         elif get_boolean_response "Do you want to install ZSH configuration files?"; then
         # -- ZSHRC
-        ln -sf $DOTFILES/zsh/zshrc $HOME/.zshrc
+        ln -sf "$DOTFILES/zsh/zshrc" "$HOME/.zshrc"
         echo_item "Linked zshrc" "green"
         
         # -- OH MY ZSH
-        if [ -d $HOME/.oh-my-zsh/ ]; then
+        if [ -d "$HOME/.oh-my-zsh/" ]; then
             echo_item "Oh my ZSH is already installed" "green"
         else
             if exists "curl"; then
@@ -80,12 +80,12 @@ echo ""
 
 # -- BASH Setup ----------------------------------------------------------------
 
-if test -L $HOME/.bash_profile; then
+if test -L "$HOME/.bash_profile"; then
     echo_item "Bash profile is already linked" green
 elif get_boolean_response "Do you want to install Bash configuration files?"
 then
     # -- BASH PROFILE
-    ln -sf $DOTFILES/bash/bash_profile $HOME/.bash_profile
+    ln -sf "$DOTFILES/bash/bash_profile" "$HOME/.bash_profile"
     echo_item "Linked bash_profile" "green"
 else
     echo_item "Ignoring Bash configuration" "red"
@@ -94,11 +94,11 @@ fi
 echo ""
 
 # -- TMUX ----------------------------------------------------------------------
-if test -L $HOME/.tmux.conf; then
+if test -L "$HOME/.tmux.conf"; then
     echo_item "Tmux configuration already linked" green
 elif get_boolean_response "Do you want to install the Tmux configuration file?"
 then
-    ln -sf $DOTFILES/tmux/tmux.conf $HOME/.tmux.conf
+    ln -sf "$DOTFILES/tmux/tmux.conf" "$HOME/.tmux.conf"
     echo_item "Linked tmux configutation" "green"
 else
     echo_item "Ignoring Tmux configuration" "red"
@@ -112,8 +112,8 @@ if exists "nvm"; then
     echo_item "Node tools are already installed" green
 else
     if get_boolean_response "Do you want to install Node.js tools (nvm) ?"; then
-        git clone https://github.com/creationix/nvm.git ~/.nvm && cd ~/.nvm && git checkout `git describe --abbrev=0 --tags`
-        . $HOME/.nvm/nvm.sh
+        git clone https://github.com/creationix/nvm.git ~/.nvm && cd ~/.nvm && git checkout "$(git describe --abbrev=0 --tags)"
+        source "$HOME/.nvm/nvm.sh"
         nvm alias default system
     else
         echo_item "Skipping Node.js tools install" red
@@ -148,9 +148,9 @@ fi
 # TODO: Ask if the user wants to copy the current configuration to a .local file
 if get_boolean_response "Do you want to install the NeoVim configuration file?"
 then
-    ln -sf $DOTFILES/nvim/init.vim $HOME/.config/nvim/init.vim
+    ln -sf "$DOTFILES/nvim/init.vim" "$HOME/.config/nvim/init.vim"
     echo_item "Linked Neovim configuration" "green"
-    ln -sf $DOTFILES/nvim/colors $HOME/.config/colors/nvim/colors
+    ln -sf "$DOTFILES/nvim/colors" "$HOME/.config/colors/nvim/colors"
     echo_item "Linked Neovim colors" "green"
 else
     echo_item "Ignoring Neovim configuration" red

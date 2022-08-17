@@ -1,0 +1,35 @@
+# DB Files
+sqlite-backup.db
+
+# Compiled Python files
+*.pyc
+
+# Folder view configuration files
+.DS_Store
+Desktop.ini
+
+# Thumbnail cache files
+._*
+Thumbs.db
+
+# Files that might appear on external disks
+.Spotlight-V100
+.Trashes
+
+# Tag Files
+tags
+
+# Common node stuff
+node_modules
+bower_components
+tmp
+.tern-port
+npm-debug.log
+
+# VS Code Files
+ember.d.ts
+
+# ASDF Tool Versions
+.tool-versions
+# dist experiments
+dist-*
