@@ -1,9 +1,0 @@
-windows:
-  - name: Pento
-    root: $PENTODIR
-    layout: even-horizontal
-    panes:
-      - dc up -d
-      - cd client
-      - cd spring
-      - name: right
