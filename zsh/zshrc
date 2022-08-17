@@ -76,8 +76,6 @@ fi
 alias reload='source $DOTFILES/zsh/zshrc'
 
 export PATH="$PATH:/opt/vagrant/bin"
-# Add local bin folders to path
-export PATH="/usr/local/sbin:$HOME/bin:$HOME/.local/bin:$PATH"
 
 # -- Functions -----------------------------------------------------------------
 

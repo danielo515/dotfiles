@@ -1,6 +1,4 @@
-# -- Dotfiles Directory --------------------------------------------------------
-export XDG_CONFIG_HOME="$HOME/.config"
-export DOTFILES="{{ .dotfiles }}"
+{{ template "variables" . }}
 
 # -- Import HELPER scripts -------------------------------------------------
 source "$DOTFILES/scripts/helpers/functions.sh"
