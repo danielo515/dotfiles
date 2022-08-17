@@ -1,0 +1,36 @@
+{{- if eq .chezmoi.os "linux" "darwin" -}}
+#!/usr/bin/env bash
+
+    {{- if (joinPath .chezmoi.homeDir ".asdf" | stat | not) }}
+
+git clone -- \
+    'https://github.com/asdf-vm/asdf.git' "$HOME/.asdf"
+
+{{- end }}
+
+
+
+ASDF_DIR="$HOME/.asdf"
+PATH="$ASDF_DIR/bin:$PATH"
+  . $ASDF_DIR/lib/asdf.sh # just load the asdf wrapper function
+
+asdf update
+
+
+
+    {{- if lookPath "direnv" }}
+
+# add direnv plugins
+asdf plugin add direnv
+
+# setup asdf direnv
+asdf direnv setup --version system --shell zsh
+
+    {{- else }}
+
+echo 'Install direnv system wide, then run:'
+echo '  $ chezmoi apply --source-path {{ joinPath .chezmoi.sourceDir .chezmoi.sourceFile }}'
+
+    {{- end }}
+
+{{- end }}
