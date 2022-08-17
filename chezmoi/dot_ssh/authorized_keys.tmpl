@@ -1,4 +1,4 @@
-{{ range gitHubKeys "$GITHUB_USERNAME" -}}
+{{ range gitHubKeys .github_username -}}
 {{   .Key }}
 {{ end -}}
 
