@@ -1,5 +1,5 @@
 #!/bin/bash
 {{ if eq .chezmoi.os "darwin" }}
 # After chezmoi setups the machine, run the brew bundle installation
-brew bundle install --file "$({{  .chezmoi.executable }} source-path)/Brewfile"
+brew bundle install --file {{ joinPath .dotfiles "Brewfile" }}
 {{ end }}
