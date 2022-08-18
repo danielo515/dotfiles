@@ -2,6 +2,13 @@
 # export XDG_CONFIG_HOME="$HOME/.config"
 # export DOTFILES="$HOME/.dotfiles"
 
+# Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
+# Initialization code that may require console input (password prompts, [y/n]
+# confirmations, etc.) must go above this block; everything else may go below.
+if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
+  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
+fi
+
 # -- Do jnot update oh-my-zsh, chezmoi will take care --
 DISABLE_AUTO_UPDATE="true"
 # -- Import HELPER scripts -------------------------------------------------
@@ -15,24 +22,29 @@ fi
 
 # -- Zsh -----------------------------------------------------------------------
 ZSH="$HOME/.oh-my-zsh"
+# -- For now, just use the default ones and do not configure it
 # ZSH_CUSTOM="$DOTFILES/zsh/custom"
 # fpath=("$DOTFILES/zsh/custom" $fpath)
 
 # -- Theme ---------------------------------------------------------------------
 export NVIM_TUI_ENABLE_TRUE_COLOR=1
-ZSH_THEME="spaceship"
-SPACESHIP_PROMPT_ADD_NEWLINE="true"
-SPACESHIP_CHAR_SUFFIX=(" ")
-SPACESHIP_CHAR_COLOR_SUCCESS="yellow"
-SPACESHIP_PROMPT_DEFAULT_PREFIX="$USER"
-SPACESHIP_PROMPT_FIRST_PREFIX_SHOW="true"
-SPACESHIP_USER_SHOW="true"
+ZSH_THEME="powerlevel10k/powerlevel10k"
+# SPACESHIP_PROMPT_ADD_NEWLINE="true"
+# SPACESHIP_CHAR_SUFFIX=(" ")
+# SPACESHIP_CHAR_COLOR_SUCCESS="yellow"
+# SPACESHIP_PROMPT_DEFAULT_PREFIX="$USER"
+# SPACESHIP_PROMPT_FIRST_PREFIX_SHOW="true"
+# SPACESHIP_USER_SHOW="true"
 
 # -- ZSH Plugins ---------------------------------------------------------------
-plugins=(git npm bower vi-mode pj zsh-autosuggestions)
+plugins=(
+  # zsh-nvm
+  git npm bower vi-mode pj zsh-autosuggestions)
 if exists "virtualenvwrapper"; then plugins+=virtualenvwrapper; fi
 if exists "autojump"; then plugins+=autojump; fi
-plugins+=(zsh-nvm zsh-syntax-highlighting)
+plugins+=(
+  zsh-syntax-highlighting # needs to be the last plugin
+)
 
 fpath=($DOTFILES/zsh/custom/completion $fpath)
 
