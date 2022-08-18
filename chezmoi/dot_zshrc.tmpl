@@ -4,3 +4,6 @@
 {{- if (eq .chezmoi.os "darwin") -}}
 {{ include (joinPath .chezmoi.workingTree "zsh" "zshrc.osx.zsh") }}
 {{ end }}
+{{- if (joinPath .chezmoi.homeDir ".config" "asdf-direnv" | stat ) }}
+source "${XDG_CONFIG_HOME:-$HOME/.config}/asdf-direnv/zshrc"
+{{- end }}
