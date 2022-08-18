@@ -4,6 +4,7 @@ local plugins = {
   { "Mofiqul/dracula.nvim" },
   { "catppuccin/nvim", as = "catppuccin" },
   "marko-cerovac/material.nvim",
+  require "user.plugins.filetype-config", -- faster and lua way of setting custom filetypes
   -- sessions management
   require("user.persistence").plugin,
   require("user.harpoon").plugin,
