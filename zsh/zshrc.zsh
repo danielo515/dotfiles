@@ -15,8 +15,8 @@ fi
 
 # -- Zsh -----------------------------------------------------------------------
 ZSH="$HOME/.oh-my-zsh"
-ZSH_CUSTOM="$DOTFILES/zsh/custom"
-fpath=( "$DOTFILES/zsh/custom" $fpath)
+# ZSH_CUSTOM="$DOTFILES/zsh/custom"
+# fpath=("$DOTFILES/zsh/custom" $fpath)
 
 # -- Theme ---------------------------------------------------------------------
 export NVIM_TUI_ENABLE_TRUE_COLOR=1
@@ -29,10 +29,10 @@ SPACESHIP_PROMPT_FIRST_PREFIX_SHOW="true"
 SPACESHIP_USER_SHOW="true"
 
 # -- ZSH Plugins ---------------------------------------------------------------
-plugins=(git npm bower vi-mode pj zsh-syntax-highlighting zsh-autosuggestions)
+plugins=(git npm bower vi-mode pj zsh-autosuggestions)
 if exists "virtualenvwrapper"; then plugins+=virtualenvwrapper; fi
 if exists "autojump"; then plugins+=autojump; fi
-plugins+=(zsh-nvm)
+plugins+=(zsh-nvm zsh-syntax-highlighting)
 
 fpath=($DOTFILES/zsh/custom/completion $fpath)
 
@@ -52,8 +52,8 @@ unsetopt auto_name_dirs
 zstyle ':completion:*:*:vim:*:*files' ignored-patterns '*.class'
 
 # -- Command History -----------------------------------------------------------
-export HISTSIZE=500
-export SAVEHIST=500
+export HISTSIZE=900
+export SAVEHIST=900
 
 # -- Options -------------------------------------------------------------------
 unsetopt correct_all
