@@ -197,12 +197,7 @@ zle -N zle-line-init
 zle -N zle-keymap-select
 export KEYTIMEOUT=1
 
-# Set Spaceship ZSH as a prompt
-autoload -U promptinit; promptinit
-# prompt spaceship
-# spaceship_vi_mode_disable
 test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
-
 # tabtab source for serverless package
 # uninstall by removing these lines or running `tabtab uninstall serverless`
 [[ -f /Users/danielo/.nvm/versions/node/v8.15.0/lib/node_modules/serverless/node_modules/tabtab/.completions/serverless.zsh ]] && . /Users/danielo/.nvm/versions/node/v8.15.0/lib/node_modules/serverless/node_modules/tabtab/.completions/serverless.zsh
@@ -224,3 +219,5 @@ export PATH="/usr/local/opt/ruby/bin:$PATH"
 
 # opam configuration
 [[ ! -r /Users/danielo/.opam/opam-init/init.zsh ]] || source /Users/danielo/.opam/opam-init/init.zsh  > /dev/null 2> /dev/null
+# - Powerlevel10k load
+[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
