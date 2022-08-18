@@ -130,14 +130,6 @@ if [ -f ~/.fzf.zsh ]; then
     export FZF_CTRL_T_COMMAND="rg --files-with-matches --no-messages --hidden -F '' | grep -v .git/"
 fi
 
-# -- OS-Specific Config --------------------------------------------------------
-if [[ $(uname) == 'Darwin' ]]; then
-    # Load OSX config
-    source $DOTFILES/zsh/zshrc.osx
-    elif [ "$(expr substr $(uname -s) 1 5)" == "Linux" ]; then
-    # Load Linux config
-fi
-
 # -- asdf ---------------------------------------------------------------------
 if [[ -d "$HOME/.asdf" ]]; then
     source $HOME/.asdf/asdf.sh

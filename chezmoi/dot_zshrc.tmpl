@@ -1,3 +1,6 @@
 {{ template "variables" . }}
 {{ template "path" . }}
 {{ include (joinPath .chezmoi.workingTree "zsh" "zshrc.zsh") }}
+{{- if (eq .chezmoi.os "darwin") -}}
+{{ include (joinPath .chezmoi.workingTree "zsh" "zshrc.osx.zsh") }}
+{{ end }}
