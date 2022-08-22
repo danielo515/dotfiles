@@ -6,14 +6,14 @@ lvim.lsp.installer.setup.automatic_installation = true
 -- Project
 lvim.builtin.project.patterns = { ".git", "package.json" }
 -- Packer fix
-local packer = require('packer')
+local packer = require "packer"
 
-packer.init({
+packer.init {
   max_jobs = 10,
   git = {
     clone_timeout = 10, -- timeout in seconds
   },
-})
+}
 -- general
 lvim.log.level = "debug"
 lvim.format_on_save = true
@@ -60,11 +60,14 @@ require "user.statusline"
 require "user.sniprun"
 require "user.builtin.nvimtree"
 require("user.lsp").config()
-require("user.auto-resize-window").setup()
 -- require("user.lualine").config()
 require("luasnip.loaders.from_snipmate").lazy_load()
 local treesitter = require "user.treesitter"
 treesitter.config()
 local plugins = require "user.plugins"
-lvim.plugins = concat_lists(plugins, treesitter.plugins, require "user.telescope.settings")
+local inject_sha = require("user.util.plugins").inject_snapshot_commit
+local snapshot_path = join_paths(get_config_dir(), "snapshots/default.json")
+lvim.plugins = concat_lists(inject_sha(plugins, snapshot_path), treesitter.plugins, require "user.telescope.settings")
 require("user.autocommands").config()
+-- I call this after because it appends to the existing Danielo autocmd group
+require("user.auto-resize-window").setup()
