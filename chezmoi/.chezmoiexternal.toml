@@ -39,5 +39,5 @@ exact = true
 # Direnv loads env variables from local directories
 [".local/bin/direnv"]
 type = "file"
-url = 'https://github.com/direnv/direnv/releases/download/{{( gitHubLatestRelease "direnv/direnv").TagName }}/direnv.linux-{{ .chezmoi.arch }}'
+url = 'https://github.com/direnv/direnv/releases/download/{{( gitHubLatestRelease "direnv/direnv").TagName }}/direnv.{{ .chezmoi.os }}-{{ .chezmoi.arch }}'
 executable = true
