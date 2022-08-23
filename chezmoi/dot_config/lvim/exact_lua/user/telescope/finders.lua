@@ -20,17 +20,17 @@ M.dotfiles = function()
 end
 
 M.find_siblings = function()
-  local opts = themes.get_dropdown { cwd = vim.fn.expandcmd "%:h" }
+  local opts = themes.get_dropdown { cwd = vim.fn.expandcmd "%:h", prompt_title = "Sibling files" }
   builtin.find_files(opts)
 end
 
 M.find_on_parent = function()
-  builtin.find_files(themes.vscode { cwd = vim.fn.expandcmd "%:h:h" })
+  builtin.find_files(themes.get_dropdown { cwd = vim.fn.expandcmd "%:h:h", prompt_title = "Parent files" })
 end
 
 function M.expand()
   ---@diagnostic disable-next-line: missing-parameter
-  return vim.fn.expand("<cword>")
+  return vim.fn.expand "<cword>"
 end
 
 -- utility function for the <C-f> find key
