@@ -13,7 +13,7 @@ local plugins = {
   require("user.neo_tree").plugin,
   require "user.goto_preview",
   require "user.tabout",
-  require "user.plugins.cmp",
+  require "user.plugins.cmp-config",
   require "user.plugins.neogen-config",
   require "user.plugins.biscuits",
   require "user.plugins.lsp-lines",
@@ -125,7 +125,6 @@ local plugins = {
   require "user.plugins.colorizer-config",
   {
     "petertriho/nvim-scrollbar",
-    commit = "ce0df69",
     config = function()
       require("scrollbar").setup()
     end,

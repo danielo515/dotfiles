@@ -51,14 +51,16 @@ lvim.builtin.cmp.formatting.source_names.rg = "(RG)"
 -- Return a list of plugins to install to insert in main plugins list
 return {
   { "lukas-reineke/cmp-rg" },
-  "ray-x/cmp-treesitter",
+  { "ray-x/cmp-treesitter" },
   { "andersevenrud/cmp-tmux" },
   {
     "David-Kunz/cmp-npm",
-    requires = {
-      "nvim-lua/plenary.nvim",
-    },
+    requires = { "nvim-lua/plenary.nvim" },
+    config = function()
+      require("cmp-npm").setup {}
+    end,
   },
   { "hrsh7th/cmp-emoji" },
   { "hrsh7th/cmp-cmdline", commit = "9c0e331" },
+  { "hrsh7th/cmp-nvim-lua", commit = "d276254e7198ab7d00f117e88e223b4bd8c02d21" },
 }
