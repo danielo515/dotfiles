@@ -3,4 +3,4 @@ git:
   autopush: false
 verbose: true
 data: 
-  dotfiles: {{ joinPath .chezmoi.sourceDir ".." }}
+  dotfiles: {{ joinPath .chezmoi.sourceDir }} # there is a bug on chezmoi, add ".." at the end of the template when fixed
