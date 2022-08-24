@@ -9,7 +9,7 @@ if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]
   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
 
-# -- Do jnot update oh-my-zsh, chezmoi will take care --
+# -- Do not update oh-my-zsh, chezmoi will take care --
 DISABLE_AUTO_UPDATE="true"
 # -- Import HELPER scripts -------------------------------------------------
 source "$DOTFILES/scripts/helpers/functions.sh"
