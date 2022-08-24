@@ -21,7 +21,6 @@ function M.config()
   }
   local lspManager = require "lvim.lsp.manager"
   lspManager.setup("graphql", graphql_lsp_opts)
-  -- require("lvim.lsp.manager").setup "marksman"
   lspManager.setup("jsonls", {
     settings = {
       json = {
@@ -30,11 +29,19 @@ function M.config()
       },
     },
   })
-  lspManager.setup("sumneko_lua", {
-    completion = {
-      autoRequire = true,
-    },
-  })
+  lspManager.setup(
+    "sumneko_lua",
+    {
+      settings = {
+        Lua = {
+          completion = {
+            autoRequire = true,
+            displayContext = 50,
+          },
+        },
+      },
+    }
+  )
   local setup_code_actions = require("lvim.lsp.null-ls.code_actions").setup
   local refactorin_opts = nls.builtins.code_actions.refactoring.with {
     filetypes = { "typescript", "javascript", "lua", "c", "cpp", "go", "python", "java", "php" },
