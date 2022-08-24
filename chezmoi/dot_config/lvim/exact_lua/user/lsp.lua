@@ -19,15 +19,20 @@ function M.config()
   local graphql_lsp_opts = {
     filetypes = { "graphql", "typescriptreact", "javascriptreact", "typescript" },
   }
-
-  require("lvim.lsp.manager").setup("graphql", graphql_lsp_opts)
+  local lspManager = require "lvim.lsp.manager"
+  lspManager.setup("graphql", graphql_lsp_opts)
   -- require("lvim.lsp.manager").setup "marksman"
-  require("lvim.lsp.manager").setup("jsonls", {
+  lspManager.setup("jsonls", {
     settings = {
       json = {
         schemas = require("schemastore").json.schemas(),
         validate = { enable = true },
       },
+    },
+  })
+  lspManager.setup("sumneko_lua", {
+    completion = {
+      autoRequire = true,
     },
   })
   local setup_code_actions = require("lvim.lsp.null-ls.code_actions").setup
