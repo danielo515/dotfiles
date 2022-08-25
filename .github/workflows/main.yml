@@ -43,7 +43,7 @@ jobs:
       - name: Install LunarVim stable
         timeout-minutes: 4
         run: |
-         LV_BRANCH=rolling bash <(curl -s https://raw.githubusercontent.com/lunarvim/lunarvim/rolling/utils/installer/install.sh)
+         LV_BRANCH=rolling bash <(curl -s https://raw.githubusercontent.com/lunarvim/lunarvim/rolling/utils/installer/install.sh) -s -- -y
       - name: run lvim!
         timeout-minutes: 1
         run: $HOME/.local/bin/lvim -Es -c 'autocmd User PackerComplete quitall' -c 'PackerSync'
