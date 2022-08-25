@@ -41,7 +41,7 @@ jobs:
           neovim: true
           version: v0.7.0
       - name: Install LunarVim stable
-        timeout-minutes: 4
+        timeout-minutes: 8
         run: |
          LV_BRANCH=rolling bash <(curl -s https://raw.githubusercontent.com/lunarvim/lunarvim/rolling/utils/installer/install.sh) -s -- -y
       - name: run lvim!
