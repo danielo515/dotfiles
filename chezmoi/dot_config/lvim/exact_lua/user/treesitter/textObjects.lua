@@ -1,4 +1,3 @@
----@diagnostic disable: deprecated
 local keymap = require "user.util.keymap"
 local M = {}
 
@@ -66,15 +65,15 @@ M.config = {
   },
 }
 
-local tso = require "nvim-treesitter.textobjects.move"
-local next = tso.goto_next_start
-local prev = tso.goto_previous_start
-
 --- Creates a new function that will try to jump to the next start of query, and
 --- if it does not find any, will try to jump to the previous
 ---@param query string the name of the capture group of the tree-sitter query you want to jump to
 local function smart_start(query)
   return function()
+    -- Sadly this are not available at startup time, so we need to require them at runtime
+    local tso = require "nvim-treesitter.textobjects.move"
+    local next = tso.goto_next_start
+    local prev = tso.goto_previous_start
     local curRow = unpack(vim.api.nvim_win_get_cursor(0))
     next(query)
     local newRow = unpack(vim.api.nvim_win_get_cursor(0))
