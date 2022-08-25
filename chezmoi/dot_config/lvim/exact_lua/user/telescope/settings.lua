@@ -10,7 +10,7 @@ local plugins = {
   { "nvim-telescope/telescope-packer.nvim" },
   "nvim-telescope/telescope-live-grep-args.nvim",
   "LinArcX/telescope-env.nvim",
-  "Ezechi3l/telescope-bashed.nvim",
+  -- "Ezechi3l/telescope-bashed.nvim",
   "nvim-telescope/telescope-symbols.nvim",
 }
 
@@ -27,16 +27,16 @@ vim.g.bashed_commands = {
   },
   chezmoi_diff = {
     { "chezmoi", "diff" },
-    "Run chezmoi diff and see the diffs"
+    "Run chezmoi diff and see the diffs",
   },
   chezmoi_apply = {
     { "chezmoi", "apply" },
-    "Run chezmoi diff and see the diffs"
+    "Run chezmoi diff and see the diffs",
   },
   normal_maps = {
     { ":nmap" },
-    "Show normal maps"
-  }
+    "Show normal maps",
+  },
 }
 
 lvim.builtin.telescope.path_display = "truncate"
@@ -44,7 +44,7 @@ lvim.builtin.telescope.path_display = "truncate"
 lvim.builtin.telescope.on_config_done = function(tele)
   -- we use protected-mode (pcall) just in case the plugin wasn't loaded yet.
   local _, actions = pcall(require, "telescope.actions")
-  local state = require("telescope.actions.state")
+  local state = require "telescope.actions.state"
   tele.load_extension "frecency"
   -- tele.load_extension("command_palette")
   tele.load_extension "notify"
@@ -54,7 +54,7 @@ lvim.builtin.telescope.on_config_done = function(tele)
   tele.load_extension "luasnip"
   tele.load_extension "live_grep_args"
   tele.load_extension "env"
-  tele.load_extension "bashed"
+  -- tele.load_extension "bashed"
   local opts = {
     -- Default mappings are handled below
     pickers = {
@@ -65,9 +65,9 @@ lvim.builtin.telescope.on_config_done = function(tele)
               local selection = state.get_selected_entry()
               actions.close(prompt_bufnr)
               vim.api.nvim_paste(selection.value, false, -1)
-            end
-          }
-        }
+            end,
+          },
+        },
       },
       lsp_workspace_symbols = {
         mappings = {
@@ -117,7 +117,7 @@ lvim.builtin.telescope.defaults.mappings = {
     ["<c-s>"] = user_telescope.multi_selection_open_split,
     ["<c-t>"] = user_telescope.multi_selection_open_tab,
     ["<C-X>"] = actions.delete_buffer,
-    ['<c-h>'] = "which_key"
+    ["<c-h>"] = "which_key",
   },
   -- for normal mode
   n = {
