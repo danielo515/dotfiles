@@ -6,7 +6,12 @@ local hide_in_width = function()
 end
 
 if gps_ok then
-  lvim.lsp.on_attach_callback = gps.attach
+  lvim.lsp.on_attach_callback = function(client, buf)
+    local disallowed_servers = { "html", "cssls", "ionide", "fsautocomplete" }
+    if client.server_capabilities.documentSymbolProvider and not vim.tbl_contains(disallowed_servers, client.name) then
+      gps.attach(client, buf)
+    end
+  end
 end
 
 local nvim_gps = function()

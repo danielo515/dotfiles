@@ -8,7 +8,7 @@ end
 
 ---Performs the real injection, recursively if needed
 ---@param plugins_list table
----@param default_sha1 object
+---@param default_sha1 table
 ---@return table
 local function inject_rec(plugins_list, default_sha1)
   local result = vim.tbl_map(function(spec)
