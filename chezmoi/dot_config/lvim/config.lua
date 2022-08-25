@@ -4,7 +4,7 @@ require "settings.gui"
 -- generic LSP settings
 lvim.lsp.installer.setup.automatic_installation = true
 -- Project
-lvim.builtin.project.patterns = { ".git", "package.json" }
+lvim.builtin.project.patterns = { ".git", "package.json", "config.lua" }
 -- Packer fix
 local packer = require "packer"
 
