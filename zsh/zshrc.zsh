@@ -39,7 +39,14 @@ ZSH_THEME="powerlevel10k/powerlevel10k"
 # -- ZSH Plugins ---------------------------------------------------------------
 plugins=(
   # zsh-nvm
-  git npm bower vi-mode pj zsh-autosuggestions)
+  git 
+  npm 
+  bower 
+  vi-mode 
+  pj 
+  zsh-navigation-tools
+  zsh-autosuggestions
+)
 if exists "virtualenvwrapper"; then plugins+=virtualenvwrapper; fi
 if exists "autojump"; then plugins+=autojump; fi
 plugins+=(
