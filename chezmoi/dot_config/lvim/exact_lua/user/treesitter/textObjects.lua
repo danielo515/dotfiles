@@ -69,15 +69,23 @@ M.config = {
 local tso = require "nvim-treesitter.textobjects.move"
 local next = tso.goto_next_start
 local prev = tso.goto_previous_start
-keymap.nmap(",f", function()
-  local curRow = unpack(vim.api.nvim_win_get_cursor(0))
-  next "@function.inner"
-  local newRow = unpack(vim.api.nvim_win_get_cursor(0))
-  if curRow == newRow then
-    print "No movement, trying backwards"
-    prev "@function.inner"
+
+--- Creates a new function that will try to jump to the next start of query, and
+--- if it does not find any, will try to jump to the previous
+---@param query string the name of the capture group of the tree-sitter query you want to jump to
+local function smart_start(query)
+  return function()
+    local curRow = unpack(vim.api.nvim_win_get_cursor(0))
+    next(query)
+    local newRow = unpack(vim.api.nvim_win_get_cursor(0))
+    if curRow == newRow then
+      print "No movement, trying backwards"
+      prev(query)
+    end
   end
-end, "Go to next function body")
+end
+
+keymap.nmap(",f", smart_start "@function.inner", "Go to next function body")
 
 -- treesitter
 M.plugin = {
