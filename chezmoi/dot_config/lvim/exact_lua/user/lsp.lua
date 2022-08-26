@@ -29,19 +29,24 @@ function M.config()
       },
     },
   })
-  lspManager.setup(
-    "sumneko_lua",
-    {
-      settings = {
-        Lua = {
-          completion = {
-            autoRequire = true,
-            displayContext = 50,
-          },
+  lspManager.setup("sumneko_lua", {
+    settings = {
+      Lua = {
+        runtime = {
+          version = "LuaJIT",
+          path = get_runtime_dir(),
+        },
+
+        diagnostics = {
+          globals = { "vim", "lvim", "packer_plugins", "fmt", "s", "i" },
+        },
+        completion = {
+          autoRequire = true,
+          displayContext = 50,
         },
       },
-    }
-  )
+    },
+  })
   local setup_code_actions = require("lvim.lsp.null-ls.code_actions").setup
   local refactorin_opts = nls.builtins.code_actions.refactoring.with {
     filetypes = { "typescript", "javascript", "lua", "c", "cpp", "go", "python", "java", "php" },
