@@ -35,6 +35,9 @@ lvim.keys.normal_mode["th"] = ":tabprev<cr>"
 -- I'm handling this myself in a separate plugin
 lvim.keys.normal_mode["gp"] = nil
 -- insert_mode key bindings
+lvim.keys.insert_mode["jj"] = false
+lvim.keys.insert_mode["kj"] = false
+lvim.keys.insert_mode["jk"] = false
 lvim.keys.insert_mode["<C-f>"] = lvim.keys.normal_mode["<C-F>"]
 lvim.keys.insert_mode["<C-y>"] =
   "<cmd>lua require('telescope').extensions.neoclip.default(require('telescope.themes').get_cursor())<cr>"
