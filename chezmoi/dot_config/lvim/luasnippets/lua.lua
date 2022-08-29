@@ -17,6 +17,6 @@ return {
   ),
   s(
     { trig = "fmt", dscr = "fmt snippet to use with snip" },
-    fmt([[ fmt( "{}" , {{ {} = i({}) }}) )]], { i(1, "key"), rep(1), i(2, "value") })
+    fmta([[ fmt( "{<>}" , { <> = i(<>,"default") }) )]], { i(1, "key"), rep(1), i(2, "1") })
   ),
 }

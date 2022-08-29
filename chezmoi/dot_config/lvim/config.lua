@@ -54,6 +54,7 @@ end
 
 vim.opt.cpoptions:append "y"
 
+require "user.builtin.luasnip"
 require "user.keymaps"
 require "user.which-key"
 require "user.telescope"
