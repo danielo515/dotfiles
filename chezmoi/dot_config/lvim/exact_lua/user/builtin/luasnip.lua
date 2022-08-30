@@ -12,5 +12,10 @@ luasnip.config.set_config {
         virt_text = { { "<-- snip", "BufferInactiveIndex" } },
       },
     },
+    [types.choiceNode] = {
+      active = {
+        virt_text = { { "<-- choice", "BufferInactiveIndex" } },
+      },
+    },
   },
 }
