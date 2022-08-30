@@ -1,3 +1,6 @@
+-- This two were remmoved by LVIM from the defualts, too bad
+lvim.keys.normal_mode["<S-l>"] = ":BufferLineCycleNext<CR>"
+lvim.keys.normal_mode["<S-h>"] = ":BufferLineCyclePrev<CR>"
 lvim.keys.normal_mode["<C-F>"] = "<cmd>lua require('user.telescope').grep_files()<cr>"
 -- lvim.keys.normal_mode["<C-P>"] = "<C-W><C-P>"
 lvim.keys.normal_mode["<S-X>"] = "<cmd>BufferKill<cr>"
@@ -39,6 +42,7 @@ lvim.keys.insert_mode["jj"] = false
 lvim.keys.insert_mode["kj"] = false
 lvim.keys.insert_mode["jk"] = false
 lvim.keys.insert_mode["<C-f>"] = lvim.keys.normal_mode["<C-F>"]
+lvim.keys.insert_mode["<C-u>"] = "<cmd>lua require('luasnip.extras.select_choice')()<cr>"
 lvim.keys.insert_mode["<C-y>"] =
   "<cmd>lua require('telescope').extensions.neoclip.default(require('telescope.themes').get_cursor())<cr>"
 lvim.keys.insert_mode["<C-s>"] = "<cmd>lua vim.lsp.buf.signature_help()<cr>"
