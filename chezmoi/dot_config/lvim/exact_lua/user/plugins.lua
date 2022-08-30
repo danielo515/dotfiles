@@ -16,7 +16,7 @@ local plugins = {
   require "user.plugins.cmp-config",
   require "user.plugins.neogen-config",
   require "user.plugins.biscuits",
-  require "user.plugins.lsp-lines",
+  -- require "user.plugins.lsp-lines",
   -- require "user.bookmarks",
   require "user.neozoom",
   require "user.incline",
@@ -44,7 +44,7 @@ local plugins = {
   -- some lsp diagnosis
   { "folke/trouble.nvim", cmd = "TroubleToggle" },
   -- better surround options
-  { "tpope/vim-surround", keys = { "c", "d", "y" } },
+  { "tpope/vim-surround" },
   "wellle/targets.vim",
   { "tpope/vim-repeat" },
   -- fuzzy jummp on the file

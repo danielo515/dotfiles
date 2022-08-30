@@ -44,7 +44,7 @@ lvim.keys.insert_mode["jk"] = false
 lvim.keys.insert_mode["<C-f>"] = lvim.keys.normal_mode["<C-F>"]
 lvim.keys.insert_mode["<C-u>"] = "<cmd>lua require('luasnip.extras.select_choice')()<cr>"
 lvim.keys.insert_mode["<C-y>"] =
-  "<cmd>lua require('telescope').extensions.neoclip.default(require('telescope.themes').get_cursor())<cr>"
+  "<cmd>lua require('telescope').extensions.neoclip.default(require('telescope.themes').get_ivy())<cr>"
 lvim.keys.insert_mode["<C-s>"] = "<cmd>lua vim.lsp.buf.signature_help()<cr>"
 lvim.keys.insert_mode["<A-s>"] =
   "<cmd>lua require('telescope').extensions.luasnip.luasnip(require('telescope.themes').get_cursor({}))<CR>"
@@ -67,11 +67,8 @@ end
 
 imap("<C-N>", "<cmd>lua require'cmp'.complete()<cr>", "trigger autocomplete in insert mode")
 
-local function nmap(lhs, rhs, desc)
-  vim.keymap.set("n", lhs, rhs, { silent = true, noremap = true, desc = desc })
-end
-
 local bind = require("user.util").bind
+local nmap = require("user.util.keymap").nmap
 nmap("<C-C>", bind(vim.api.nvim_win_close, 0, false), "Close current window")
 nmap("<C-P>", ":Telescope command_center<cr>", "Open command center")
 nmap(",h", ":Gitsigns next_hunk<cr>", "Next git hunk")

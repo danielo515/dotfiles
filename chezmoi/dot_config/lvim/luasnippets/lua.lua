@@ -1,5 +1,9 @@
 local ls = require "luasnip"
 local extras = require "luasnip.extras"
+local l = extras.lambda
+local f = ls.function_node
+local c = ls.choice_node
+local d = ls.dynamic_node
 local rep = extras.rep
 local fmta = require("luasnip.extras.fmt").fmta
 local t = ls.text_node
@@ -24,7 +28,14 @@ return {
   ),
   s(
     { trig = "fmt", dscr = "fmt snippet to use with snip" },
-    fmta([[ fmt( "{<>}" , { <> = i(<>,"default") }) )]], { i(1, "key"), rep(1), i(2, "1") })
+    fmta(
+      [[ 
+    fmt( "{<>}" , { 
+      <> = i(<>,"default") 
+      })
+    ]],
+      { i(1, "key"), rep(1), i(2, "1") }
+    )
   ),
   s({ trig = "(%w+)tmap", dscr = "Wrap current table with a map method", regTrig = true }, {
     t "vim.tbl_map(",
@@ -32,4 +43,12 @@ return {
     i(0),
     t ")",
   }),
+  s(
+    { trig = "reqm", dscr = "Require a module but extract a method" },
+    fmt("local {} = require'{}'.{}", {
+      i(1, "method"),
+      c(2, { i(nil, ""), sn(nil, l("user.util." .. l._1, ai[1])) }),
+      rep(1),
+    })
+  ),
 }
