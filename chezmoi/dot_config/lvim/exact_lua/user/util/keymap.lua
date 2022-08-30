@@ -14,7 +14,16 @@ local function imap(lhs, rhs, desc)
   vim.keymap.set({ "i", "s" }, lhs, rhs, { silent = true, noremap = true, desc = desc })
 end
 
+--- Creates a key bind in visual mode exclusively (not select to avoid problems with snippet engines)
+---@param lhs string The key to assign
+---@param rhs string | function the action to execute
+---@param desc string the keymap human readabble description
+local function vmap(lhs, rhs, desc)
+  vim.keymap.set("x", lhs, rhs, { silent = true, noremap = true, desc = desc })
+end
+
 return {
   nmap = nmap,
   imap = imap,
+  vmap = vmap,
 }
