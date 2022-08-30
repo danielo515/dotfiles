@@ -20,7 +20,7 @@ local plugins = {
   -- require "user.bookmarks",
   require "user.neozoom",
   require "user.incline",
-  -- require "user.vgit",
+  -- require "user.plugins.vgit",
   require "user.colorbuddy",
   require "user.plugins.primeagen-refactoring",
   require "user.plugins.vim-firestore",
@@ -28,6 +28,7 @@ local plugins = {
   -- require "user.treesitter-statusline",
   require "user.plugins.pomodoro-config",
   require "user.plugins.neogit-config",
+  require "user.plugins.git-conflict-config",
   -- Awesome diff view
   require "user.diffview",
   require "user.plugins.cheat",
