@@ -11,14 +11,16 @@ function Yank_full_file_name()
 end
 
 lvim.builtin.which_key.setup.plugins.presets = {
-  operators = false, -- adds help for operators like d, y, ...
-  motions = false, -- adds help for motions
+  operators = true, -- adds help for operators like d, y, ...
+  motions = true, -- adds help for motions
   text_objects = true, -- help for text objects triggered after entering an operator
   windows = true, -- default bindings on <c-w>
   nav = true, -- misc bindings to work with windows
   z = true, -- bindings for folds, spelling and others prefixed with z
   g = true, -- bindings for prefixed with g
 }
+
+lvim.builtin.which_key.setup.hidden = { "<silent>", "<cmd>", "<Cmd>", "<CR>", "call", "lua", "^:", "^ ", "require'" } -- hide mapping boilerplate
 
 lvim.builtin.which_key.mappings.q = nil
 
@@ -78,24 +80,27 @@ local whichConfig = {
   },
   -- file section
   f = {
+    name = "Files",
     f = { require("lvim.core.telescope.custom-finders").find_project_files, "Find project files" },
     r = { "<cmd>Telescope frecency <cr>", "Browse recent files" },
     b = { "<cmd>Telescope file_browser<cr>", "Browse file tree cool" },
     y = { "<cmd>lua Yank_file_name()<CR>", "Yank current file path" },
     Y = { "<cmd>lua Yank_full_file_name()<CR>", "Yank full file path" },
   },
+  ["?"] = { "<cmd>Cheat<CR>", " Cheat.sh" },
 }
 
-lvim.builtin.which_key.mappings["?"] = { "<cmd>Cheat<CR>", " Cheat.sh" }
 -- merge our custom config with the one from lvim
 local lv_which = lvim.builtin.which_key.mappings
 lvim.builtin.which_key.mappings = vim.tbl_deep_extend("force", lv_which, whichConfig)
 
 lvim.builtin.which_key.on_config_done = function(which)
+  local registerOpts = { prefix = "<leader>" }
+  which.register(whichConfig, registerOpts)
   -- Yes, it is possible to have both it as a namespace AND a single key-map
   which.register(
     { ["f"] = { require("lvim.core.telescope.custom-finders").find_project_files, "Find File" } },
-    { prefix = "<leader>" }
+    registerOpts
   )
   vim.notify "Reloaded wich keys"
 end
