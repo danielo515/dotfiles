@@ -15,7 +15,7 @@ M.plugin = {
 
     local whk_status, whk = pcall(require, "which-key")
     if not whk_status then
-      vim.notify("Could not load which key for harpoon", "warn")
+      vim.notify("Could not load which key for harpoon", vim.log.levels.WARN)
       return
     end
     whk.register {

@@ -57,7 +57,7 @@ vim.go.showmode = true
 
 require "user.builtin.luasnip"
 require "user.keymaps"
-require "user.which-key"
+require "user.builtin.which-key"
 require "user.telescope"
 require "user.statusline"
 require "user.sniprun"

@@ -20,7 +20,8 @@ lvim.builtin.which_key.setup.plugins.presets = {
   g = true, -- bindings for prefixed with g
 }
 
-lvim.builtin.which_key.setup.hidden = { "<silent>", "<cmd>", "<Cmd>", "<CR>", "call", "lua", "^:", "^ ", "require'" } -- hide mapping boilerplate
+lvim.builtin.which_key.setup.hidden =
+  { "<silent>", "<cmd>", "<Cmd>", "<CR>", "call", "lua", "^:", "^ ", "require'[^']*'." } -- hide mapping boilerplate
 
 lvim.builtin.which_key.mappings.q = nil
 
