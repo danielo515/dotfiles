@@ -23,6 +23,8 @@ lvim.builtin.which_key.setup.plugins.presets = {
 lvim.builtin.which_key.setup.hidden =
   { "<silent>", "<cmd>", "<Cmd>", "<CR>", "call", "lua", "^:", "^ ", "require'[^']*'." } -- hide mapping boilerplate
 
+lvim.builtin.which_key.setup.triggers_blacklist.v = nil
+
 lvim.builtin.which_key.mappings.q = nil
 
 -- This config will be merged with the one that lvim has by default
