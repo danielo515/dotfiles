@@ -53,6 +53,7 @@ for k, v in pairs(options) do
 end
 
 vim.opt.cpoptions:append "y"
+vim.go.showmode = true
 
 require "user.builtin.luasnip"
 require "user.keymaps"
