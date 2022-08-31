@@ -69,8 +69,8 @@ local treesitter = require "user.treesitter"
 treesitter.config()
 local plugins = require "user.plugins"
 local inject_sha = require("user.util.plugins").inject_snapshot_commit
-local snapshot_path = join_paths(get_config_dir(), "snapshots/default.json")
-lvim.plugins = concat_lists(inject_sha(plugins, snapshot_path), treesitter.plugins, require "user.telescope.settings")
+local snapshot_path = join_paths(get_config_dir(), "snapshots", "default.json")
+lvim.plugins = inject_sha(concat_lists(plugins, treesitter.plugins, require "user.telescope.settings"), snapshot_path)
 require("user.autocommands").config()
 -- I call this after because it appends to the existing Danielo autocmd group
 require("user.auto-resize-window").setup()
