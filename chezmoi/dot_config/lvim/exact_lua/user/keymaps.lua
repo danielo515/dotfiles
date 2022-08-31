@@ -29,9 +29,7 @@ lvim.keys.normal_mode["ml"] = "dd<C-W><C-l>p<C-w><C-h>"
 lvim.keys.normal_mode[",n"] = "<cmd>lua vim.diagnostic.goto_next()<cr>"
 lvim.keys.normal_mode["+"] = "<cmd>3wincmd > <cr>"
 lvim.keys.normal_mode["-"] = "<cmd>3wincmd < <cr>"
--- lvim.keys.visual_mode["p"] = [["_dP]] -- avoid override when pasting over seleted text
 vmap("p", '"_dp', "Paste without saving to clipboard")
-
 -- Tab bindings
 lvim.keys.normal_mode["tk"] = ":tabclose<cr>"
 lvim.keys.normal_mode["tn"] = ":tabnew<cr>"

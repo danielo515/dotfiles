@@ -47,8 +47,16 @@ return {
     { trig = "reqm", dscr = "Require a module but extract a method" },
     fmt("local {} = require'{}'.{}", {
       i(1, "method"),
-      c(2, { i(nil, ""), sn(nil, l("user.util." .. l._1, ai[1])) }),
+      c(2, { t "", sn(nil, dl(nil, "user.util." .. l._1, ai[1])) }),
       rep(1),
     })
   ),
-}
+},
+  {
+    -- Auto snippets, note the comma above
+
+    s(
+      { trig = "(%w+)__", regTrig = true, dscr = "automatically repeat what we have assigned to itself" },
+      { l(l.CAPTURE1), t " = ", l(l.CAPTURE1, {}) }
+    ),
+  }
