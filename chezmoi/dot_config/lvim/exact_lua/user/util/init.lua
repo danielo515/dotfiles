@@ -19,11 +19,7 @@ function M.bind(fn, ...)
 end
 
 function M.copy_messages_to_clipboard(number)
-  local cmd = [[
-redir @*
-%smessages
-redir END
-]]
+  local cmd = [[ let @* = execute('%smessages') ]]
   number = number or ""
   vim.cmd(string.format(cmd, number))
   vim.notify(":messages copied to the clipboard", "info")
@@ -33,7 +29,9 @@ local Ok, err = pcall(function()
   local bind_command = require("legendary").bind_command
   bind_command {
     ":CopyMessages",
-    M.copy_messages_to_clipboard,
+    function()
+      M.copy_messages_to_clipboard()
+    end,
     description = "Copy the output of :messages to OS clipboard",
   }
   bind_command {
