@@ -47,14 +47,6 @@ function M.grep_files(opts)
     search_dirs = { cwd },
   }
 
-  vim.cmd [[
-    function! Cword(A, L, P)
-        let word = expand("<cword>")
-        echo word
-        return word
-    endfunction
-]]
-
   opts = vim.tbl_deep_extend("force", theme_opts, opts)
   local currentWord = vim.fn.expand "<cword>"
   vim.ui.input({
