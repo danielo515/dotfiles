@@ -28,9 +28,11 @@ M.find_on_parent = function()
   builtin.find_files(themes.get_dropdown { cwd = vim.fn.expandcmd "%:h:h", prompt_title = "Parent files" })
 end
 
-function M.expand()
+function M.expand(word)
   ---@diagnostic disable-next-line: missing-parameter
-  return vim.fn.expand "<cword>"
+  return function()
+    return word
+  end
 end
 
 -- utility function for the <C-f> find key
@@ -54,8 +56,9 @@ function M.grep_files(opts)
 ]]
 
   opts = vim.tbl_deep_extend("force", theme_opts, opts)
+  local currentWord = vim.fn.expand "<cword>"
   vim.ui.input({
-    completion = "custom,v:lua.require'user.telescope.finders'.expand",
+    completion = string.format("custom,v:lua.require'user.telescope.finders'.expand('%s')", currentWord),
   }, function(text)
     builtin.grep_string(vim.tbl_extend("force", opts, { search = text }))
   end)
