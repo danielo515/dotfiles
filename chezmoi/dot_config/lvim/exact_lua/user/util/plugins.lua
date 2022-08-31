@@ -42,6 +42,22 @@ local function inject_snapshot_commit(plugins_list, snapshot_path)
   end
   return inject_rec(plugins_list, default_sha1)
 end
+
+---Takes a packer snapshot to the provided path.
+-- if no path is provided, then it defaults to current lunarvim config directory and
+-- the file is named packer_lock.json
+local function take_snapshot(snapshot_path)
+  local ok, packer = pcall(require, "packer")
+  if not ok then
+    return
+  end
+  snapshot_path = snapshot_path or join_paths(get_config_dir(), "packer_lock.json")
+  packer.snapshot(snapshot_path)
+  return snapshot_path
+end
+
+-- Exports
 return {
   inject_snapshot_commit = inject_snapshot_commit,
+  take_snapshot = take_snapshot,
 }

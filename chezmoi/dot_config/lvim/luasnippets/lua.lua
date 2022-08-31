@@ -23,7 +23,7 @@ return {
     { trig = "snip", dscr = "Create lua snippet" },
     fmt(
       [[ s({{ trig = "{trig}", dscr = "{dscr}", {regTrig} }}, {} )]],
-      { trig = i(1), dscr = i(2, "description"), regTrig = c(3, { t "", t "regTrig=true" }), i(0) }
+      { trig = i(1), dscr = i(2, "description"), regTrig = c(3, { t "regTrig=false", t "regTrig=true" }), i(0) }
     )
   ),
   s(
