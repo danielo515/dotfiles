@@ -12,7 +12,7 @@ local plugins = {
   require("user.hlslens").plugin,
   require("user.neo_tree").plugin,
   require "user.goto_preview",
-  require "user.tabout",
+  -- require "user.tabout",
   require "user.plugins.cmp-config",
   require "user.plugins.neogen-config",
   require "user.plugins.biscuits",
