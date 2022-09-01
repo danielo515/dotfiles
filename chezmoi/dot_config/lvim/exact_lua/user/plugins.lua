@@ -13,6 +13,7 @@ local plugins = {
   require("user.neo_tree").plugin,
   require "user.goto_preview",
   -- require "user.tabout",
+  require "user.plugins.twilight-config",
   require "user.plugins.cmp-config",
   require "user.plugins.neogen-config",
   require "user.plugins.biscuits",
