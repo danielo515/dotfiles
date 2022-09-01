@@ -43,8 +43,8 @@ lvim.keys.insert_mode["kj"] = false
 lvim.keys.insert_mode["jk"] = false
 lvim.keys.insert_mode["<C-f>"] = lvim.keys.normal_mode["<C-F>"]
 lvim.keys.insert_mode["<C-u>"] = "<cmd>lua require('luasnip.extras.select_choice')()<cr>"
-lvim.keys.insert_mode["<C-y>"] =
-  "<cmd>lua require('telescope').extensions.neoclip.default(require('telescope.themes').get_ivy())<cr>"
+-- lvim.keys.insert_mode["<C-y>"] =
+--   "<cmd>lua require('telescope').extensions.neoclip.default(require('telescope.themes').get_ivy())<cr>"
 lvim.keys.insert_mode["<C-s>"] = "<cmd>lua vim.lsp.buf.signature_help()<cr>"
 lvim.keys.insert_mode["<A-s>"] =
   "<cmd>lua require('telescope').extensions.luasnip.luasnip(require('telescope.themes').get_cursor({}))<CR>"
