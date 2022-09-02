@@ -1,6 +1,8 @@
 local async = require "plenary.async"
 local Job = require "plenary.job"
 local util = require "semgrep.util"
+local config = require "semgrep.config"
+local saved_queries = config.saved_queries
 
 ---@alias ResultCb fun(result:SemgrepResult[]):any
 
@@ -42,34 +44,15 @@ local function execute_semgrep(pattern, cb)
     :start()
 end
 
----@alias SemgrepResult { path: string, extra: { lines: string }, start: { line: number, col: number }}
----@param auto_open boolean
----@return ResultCb
-local function show_in_qflist(auto_open)
-  ---@param results SemgrepResult[]
-  return function(results)
-    local qf_list = vim.tbl_map(function(
-      e --[[@as SemgrepResult]]
-    )
-      return { filename = e.path, text = e.extra.lines, lnum = e.start.line, col = e.start.col }
-    end, results)
-    ---@diagnostic disable-next-line: param-type-mismatch
-    vim.fn.setqflist(qf_list, "r")
-    if auto_open then
-      vim.cmd "copen"
-    end
-  end
-end
-
-local function test()
-  vim.cmd [[messages clear]]
-  execute_semgrep("if not $X then $FUN(...)", show_in_qflist(true))
+local function complete_user_input()
+  vim.pretty_print(saved_queries)
+  return saved_queries
 end
 
 --- Interacitve method
 ---@param opts { show_method: fun(result:SemgrepResult[]):any } show method must be already configured, ready to be called
 local function interactive(opts)
-  vim.ui.input({}, function(user_input)
+  vim.ui.input({ completion = "customlist,v:lua.require'semgrep.semgrep'.complete_user_input" }, function(user_input)
     if not user_input then
       util.notify("Got empty query, will not execute sempgrep", "WARN")
       return
@@ -79,8 +62,7 @@ local function interactive(opts)
 end
 
 return {
-  test = test,
-  show_in_qflist = show_in_qflist,
   execute_semgrep = execute_semgrep,
   interactive = interactive,
+  complete_user_input = complete_user_input,
 }

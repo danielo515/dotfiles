@@ -1,4 +1,5 @@
 local S = require "semgrep.semgrep"
+local sm = require "semgrep.show_methods"
 local util = require "semgrep.util"
 local M = {}
 
@@ -13,12 +14,8 @@ local default_options = {
 
 ---@type { [ShowMethod]: function }
 local show_methods = {
-  quickfix = S.show_in_qflist,
-  telescope = function()
-    return function()
-      util.notify("Not yet implemented", "INFO")
-    end
-  end,
+  quickfix = sm.show_in_qflist,
+  telescope = sm.show_in_telescope,
 }
 
 --- Main search method. Opens the UI and asks for user input
