@@ -66,7 +66,6 @@ function M.register_commands(user_commands)
     completion_table[name] = complete
     local custom_complete = [[customlist,v:lua.require'semgrep.util'.complete]]
     local options = { complete = custom_complete, desc = desc, nargs = nargs or 0, force = true }
-    vim.pretty_print(options)
     vim.api.nvim_create_user_command(name, cmd, options)
   end
 end

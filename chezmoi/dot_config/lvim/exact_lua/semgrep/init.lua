@@ -15,7 +15,9 @@ local default_options = {
 local show_methods = {
   quickfix = S.show_in_qflist,
   telescope = function()
-    util.notify("Not yet implemented", "INFO")
+    return function()
+      util.notify("Not yet implemented", "INFO")
+    end
   end,
 }
 

@@ -54,7 +54,7 @@ local function show_in_qflist(auto_open)
       return { filename = e.path, text = e.extra.lines, lnum = e.start.line, col = e.start.col }
     end, results)
     ---@diagnostic disable-next-line: param-type-mismatch
-    vim.fn.setqflist(qf_list, "r", { title = "Semgrep results" })
+    vim.fn.setqflist(qf_list, "r")
     if auto_open then
       vim.cmd "copen"
     end
@@ -69,13 +69,12 @@ end
 --- Interacitve method
 ---@param opts { show_method: fun(result:SemgrepResult[]):any } show method must be already configured, ready to be called
 local function interactive(opts)
-  local o = util.defaults({ show_method = show_in_qflist }, opts)
   vim.ui.input({}, function(user_input)
     if not user_input then
       util.notify("Got empty query, will not execute sempgrep", "WARN")
       return
     end
-    execute_semgrep(user_input, o.show_results)
+    execute_semgrep(user_input, opts.show_method)
   end)
 end
 
