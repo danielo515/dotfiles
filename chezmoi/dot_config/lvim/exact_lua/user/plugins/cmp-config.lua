@@ -44,6 +44,7 @@ local cmdlineOk = pcall(function()
     },
   })
 end)
+--#region builtin overrides
 -- This works for me. To avoid future problems with Lvim updating this, i will be overriding it anyway
 lvim.builtin.cmp.mapping["<CR>"] = cmp.mapping(function(fallback)
   if cmp.visible() then
@@ -69,6 +70,7 @@ end
 lvim.builtin.cmp.window.completion.max_height = 80
 vim.opt.pumheight = 0 -- use all available space
 lvim.builtin.cmp.formatting.source_names.rg = "(RG)"
+--#endregion
 -- Return a list of plugins to install to insert in main plugins list
 return {
   { "lukas-reineke/cmp-rg" },

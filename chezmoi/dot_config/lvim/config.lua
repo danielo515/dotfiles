@@ -62,6 +62,7 @@ require "user.telescope"
 require "user.statusline"
 require "user.sniprun"
 require "user.builtin.nvimtree"
+require "semgrep"
 require("user.lsp").config()
 -- require("user.lualine").config()
 require("luasnip.loaders.from_snipmate").lazy_load()
