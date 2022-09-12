@@ -41,7 +41,6 @@ local plugins = {
       require "user.syntax_tree_surfer"
     end,
   },
-  -- require("user.lspsaga").plugin,
   -- some lsp diagnosis
   { "folke/trouble.nvim", cmd = "TroubleToggle" },
   -- better surround options
