@@ -6,3 +6,4 @@
 *.local.*
 secrets
 chezmoi/Brewfile.lock.json
+zsh/custom/plugins
