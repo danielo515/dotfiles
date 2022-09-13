@@ -2,7 +2,9 @@ local concat_lists = require("user.util").concat_lists
 -- Settings related to GUI clients like neovide
 require "settings.gui"
 -- generic LSP settings
-lvim.lsp.installer.setup.automatic_installation = true
+lvim.lsp.installer.setup.automatic_servers_installation = true
+-- Required for ocaml-lsp TODO: do not use hardcoded path
+vim.opt.rtp:append "/Users/danielo/.opam/default/share/ocp-indent/vim"
 -- Project
 lvim.builtin.project.patterns = { ".git", "package.json", "config.lua" }
 -- Packer fix

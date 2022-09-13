@@ -29,6 +29,7 @@ function M.config()
       },
     },
   })
+  lspManager.setup "reason_ls"
   -- lspManager.setup("sumneko_lua", {
   --   settings = {
   --     Lua = {

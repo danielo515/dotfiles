@@ -21,6 +21,7 @@ return {
           eslintrc = "json",
           prettierrc = "json",
           mdx = "markdown",
+          re = "reason",
         },
       },
     }
