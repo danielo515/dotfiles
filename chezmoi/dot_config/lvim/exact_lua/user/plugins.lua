@@ -163,6 +163,20 @@ local plugins = {
   { "tversteeg/registers.nvim", commit = "949213e" },
   -- Adds hop-like visual hints for selecting using treesitter
   "mfussenegger/nvim-ts-hint-textobject",
-  { "felipec/vim-sanegx", event = "BufRead" },
+  { "felipec/vim-sanegx" },
+  --#region rescript
+  {
+    "reasonml-editor/vim-reason-plus",
+    -- Not sure if this will work fine
+    config = function()
+      vim.g.LanguageClient_serverCommands = {
+        reason = { "reason-language-server" },
+      }
+    end,
+  },
+  {
+    "nkrkv/nvim-treesitter-rescript",
+  },
+  --#endregion Rescrtip
 }
 return plugins

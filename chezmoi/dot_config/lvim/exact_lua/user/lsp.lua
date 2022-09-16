@@ -5,6 +5,9 @@ if not status_ok then
   return
 end
 
+lvim.lsp.automatic_configuration.skipped_filetypes = { "reason", "rescript" }
+-- lvim.lsp.automatic_configuration.skipped_servers = { "rescriptls" }
+
 function M.config()
   local formatters = require "lvim.lsp.null-ls.formatters"
   formatters.setup {
@@ -29,7 +32,16 @@ function M.config()
       },
     },
   })
-  lspManager.setup "reason_ls"
+  -- lspManager.setup "reason_ls"
+  -- This may be the only thing you need to work with Tella rescript
+  lspManager.setup("rescriptls", {
+    cmd = {
+      "node",
+      "/Users/danielo/.config/coc/extensions/rescript-vscode-1.2.1/extension/server/out/server.js",
+      "--stdio",
+    },
+    filetypes = { "reason", "rescript" },
+  })
   -- lspManager.setup("sumneko_lua", {
   --   settings = {
   --     Lua = {
