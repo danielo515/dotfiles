@@ -206,7 +206,9 @@ Plug 'plasticboy/vim-markdown',           { 'for': 'markdown' }
 " Docker
 Plug 'ekalinin/dockerfile.vim'
 Plug 'jparise/vim-graphql'
-
+" Tella
+Plug 'rescript-lang/vim-rescript'
+Plug 'reasonml-editor/vim-reason-plus'
 call plug#end()
 " Load plugin configurations {{{2
 " For some reason, a few plugins seem to have config options that cannot be

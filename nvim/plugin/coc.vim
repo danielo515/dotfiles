@@ -25,7 +25,6 @@ let g:coc_global_extensions = ['coc-tsserver',
                               \'https://github.com/xabikos/vscode-javascript',
                               \'https://github.com/danielo515/vscode-node-snippets',
                               \'https://github.com/andys8/vscode-jest-snippets',
-                              \'https://github.com/dsznajder/vscode-es7-javascript-react-snippets',
                               \]
 
 
@@ -68,12 +67,30 @@ set signcolumn=yes
 "==============================
 " Use tab for trigger completion with characters ahead and navigate.
 " Use command ':verbose imap <tab>' to make sure tab is not mapped by other plugin.
-inoremap <silent><expr> <TAB>
-      \ pumvisible() ? "\<C-n>" :
-      \ <SID>check_back_space() ? "\<TAB>" :
-      \ coc#refresh()
-inoremap <expr><C-j> pumvisible() ? "\<C-p>" : "\<C-h>"
-inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
+" inoremap <silent><expr> <TAB>
+"       \ pumvisible() ? "\<C-n>" :
+"       \ <SID>check_back_space() ? "\<TAB>" :
+"       \ coc#refresh()
+" inoremap <expr><C-j> pumvisible() ? "\<C-p>" : "\<C-h>"
+" inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
+" Michiel START
+" Use K to show documentation in preview window
+nmap <silent> gd <Plug>(coc-definition)
+nmap <silent> gy <Plug>(coc-type-definition)
+nmap <silent> gi <Plug>(coc-implementation)
+nmap <silent> gr <Plug>(coc-references)
+function! s:show_documentation()
+ if (index(['vim','help'], &filetype) >= 0)
+   execute 'h '.expand('<cword>')
+ else
+   call CocActionAsync('doHover')
+ endif
+endfunction
+" Remap list navigation to normal J and K
+inoremap <expr> <C-j> pumvisible() ? "\<C-n>" : "\<C-j>"
+inoremap <expr> <C-k> pumvisible() ? "\<C-p>" : "\<C-k>"
+nnoremap <silent> <S-K> :call <SID>show_documentation()<CR>
+" END
 
 function! s:check_back_space() abort
   let col = col('.') - 1
