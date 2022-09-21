@@ -29,7 +29,7 @@ lvim.keys.normal_mode["ml"] = "dd<C-W><C-l>p<C-w><C-h>"
 lvim.keys.normal_mode[",n"] = "<cmd>lua vim.diagnostic.goto_next()<cr>"
 lvim.keys.normal_mode["+"] = "<cmd>3wincmd > <cr>"
 lvim.keys.normal_mode["-"] = "<cmd>3wincmd < <cr>"
-vmap("p", '"_dp', "Paste without saving to clipboard")
+vmap("p", '"_dP', "Paste without saving to clipboard")
 -- Tab bindings
 lvim.keys.normal_mode["tk"] = ":tabclose<cr>"
 lvim.keys.normal_mode["tn"] = ":tabnew<cr>"
