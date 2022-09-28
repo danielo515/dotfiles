@@ -67,6 +67,7 @@ local nmap = require("user.util.keymap").nmap
 nmap("<C-C>", bind(vim.api.nvim_win_close, 0, false), "Close current window")
 nmap("<C-P>", ":Telescope command_center<cr>", "Open command center")
 nmap(",h", ":Gitsigns next_hunk<cr>", "Next git hunk")
+nmap(",c", ":cNext!<cr>", "Next item in quickfix")
 
 -- An awesome method to jump to windows
 local picker = require "window-picker"
