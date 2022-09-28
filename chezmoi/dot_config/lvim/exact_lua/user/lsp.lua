@@ -1,5 +1,7 @@
 local M = {}
 
+lvim.lsp.null_ls.setup.debug = true
+
 local status_ok, nls = pcall(require, "null-ls")
 if not status_ok then
   return
@@ -17,7 +19,7 @@ function M.config()
 
   local linters = require "lvim.lsp.null-ls.linters"
   linters.setup {
-    { command = "eslint", filetypes = { "typescript", "typescriptreact" } },
+    { command = "eslint_d", filetypes = { "typescript", "typescriptreact", "javascript", "javascriptreact" } },
   }
   local graphql_lsp_opts = {
     filetypes = { "graphql", "typescriptreact", "javascriptreact", "typescript" },
