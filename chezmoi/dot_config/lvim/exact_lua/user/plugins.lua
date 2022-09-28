@@ -177,6 +177,9 @@ local plugins = {
   {
     "nkrkv/nvim-treesitter-rescript",
   },
+  {
+    "~/tella/nvim-treesitter-reason",
+  },
   --#endregion Rescrtip
 }
 return plugins
