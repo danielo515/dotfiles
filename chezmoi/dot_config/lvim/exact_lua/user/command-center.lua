@@ -3,11 +3,12 @@ local M = {}
 local util = require "user.util"
 -- Add all available commands to command center
 local function addAllCommands()
-  local raw = vim.api.nvim_get_commands({})
+  local raw = vim.api.nvim_get_commands {}
   local commands = vim.tbl_map(function(command)
     return {
       description = command.name,
-      cmd = string.format('<cmd>%s<cr>', command.name)
+      -- If the command does not require args then do add <cr> at the end, but if not, just populate the coommand prompt
+      cmd = string.format("<cmd>%s%s", command.name, command.nargs == "0" and "<CR>" or ""),
     }
   end, raw)
   local plain_table = vim.tbl_values(commands)
