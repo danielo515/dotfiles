@@ -39,7 +39,7 @@
     "commit": "da7461b"
   },
   "command-center.nvim": {
-    "commit": "81a2200"
+    "commit": "7726c467e24a642dce15039a58b5038c5e733ba6"
   },
   "telescope-packer.nvim": {
     "commit": "56f3255"
@@ -312,7 +312,7 @@
     "commit": "6236642"
   },
   "legendary.nvim": {
-    "commit": "b0bcc76"
+    "commit": "59309190f3c80a41160e29d644a15ceb5c64e239"
   },
   "vim-firestore": {
     "commit": "e53fe9d"
