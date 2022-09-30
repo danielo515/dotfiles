@@ -66,7 +66,7 @@ function M.config()
   local refactorin_opts = nls.builtins.code_actions.refactoring.with {
     filetypes = { "typescript", "javascript", "lua", "c", "cpp", "go", "python", "java", "php" },
   }
-  setup_code_actions { refactorin_opts }
+  setup_code_actions { refactorin_opts, nls.builtins.code_actions.gitsigns }
 end
 
 return M
