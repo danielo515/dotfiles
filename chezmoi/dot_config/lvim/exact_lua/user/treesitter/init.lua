@@ -41,7 +41,6 @@ M.plugins = {
   },
   {
     "nvim-treesitter/playground",
-    cmd = "TSPlaygroundToggle",
   },
   -- I'm not interested in the refactors, only in the navigations
   "nvim-treesitter/nvim-treesitter-refactor",
