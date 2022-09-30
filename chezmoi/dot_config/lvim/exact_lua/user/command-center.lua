@@ -5,10 +5,13 @@ local util = require "user.util"
 local function addAllCommands()
   local raw = vim.api.nvim_get_commands {}
   local commands = vim.tbl_map(function(command)
+    local has_args = command.nargs == "0"
+    local prefix = has_args and ":" or "<CMD>"
+    local suffix = has_args and "" or "<CR>"
     return {
       description = command.name,
       -- If the command does not require args then do add <cr> at the end, but if not, just populate the coommand prompt
-      cmd = string.format("<cmd>%s%s", command.name, command.nargs == "0" and "<CR>" or ""),
+      cmd = string.format("%s%s%s", prefix, command.name, suffix),
     }
   end, raw)
   local plain_table = vim.tbl_values(commands)
