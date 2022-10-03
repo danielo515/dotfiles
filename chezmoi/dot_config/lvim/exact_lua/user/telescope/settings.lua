@@ -10,33 +10,7 @@ local plugins = {
   { "nvim-telescope/telescope-packer.nvim" },
   "nvim-telescope/telescope-live-grep-args.nvim",
   "LinArcX/telescope-env.nvim",
-  -- "Ezechi3l/telescope-bashed.nvim",
   "nvim-telescope/telescope-symbols.nvim",
-}
-
-vim.g.bashed_commands = {
-  -- This is an example for now
-  http = {
-    { "fd", "-t", "f", "-e", "http" },
-    { ":e %s", 'lua require("rest-nvim").run()' },
-    "List all http files inside the project to run rest.nvim on one",
-  },
-  npm_ls = {
-    { "npm", "ls" },
-    "List npm packages and filter them in telescope",
-  },
-  chezmoi_diff = {
-    { "chezmoi", "diff" },
-    "Run chezmoi diff and see the diffs",
-  },
-  chezmoi_apply = {
-    { "chezmoi", "apply" },
-    "Run chezmoi diff and see the diffs",
-  },
-  normal_maps = {
-    { ":nmap" },
-    "Show normal maps",
-  },
 }
 
 lvim.builtin.telescope.path_display = "truncate"
@@ -54,7 +28,6 @@ lvim.builtin.telescope.on_config_done = function(tele)
   tele.load_extension "luasnip"
   tele.load_extension "live_grep_args"
   tele.load_extension "env"
-  -- tele.load_extension "bashed"
   local opts = {
     -- Default mappings are handled below
     pickers = {
@@ -84,6 +57,13 @@ lvim.builtin.telescope.on_config_done = function(tele)
         mappings = {
           i = {
             ["<c-d>"] = actions.delete_buffer,
+          },
+        },
+      },
+      live_grep = {
+        mappings = {
+          i = {
+            ["<c-f>"] = actions.to_fuzzy_refine,
           },
         },
       },
