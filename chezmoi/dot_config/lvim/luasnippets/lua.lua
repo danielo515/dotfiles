@@ -1,5 +1,8 @@
 local ls = require "luasnip"
 local extras = require "luasnip.extras"
+local s = ls.s
+local fmt = require("luasnip.extras.fmt").fmt
+local i = ls.i
 local l = extras.lambda
 local f = ls.function_node
 local c = ls.choice_node
