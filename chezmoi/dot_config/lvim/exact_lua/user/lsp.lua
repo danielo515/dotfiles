@@ -34,6 +34,7 @@ function M.config()
     { name = "eslint_d" },
     { name = "stylua" },
     { name = "fixjson" },
+    -- { name = "codespell" }, -- too aggressive
   }
 
   local linters = require "lvim.lsp.null-ls.linters"
