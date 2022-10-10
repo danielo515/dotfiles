@@ -1,66 +1,66 @@
 return {
-  'b0o/incline.nvim',
+  "b0o/incline.nvim",
   config = function()
-    require('incline').setup {
+    require("incline").setup {
       debounce_threshold = {
         falling = 50,
-        rising = 10
+        rising = 10,
       },
       hide = {
         cursorline = false,
-        focused_win = false,
-        only_win = false
+        focused_win = true,
+        only_win = false,
       },
       highlight = {
         groups = {
           InclineNormal = {
             default = true,
-            group = "lualine_b_windows_active"
+            group = "lualine_b_windows_active",
           },
           InclineNormalNC = {
             default = true,
-            group = "lualine_b_windows_active"
-          }
-        }
+            group = "lualine_b_windows_active",
+          },
+        },
       },
       ignore = {
         buftypes = "special",
         filetypes = {},
         floating_wins = true,
         unlisted_buffers = true,
-        wintypes = "special"
+        wintypes = "special",
       },
       render = "basic",
       window = {
         margin = {
-          horizontal = 3,
-          vertical = 2
+          horizontal = 2,
+          vertical = 1,
         },
         options = {
           signcolumn = "no",
-          wrap = false
+          wrap = false,
         },
         padding = 1,
         padding_char = "-",
         placement = {
           horizontal = "right",
-          vertical = "top"
+          vertical = "top",
         },
         width = "fit",
         winhighlight = {
           active = {
             EndOfBuffer = "None",
             Normal = "InclineNormal",
-            Search = "None"
+            Search = "None",
           },
           inactive = {
             EndOfBuffer = "None",
             Normal = "InclineNormalNC",
-            Search = "None"
-          }
+            Search = "None",
+          },
         },
-        zindex = 50
-      }
+        zindex = 50,
+      },
     }
-  end
+  end,
 }

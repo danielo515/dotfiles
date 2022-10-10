@@ -349,5 +349,8 @@
   },
   "cmp-buffer": {
     "commit": "3022dbc"
+  },
+  "vgit": {
+    "commit": "9a2ef0b0edede4dcf35cc53801eed4c7cdd15605"
   }
 }
