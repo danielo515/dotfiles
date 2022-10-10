@@ -10,7 +10,7 @@ local function addAllCommands()
     local suffix = has_args and "" or "<CR>"
     return {
       description = command.name,
-      -- If the command does not require args then do add <cr> at the end, but if not, just populate the coommand prompt
+      -- If the command does not require args then do add <cr> at the end, but if not, just populate the command prompt
       cmd = string.format("%s%s%s", prefix, command.name, suffix),
     }
   end, raw)
@@ -25,7 +25,7 @@ M.config = function()
     vim.notify("Command center not loaded", "warn")
     return
   end
-  -- We schedule it to give other plugins the oportunity to load their commands
+  -- We schedule it to give other plugins the opportunity to load their commands
   vim.schedule(addAllCommands)
   command_center.add({
     { description = "Search within the project (Live grep)", cmd = ":Telescope live_grep<cr>" },
@@ -104,7 +104,14 @@ M.config = function()
     { description = "Typescript remove unused", cmd = ":TypescriptRemoveUnused<CR>" },
     -- TODO:
     -- Search in parent directory and or sibling directory
-  }, command_center.mode.ADD_ONLY)
+  }, command_center.mode.ADD)
+  command_center.add {
+    {
+      name = "LuasnipEdit",
+      description = "Edit snippets for the current filetype",
+      cmd = '<cmd>lua require("luasnip.loaders").edit_snippet_files()<cr>',
+    },
+  }
 end
 
 return M
