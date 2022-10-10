@@ -181,5 +181,6 @@ local plugins = {
     "~/tella/nvim-treesitter-reason",
   },
   --#endregion Rescrtip
+  require "user.plugins.async-tasks",
 }
 return plugins
