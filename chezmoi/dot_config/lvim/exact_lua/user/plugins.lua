@@ -21,7 +21,7 @@ local plugins = {
   -- require "user.plugins.lsp-lines",
   -- require "user.bookmarks",
   -- require "user.neozoom",
-  require "user.incline",
+  require "user.plugins.incline",
   -- require "user.plugins.vgit",
   require "user.colorbuddy",
   require "user.plugins.primeagen-refactoring",
@@ -81,8 +81,7 @@ local plugins = {
       }
     end,
   },
-
-  { "SmiteshP/nvim-navic", requires = "neovim/nvim-lspconfig" },
+  { "SmiteshP/nvim-navic", requires = "neovim/nvim-lspconfig" }, -- shows your position using treesitter
   -- Indent guides on every line
   {
     "lukas-reineke/indent-blankline.nvim",
