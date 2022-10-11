@@ -31,6 +31,7 @@ lvim.builtin.nvimtree.setup.view.mappings.list = {
   { key = { "l", "<CR>" }, action = "edit", mode = "n" },
   { key = "h", action = "close_node" },
   { key = "v", action = "vsplit" },
+  { key = "s", action = "split" },
   { key = "C", action = "cd" },
   { key = "o", action = "edit_no_picker" },
   { key = "<C-F>", action = "live_filter" },
