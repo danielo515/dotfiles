@@ -8,18 +8,18 @@ return {
       },
       hide = {
         cursorline = false,
-        focused_win = true,
+        focused_win = false,
         only_win = false,
       },
       highlight = {
         groups = {
           InclineNormal = {
             default = true,
-            group = "lualine_b_windows_active",
+            group = "lualine_a_insert",
           },
           InclineNormalNC = {
             default = true,
-            group = "lualine_b_windows_active",
+            group = "lualine_b_insert",
           },
         },
       },
