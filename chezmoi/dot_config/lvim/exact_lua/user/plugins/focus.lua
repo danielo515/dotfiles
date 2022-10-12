@@ -16,7 +16,9 @@ return {
       cursorcolumn = true,
       colorcolumn = { enable = true, width = 100 },
       absolutenumber_unfocussed = true,
-      winhighlight = true,
+      winhighlight = false,
     }
+    vim.cmd "hi link UnfocusedWindow CursorLineSign"
+    vim.cmd "hi link FocusedWindow Normal"
   end,
 }
