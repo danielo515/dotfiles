@@ -1,24 +1,69 @@
 local cmp = require "cmp"
 local luasnip = require "luasnip"
+
+local sorting = {
+  priority_weight = 100,
+  comparators = {
+    cmp.config.compare.offset,
+    cmp.config.compare.exact,
+    cmp.config.compare.score,
+    -- require("cmp-under-comparator").under,
+    cmp.config.compare.sort_text,
+    cmp.config.compare.length,
+    cmp.config.compare.order,
+  },
+}
+
+local source_names = {
+  nvim_lsp = "(LSP)",
+  emoji = "(Emoji)",
+  path = "(Path)",
+  calc = "(Calc)",
+  cmp_tabnine = "(Tabnine)",
+  vsnip = "(Snippet)",
+  luasnip = "(Snippet)",
+  buffer = "(Buffer)",
+  tmux = "(TMUX)",
+  rg = "(RG)",
+}
+
+lvim.builtin.cmp.sorting = sorting
+lvim.builtin.cmp.formatting.source_names = source_names
 -- CMP specific plugins and configruations
 local sources = {
   { name = "npm", keyword_length = 4 },
+  { name = "emoji" },
+  -- { name = "rg", keyword_length = 3, option = { pattern = "[\\w ]+'" } },
+  -- { name = "rg", keyword_length = 3, max_item_count = 10 },
+  -- { name = "treesitter", max_item_count = 10 },
+  --#region Copied from someone
+
+  -- { name = "orgmode", priority_weight = 110 },
+  -- { name = "crates", priority_weight = 110 },
+  -- { name = "dap", priority_weight = 110 },
+  { name = "path", priority_weight = 110, label = "[Path]" },
+  { name = "git", priority_weight = 110 },
+  { name = "nvim_lsp", max_item_count = 20, priority_weight = 100 },
+  { name = "nvim_lua", priority_weight = 90 },
+  { name = "luasnip", priority_weight = 80 },
+  { name = "buffer", max_item_count = 5, priority_weight = 70 },
   {
-    {
-      name = "tmux",
-      option = {
-        all_panes = true,
-        label = "[tmux]",
-        trigger_characters = {},
-        trigger_characters_ft = {}, -- { filetype = { '.' } }
-      },
-      max_item_count = 10,
+    name = "rg",
+    keyword_length = 4,
+    max_item_count = 5,
+    priority_weight = 60,
+    option = {
+      additional_arguments = "--smart-case --hidden",
     },
   },
-  -- { name = "rg", keyword_length = 3, option = { pattern = "[\\w ]+'" } },
-  { name = "rg", keyword_length = 3, max_item_count = 10 },
-  { name = "emoji" },
-  { name = "treesitter", max_item_count = 10 },
+  { name = "tmux", max_item_count = 5, option = { all_panes = true, label = "[tmux]" }, priority_weight = 50 },
+  {
+    name = "look",
+    keyword_length = 5,
+    max_item_count = 5,
+    option = { convert_case = true, loud = true },
+    priority_weight = 40,
+  },
 }
 
 for _, source in ipairs(sources) do
@@ -26,22 +71,73 @@ for _, source in ipairs(sources) do
 end
 
 local cmdlineOk = pcall(function()
-  local mapping = {
-    ["<Down>"] = cmp.mapping(cmp.mapping.select_next_item { behavior = cmp.SelectBehavior.Replace }, { "c" }),
-    ["<Up>"] = cmp.mapping(cmp.mapping.select_prev_item { behavior = cmp.SelectBehavior.Replace }, { "c" }),
-  }
-  cmp.setup.cmdline("/", {
-    mapping = cmp.mapping.preset.cmdline(mapping),
-    sources = {
-      { name = "buffer" },
+  -- Setup CMP on / and : prompts
+  -- local mapping = {
+  --   ["<Down>"] = cmp.mapping(cmp.mapping.select_next_item { behavior = cmp.SelectBehavior.Replace }, { "c" }),
+  --   ["<Up>"] = cmp.mapping(cmp.mapping.select_prev_item { behavior = cmp.SelectBehavior.Replace }, { "c" }),
+  -- }
+  -- cmp.setup.cmdline("/", {
+  --   mapping = cmp.mapping.preset.cmdline(mapping),
+  --   sources = {
+  --     { name = "buffer" },
+  --   },
+  -- })
+
+  -- cmp.setup.cmdline(":", {
+  --   mapping = cmp.mapping.preset.cmdline(mapping),
+  --   sources = {
+  --     { name = "cmdline" },
+  --   },
+  -- })
+
+  local cmdline_mappings = {
+    select_next_item = {
+      c = function(fallback)
+        if cmp.visible() then
+          return cmp.mapping.select_next_item { behavior = cmp.SelectBehavior.Insert }(fallback)
+        else
+          return cmp.mapping.complete { reason = cmp.ContextReason.Auto }(fallback)
+        end
+      end,
     },
-  })
+    select_prev_item = {
+      c = cmp.mapping.select_prev_item { behavior = cmp.SelectBehavior.Insert },
+    },
+  }
 
   cmp.setup.cmdline(":", {
-    mapping = cmp.mapping.preset.cmdline(mapping),
-    sources = {
-      { name = "cmdline" },
+    mapping = {
+      ["<Down>"] = cmdline_mappings.select_next_item,
+      ["<C-n>"] = cmdline_mappings.select_next_item,
+      ["<Tab>"] = cmdline_mappings.select_next_item,
+      ["<C-p>"] = cmdline_mappings.select_prev_item,
+      ["<Up>"] = cmdline_mappings.select_prev_item,
+      ["<S-Tab>"] = cmdline_mappings.select_prev_item,
     },
+    sources = cmp.config.sources({
+      { name = "path" },
+    }, {
+      { name = "cmdline" },
+    }, {
+      { name = "buffer" },
+    }, {
+      { name = "cmdline_history" },
+    }),
+  })
+  cmp.setup.cmdline("/", {
+    mapping = {
+      ["<Down>"] = cmdline_mappings.select_next_item,
+      ["<C-n>"] = cmdline_mappings.select_next_item,
+      ["<Tab>"] = cmdline_mappings.select_next_item,
+      ["<C-p>"] = cmdline_mappings.select_prev_item,
+      ["<Up>"] = cmdline_mappings.select_prev_item,
+      ["<S-Tab>"] = cmdline_mappings.select_prev_item,
+    },
+    sources = cmp.config.sources({
+      { name = "buffer" },
+    }, {
+      { name = "cmdline_history" },
+    }),
   })
 end)
 --#region builtin overrides
