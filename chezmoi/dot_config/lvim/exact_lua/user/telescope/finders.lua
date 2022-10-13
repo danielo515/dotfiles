@@ -28,6 +28,9 @@ M.find_on_parent = function()
   builtin.find_files(themes.get_dropdown { cwd = vim.fn.expandcmd "%:h:h", prompt_title = "Parent files" })
 end
 
+---Dummy function to be able to offer auto-complete from lua.
+-- It takes an argument, and returns a function that will return that argument.
+-- This allows you to parametrize the lua function that vim will call
 function M.expand(text)
   return function()
     return text
@@ -50,8 +53,12 @@ function M.grep_files(opts)
   local currentWord = vim.fn.expand "<cword>"
   local currentPath = vim.fn.expand "%"
   vim.ui.input({
+    --This has several limitations. We need to pass a single argument because trying to provide several
+    -- is going to make the string become invalid.
+    --also need to escape the line feed or the provided string will be invalid.
     completion = string.format(
       "custom,v:lua.require'user.telescope.finders'.expand('%s')",
+      --custom can have several options, but they must be newline separated
       table.concat({
         currentWord,
         currentPath,
