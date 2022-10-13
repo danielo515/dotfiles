@@ -28,10 +28,9 @@ M.find_on_parent = function()
   builtin.find_files(themes.get_dropdown { cwd = vim.fn.expandcmd "%:h:h", prompt_title = "Parent files" })
 end
 
-function M.expand(word)
-  ---@diagnostic disable-next-line: missing-parameter
+function M.expand(text)
   return function()
-    return word
+    return text
   end
 end
 
@@ -49,8 +48,15 @@ function M.grep_files(opts)
 
   opts = vim.tbl_deep_extend("force", theme_opts, opts)
   local currentWord = vim.fn.expand "<cword>"
+  local currentPath = vim.fn.expand "%"
   vim.ui.input({
-    completion = string.format("custom,v:lua.require'user.telescope.finders'.expand('%s')", currentWord),
+    completion = string.format(
+      "custom,v:lua.require'user.telescope.finders'.expand('%s')",
+      table.concat({
+        currentWord,
+        currentPath,
+      }, "\\n")
+    ),
   }, function(text)
     builtin.grep_string(vim.tbl_extend("force", opts, { search = text }))
   end)
@@ -154,7 +160,7 @@ function M.refine_search(propmpt_bufnr)
     end)
   end
 
-  vim.pretty_print("Files", files)
+  -- vim.pretty_print("Files", files)
   builtin.live_grep {
     search_dirs = files,
   }
