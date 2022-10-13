@@ -25,23 +25,16 @@ local source_names = {
   buffer = "(Buffer)",
   tmux = "(TMUX)",
   rg = "(RG)",
+  treesitter = "(TreeSitter)",
 }
 
 lvim.builtin.cmp.sorting = sorting
 lvim.builtin.cmp.formatting.source_names = source_names
--- CMP specific plugins and configruations
+-- CMP specific plugins and configurations
 local sources = {
   { name = "npm", keyword_length = 4 },
-  { name = "emoji" },
-  -- { name = "rg", keyword_length = 3, option = { pattern = "[\\w ]+'" } },
-  -- { name = "rg", keyword_length = 3, max_item_count = 10 },
-  -- { name = "treesitter", max_item_count = 10 },
   --#region Copied from someone
-
-  -- { name = "orgmode", priority_weight = 110 },
-  -- { name = "crates", priority_weight = 110 },
-  -- { name = "dap", priority_weight = 110 },
-  { name = "path", priority_weight = 110, label = "[Path]" },
+  { name = "path", priority_weight = 110, option = { label = "[Path]" } },
   { name = "git", priority_weight = 110 },
   { name = "nvim_lsp", max_item_count = 20, priority_weight = 100 },
   { name = "nvim_lua", priority_weight = 90 },
@@ -182,4 +175,5 @@ return {
   { "hrsh7th/cmp-emoji" },
   { "hrsh7th/cmp-cmdline", commit = "9c0e331" },
   { "hrsh7th/cmp-nvim-lua", commit = "d276254e7198ab7d00f117e88e223b4bd8c02d21" },
+  { "hrsh7th/cmp-calc" },
 }

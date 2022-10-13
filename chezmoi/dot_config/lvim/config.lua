@@ -20,6 +20,7 @@ packer.init {
 -- general
 lvim.log.level = "debug"
 lvim.format_on_save = true
+require("user.theme").tokyonight()
 lvim.colorscheme = "tokyonight"
 lvim.leader = "space"
 lvim.builtin.alpha.active = true
