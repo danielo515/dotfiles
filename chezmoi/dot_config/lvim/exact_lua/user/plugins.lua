@@ -14,6 +14,7 @@ local plugins = {
   require "user.goto_preview",
   -- require "user.tabout",
   require "user.plugins.twilight-config",
+  require "user.plugins.zen_mode",
   require "user.plugins.cmp-config",
   require "user.plugins.focus",
   require "user.plugins.neogen-config",
@@ -42,8 +43,8 @@ local plugins = {
       require "user.syntax_tree_surfer"
     end,
   },
-  -- some lsp diagnosis
-  { "folke/trouble.nvim", cmd = "TroubleToggle" },
+  require "user.plugins.trouble", -- some lsp diagnosis
+
   -- better surround options
   { "tpope/vim-surround" },
   "wellle/targets.vim",
