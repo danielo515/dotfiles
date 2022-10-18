@@ -45,4 +45,15 @@ module {} = {{
       }
     )
   ),
+  s(
+    { trig = "rstr", dscr = "react string", regTrig = false },
+    fmt(
+      [[
+      "{}" -> React.string
+    ]],
+      {
+        i(0),
+      }
+    )
+  ),
 }
