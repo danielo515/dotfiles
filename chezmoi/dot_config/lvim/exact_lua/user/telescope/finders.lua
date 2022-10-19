@@ -51,6 +51,8 @@ function M.grep_files(opts)
 
   opts = vim.tbl_deep_extend("force", theme_opts, opts)
   local currentWord = vim.fn.expand "<cword>"
+  local currentFileName = vim.fn.expand "%:t:r"
+  local currentFile = vim.fn.expand "%:t"
   local currentPath = vim.fn.expand "%"
   vim.ui.input({
     --This has several limitations. We need to pass a single argument because trying to provide several
@@ -61,6 +63,8 @@ function M.grep_files(opts)
       --custom can have several options, but they must be newline separated
       table.concat({
         currentWord,
+        currentFile,
+        currentFileName,
         currentPath,
       }, "\\n")
     ),
