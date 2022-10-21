@@ -22,6 +22,7 @@ return {
           prettierrc = "json",
           mdx = "markdown",
           re = "reason",
+          rei = "reason",
         },
       },
     }
