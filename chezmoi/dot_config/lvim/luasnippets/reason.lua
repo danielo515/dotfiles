@@ -56,4 +56,62 @@ module {} = {{
       }
     )
   ),
+  s(
+    { trig = "ustate", dscr = "use state reac", regTrig = false },
+    fmt(
+      [[ 
+  let ({}, {}) = React.useState(_ => {});
+    ]],
+      {
+        i(1, "state"),
+        i(2, "setState"),
+        i(0),
+      }
+    )
+  ),
+  s(
+    { trig = "uef1", dscr = "react use effect 1", regTrig = false },
+    fmt(
+      [[ 
+  
+  React.useEffect1(()=>{{
+
+    {}
+
+    None;
+
+    }},[|{}|]);
+
+    ]],
+      {
+        i(0),
+        i(1),
+      }
+    )
+  ),
+  s(
+    { trig = "amap", dscr = "Array map", regTrig = false },
+    fmt(
+      [[ {} -> Array.map(({}) => {{ {} }});
+    ]],
+      {
+        i(1),
+        i(2),
+        i(0),
+      }
+    )
+  ),
+  s(
+    { trig = "jslog", dscr = "Javascript easier log", regTrig = false },
+    fmt(
+      [[
+        //TODO: Remove this debug line
+          Js.log2("{}", {});
+      ]],
+      {
+        rep(1),
+        i(1),
+      }
+    )
+  ),
 }
