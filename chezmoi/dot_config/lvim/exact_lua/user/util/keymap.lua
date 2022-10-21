@@ -2,8 +2,10 @@
 ---@param lhs string The key to assign
 ---@param rhs string | function the action to execute
 ---@param desc string the keymap human readabble description
-local function nmap(lhs, rhs, desc)
-  vim.keymap.set("n", lhs, rhs, { silent = true, noremap = true, desc = desc })
+---@param [silent] say if the mapping should be silent or not. Defaults to being silent
+local function nmap(lhs, rhs, desc, silent)
+  silent = silent or true
+  vim.keymap.set("n", lhs, rhs, { silent = silent, noremap = true, desc = desc })
 end
 
 --- Creates a key bind in insert mode and select mode
