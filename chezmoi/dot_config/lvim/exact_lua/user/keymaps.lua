@@ -1,7 +1,7 @@
 local vmap = require("user.util.keymap").vmap
 local imap = require("user.util.keymap").imap
 
--- This two were remmoved by LVIM from the defualts, too bad
+-- This two were remmoved by LVIM from the defaults, too bad
 lvim.keys.normal_mode["<S-l>"] = ":BufferLineCycleNext<CR>"
 lvim.keys.normal_mode["<S-h>"] = ":BufferLineCyclePrev<CR>"
 lvim.keys.normal_mode["<C-F>"] = "<cmd>lua require('user.telescope').grep_files()<cr>"
@@ -52,12 +52,17 @@ lvim.keys.insert_mode["<A-s>"] =
 vim.keymap.set("c", "<C-A>", "<Home>", { noremap = false })
 
 -- omap     <silent> m :<C-U>lua require('tsht').nodes()<CR>
-vim.keymap.set("o", "m", ':<C-U>lua require("tsht").nodes()<CR>', { silent = true, desc = "Higlight nodes to jump to" })
+vim.keymap.set(
+  "o",
+  "m",
+  ':<C-U>lua require("tsht").nodes()<CR>',
+  { silent = true, desc = "Highlight nodes to jump to" }
+)
 vim.keymap.set(
   "x",
   "m",
   ':<C-U>lua require("tsht").nodes()<CR>',
-  { silent = true, noremap = false, desc = "Higlight nodes to jump to" }
+  { silent = true, noremap = false, desc = "Highlight nodes to jump to" }
 )
 
 imap("<C-N>", "<cmd>lua require'cmp'.complete()<cr>", "trigger autocomplete in insert mode")
@@ -66,6 +71,7 @@ local bind = require("user.util").bind
 local nmap = require("user.util.keymap").nmap
 nmap("<C-C>", bind(vim.api.nvim_win_close, 0, false), "Close current window")
 nmap("<C-P>", ":Telescope command_center<cr>", "Open command center")
+nmap("<C-s>", ":%s/", "Search and replace whole file", false)
 nmap(",h", ":Gitsigns next_hunk<cr>", "Next git hunk")
 nmap(",c", ":cNext!<cr>", "Next item in quickfix")
 
