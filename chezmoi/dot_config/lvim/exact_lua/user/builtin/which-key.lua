@@ -43,6 +43,7 @@ local whichConfig = {
     n = { "<cmd>Telescope notify<cr>", "Notifications" },
     j = { "<cmd>Telescope jumplist<cr>", "Jump list" },
     P = { "<cmd>Telescope packer<cr>", "Packer search" },
+    o = { require("user.telescope.finders").grep_open_files, "Grep on open files" },
     ["."] = { "<cmd>Telescope resume<cr>", "Repeat search" },
     S = {
       "<cmd>lua require('spectre').open_visual({select_word=true})<CR>",
