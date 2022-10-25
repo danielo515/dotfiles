@@ -219,7 +219,7 @@
     "commit": "8b62211"
   },
   "vim-matchup": {
-    "commit": "3cebd21"
+    "commit": "3fa1b2283e957784922fe891de361a2342b90bca"
   },
   "cmp-treesitter": {
     "commit": "c2886bb"
