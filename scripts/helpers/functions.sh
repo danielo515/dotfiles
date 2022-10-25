@@ -1,6 +1,7 @@
 #!/bin/bash
 # Functions
 
+# Can be used in if conditions to check the existence of something
 exists() {
   type "$1" >/dev/null 2>/dev/null
 }
@@ -56,6 +57,33 @@ system_is_linux() {
   fi
 }
 
+# ----- Borrowed from https://github.com/carloscuesta/dotfiles/blob/master/osx/utils.sh
+
+is_git_repository() {
+    git rev-parse &> /dev/null
+    return $?
+}
+
+execute() {
+    eval "$1" &> /dev/null
+    print_result $? "${2:-$1}"
+}
+
+print_success() {
+    echogreen "  [✔] $1\n"
+}
+
+print_error() {
+    echored "  [✖] $1 $2\n"
+}
+
+print_result() {
+    [ $1 -eq 0 ] \
+        && print_success "$2" \
+        || print_error "$2"
+
+    return $1
+}
 # ----- Danielo custom
 
 clean_docker() {
