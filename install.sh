@@ -63,18 +63,19 @@ fi
 
 echo ""
 
-# -- TMUX ----------------------------------------------------------------------
-if test -L "$HOME/.tmux.conf"; then
-    echo_item "Tmux configuration already linked" green
-elif get_boolean_response "Do you want to install the Tmux configuration file?"
-then
-    ln -sf "$DOTFILES/tmux/tmux.conf" "$HOME/.tmux.conf"
-    echo_item "Linked tmux configutation" "green"
-else
-    echo_item "Ignoring Tmux configuration" "red"
-fi
+# # -- TMUX ----------------------------------------------------------------------
+# For now, handled by chezmoi
+# if test -L "$HOME/.tmux.conf"; then
+#     echo_item "Tmux configuration already linked" green
+# elif get_boolean_response "Do you want to install the Tmux configuration file?"
+# then
+#     ln -sf "$DOTFILES/tmux/tmux.conf" "$HOME/.tmux.conf"
+#     echo_item "Linked tmux configuration" "green"
+# else
+#     echo_item "Ignoring Tmux configuration" "red"
+# fi
 
-echo ""
+# echo ""
 
 # -- Node ----------------------------------------------------------------------
 
