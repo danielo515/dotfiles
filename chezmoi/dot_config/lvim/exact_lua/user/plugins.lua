@@ -1,6 +1,6 @@
 local plugins = {
   -- themes
-  "folke/tokyonight.nvim",
+  -- "folke/tokyonight.nvim", -- builtin in lunarvim
   { "Mofiqul/dracula.nvim" },
   { "catppuccin/nvim", as = "catppuccin" },
   "marko-cerovac/material.nvim",
@@ -54,17 +54,9 @@ local plugins = {
   require "user.plugins.vim-matchup",
   -- explore LSP symbols
   require "user.plugins.symbols-outline",
-  -- colors
   { "folke/lsp-colors.nvim", event = "BufRead" },
   { "ckipp01/stylua-nvim" },
   { "rafcamlet/nvim-luapad" },
-  -- {
-  --   "pwntester/octo.nvim",
-  --   event = "BufRead",
-  --   config = function()
-  --     require("user.octo").setup()
-  --   end,
-  -- },
   -- Improve nvim interface for inputs and that stuff
   { "stevearc/dressing.nvim" },
 
@@ -81,14 +73,18 @@ local plugins = {
       }
     end,
   },
-  { "SmiteshP/nvim-navic", requires = "neovim/nvim-lspconfig" }, -- shows your position using treesitter
+  --[[ Lunarvim builtin now
+   { "SmiteshP/nvim-navic", requires = "neovim/nvim-lspconfig" }, -- shows your position using treesitter
+  -- ]]
   -- Indent guides on every line
-  {
+  --[[ Lunarvim builtin now
+  --{
     "lukas-reineke/indent-blankline.nvim",
     event = "BufRead",
     commit = "c15bbe9",
     config = require("user.indent-blankline").config,
   },
+  --]]
   -- Smooth scrolling
   { "psliwka/vim-smoothie" },
   --- Pick the file where you edited last time
