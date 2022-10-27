@@ -1,4 +1,5 @@
 local components = require "lvim.core.lualine.components"
+local colors = require("user.theme").current_colors()
 local gps_ok, gps = pcall(require, "nvim-navic")
 
 local hide_in_width = function()
@@ -89,7 +90,9 @@ lvim.builtin.lualine.sections.lualine_a = {
   },
 }
 
-lvim.builtin.lualine.sections.lualine_b = { components.branch, "windows" }
+lvim.builtin.lualine.sections.lualine_b = {
+  components.branch, --[[ "windows" ]]
+}
 lvim.builtin.lualine.sections.lualine_c = {
   components.diff,
   components.lsp,
