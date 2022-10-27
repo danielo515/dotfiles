@@ -57,7 +57,7 @@ module {} = {{
     )
   ),
   s(
-    { trig = "ustate", dscr = "use state reac", regTrig = false },
+    { trig = "usestate", dscr = "use state reac", regTrig = false },
     fmt(
       [[ 
   let ({}, {}) = React.useState(_ => {});
@@ -90,13 +90,14 @@ module {} = {{
     )
   ),
   s(
-    { trig = "amap", dscr = "Array map", regTrig = false },
+    { trig = "map", dscr = "Any map", regTrig = false },
     fmt(
-      [[ {} -> Array.map(({}) => {{ {} }});
+      [[ {} -> {}.map(({}) => {{ {} }});
     ]],
       {
         i(1),
-        i(2),
+        c(2, { t "Array", t "Option", t "List" }),
+        i(3),
         i(0),
       }
     )
