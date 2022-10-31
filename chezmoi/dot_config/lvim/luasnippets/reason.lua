@@ -10,7 +10,20 @@ local d = ls.dynamic_node
 local rep = extras.rep
 local fmta = require("luasnip.extras.fmt").fmta
 local t = ls.text_node
+local partial = require("luasnip.extras").partial
+local ext_opts = {
+  -- these ext_opts are applied when the node is active (e.g. it has been
+  -- jumped into, and not out yet).
+  -- this is the table actually passed to `nvim_buf_set_extmark`.
+  active = {
+    -- highlight the text inside the node red.
+    hl_group = "GruvboxRed",
+  },
+}
 
+local node_ops = { node_ext_ops = ext_opts }
+
+--regTrig = trigger should be interpreted as a lua pattern
 return {
   s(
     { trig = "switch", dscr = "switch expression", regTrig = false },
@@ -112,6 +125,32 @@ module {} = {{
       {
         rep(1),
         i(1),
+      }
+    )
+  ),
+  s(
+    { trig = "fn", dscr = "Create a function easily", regTrig = false },
+    fmt(
+      [[
+          let {} = ({}) => {}
+      ]],
+      {
+        i(1),
+        i(2),
+        c(3, { i(0), t "{{ {} }}" }),
+      }
+    )
+  ),
+  s(
+    { trig = "log", dscr = "Logs using our nice logger", regTrig = false },
+    fmt(
+      [[
+    Log.{}(~call="{}", {});
+      ]],
+      {
+        c(1, { t "error", t "warn" }, node_ops),
+        partial(vim.fn.expand, "%:t:r"),
+        i(0, "error"),
       }
     )
   ),
