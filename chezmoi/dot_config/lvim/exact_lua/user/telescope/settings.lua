@@ -21,7 +21,7 @@ lvim.builtin.telescope.on_config_done = function(tele)
   local state = require "telescope.actions.state"
   tele.load_extension "frecency"
   -- tele.load_extension("command_palette")
-  tele.load_extension "notify"
+  -- tele.load_extension "notify"
   tele.load_extension "file_browser"
   tele.load_extension "lazygit"
   tele.load_extension "packer"

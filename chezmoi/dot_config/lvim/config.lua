@@ -20,12 +20,13 @@ packer.init {
 -- general
 lvim.log.level = "debug"
 lvim.format_on_save = true
-require("user.theme").tokyonight()
+-- require("user.theme").tokyonight()
 lvim.colorscheme = "tokyonight"
+lvim.builtin.theme.options.style = "storm"
+lvim.builtin.theme.options.dim_inactive = true
 lvim.leader = "space"
 lvim.builtin.alpha.active = true
 lvim.builtin.alpha.mode = "dashboard"
-lvim.builtin.notify.active = true
 lvim.builtin.terminal.active = true
 -- Always show line blame like VSCode
 lvim.builtin.gitsigns.opts.current_line_blame = true
@@ -67,7 +68,7 @@ D.pconf "user.statusline"
 D.pconf "user.sniprun"
 D.pconf "user.builtin.nvimtree"
 D.pconf "semgrep"
-D.pconf("user.lsp")
+D.pconf "user.lsp"
 -- require("user.lualine").config()
 require("luasnip.loaders.from_snipmate").lazy_load()
 local treesitter = require "user.treesitter"
