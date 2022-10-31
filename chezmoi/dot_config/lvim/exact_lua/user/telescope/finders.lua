@@ -116,7 +116,7 @@ function M._multiopen(prompt_bufnr, open_cmd)
   local picker = action_state.get_current_picker(prompt_bufnr)
   local num_selections = #picker:get_multi_selection()
   local border_contents = picker.prompt_border.contents[1]
-  -- TODO: better logic to determine if shoudl kick in or not
+  -- TODO: better logic to determine if should kick in or not
   if not (string.find(border_contents, "Find Files") or string.find(border_contents, "Git Files")) then
     actions.select_default(prompt_bufnr)
     return
@@ -159,6 +159,10 @@ end
 local action_utils = require "telescope.actions.utils"
 local from_entry = require "telescope.from_entry"
 
+---When you are on a telescope search prompt, this action will get all the results that
+-- are visible and will open a new telescope prompt with only those search results,
+-- so you can refine the search
+---@param propmpt_bufnr number
 function M.refine_search(propmpt_bufnr)
   local picker = action_state.get_current_picker(propmpt_bufnr)
   local files = vim.tbl_map(function(item)
