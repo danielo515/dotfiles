@@ -77,7 +77,7 @@ local whichConfig = {
   ["g"] = {
     S = { "<cmd>lua require 'gitsigns'.stage_hunk()<cr>", "Stage Hunk" },
     s = { "<cmd>lua require 'gitsigns'.stage_buffer()<cr>", "Stage file" },
-    B = { "<cmd>lua require 'gitsigns'.toggle_current_line_blame()<cr>", "Togle blame" },
+    B = { "<cmd>lua require 'gitsigns'.toggle_current_line_blame()<cr>", "Toggle blame" },
     d = { "<cmd>DiffviewOpen<cr>", "Open git diff" },
     g = { "<cmd>lua require 'lazygit'.lazygit()<cr>", "Open git diff" },
     f = { "<cmd>Telescope git_status<cr>", "Search changed files" },
@@ -88,6 +88,7 @@ local whichConfig = {
     f = { require("lvim.core.telescope.custom-finders").find_project_files, "Find project files" },
     r = { "<cmd>Telescope frecency <cr>", "Browse recent files" },
     b = { "<cmd>Telescope file_browser<cr>", "Browse file tree cool" },
+    g = { require("user.telescope.finders").grep_open_files(), "Search on open files" },
     y = { "<cmd>lua Yank_file_name()<CR>", "Yank current file path" },
     Y = { "<cmd>lua Yank_full_file_name()<CR>", "Yank full file path" },
   },
