@@ -56,6 +56,12 @@ function pushSnippets(){
  git add . && git commit -m "Added more stuff" && git push
  cd -
 }
+
+function cat_fuzzy(){
+  fd "$1" ../ -x cat {}
+}
+
+
 # ---- NPM
 alias npm-i='npm i --registry=https://registry.npmjs.org/'
 alias npr='npm run'
