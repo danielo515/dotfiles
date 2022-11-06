@@ -1,6 +1,11 @@
 -- Fuck it, I'm gonna drop some global utility functions for my personal use!!
 _G.D = {} -- But namespaced, obviously!
 
+---Prints whatever argument it gets, and then returns it.
+--Useful to add in the middle of any pipeline without much trouble
+---@generic T
+---@param arg T
+---@return T
 function D.Peek(arg)
   vim.pretty_print(arg)
   return arg
