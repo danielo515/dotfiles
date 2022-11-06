@@ -1,7 +1,6 @@
-local M = {}
-
 local fun = require "danielo.fun"
+local keymap = require "danielo.keymap"
 
-M = fun.assign(M, fun)
+local M = fun.assign(fun, keymap)
 
 return M

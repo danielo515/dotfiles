@@ -20,12 +20,6 @@ function M.bind(fn, ...)
   end
 end
 
---@alias Cb
---@generic T
---@generic D
---@param x:T
---@return D
-
 --- Executes a function in a protected call. Returns the default value if it fails
 ---@generic T,D
 ---@param fn fun(arg:T):D the function to call
@@ -40,28 +34,46 @@ function M.try_or_default(fn, default, ...)
   return default
 end
 
----Assigns the properties of one object to another object
----@generic T
----@generic O { [string]: T }
----@param target table
----@param source O
----@return O
-function M.assign(target, source)
-  for key, value in pairs(source) do
-    target[key] = value
+---Shallow merge any number of objects into a new one
+--which is then returned
+----@generic T
+----@param ... { [string]: T }
+----@return { [string]: T }
+function M.assign(...)
+  local sources = { ... }
+  local result = {}
+  for _, source in ipairs(sources) do
+    for key, value in pairs(source) do
+      result[key] = value
+    end
   end
-  return target
+  return result
 end
 
 ---Calls a value if it is a function within a protected call
 ---@generic T
 ---@param fn fun(...:any):T
 ---@param ... any arguments the function may need
+---@return boolean,T|nil
 function M.call(fn, ...)
   local args = { ... }
   if type(fn) == "function" then
-    return pcall(fn, unpack(args))
+    local ok, res = pcall(fn, unpack(args))
+    return ok, res
+  end
+  return false, nil
+end
+
+---Creates a constant function that always returns the provided value
+---@generic T
+---@param k T
+---@return fun():T
+function M.const(k)
+  return function()
+    return k
   end
 end
+
+local x = M.const(5)
 
 return M
