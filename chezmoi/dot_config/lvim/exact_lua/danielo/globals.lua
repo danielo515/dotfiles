@@ -11,21 +11,11 @@ function D.Peek(arg)
   return arg
 end
 
----Calls a value if it is a function within a protected call
----@param fn function
----@param ... any arguments the function may need
-function D.call(fn, ...)
-  local args = { ... }
-  if type(fn) == "function" then
-    return pcall(fn, unpack(args))
-  end
-end
-
 ---Make a require of a module in a protected call. If the call succeeds, then call the on_success
 ---Everything is executed within protected calls
 ---@param path string
 ---@param on_success function
----@param [on_fail] function
+---@param on_fail? function
 function D.require(path, on_success, on_fail)
   local ok, lib = pcall(require, path)
   on_fail = on_fail or D.noop
@@ -52,3 +42,5 @@ end
 D.noop = function() end
 -- Shortcut
 _G.preq = D.require
+local fun = require "danielo.fun"
+D = fun.assign(D, fun)

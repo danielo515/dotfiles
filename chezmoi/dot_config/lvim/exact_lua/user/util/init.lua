@@ -2,15 +2,6 @@ local M = {}
 
 local create_sibling_file = require("user.util.create").create_sibling_file
 
-function M.concat_lists(...)
-  local result = {}
-  for i = 1, select("#", ...) do
-    local v = select(i, ...)
-    vim.list_extend(result, v)
-  end
-  return result
-end
-
 function M.bind(fn, ...)
   local args = { ... }
   return function()

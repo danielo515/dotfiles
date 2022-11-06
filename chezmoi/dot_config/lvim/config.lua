@@ -1,5 +1,5 @@
-require "user.globals"
-local concat_lists = require("user.util").concat_lists
+require "danielo.globals"
+local concat_lists = require("danielo").concat_lists
 -- Settings related to GUI clients like neovide
 require "settings.gui"
 -- generic LSP settings
@@ -77,6 +77,6 @@ local plugins = require "user.plugins"
 local inject_sha = require("user.util.plugins").inject_snapshot_commit
 local snapshot_path = join_paths(get_config_dir(), "snapshots", "default.json")
 lvim.plugins = inject_sha(concat_lists(plugins, treesitter.plugins, require "user.telescope.settings"), snapshot_path)
-require("user.autocommands").config()
+D.pconf "user.autocommands"
 -- I call this after because it appends to the existing Danielo autocmd group
-require("user.auto-resize-window").setup()
+D.pconf "user.auto-resize-window"
