@@ -51,6 +51,7 @@ function M.config()
   setup_code_actions { refactorin_opts, nls.builtins.code_actions.gitsigns }
   --#endregion
 
+  --#region LSP
   local graphql_lsp_opts = {
     filetypes = { "graphql", "typescriptreact", "javascriptreact", "typescript" },
   }
@@ -92,6 +93,7 @@ function M.config()
   --     },
   --   },
   -- })
+  --#endregion
 end
 
 return M
