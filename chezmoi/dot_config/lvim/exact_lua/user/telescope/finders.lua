@@ -69,6 +69,9 @@ function M.grep_files(opts)
       }, "\\n")
     ),
   }, function(text)
+    if not text or text == "" then
+      return
+    end
     builtin.grep_string(vim.tbl_extend("force", opts, { search = text }))
   end)
 end
