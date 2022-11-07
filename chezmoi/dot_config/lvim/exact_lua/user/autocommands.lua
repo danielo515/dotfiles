@@ -4,24 +4,6 @@ local M = {}
 -- note: this setting is global and should be set only once
 vim.o.updatetime = 250
 
-local function reloadSnippets()
-  require("luasnip").cleanup() -- opts can be ommited
-  require("luasnip.loaders.from_snipmate").load() -- opts can be ommited
-  require("luasnip.loaders.from_vscode").load() -- opts can be ommited
-end
-
-local danieloSnip = vim.api.nvim_create_augroup("danielo-snip", {
-  clear = true,
-})
-
-vim.api.nvim_create_autocmd({
-  "BufWritePost",
-}, {
-  pattern = { "*.snippets" },
-  callback = reloadSnippets,
-  group = danieloSnip,
-})
-
 local function add_node_bin()
   ---@diagnostic disable-next-line: missing-parameter
   local binPath = vim.fn.glob "./node_modules/.bin"
