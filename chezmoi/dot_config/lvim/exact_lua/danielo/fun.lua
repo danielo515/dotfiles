@@ -74,6 +74,14 @@ function M.const(k)
   end
 end
 
-local x = M.const(5)
+---Map over a list of values and transform each one using fn
+---@generic T
+---@generic K
+---@param fn fun(arg:T):K the function to transform the values
+---@param tbl T[] the table to transform its values
+---@return K[]
+M.map = function(fn, tbl)
+  return vim.tbl_map(fn, tbl)
+end
 
 return M
