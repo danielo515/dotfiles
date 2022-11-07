@@ -45,7 +45,8 @@ local plugins = {
   require "user.plugins.trouble", -- some lsp diagnosis
 
   -- better surround options
-  { "tpope/vim-surround" },
+  -- { "tpope/vim-surround" },
+  require "user.plugins.nvim-surround",
   "wellle/targets.vim",
   { "tpope/vim-repeat" },
   -- fuzzy jummp on the file
