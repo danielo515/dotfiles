@@ -44,3 +44,5 @@ D.noop = function() end
 _G.preq = D.require
 local fun = require "danielo.fun"
 D = fun.assign(D, fun)
+
+D.vim = require "danielo.vim"
