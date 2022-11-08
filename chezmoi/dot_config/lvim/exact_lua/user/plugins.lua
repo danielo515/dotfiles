@@ -3,7 +3,7 @@ local plugins = {
   -- "folke/tokyonight.nvim", -- builtin in lunarvim
   { "Mofiqul/dracula.nvim" },
   { "catppuccin/nvim", as = "catppuccin" },
-  "marko-cerovac/material.nvim",
+  { "marko-cerovac/material.nvim" },
   require "user.plugins.filetype-config", -- faster and lua way of setting custom filetypes
   -- sessions management
   require("user.persistence").plugin,
@@ -179,5 +179,6 @@ local plugins = {
   },
   --#endregion Rescrtip
   require "user.plugins.async-tasks",
+  require "user.plugins.leap",
 }
 return plugins
