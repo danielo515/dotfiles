@@ -69,6 +69,7 @@ D.pconf "user.sniprun"
 D.pconf "user.builtin.nvimtree"
 D.pconf "semgrep"
 D.pconf "user.lsp"
+D.pconf "user.commands"
 -- require("user.lualine").config()
 require("luasnip.loaders.from_snipmate").lazy_load()
 local treesitter = require "user.treesitter"
