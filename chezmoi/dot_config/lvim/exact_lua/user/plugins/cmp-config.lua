@@ -32,9 +32,28 @@ lvim.builtin.cmp.sorting = sorting
 lvim.builtin.cmp.formatting.source_names = source_names
 -- CMP specific plugins and configurations
 local sources = {
+
+  {
+    name = "nvim_lsp",
+    entry_filter = function(entry, ctx)
+      local kind = require("cmp.types").lsp.CompletionItemKind[entry:get_kind()]
+      if kind == "Snippet" and ctx.prev_context.filetype == "java" then
+        return false
+      end
+      if kind == "Text" then
+        return false
+      end
+      return true
+    end,
+  },
+
+  { name = "cmp_tabnine" },
+  { name = "calc" },
+  { name = "emoji" },
+  { name = "crates" },
   { name = "npm", keyword_length = 4 },
   --#region Copied from someone
-  { name = "path", priority_weight = 110, option = { label = "[Path]" } },
+  { name = "path", priority_weight = 110 },
   { name = "git", priority_weight = 110 },
   { name = "nvim_lsp", max_item_count = 20, priority_weight = 100 },
   { name = "nvim_lua", priority_weight = 90 },
@@ -57,18 +76,17 @@ local sources = {
     option = { convert_case = true, loud = true },
     priority_weight = 40,
   },
+  { name = "treesitter" },
 }
 
-for _, source in ipairs(sources) do
-  table.insert(lvim.builtin.cmp.sources, source)
-end
+lvim.builtin.cmp.sources = sources
 
 local cmdlineOk = pcall(function()
   -- Setup CMP on / and : prompts
-  -- local mapping = {
-  --   ["<Down>"] = cmp.mapping(cmp.mapping.select_next_item { behavior = cmp.SelectBehavior.Replace }, { "c" }),
-  --   ["<Up>"] = cmp.mapping(cmp.mapping.select_prev_item { behavior = cmp.SelectBehavior.Replace }, { "c" }),
-  -- }
+  local mapping = {
+    ["<Down>"] = cmp.mapping(cmp.mapping.select_next_item { behavior = cmp.SelectBehavior.Replace }, { "c" }),
+    ["<Up>"] = cmp.mapping(cmp.mapping.select_prev_item { behavior = cmp.SelectBehavior.Replace }, { "c" }),
+  }
   -- cmp.setup.cmdline("/", {
   --   mapping = cmp.mapping.preset.cmdline(mapping),
   --   sources = {
@@ -76,12 +94,16 @@ local cmdlineOk = pcall(function()
   --   },
   -- })
 
-  -- cmp.setup.cmdline(":", {
-  --   mapping = cmp.mapping.preset.cmdline(mapping),
-  --   sources = {
-  --     { name = "cmdline" },
-  --   },
-  -- })
+  cmp.setup.cmdline(":", {
+    mapping = cmp.mapping.preset.cmdline(mapping),
+    sources = {
+      { name = "cmdline" },
+      { name = "path" },
+      { name = "cmdline" },
+      { name = "buffer" },
+      { name = "cmdline_history" },
+    },
+  })
 
   local cmdline_mappings = {
     select_next_item = {
@@ -98,25 +120,22 @@ local cmdlineOk = pcall(function()
     },
   }
 
-  cmp.setup.cmdline(":", {
-    mapping = {
-      ["<Down>"] = cmdline_mappings.select_next_item,
-      ["<C-n>"] = cmdline_mappings.select_next_item,
-      ["<Tab>"] = cmdline_mappings.select_next_item,
-      ["<C-p>"] = cmdline_mappings.select_prev_item,
-      ["<Up>"] = cmdline_mappings.select_prev_item,
-      ["<S-Tab>"] = cmdline_mappings.select_prev_item,
-    },
-    sources = cmp.config.sources({
-      { name = "path" },
-    }, {
-      { name = "cmdline" },
-    }, {
-      { name = "buffer" },
-    }, {
-      { name = "cmdline_history" },
-    }),
-  })
+  -- cmp.setup.cmdline(":", {
+  --   mapping = {
+  --     ["<Down>"] = cmdline_mappings.select_next_item,
+  --     ["<C-n>"] = cmdline_mappings.select_next_item,
+  --     ["<Tab>"] = cmdline_mappings.select_next_item,
+  --     ["<C-p>"] = cmdline_mappings.select_prev_item,
+  --     ["<Up>"] = cmdline_mappings.select_prev_item,
+  --     ["<S-Tab>"] = cmdline_mappings.select_prev_item,
+  --   },
+  --   sources = {
+  --     { name = "path" },
+  --     { name = "cmdline" },
+  --     { name = "buffer" },
+  --     { name = "cmdline_history" },
+  --   },
+  -- })
   cmp.setup.cmdline("/", {
     mapping = {
       ["<Down>"] = cmdline_mappings.select_next_item,
