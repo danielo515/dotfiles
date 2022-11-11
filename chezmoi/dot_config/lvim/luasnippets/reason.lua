@@ -105,7 +105,7 @@ module {} = {{
   s(
     { trig = "map", dscr = "Any map", regTrig = false },
     fmt(
-      [[ {} -> {}.map(({}) => {{ {} }});
+      [[ {} -> {}.map(({}) => {{ {} }})
     ]],
       {
         i(1),
@@ -145,12 +145,28 @@ module {} = {{
     { trig = "log", dscr = "Logs using our nice logger", regTrig = false },
     fmt(
       [[
-    Log.{}(~call="{}", {});
+    Log.{}(~call="{}", {})
       ]],
       {
         c(1, { t "error", t "warn" }, node_ops),
         partial(vim.fn.expand, "%:t:r"),
         i(0, "error"),
+      }
+    )
+  ),
+  s(
+    { trig = "red", dscr = "reduce helper", regTrig = false },
+    fmt(
+      [[
+      {} -> Array.reduce((acc,{}) => {{ 
+        {} 
+        acc;
+      }})
+      ]],
+      {
+        i(1),
+        i(2),
+        i(0),
       }
     )
   ),
