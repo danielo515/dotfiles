@@ -4,7 +4,7 @@
 ---@param desc string the keymap human readabble description
 ---@param [silent] say if the mapping should be silent or not. Defaults to being silent
 local function nmap(lhs, rhs, desc, silent)
-  silent = silent or true
+  silent = silent == nil and true or false
   vim.keymap.set("n", lhs, rhs, { silent = silent, noremap = true, desc = desc })
 end
 
