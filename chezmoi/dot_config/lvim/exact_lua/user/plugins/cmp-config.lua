@@ -99,7 +99,6 @@ local cmdlineOk = pcall(function()
     sources = {
       { name = "cmdline" },
       { name = "path" },
-      { name = "cmdline" },
       { name = "buffer" },
       { name = "cmdline_history" },
     },
@@ -170,6 +169,23 @@ lvim.builtin.cmp.mapping["<CR>"] = cmp.mapping(function(fallback)
   end
   fallback()
 end, { "i" })
+
+local jumpable = require("lvim.core.cmp").methods.jumpable
+
+lvim.builtin.cmp.mapping["<Tab>"] = cmp.mapping(function(fallback)
+  if cmp.visible() then
+    cmp.select_next_item()
+  elseif luasnip.choice_active() then
+    -- cmp.complete()
+    luasnip.change_choice(1)
+  elseif luasnip.expand_or_locally_jumpable() then
+    luasnip.expand_or_jump()
+  elseif jumpable(1) then
+    luasnip.jump(1)
+  else
+    fallback()
+  end
+end, { "i", "s" })
 
 if not cmdlineOk then
   vim.notify("Could not require cmp to setup cmdline", vim.log.levels.ERROR, { title = "Danielo" })
