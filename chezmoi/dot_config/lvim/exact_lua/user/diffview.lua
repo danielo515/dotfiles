@@ -16,8 +16,8 @@ return {
           ["<C-w>gf"] = actions.goto_file_tab, -- Open the file in a new tabpage
           ["<leader>e"] = actions.focus_files, -- Bring focus to the files panel
           ["<leader>b"] = actions.toggle_files, -- Toggle the files panel.
-          j = "]c",
-          k = "[c",
+          ["<s-j>"] = "]c",
+          ["<s-k>"] = "[c",
         },
         file_panel = {
           ["j"] = actions.select_next_entry, -- Bring the cursor to the next file entry
