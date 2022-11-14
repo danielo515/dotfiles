@@ -61,6 +61,11 @@ function cat_fuzzy(){
   fd "$1" ../ -x cat {}
 }
 
+function fuzzy_kill() {
+ line=$(ps -ef | fzf -q "'$1" -1 --height 40% --layout reverse -d 20)
+ echo $line
+}
+
 
 # ---- NPM
 alias npm-i='npm i --registry=https://registry.npmjs.org/'
