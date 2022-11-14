@@ -8,6 +8,7 @@ lvim.lsp.installer.setup.automatic_servers_installation = true
 vim.opt.rtp:append "/Users/danielo/.opam/default/share/ocp-indent/vim"
 -- Project
 lvim.builtin.project.patterns = { ".git", "package.json", "config.lua" }
+lvim.builtin.project.silent_chdir = false
 -- Packer fix
 local packer = require "packer"
 
