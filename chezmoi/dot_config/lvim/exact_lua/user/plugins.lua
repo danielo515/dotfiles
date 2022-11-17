@@ -8,6 +8,7 @@ local plugins = {
   -- sessions management
   require("user.persistence").plugin,
   require("user.harpoon").plugin,
+  require "user.plugins.sessions",
   -- highlight nicely the search results
   require("user.hlslens").plugin,
   require("user.neo_tree").plugin, -- Is good not only for files, but also git
