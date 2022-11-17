@@ -14,14 +14,23 @@ local function add_node_bin()
 end
 
 function M.config()
-  local get_chezmoi_dir = require("user.util.chezmoi").get_chezmoi_dir
+  local chezmoi = require "user.util.chezmoi"
   local codelens_viewer = "lua require('nvim-lightbulb').update_lightbulb()"
   local autocommands = {
     -- Apply chezmoi whenever a dotfile is updated
     {
       "BufWritePost",
-      get_chezmoi_dir() .. "/*",
+      chezmoi.get_chezmoi_dir() .. "/*",
       "execute '!chezmoi apply -v --source-path %' | LvimReload ",
+    },
+    -- Re add to chezmoi snippet files, because that is the only way to have live reload of snippets
+    {
+      "BufWritePost",
+      "*/luasnippets/*",
+      function()
+        local file = vim.fn.expand "%:p"
+        chezmoi.re_add(file)
+      end,
     },
     { "CursorHold", "*.rs,*.go,*.ts,*.tsx,*.lua", codelens_viewer },
 
