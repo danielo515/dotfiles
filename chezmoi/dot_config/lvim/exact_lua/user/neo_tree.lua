@@ -11,7 +11,7 @@ M.plugin = {
       "s1n7ax/nvim-window-picker",
       tag = "1.*",
       config = function()
-        require("window-picker").setup({
+        require("window-picker").setup {
           autoselect_one = true,
           include_current = false,
           filter_rules = {
@@ -25,13 +25,13 @@ M.plugin = {
             },
           },
           other_win_hl_color = "#e35e4f",
-        })
+        }
       end,
     },
   },
   config = function()
     -- Unless you are still migrating, remove the deprecated commands from v1.x
-    vim.cmd([[ let g:neo_tree_remove_legacy_commands = 1 ]])
+    vim.cmd [[ let g:neo_tree_remove_legacy_commands = 1 ]]
 
     -- If you want icons for diagnostic errors, you'll need to define them somewhere:
     vim.fn.sign_define("DiagnosticSignError", { text = " ", texthl = "DiagnosticSignError" })
@@ -41,7 +41,7 @@ M.plugin = {
     -- NOTE: this is changed from v1.x, which used the old style of highlight groups
     -- in the form "LspDiagnosticsSignWarning"
 
-    require("neo-tree").setup({
+    require("neo-tree").setup {
       close_if_last_window = false, -- Close Neo-tree if it is the last window left in the tab
       popup_border_style = "rounded",
       enable_git_status = true,
@@ -67,7 +67,7 @@ M.plugin = {
         icon = {
           folder_closed = "",
           folder_open = "",
-          folder_empty = "ﰊ",
+          folder_empty = "",
           -- The next two settings are only a fallback, if you use nvim-web-devicons and configure default icons there
           -- then these will never be used.
           default = "*",
@@ -173,7 +173,7 @@ M.plugin = {
           mappings = {
             ["<bs>"] = "navigate_up",
             ["."] = "set_root",
-            ["H"] = "toggle_hidden",
+            ["I"] = "toggle_hidden",
             ["/"] = "fuzzy_finder",
             ["f"] = "filter_on_submit",
             ["<c-x>"] = "clear_filter",
@@ -189,7 +189,7 @@ M.plugin = {
         show_unloaded = true,
         window = {
           mappings = {
-            ["bd"] = "buffer_delete",
+            ["x"] = "buffer_delete",
             ["<bs>"] = "navigate_up",
             ["."] = "set_root",
           },
@@ -209,9 +209,9 @@ M.plugin = {
           },
         },
       },
-    })
+    }
 
-    vim.cmd([[nnoremap \ :Neotree reveal<cr>]])
+    vim.cmd [[nnoremap \ :Neotree reveal<cr>]]
   end,
 }
 return M
