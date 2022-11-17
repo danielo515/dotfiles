@@ -32,7 +32,7 @@ lvim.builtin.cmp.sorting = sorting
 lvim.builtin.cmp.formatting.source_names = source_names
 -- CMP specific plugins and configurations
 local sources = {
-
+  { name = "luasnip", priority_weight = 80 },
   {
     name = "nvim_lsp",
     entry_filter = function(entry, ctx)
@@ -52,12 +52,10 @@ local sources = {
   { name = "emoji" },
   { name = "crates" },
   { name = "npm", keyword_length = 4 },
-  --#region Copied from someone
   { name = "path", priority_weight = 110 },
   { name = "git", priority_weight = 110 },
   { name = "nvim_lsp", max_item_count = 20, priority_weight = 100 },
   { name = "nvim_lua", priority_weight = 90 },
-  { name = "luasnip", priority_weight = 80 },
   { name = "buffer", max_item_count = 5, priority_weight = 70 },
   {
     name = "rg",
@@ -176,7 +174,6 @@ lvim.builtin.cmp.mapping["<Tab>"] = cmp.mapping(function(fallback)
   if cmp.visible() then
     cmp.select_next_item()
   elseif luasnip.choice_active() then
-    -- cmp.complete()
     luasnip.change_choice(1)
   elseif luasnip.expand_or_locally_jumpable() then
     luasnip.expand_or_jump()
