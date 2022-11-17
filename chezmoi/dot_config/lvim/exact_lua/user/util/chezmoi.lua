@@ -13,23 +13,29 @@ end
 local Job = require "plenary.job"
 
 function M.re_add(path)
-  Job:new({
+  local result, _ = Job:new({
     command = "chezmoi",
     args = { "managed", "-i", "files", path },
     -- Do not set env prop or it will  fail
-    on_exit = function(j, return_val)
-      vim.pretty_print("file under control: ", return_val == 0)
-      local result = j:result()
-      local isIncluded = #result > 0
-      vim.ui.select({ "yes", "no" }, { prompt = "Chezmo managed file edited. re-add it?" }, function(choice)
-        local saidYes = choice == "yes"
-        if saidYes then
-          print(saidYes, result)
-          vim.fn.execute("!chemzoi add -f " .. path)
-        end
-      end)
+    on_exit = function(_, return_val)
+      if return_val ~= 0 then
+        print "Command failed to execute"
+        return
+      end
     end,
   }):sync()
+  local isIncluded = #result > 0
+  -- vim.pretty_print("file under control normal: ", isIncluded)
+  -- vim.pretty_print(result, #result, isIncluded)
+  if not isIncluded then
+    return
+  end
+  vim.ui.select({ "yes", "no" }, { prompt = "Chezmo managed file edited. re-add it?" }, function(choice)
+    local saidYes = choice == "yes"
+    if saidYes then
+      Job:new({ command = "chezmoi", args = { "add", "-f", path } }):sync()
+    end
+  end)
 end
 
 _G.re_add = M.re_add
