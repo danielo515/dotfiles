@@ -34,7 +34,9 @@ alias chr='chmod 644'
 alias l='ls -l'
 alias ll='ls -la'
 alias lsh='ls -lhXG'
-# ---- Git
+#--------------
+# ---- Git ----
+#--------------
 alias g='git status'
 alias ga='git add --all'
 alias gb='git branch'
@@ -44,12 +46,19 @@ alias gac='ga && gcm'
 alias push='git push'
 alias pushu='git push -u origin HEAD'
 alias gundo='git reset --soft HEAD~1'
-#----- Other stuff
-alias bashrc='vi ~/.bashrc && refresh'
-alias lgrep=' ls -la | grep'
+
+function git_grep_file() {
+  #git_grep_file filename str
+  git --no-pager grep "$2" $(git rev-list --all -- $1) -- $1
+}
+
 function rebaseN(){
     noglob git rebase --interactive HEAD~$1
 }
+
+#----- Other stuff
+alias bashrc='vi ~/.bashrc && refresh'
+alias lgrep=' ls -la | grep'
 
 function pushSnippets(){
  cd ~/mega/programacion/node/vscodePlugins/vscode-node-snippets/
@@ -57,7 +66,7 @@ function pushSnippets(){
  cd -
 }
 
-function cat_fuzzy(){
+function fuzzy_cat(){
   fd "$1" ../ -x cat {}
 }
 
