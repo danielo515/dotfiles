@@ -1,6 +1,5 @@
 --
-local NuiText = require("nui.text")
-
+local NuiText = require "nui.text"
 
 ---Render a single key -> description entry
 ---@param key string[]
@@ -8,8 +7,8 @@ local NuiText = require("nui.text")
 ---@param bufnr integer
 ---@return integer The length of the rendered text
 local function renderKey(key, description, bufnr, column, row)
-  local keyText = NuiText(' ' .. vim.fn.join(key, ','), 'WhichKeyDesc')
-  local sep = NuiText(' → ', 'WhichKeySeparator')
+  local keyText = NuiText(" " .. vim.fn.join(key, ","), "WhichKeyDesc")
+  local sep = NuiText(" → ", "WhichKeySeparator")
   keyText:render(bufnr, -1, row, column, row, column)
   column = column + keyText:length()
   sep:render(bufnr, -1, row, column, row, column)
@@ -24,6 +23,8 @@ end
 ---@param bufnr number
 local function renderHelp(mappings, bufnr)
   local mode = vim.fn.mode()
+  -- clear the current contents
+  vim.fn.setbufline(bufnr, 1, "")
   mappings = vim.tbl_filter(function(mapping)
     return vim.tbl_contains(mapping.modes, mode)
   end, mappings)

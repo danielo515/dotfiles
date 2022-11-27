@@ -1,8 +1,8 @@
-local Input = require("nui.input")
-local Popup = require("nui.popup")
+local Input = require "nui.input"
+local Popup = require "nui.popup"
 local event = require("nui.utils.autocmd").event
 local bind = require("user.util").bind
-local renderHelp = require_clean("user.form.print-help")
+local renderHelp = require_clean "user.form.print-help"
 
 local width = 60
 local focus = vim.api.nvim_set_current_win
@@ -19,22 +19,21 @@ local layout = {
 ---@field description string
 ---@field modes mode[]
 
-
 ---@alias Mappings table<string, Key_spec>
 ---@type Mappings
 local default_mappings = {
   switch_key = {
-    keys = { '<Tab>', '<Enter>' },
-    description = ' Jump to next input',
+    keys = { "<Tab>", "<Enter>" },
+    description = " Jump to next input",
     -- Switch key is bound in input mode for convenience
-    modes = { 'n', 'i' }
+    modes = { "n", "i" },
   },
   exit_key = {
-    keys = { 'q' },
-    description = 'Exit the form',
-    modes = { 'n' }
-  } }
-
+    keys = { "q" },
+    description = "Exit the form",
+    modes = { "n" },
+  },
+}
 
 local function bindExitEvents(popups)
   for _, popup in pairs(popups) do
@@ -58,7 +57,7 @@ end
 
 ---Binds the requested keys t
 ---@param binds Mappings
----@param popup nui.popup
+---@param popup popup
 ---@param alt_win integer alternative window to jump on switch
 local function bindKeys(binds, popup, alt_win)
   local opts = { noremap = true }
@@ -75,7 +74,7 @@ local function bindKeys(binds, popup, alt_win)
     map(key, function()
       vim.api.nvim_set_current_win(alt_win)
       vim.schedule(function()
-        vim.cmd('startinsert')
+        vim.cmd "startinsert"
       end)
     end, binds.switch_key.modes)
   end
@@ -87,13 +86,13 @@ end
 ---@param o { onSubmit: cb, title: string } options for the form
 local function Form(o)
   local onSubmit, title = o.onSubmit, o.title
-  local state = ''
+  local state = ""
 
   local input_options = {
     relative = "editor",
     position = {
-      row = '50%',
-      col = '50%',
+      row = "50%",
+      col = "50%",
     },
     size = width,
     border = {
@@ -108,12 +107,11 @@ local function Form(o)
     },
   }
 
-
   layout.input = Input(input_options, {
     prompt = "> ",
     default_value = "",
     on_close = function()
-      print("Input closed!")
+      print "Input closed!"
       exit()
     end,
     on_change = function(value)
@@ -121,57 +119,72 @@ local function Form(o)
     end,
   })
 
-
-
   -- POPUP
-  layout.popup = Popup({
+  layout.popup = Popup {
     enter = false,
     focusable = true,
-    relative = 'editor',
+    -- relative = "editor",
     border = {
       style = "rounded",
     },
-    position = {
-      col = layout.input.win_config.col,
-      row = layout.input.win_config.row + layout.input.win_config.height + 2,
-    },
-    size = {
-      width = width,
-      height = 20,
-    },
+    -- position = {
+    --   col = layout.input.win_config.col,
+    --   row = layout.input.win_config.row + layout.input.win_config.height + 2,
+    -- },
+    -- size = {
+    --   width = width,
+    --   height = 20,
+    -- },
     buf_options = {
       modifiable = true,
       readonly = false,
     },
-  })
-
+  }
 
   -- Help window
-  layout.help = Popup({
+  layout.help = Popup {
     enter = false,
     focusable = false,
-    relative = 'editor',
+    -- relative = "editor",
     border = {
       style = "rounded",
+      -- text = {
+      --   top = "keys",
+      --   top_align = "left",
+      -- },
     },
-    position = {
-      col = layout.popup.win_config.col,
-      row = layout.popup.win_config.row + layout.popup.win_config.height + 2,
-    },
-    size = {
-      width = width,
-      height = 2,
-    },
+    -- position = {
+    --   col = layout.popup.win_config.col,
+    --   row = layout.popup.win_config.row + layout.popup.win_config.height + 2,
+    -- },
+    -- size = {
+    --   width = width,
+    --   height = 2,
+    -- },
     buf_options = {
       modifiable = true,
       readonly = false,
     },
-  })
+  }
 
+  local Layout = require "nui.layout"
 
-  layout.input:mount()
-  layout.popup:mount()
-  layout.help:mount()
+  local llayout = Layout(
+    {
+      position = "50%",
+      size = {
+        width = 80,
+        height = 40,
+      },
+    },
+    Layout.Box({
+      Layout.Box(layout.input, { size = "10%" }),
+      Layout.Box(layout.popup, { size = "80%" }),
+      Layout.Box(layout.help, { size = "10%" }),
+    }, { dir = "col" })
+  )
+
+  llayout:mount()
 
   layout.input:on({ event.InsertLeave, event.InsertEnter }, function()
     vim.schedule(function()
@@ -186,6 +199,6 @@ local function Form(o)
   -- vim.schedule(bind(renderHelp, default_mappings, layout.help.bufnr))
 end
 
-Form { title = 'new thing', onSubmit = pprint }
+Form { title = "new thing", onSubmit = pprint }
 
 return Form
