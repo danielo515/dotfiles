@@ -19,9 +19,13 @@ local function mapKeys(layout, pop, alt_win)
   pop:map("n", "<Esc>", function()
     layout:unmount()
   end)
-  pop:map("n", "<Tab>", function()
+  local function goto_alt()
     vim.api.nvim_set_current_win(alt_win)
-  end)
+  end
+  -- because when all you have is two windows, who cares about direction?
+  pop:map("n", "<Tab>", goto_alt)
+  pop:map("n", "<c-l>", goto_alt)
+  pop:map("n", "<c-h>", goto_alt)
 end
 
 ---Mounts a split window with the two buffers loaded into each side.
@@ -81,11 +85,12 @@ local function make_buffers(moduleName)
 end
 
 local function create_module()
+  local current_file = vim.fn.expand "%:t:r"
   D.vim.input(function(name)
     local path = vim.fn.expand "%:p:h"
     local buffers = make_buffers(path .. "/" .. name)
     mount_window(name, buffers)
-  end, {})
+  end, { current_file })
 end
 
 local M = {
