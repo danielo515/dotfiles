@@ -1,8 +1,9 @@
 local ls = require "luasnip"
-local fmt = require("luasnip.extras.fmt").fmt
+
 local s = ls.s
 local i = ls.i
 local extras = require "luasnip.extras"
+local fmt = require("luasnip.extras.fmt").fmt
 local l = extras.lambda
 local f = ls.function_node
 local c = ls.choice_node
@@ -23,33 +24,48 @@ local ext_opts = {
 
 local node_ops = { node_ext_ops = ext_opts }
 
+local function switch_match(index)
+  return c(index, {
+    i(nil, ""),
+    sn(nil, { t "Some(", i(1, "_"), t ")" }),
+    sn(nil, { t "Ok(", i(1, "_"), t ")" }),
+    sn(nil, { t "Error(", i(1, "_"), t ")" }),
+  })
+end
+
 --regTrig = trigger should be interpreted as a lua pattern
-return {
+local normal_ones = {
   s(
     { trig = "switch", dscr = "switch expression", regTrig = false },
     fmt(
       [[
-switch({}) {{
-  | {} => {}
-  }};
-]],
+        switch({}) {{
+          | {} => {}
+          }};
+        ]],
       {
         i(1),
-        c(2, { t "", t "Some()" }),
+        switch_match(2),
         i(0),
       }
     )
   ),
   s(
+    { trig = "sm", dscr = "switch match", regTrig = false },
+    fmt([[ | {} => {} ]], {
+      switch_match(1),
+      i(0),
+    })
+  ),
+  s(
     { trig = "remod", dscr = "react component as module", regTrig = false },
     fmt(
-      [[
-module {} = {{
-  [@react.component]
-  let make = ({}) => {{
-    <div>{}</div>;
-  }};
-}};
+      [[ module {} = {{ 
+      [@react.component]
+      let make = ({}) => {{
+        <div>{}</div>;
+      }};
+    }};
     ]],
       {
         i(1),
@@ -118,39 +134,35 @@ module {} = {{
   s(
     { trig = "jslog", dscr = "Javascript easier log", regTrig = false },
     fmt(
-      [[
-        //TODO: Remove this debug line
-          Js.log2("{}", {});
+      [[ //TODO: Remove this debug line
+          Js.log2("{}", {}{});
       ]],
       {
         rep(1),
         i(1),
+        i(0),
       }
     )
   ),
   s(
     { trig = "fn", dscr = "Create a function easily", regTrig = false },
-    fmt(
-      [[
-          let {} = ({}) => {}
-      ]],
-      {
-        i(1),
-        i(2),
-        c(3, { i(0), t "{{ {} }}" }),
-      }
-    )
+    fmt([[ let {} = ({}) => {} ]], {
+      i(1),
+      i(2),
+      c(3, { i(0), { t "{ ", t "}" } }),
+    })
   ),
   s(
     { trig = "log", dscr = "Logs using our nice logger", regTrig = false },
     fmt(
       [[
-    Log.{}(~call="{}", {})
+    Log.{}(~call="{}", ~error={}, {})
       ]],
       {
-        c(1, { t "error", t "warn" }, node_ops),
+        c(1, { t "error", t "warn", t "debug" }, node_ops),
         partial(vim.fn.expand, "%:t:r"),
-        i(0, "error"),
+        i(2),
+        i(0),
       }
     )
   ),
@@ -170,4 +182,38 @@ module {} = {{
       }
     )
   ),
+  s(
+    { trig = "useff", dscr = "Use effect", regTrig = false },
+    fmt(
+      [[
+          React.useEffect1(
+            () => {{
+              {}
+              Some(() => setRef(_ => Js.Nullable.null));
+            }},
+            [|{}|],
+          );
+      ]],
+      { i(1), i(0) }
+    )
+  ),
 }
+
+local auto_trigger = {
+  s(
+    { trig = "prr", dscr = "Promise result return", regTrig = false },
+    fmt([[ -> PromiseResult.return {} ]], {
+      i(0),
+    })
+  ),
+  s(
+    { trig = "logw", dscr = "Promise result return", regTrig = false },
+    fmt([[ Log.warning(~call="{}{}", {})]], {
+      partial(vim.fn.expand, "%:t:r"),
+      i(1),
+      i(0),
+    })
+  ),
+}
+
+return normal_ones, auto_trigger
