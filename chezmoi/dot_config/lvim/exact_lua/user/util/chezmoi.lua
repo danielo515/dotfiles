@@ -33,7 +33,8 @@ function M.re_add(path)
   vim.ui.select({ "yes", "no" }, { prompt = "Chezmo managed file edited. re-add it?" }, function(choice)
     local saidYes = choice == "yes"
     if saidYes then
-      Job:new({ command = "chezmoi", args = { "add", "-f", path } }):sync()
+      local res, code = Job:new({ command = "chezmoi", args = { "add", "-f", path } }):sync()
+      -- vim.pretty_print("result", res, "code", code, result)
     end
   end)
 end
