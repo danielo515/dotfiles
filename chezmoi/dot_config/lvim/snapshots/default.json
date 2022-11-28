@@ -212,9 +212,6 @@
   "nvim-scrollbar": {
     "commit": "ce0df69"
   },
-  "neo-tree.nvim": {
-    "commit": "3c70bb4"
-  },
   "nvim-bqf": {
     "commit": "8b62211"
   },
@@ -249,7 +246,7 @@
     "commit": "e7b5e92"
   },
   "nui.nvim": {
-    "commit": "d411520"
+    "commit": "d12a697"
   },
   "popfix": {
     "commit": "bf3cc43"
@@ -312,7 +309,7 @@
     "commit": "6236642"
   },
   "legendary.nvim": {
-    "commit": "59309190f3c80a41160e29d644a15ceb5c64e239"
+    "commit": "3b643d7bb4a521e0c9f0fcd00f299b1432441eb8"
   },
   "vim-firestore": {
     "commit": "e53fe9d"
