@@ -84,6 +84,8 @@ local function make_buffers(moduleName)
   return { interface = interface, implementation = implementation }
 end
 
+---Creates a new module (interface + implementation) and opens
+--it in a split floating window
 local function create_module()
   local current_file = vim.fn.expand "%:t:r"
   D.vim.input(function(name)
@@ -91,6 +93,14 @@ local function create_module()
     local buffers = make_buffers(path .. "/" .. name)
     mount_window(name, buffers)
   end, { current_file })
+end
+
+---Opens the current file as a module in a floating window
+local function open_module()
+  -- current file without extension
+  local path = vim.fn.expand "%:p:r"
+  local buffers = make_buffers(path)
+  mount_window(name, buffers)
 end
 
 local M = {

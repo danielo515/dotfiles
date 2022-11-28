@@ -1,25 +1,37 @@
 local bind = require("danielo").bind
 local create_sibling_file = require("user.util.create").create_sibling_file
 local copy_messages_to_clipboard = require("user.util").copy_messages_to_clipboard
+local create_module = require("user.ui.split_module").create_module
+local open_module = require("user.ui.split_module").open_module
 
 local Ok, err = pcall(function()
-  local bind_command = require("legendary").bind_command
-  bind_command {
+  local command = require("legendary").command
+  command {
     ":CopyMessages",
     function()
       copy_messages_to_clipboard()
     end,
     description = "Copy the output of :messages to OS clipboard",
   }
-  bind_command {
+  command {
     ":CopyLast10Messages",
     bind(copy_messages_to_clipboard, 10),
     description = "Copy the last 10 lines of :messages to OS clipboard",
   }
-  bind_command {
+  command {
     ":CreateSibling",
     create_sibling_file,
     description = "Create a new file that is a sibling of the current one",
+  }
+  command {
+    ":CreateModule",
+    create_module,
+    description = "Create a new interface + implementation file and open in split view",
+  }
+  command {
+    ":OpenModule",
+    open_module,
+    description = "Opens the current file with its rei file in a split view",
   }
 end)
 
