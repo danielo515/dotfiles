@@ -16,16 +16,22 @@ local buf_options = {
 ---@param layout any
 ---@param alt_win number The window Id of the other popup
 local function mapKeys(layout, pop, alt_win)
-  pop:map("n", "<Esc>", function()
-    layout:unmount()
-  end)
   local function goto_alt()
     vim.api.nvim_set_current_win(alt_win)
   end
   -- because when all you have is two windows, who cares about direction?
-  pop:map("n", "<Tab>", goto_alt)
-  pop:map("n", "<c-l>", goto_alt)
-  pop:map("n", "<c-h>", goto_alt)
+  local maps = { "<c-h>", "<c-l>", "<Tab>" }
+  vim.tbl_map(function(key)
+    pop:map("n", key, goto_alt)
+  end, maps)
+
+  --On exit, unmap the bindings
+  pop:map("n", "<Esc>", function()
+    vim.tbl_map(function(key)
+      pop:unmap("n", key)
+    end, maps)
+    layout:unmount()
+  end)
 end
 
 ---Mounts a split window with the two buffers loaded into each side.
@@ -98,13 +104,14 @@ end
 ---Opens the current file as a module in a floating window
 local function open_module()
   -- current file without extension
-  local path = vim.fn.expand "%:p:r"
-  local buffers = make_buffers(path)
+  local name = vim.fn.expand "%:p:r"
+  local buffers = make_buffers(name)
   mount_window(name, buffers)
 end
 
 local M = {
   create_module = create_module,
+  open_module = open_module,
 }
 
 return M
