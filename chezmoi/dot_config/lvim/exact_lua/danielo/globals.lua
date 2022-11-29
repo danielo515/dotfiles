@@ -38,6 +38,14 @@ function D.pconf(path, ...)
   end)
 end
 
+---Tries to require the current file with a require
+--clean path. The method is not very good, so it may
+--fail if the expected path is not exactly the one you thing
+function D.require_clean()
+  local current_file = vim.fn.expand("%:r"):gsub(".*lua/", "")
+  D.call(lvim.require_clean, current_file)
+end
+
 -- Yes, a function that does nothing, deal with it
 D.noop = function() end
 -- Shortcut

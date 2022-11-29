@@ -41,3 +41,5 @@ function PopupKeys:unmount()
   end
   PopupKeys.super.unmount(self)
 end
+
+return PopupKeys
