@@ -4,4 +4,6 @@ local _vim = require "danielo.vim"
 
 local M = fun.assign(fun, keymap, _vim)
 
+M.PopupKeys = require "danielo.ui.PopupKeys"
+
 return M

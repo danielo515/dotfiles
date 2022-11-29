@@ -46,3 +46,4 @@ local fun = require "danielo.fun"
 D = fun.assign(D, fun)
 
 D.vim = require "danielo.vim"
+D.popup = require "danielo.ui.PopupKeys"
