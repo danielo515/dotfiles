@@ -34,6 +34,7 @@ lvim.builtin.gitsigns.opts.current_line_blame = true
 lvim.lsp.float.max_height = 20
 lvim.builtin.cmp.confirm_opts.behavior = require("cmp").ConfirmBehavior.Insert
 lvim.builtin.autopairs.active = false
+lvim.builtin.bufferline.options.numbers = "buffer_id"
 -- Dashboard
 -- =========================================
 lvim.builtin.alpha.mode = "custom"
