@@ -5,7 +5,6 @@ local imap = require("user.util.keymap").imap
 lvim.keys.normal_mode["<S-l>"] = ":BufferLineCycleNext<CR>"
 lvim.keys.normal_mode["<S-h>"] = ":BufferLineCyclePrev<CR>"
 lvim.keys.normal_mode["<C-F>"] = "<cmd>lua require('user.telescope').grep_files()<cr>"
--- lvim.keys.normal_mode["<C-P>"] = "<C-W><C-P>"
 lvim.keys.normal_mode["<S-X>"] = "<cmd>BufferKill<cr>"
 lvim.keys.normal_mode["kj"] = false
 lvim.keys.normal_mode["jk"] = false
@@ -25,8 +24,8 @@ lvim.keys.normal_mode["<S-Tab>"] = ":Neotree float reveal<cr>"
 lvim.keys.normal_mode["<A-k>"] = ":Telescope command_center<CR>"
 lvim.keys.normal_mode["<C-N>"] = ":NvimTreeFindFile<cr>"
 lvim.keys.normal_mode["<C-;>"] = ":Telescope command_history<cr>"
-lvim.keys.normal_mode["ml"] = "dd<C-W><C-l>p<C-w><C-h>"
 lvim.keys.normal_mode[",n"] = "<cmd>lua vim.diagnostic.goto_next()<cr>"
+-- lvim.keys.normal_mode["ml"] = "dd<C-W><C-l>p<C-w><C-h>"
 lvim.keys.normal_mode["+"] = "<cmd>3wincmd > <cr>"
 lvim.keys.normal_mode["-"] = "<cmd>3wincmd < <cr>"
 vmap("p", '"_dP', "Paste without saving to clipboard")
