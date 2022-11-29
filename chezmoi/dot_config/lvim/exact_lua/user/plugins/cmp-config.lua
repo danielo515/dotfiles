@@ -189,7 +189,7 @@ if not cmdlineOk then
 end
 
 lvim.builtin.cmp.window.completion.max_height = 80
-vim.opt.pumheight = 0 -- use all available space
+vim.opt.pumheight = 50 -- 0 will use all available space, but could cause performance issues
 lvim.builtin.cmp.formatting.source_names.rg = "(RG)"
 --#endregion
 -- Return a list of plugins to install to insert in main plugins list
