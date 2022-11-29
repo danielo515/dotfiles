@@ -35,8 +35,9 @@ local function mapKeys(layout, pop, alt_win)
 end
 
 ---Mounts a split window with the two buffers loaded into each side.
+---@alias buffId number
 ---@param moduleName string
----@param buffers { implementation = number, interface = number } table with buffer ids
+---@param buffers { implementation: buffId, interface: buffId } table with buffer ids
 local function mount_window(moduleName, buffers)
   local p1 = Popup {
     enter = true,
