@@ -9,30 +9,39 @@ local win_options = {
 local buf_options = {
   modifiable = true,
   readonly = false,
+  buflisted = true,
 }
+local event = require("nui.utils.autocmd").event
 
 ---Map the common set of keys for each popup
----@param pop any
+---@param popups any[]
 ---@param layout any
----@param alt_win number The window Id of the other popup
-local function mapKeys(layout, pop, alt_win)
-  local function goto_alt()
-    vim.api.nvim_set_current_win(alt_win)
-  end
+local function mapKeys(layout, popups)
   -- because when all you have is two windows, who cares about direction?
   local maps = { "<c-h>", "<c-l>", "<Tab>" }
-  vim.tbl_map(function(key)
-    pop:map("n", key, goto_alt)
-  end, maps)
 
-  --On exit, unmap the bindings
-  pop:map("n", "<Esc>", function()
+  for i, pop in ipairs(popups) do
+    local next = popups[i + 1] or popups[i - 1] -- next or previous, who cares
+    local function goto_alt()
+      vim.api.nvim_set_current_win(next.winid)
+    end
+    --bind the navigation keymaps
     vim.tbl_map(function(key)
-      pop:unmap("n", key)
+      pop:map("n", key, goto_alt)
     end, maps)
-    layout:unmount()
-  end)
+
+    --On exit, unmap the bindings
+    pop:map("n", "<Esc>", function()
+      vim.tbl_map(function(key)
+        pop:unmap("n", key)
+        next:unmap("n", key)
+      end, maps)
+      layout:unmount()
+    end)
+  end
 end
+
+local NuiText = require "nui.text"
 
 ---Mounts a split window with the two buffers loaded into each side.
 ---@alias buffId number
@@ -47,7 +56,7 @@ local function mount_window(moduleName, buffers)
     border = {
       style = "double",
       text = {
-        top = moduleName .. ".re",
+        top = NuiText(moduleName .. ".re", "WhichKeyDesc"),
         bottom = "<Esc> close this window",
       },
     },
@@ -60,7 +69,7 @@ local function mount_window(moduleName, buffers)
     border = {
       style = "rounded",
       text = {
-        top = moduleName .. ".rei",
+        top = NuiText(moduleName .. ".rei", "String"),
       },
     },
   }
@@ -77,10 +86,14 @@ local function mount_window(moduleName, buffers)
 
   layout:mount()
   -- Always map after mount
-  mapKeys(layout, p1, p2.winid)
-  mapKeys(layout, p2, p1.winid)
+  mapKeys(layout, { p1, p2 })
 end
 
+---Given a module name, creates two different buffers pointing to
+--the implementation and interface files
+--The module name should not include extension
+---@param moduleName string
+---@return {interface: number, implementation: number}
 local function make_buffers(moduleName)
   local implementation = vim.fn.bufadd(moduleName .. ".re")
   local interface = vim.fn.bufadd(moduleName .. ".rei")
@@ -105,8 +118,9 @@ end
 ---Opens the current file as a module in a floating window
 local function open_module()
   -- current file without extension
-  local name = vim.fn.expand "%:p:r"
-  local buffers = make_buffers(name)
+  local path = vim.fn.expand "%:p:r"
+  local name = vim.fn.expand "%:r"
+  local buffers = make_buffers(path)
   mount_window(name, buffers)
 end
 
