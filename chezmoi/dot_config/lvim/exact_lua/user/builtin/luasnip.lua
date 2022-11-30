@@ -14,10 +14,18 @@ imap("<c-e>", function()
 end, "Jump to next in luasnip")
 
 luasnip.config.set_config {
+  -- Update more often, :h events for more info.
   history = true,
   updateevents = "TextChanged,TextChangedI",
-  delete_check_events = "TextChanged", -- or maybe "InsertLeave"
+  -- Snippets aren't automatically removed if their text is deleted.
+  -- `delete_check_events` determines on which events (:h events) a check for
+  -- deleted snippets is performed.
+  -- This can be especially useful when `history` is enabled.
+  delete_check_events = "InsertLeave", -- or maybe "InsertLeave"
   enable_autosnippets = true,
+  -- mapping for cutting selected text so it's usable as SELECT_DEDENT,
+  -- SELECT_RAW or TM_SELECTED_TEXT (mapped via xmap).
+  store_selection_keys = "<Tab>",
   --  region_check_events = "CursorMoved", -- or maybe "InsertEnter"
   ext_opts = {
     [types.insertNode] = {
