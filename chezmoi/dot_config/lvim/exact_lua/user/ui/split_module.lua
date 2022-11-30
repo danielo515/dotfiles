@@ -1,5 +1,5 @@
 local Layout = require "nui.layout"
-local Popup = require "nui.popup"
+local Popup = require "danielo.ui.PopupKeys"
 
 local win_options = {
   -- winblend = 10,
@@ -11,7 +11,6 @@ local buf_options = {
   readonly = false,
   buflisted = true,
 }
-local event = require("nui.utils.autocmd").event
 
 ---Map the common set of keys for each popup
 ---@param popups any[]
@@ -30,12 +29,8 @@ local function mapKeys(layout, popups)
       pop:map("n", key, goto_alt)
     end, maps)
 
-    --On exit, unmap the bindings
+    --On exit, bindings are automatically removed by my extended popup
     pop:map("n", "<Esc>", function()
-      vim.tbl_map(function(key)
-        pop:unmap("n", key)
-        next:unmap("n", key)
-      end, maps)
       layout:unmount()
     end)
   end
