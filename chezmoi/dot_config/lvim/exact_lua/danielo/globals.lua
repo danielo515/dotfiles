@@ -41,7 +41,7 @@ end
 ---Tries to require the current file with a require
 --clean path. The method is not very good, so it may
 --fail if the expected path is not exactly the one you thing
-function D.require_clean()
+function D.req_current()
   local current_file = vim.fn.expand("%:r"):gsub(".*lua/", "")
   D.call(lvim.require_clean, current_file)
 end
