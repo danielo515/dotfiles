@@ -92,6 +92,10 @@ local whichConfig = {
     y = { "<cmd>lua Yank_file_name()<CR>", "Yank current file path" },
     Y = { "<cmd>lua Yank_full_file_name()<CR>", "Yank full file path" },
   },
+  -- Contextual section. This will be filled from filetype functions
+  x = {
+    name = "contextual",
+  },
   ["?"] = { "<cmd>Cheat<CR>", " Cheat.sh" },
 }
 
@@ -102,5 +106,5 @@ lvim.builtin.which_key.mappings = vim.tbl_deep_extend("force", lv_which, whichCo
 lvim.builtin.which_key.on_config_done = function(which)
   local registerOpts = { prefix = "<leader>" }
   which.register(whichConfig, registerOpts)
-  vim.notify "Reloaded wich keys"
+  vim.notify "Reloaded which keys"
 end
