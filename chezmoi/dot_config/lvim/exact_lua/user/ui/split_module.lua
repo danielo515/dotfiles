@@ -110,17 +110,35 @@ local function create_module()
   end, { current_file })
 end
 
----@type table<string,{name: string, path: string}>
-local opened_cache = {}
+---@generic T
+---@param list T[]
+---@param item T
+local function reAddOnTop(list, item)
+  local filtered = vim.tbl_filter(function(value)
+    return item ~= value
+  end, list)
+  return vim.list_extend(filtered, { item }, 1)
+end
 
+---@type { list: string[], values: table<string,{name: string, path: string}>}
+local opened_cache = { list = {}, values = {} }
+
+local function addToCache(name, path)
+  opened_cache.values[name] = { name = name, path = path }
+  opened_cache.list = reAddOnTop(opened_cache.list, name)
+end
+
+local function open_mod(name, path)
+  local buffers = make_buffers(path)
+  addToCache(name, path)
+  mount_window(name, buffers)
+end
 ---Opens the current file as a module in a floating window
 local function open_module()
   -- current file without extension
   local path = vim.fn.expand "%:p:r"
   local name = vim.fn.expand "%:r"
-  local buffers = make_buffers(path)
-  opened_cache[name] = { name = name, path = path }
-  mount_window(name, buffers)
+  open_mod(name, path)
 end
 
 local function re_open_module()
@@ -128,19 +146,17 @@ local function re_open_module()
     if not choice then
       return
     end
-    local module = opened_cache[choice]
+    local module = opened_cache.values[choice]
     if not module then
       return
     end
-    local buffers = make_buffers(module.path)
-    mount_window(module.name, buffers)
+    open_mod(module.name, module.path)
   end
-  local cache_opts = vim.tbl_keys(opened_cache)
-  if #cache_opts == 0 then
+  if #opened_cache.list == 0 then
     vim.notify "There are no recent modules to open"
     return
   end
-  vim.ui.select(cache_opts, {}, re_open)
+  vim.ui.select(opened_cache.list, {}, re_open)
 end
 
 local M = {
