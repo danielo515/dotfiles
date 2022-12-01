@@ -74,6 +74,7 @@ nmap("<C-P>", ":Telescope command_center<cr>", "Open command center")
 nmap("<C-s>", ":%s/", "Search and replace whole file", false)
 nmap(",h", ":Gitsigns next_hunk<cr>", "Next git hunk")
 nmap(",c", ":cNext!<cr>", "Next item in quickfix")
+nmap(",s", ":s/", "Search/replace local line")
 
 -- An awesome method to jump to windows
 local picker = require "window-picker"
@@ -83,6 +84,7 @@ vim.keymap.set("n", ",w", function()
   } or vim.api.nvim_get_current_win()
   vim.api.nvim_set_current_win(picked_window_id)
 end, { desc = "Pick a window" })
+
 -- Swap two windows using the awesome window picker
 local function swap_windows()
   local window = picker.pick_window {
