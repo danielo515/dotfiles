@@ -79,6 +79,8 @@ local whichConfig = {
     s = { "<cmd>lua require 'gitsigns'.stage_buffer()<cr>", "Stage file" },
     B = { "<cmd>lua require 'gitsigns'.toggle_current_line_blame()<cr>", "Toggle blame" },
     d = { "<cmd>DiffviewOpen<cr>", "Open git diff" },
+    h = { "<cmd>DiffviewFileHistory %<cr>", "Open file history" },
+    H = { "<cmd>DiffviewFileHistory<cr>", "Open file history for current branch" },
     g = { "<cmd>lua require 'lazygit'.lazygit()<cr>", "Open git diff" },
     f = { "<cmd>Telescope git_status<cr>", "Search changed files" },
   },
