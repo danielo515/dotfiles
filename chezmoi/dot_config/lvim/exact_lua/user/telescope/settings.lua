@@ -28,6 +28,37 @@ lvim.builtin.telescope.on_config_done = function(tele)
   tele.load_extension "luasnip"
   tele.load_extension "live_grep_args"
   tele.load_extension "env"
+  local user_telescope = require "user.telescope"
+
+  -- Change Telescope navigation
+  -- we use protected-mode (pcall) just in case the plugin wasn't loaded yet.
+  local file_mappings = {
+    -- for input mode
+    i = {
+      ["<C-j>"] = actions.move_selection_next,
+      ["<C-n>"] = actions.cycle_history_next,
+      ["<C-r>"] = actions.cycle_history_prev,
+      ["<cr>"] = user_telescope.multi_selection_open,
+      ["<c-v>"] = user_telescope.multi_selection_open_vsplit,
+      ["<c-s>"] = user_telescope.multi_selection_open_split,
+      ["<c-t>"] = user_telescope.multi_selection_open_tab,
+      ["<C-X>"] = actions.delete_buffer,
+      ["<c-h>"] = "which_key",
+    },
+    -- for normal mode
+    n = {
+      ["j"] = actions.move_selection_next,
+      ["k"] = actions.move_selection_previous,
+      ["q"] = actions.smart_send_to_qflist + actions.open_qflist,
+      ["Q"] = actions.smart_add_to_qflist + actions.open_qflist,
+      ["x"] = actions.delete_buffer,
+      ["<C-r>"] = user_telescope.refine_search,
+      ["<cr>"] = user_telescope.multi_selection_open,
+      ["<c-v>"] = user_telescope.multi_selection_open_vsplit,
+      ["<c-s>"] = user_telescope.multi_selection_open_split,
+      ["<c-t>"] = user_telescope.multi_selection_open_tab,
+    },
+  }
   local opts = {
     -- Default mappings are handled below
     pickers = {
@@ -62,10 +93,14 @@ lvim.builtin.telescope.on_config_done = function(tele)
       },
       live_grep = {
         mappings = {
-          i = {
+          i = vim.tbl_extend("keep", {
             ["<c-f>"] = actions.to_fuzzy_refine,
-          },
+          }, file_mappings.i),
+          n = file_mappings.n,
         },
+      },
+      find_files = {
+        mappings = file_mappings,
       },
     },
     -- extensions = {
@@ -80,39 +115,6 @@ lvim.builtin.telescope.on_config_done = function(tele)
 
   tele.setup(opts)
 end
-
-local user_telescope = require "user.telescope"
-
--- Change Telescope navigation
--- we use protected-mode (pcall) just in case the plugin wasn't loaded yet.
-local _, actions = pcall(require, "telescope.actions")
-lvim.builtin.telescope.defaults.mappings = {
-  -- for input mode
-  i = {
-    ["<C-j>"] = actions.move_selection_next,
-    ["<C-n>"] = actions.cycle_history_next,
-    ["<C-r>"] = actions.cycle_history_prev,
-    ["<cr>"] = user_telescope.multi_selection_open,
-    ["<c-v>"] = user_telescope.multi_selection_open_vsplit,
-    ["<c-s>"] = user_telescope.multi_selection_open_split,
-    ["<c-t>"] = user_telescope.multi_selection_open_tab,
-    ["<C-X>"] = actions.delete_buffer,
-    ["<c-h>"] = "which_key",
-  },
-  -- for normal mode
-  n = {
-    ["j"] = actions.move_selection_next,
-    ["k"] = actions.move_selection_previous,
-    ["q"] = actions.smart_send_to_qflist + actions.open_qflist,
-    ["Q"] = actions.smart_add_to_qflist + actions.open_qflist,
-    ["x"] = actions.delete_buffer,
-    ["<C-r>"] = user_telescope.refine_search,
-    ["<cr>"] = user_telescope.multi_selection_open,
-    ["<c-v>"] = user_telescope.multi_selection_open_vsplit,
-    ["<c-s>"] = user_telescope.multi_selection_open_split,
-    ["<c-t>"] = user_telescope.multi_selection_open_tab,
-  },
-}
 
 lvim.builtin.telescope.extensions.frecency = {
   auto_validate = false,
