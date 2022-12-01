@@ -53,5 +53,7 @@ _G.preq = D.require
 local fun = require "danielo.fun"
 D = fun.assign(D, fun)
 
+--Better defaults and interfaces for vim commands
 D.vim = require "danielo.vim"
+D.file = require "danielo.file"
 D.popup = require "danielo.ui.PopupKeys"
