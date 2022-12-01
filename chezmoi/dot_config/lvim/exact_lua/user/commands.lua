@@ -3,6 +3,7 @@ local create_sibling_file = require("user.util.create").create_sibling_file
 local copy_messages_to_clipboard = require("user.util").copy_messages_to_clipboard
 local create_module = require("user.ui.split_module").create_module
 local open_module = require("user.ui.split_module").open_module
+local re_open_module = require("user.ui.split_module").re_open_module
 
 local Ok, err = pcall(function()
   local command = require("legendary").command
@@ -32,6 +33,25 @@ local Ok, err = pcall(function()
     ":OpenModule",
     open_module,
     description = "Opens the current file with its rei file in a split view",
+  }
+  command {
+    ":ReopenModule",
+    re_open_module,
+    description = "Pick from a list of previously opened modules",
+  }
+  command {
+    ":SnipEdit",
+    function()
+      require("luasnip.loaders").edit_snippet_files {
+        -- Format the entries for the selected source (all, lua, snipmate, etc)
+        -- format = function(file, source_name)
+        --   if source_name == "all" then
+        --     return nil
+        --   end
+        -- end,
+      }
+    end,
+    description = "Edit snippets for current filetype",
   }
 end)
 

@@ -110,18 +110,43 @@ local function create_module()
   end, { current_file })
 end
 
+---@type table<string,{name: string, path: string}>
+local opened_cache = {}
+
 ---Opens the current file as a module in a floating window
 local function open_module()
   -- current file without extension
   local path = vim.fn.expand "%:p:r"
   local name = vim.fn.expand "%:r"
   local buffers = make_buffers(path)
+  opened_cache[name] = { name = name, path = path }
   mount_window(name, buffers)
+end
+
+local function re_open_module()
+  local function re_open(choice)
+    if not choice then
+      return
+    end
+    local module = opened_cache[choice]
+    if not module then
+      return
+    end
+    local buffers = make_buffers(module.path)
+    mount_window(module.name, buffers)
+  end
+  local cache_opts = vim.tbl_keys(opened_cache)
+  if #cache_opts == 0 then
+    vim.notify "There are no recent modules to open"
+    return
+  end
+  vim.ui.select(cache_opts, {}, re_open)
 end
 
 local M = {
   create_module = create_module,
   open_module = open_module,
+  re_open_module = re_open_module,
 }
 
 return M
