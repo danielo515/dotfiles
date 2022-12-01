@@ -22,6 +22,9 @@ luasnip.config.set_config {
   -- deleted snippets is performed.
   -- This can be especially useful when `history` is enabled.
   delete_check_events = "InsertLeave", -- or maybe "InsertLeave"
+  -- When to check if the snippet should be finished because out of its region.
+  -- Disabled by default, so I set it up
+  region_check_events = "CursorMoved",
   enable_autosnippets = true,
   -- mapping for cutting selected text so it's usable as SELECT_DEDENT,
   -- SELECT_RAW or TM_SELECTED_TEXT (mapped via xmap).
