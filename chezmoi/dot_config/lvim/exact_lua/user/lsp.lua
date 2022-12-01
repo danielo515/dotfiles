@@ -15,8 +15,7 @@ local function check_binary(binary_name)
   vim.notify("Missing required binary: " .. binary_name, vim.log.levels.ERROR)
 end
 
-lvim.lsp.automatic_configuration.skipped_filetypes = { "reason", "rescript" }
--- lvim.lsp.automatic_configuration.skipped_servers = { "rescriptls" }
+lvim.lsp.automatic_configuration.skipped_filetypes = { "reason", "rescript", "markdown" }
 
 function M.config()
   --#region null-ls
@@ -50,7 +49,6 @@ function M.config()
   }
   setup_code_actions { refactorin_opts, nls.builtins.code_actions.gitsigns }
   --#endregion
-
   --#region LSP
   local graphql_lsp_opts = {
     filetypes = { "graphql", "typescriptreact", "javascriptreact", "typescript" },
@@ -75,24 +73,6 @@ function M.config()
     },
     filetypes = { "reason", "rescript" },
   })
-  -- lspManager.setup("sumneko_lua", {
-  --   settings = {
-  --     Lua = {
-  --       runtime = {
-  --         version = "LuaJIT",
-  --         path = get_runtime_dir(),
-  --       },
-
-  --       diagnostics = {
-  --         globals = { "vim", "lvim", "packer_plugins", "fmt", "s", "i" },
-  --       },
-  --       completion = {
-  --         autoRequire = true,
-  --         displayContext = 50,
-  --       },
-  --     },
-  --   },
-  -- })
   --#endregion
 end
 
