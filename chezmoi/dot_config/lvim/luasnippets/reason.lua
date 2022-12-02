@@ -51,6 +51,24 @@ local normal_ones = {
     )
   ),
   s(
+    { trig = "swi2", dscr = "switch with tuples", regTrig = false },
+    fmt(
+      [[
+        switch(({},{})) {{
+          | (Some({}),Some({})) => {}
+          | None => ()
+          }};
+        ]],
+      {
+        i(1),
+        i(2),
+        rep(1),
+        rep(2),
+        i(0),
+      }
+    )
+  ),
+  s(
     { trig = "sm", dscr = "switch match", regTrig = false },
     fmt([[ | {} => {} ]], {
       switch_match(1),
@@ -125,7 +143,7 @@ local normal_ones = {
     ]],
       {
         i(1),
-        c(2, { t "Array", t "Option", t "List" }),
+        c(2, { t "Js.Array2", t "Array", t "Option", t "List" }),
         i(3),
         i(0),
       }
