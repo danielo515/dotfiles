@@ -76,6 +76,30 @@ local normal_ones = {
     })
   ),
   s(
+    { trig = "recostate", dscr = "use recoil state", regTrig = false },
+    fmt([[  let ({}, set{}) = Recoil.useRecoilState({}); ]], {
+      i(1),
+      i(2),
+      i(0),
+    })
+  ),
+  s(
+    { trig = "recoatom", dscr = "use recoil atom", regTrig = false },
+    fmt(
+      [[ 
+    let {}: Recoil.readWrite({}) =
+          Recoil.atom({{ key: "{}.{}", default: {} }});
+]],
+      {
+        i(1),
+        i(2, "option(string)"),
+        partial(vim.fn.expand, "%:t:r"),
+        rep(1),
+        i(3, "None"),
+      }
+    )
+  ),
+  s(
     { trig = "remod", dscr = "react component as module", regTrig = false },
     fmt(
       [[ module {} = {{ 
@@ -93,15 +117,11 @@ local normal_ones = {
     )
   ),
   s(
-    { trig = "rstr", dscr = "react string", regTrig = false },
-    fmt(
-      [[
-      "{}" -> React.string
-    ]],
-      {
-        i(0),
-      }
-    )
+    { trig = "restr", dscr = "react string", regTrig = false },
+    fmt([[ {} -> React.string{} ]], {
+      i(1),
+      i(0),
+    })
   ),
   s(
     { trig = "usestate", dscr = "use state reac", regTrig = false },
