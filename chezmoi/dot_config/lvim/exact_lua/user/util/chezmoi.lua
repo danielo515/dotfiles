@@ -30,8 +30,8 @@ function M.re_add(path)
   if not isIncluded then
     return
   end
-  vim.ui.select({ "yes", "no" }, { prompt = "Chezmo managed file edited. re-add it?" }, function(choice)
-    local saidYes = choice == "yes"
+  vim.ui.select({ "re-add", "ignore" }, { prompt = "Chezmo managed file edited:" .. path }, function(choice)
+    local saidYes = choice == "re-add"
     if saidYes then
       local res, code = Job:new({ command = "chezmoi", args = { "add", "-f", path } }):sync()
       -- vim.pretty_print("result", res, "code", code, result)
