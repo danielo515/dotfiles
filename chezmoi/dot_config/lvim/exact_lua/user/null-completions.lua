@@ -35,22 +35,22 @@ local reason_react_helpers = {
   generator = {
     fn = function(context)
       local current_line_content = context.content[context.row]
-      local className, classString = current_line_content:match '(%s*className=)("[%w%s:-.]+")'
+      local before, className, classString, after = current_line_content:match '(.*)(className=)("[%w%s-:.]+")(.*)$'
 
-      vim.pretty_print(current_line_content)
-
-      if not classString then
+      if classString == nil then
         return
       end
 
-      if classString:length() > 50 then
+      if classString:len() > 50 then
+        local row = context.row
+        -- local filal_len = before:len() + className:len() + classString:len()
         return {
           {
             title = "split long classname",
             action = function()
-              local lines = { className .. ("{%s}"):format(classString) }
+              local lines = { before .. className .. ("{%s}"):format(classString) .. after }
 
-              vim.api.nvim_buf_set_lines(context.bufnr, context.row, context.row, false, lines)
+              vim.api.nvim_buf_set_lines(context.bufnr, row - 1, row, false, lines)
             end,
           },
         }
