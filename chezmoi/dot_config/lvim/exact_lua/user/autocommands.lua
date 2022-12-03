@@ -26,7 +26,7 @@ function M.config()
     -- Re add to chezmoi snippet files, because that is the only way to have live reload of snippets
     {
       "BufWritePost",
-      "~/.config/lvim/luasnippets/*",
+      "*/.config/lvim/*",
       function()
         local file = vim.fn.expand "%:p"
         chezmoi.re_add(file)
