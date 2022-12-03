@@ -43,7 +43,7 @@ end
 --fail if the expected path is not exactly the one you thing
 function D.req_current()
   local current_file = vim.fn.expand("%:r"):gsub(".*lua/", "")
-  D.call(lvim.require_clean, current_file)
+  return D.call(lvim.require_clean, current_file)
 end
 
 -- Yes, a function that does nothing, deal with it
