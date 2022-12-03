@@ -1,6 +1,6 @@
 local M = {}
 
-lvim.lsp.null_ls.setup.debug = true
+lvim.lsp.null_ls.setup.debug = false -- activate this only when needed
 
 local status_ok, nls = pcall(require, "null-ls")
 if not status_ok then
