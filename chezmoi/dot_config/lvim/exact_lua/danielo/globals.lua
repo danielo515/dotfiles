@@ -13,14 +13,18 @@ end
 
 ---Make a require of a module in a protected call. If the call succeeds, then call the on_success
 ---Everything is executed within protected calls
+---@generic T
 ---@param path string
----@param on_success function
+---@param on_success? function
 ---@param on_fail? function
+---@return T
 function D.require(path, on_success, on_fail)
   local ok, lib = pcall(require, path)
   on_fail = on_fail or D.noop
   if ok then
-    pcall(on_success, lib)
+    if type(on_success) == 'function' then
+      pcall(on_success, lib)
+    else return lib end
   else
     vim.notify("Failed to require library: " .. path, vim.log.levels.ERROR, { title = "Danielo" })
     pcall(on_fail)
@@ -50,12 +54,13 @@ end
 D.noop = function() end
 -- Shortcut
 _G.preq = D.require
-local fun = require "danielo.fun"
+
+local fun = D.require "danielo.fun"
 D = fun.assign(D, fun)
 
 --Better defaults and interfaces for vim commands
-D.vim = require "danielo.vim"
-D.file = require "danielo.file"
-D.popup = require "danielo.ui.PopupKeys"
-D.fun = require "danielo.fun"
-D.string = require "danielo.string"
+D.vim = D.require "danielo.vim"
+D.file = D.require "danielo.file"
+D.fun = D.require "danielo.fun"
+D.string = D.require "danielo.string"
+D.popup = D.require "danielo.ui.PopupKeys"
