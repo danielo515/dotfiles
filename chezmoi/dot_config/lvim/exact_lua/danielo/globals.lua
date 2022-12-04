@@ -57,3 +57,5 @@ D = fun.assign(D, fun)
 D.vim = require "danielo.vim"
 D.file = require "danielo.file"
 D.popup = require "danielo.ui.PopupKeys"
+D.fun = require "danielo.fun"
+D.string = require "danielo.string"

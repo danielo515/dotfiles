@@ -50,6 +50,15 @@ function M.assign(...)
   return result
 end
 
+----Typed version of assign for just two
+----@generic A,B
+----@param  a A
+----@param b B
+----@return A|B
+function M.assign2(a, b)
+  M.assign(a, b)
+end
+
 ---Calls a value if it is a function within a protected call
 ---@generic T
 ---@param fn fun(...:any):T
