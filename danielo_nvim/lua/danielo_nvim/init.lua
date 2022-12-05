@@ -776,14 +776,13 @@ _hx_exports["vim"] = __vim_DanieloVim
 __vim_DanieloVim.autocmd = function(groupName,pattern,description,cb) 
   local this1 = ({clear = false});
   local group = vim.api.nvim_create_augroup(groupName, this1);
-  local description = (function() 
+  local this1 = ({pattern = pattern, callback = cb, group = group, description = (function() 
     local _hx_1
     if (description ~= nil) then 
     _hx_1 = description; else 
     _hx_1 = Std.string(Std.string(Std.string(Std.string("") .. Std.string(groupName)) .. Std.string(":[")) .. Std.string(pattern)) .. Std.string("]"); end
     return _hx_1
-  end )();
-  local this1 = ({pattern = pattern, callback = cb, group = group, description = description});
+  end )()});
   vim.api.nvim_create_autocmd(this1);
 end
 if _hx_bit_raw then

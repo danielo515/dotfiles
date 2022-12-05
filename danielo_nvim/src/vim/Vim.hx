@@ -28,11 +28,14 @@ extern class Api {
 	static function nvim_create_autocmd(opts:AutoCmdOpts):Int;
 }
 
+inline function comment() {
+	untyped __lua__("---@diagnostic disable");
+}
+
 @:expose("vim")
 class DanieloVim {
 	static public function autocmd(groupName:String, pattern:String, ?description:String, cb:Function) {
 		var group = Api.nvim_create_augroup(groupName, new Opts(false));
-		var description = description.or('$groupName:[$pattern]');
-		Api.nvim_create_autocmd(new AutoCmdOpts(pattern, cb, group, description));
+		Api.nvim_create_autocmd(new AutoCmdOpts(pattern, cb, group, description.or('$groupName:[$pattern]')));
 	}
 }

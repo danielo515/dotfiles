@@ -1,4 +1,8 @@
 class Test {
-	static public inline function or<T>(v:Null<T>, fallback:T):T
+	/**
+	 *  Returns `value` if it is not `null`. Otherwise returns `defaultValue`.
+	 */
+	static public inline function or<T>(v:Null<T>, fallback:T):T {
 		return v != null ? v : fallback;
+	}
 }
