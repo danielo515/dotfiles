@@ -11,6 +11,12 @@ abstract Opts(Table<String, Bool>) {
 	}
 }
 
+abstract ArgsList(Table<Int, String>) {
+	public inline function new(data) {
+		this = Table.create(data);
+	}
+}
+
 abstract AutoCmdOpts(Table<String, Dynamic>) {
 	public inline function new(pattern, cb, group, description:String) {
 		this = Table.create(null, {
@@ -20,6 +26,20 @@ abstract AutoCmdOpts(Table<String, Dynamic>) {
 			description: description
 		});
 	}
+}
+
+abstract JobOpts(Table<String, Dynamic>) {
+	public inline function new(command:String, args:Array<String>) {
+		this = Table.create(null, {
+			command: command,
+			arguments: Table.create(args)
+		});
+	}
+}
+
+@:luaRequire("plenary.job")
+extern class Job {
+	public function new(args:JobOpts);
 }
 
 @:native("vim.api")
@@ -37,5 +57,9 @@ class DanieloVim {
 	static public function autocmd(groupName:String, pattern:String, ?description:String, cb:Function) {
 		var group = Api.nvim_create_augroup(groupName, new Opts(false));
 		Api.nvim_create_autocmd(new AutoCmdOpts(pattern, cb, group, description.or('$groupName:[$pattern]')));
+	}
+
+	static public function chezmoi(args:Array<String>) {
+		new Job(new JobOpts("chezmoi", ["-v"]));
 	}
 }

@@ -1,7 +1,7 @@
+--macro nullSafety("vim", Strict)
 -cp src
 
 vim.Vim
 -dce full
 -D lua-vanilla
 -lua lua/danielo_nvim/init.lua
---macro nullSafety("vim", Strict)

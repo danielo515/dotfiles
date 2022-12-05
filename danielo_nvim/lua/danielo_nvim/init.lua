@@ -201,6 +201,7 @@ local String = _hx_e()
 local Std = _hx_e()
 __haxe_iterators_ArrayIterator = _hx_e()
 __haxe_iterators_ArrayKeyValueIterator = _hx_e()
+__vim_Job = _G.require("plenary.job")
 __vim_DanieloVim = _hx_e()
 
 local _hx_bind, _hx_bit, _hx_staticToInstance, _hx_funcToField, _hx_maxn, _hx_print, _hx_apply_self, _hx_box_mr, _hx_bit_clamp, _hx_table, _hx_bit_raw
@@ -784,6 +785,10 @@ __vim_DanieloVim.autocmd = function(groupName,pattern,description,cb)
     return _hx_1
   end )()});
   vim.api.nvim_create_autocmd(this1);
+end
+__vim_DanieloVim.chezmoi = function(args) 
+  local this1 = ({command = "chezmoi", arguments = ({"-v"})});
+  __vim_Job.new(this1);
 end
 if _hx_bit_raw then
     _hx_bit_clamp = function(v)
