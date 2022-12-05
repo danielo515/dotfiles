@@ -73,6 +73,7 @@ D.pconf "semgrep"
 D.pconf "user.lsp"
 D.pconf "user.commands"
 D.pconf "user.null-completions"
+D.pconf "user.indent-blankline"
 -- require("user.lualine").config()
 require("luasnip.loaders.from_snipmate").lazy_load()
 local treesitter = require "user.treesitter"
