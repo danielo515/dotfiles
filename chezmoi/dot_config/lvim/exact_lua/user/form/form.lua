@@ -89,12 +89,14 @@ local function Form(o)
   local state = ""
 
   local input_options = {
-    relative = "editor",
-    position = {
-      row = "50%",
-      col = "50%",
+    -- relative = "editor",
+    -- position = {
+    --   row = "50%",
+    --   col = "50%",
+    -- },
+    size = {
+      height = 3,
     },
-    size = width,
     border = {
       style = "rounded",
       text = {
@@ -178,7 +180,7 @@ local function Form(o)
       },
     },
     Layout.Box({
-      Layout.Box(layout.input, { size = "10%" }),
+      Layout.Box(layout.input, { size = 5 }),
       Layout.Box(layout.popup, { size = "80%" }),
       Layout.Box(layout.help, { size = "10%" }),
     }, { dir = "col" })
