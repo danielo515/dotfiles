@@ -1,7 +1,6 @@
 -cp src
 
 vim.Vim
-
 -dce full
 -D lua-vanilla
 -lua lua/danielo_nvim/init.lua

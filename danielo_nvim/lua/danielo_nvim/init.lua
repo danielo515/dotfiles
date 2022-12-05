@@ -773,9 +773,18 @@ end
 
 __vim_DanieloVim.new = {}
 _hx_exports["vim"] = __vim_DanieloVim
-__vim_DanieloVim.autocmd = function() 
+__vim_DanieloVim.autocmd = function(groupName,pattern,description,cb) 
   local this1 = ({clear = false});
-  vim.api.nvim_create_augroup("Pene", this1);
+  local group = vim.api.nvim_create_augroup(groupName, this1);
+  local description = (function() 
+    local _hx_1
+    if (description ~= nil) then 
+    _hx_1 = description; else 
+    _hx_1 = Std.string(Std.string(Std.string(Std.string("") .. Std.string(groupName)) .. Std.string(":[")) .. Std.string(pattern)) .. Std.string("]"); end
+    return _hx_1
+  end )();
+  local this1 = ({pattern = pattern, callback = cb, group = group, description = description});
+  vim.api.nvim_create_autocmd(this1);
 end
 if _hx_bit_raw then
     _hx_bit_clamp = function(v)
