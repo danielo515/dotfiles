@@ -181,5 +181,6 @@ local plugins = {
   --#endregion Rescrtip
   require "user.plugins.async-tasks",
   require "user.plugins.leap",
+  "jdonaldson/vaxe",
 }
 return plugins
