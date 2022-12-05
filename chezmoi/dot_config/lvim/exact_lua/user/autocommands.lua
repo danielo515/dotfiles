@@ -1,3 +1,4 @@
+local job = require "plenary.job"
 local M = {}
 
 -- You will likely want to reduce updatetime which affects CursorHold
@@ -22,6 +23,19 @@ function M.config()
       "BufWritePost",
       chezmoi.get_chezmoi_dir() .. "/*",
       "execute '!chezmoi apply -v --source-path %' | LvimReload ",
+    },
+    {
+      "BufWritePost",
+      "danielo_nvim/*.hx",
+      function()
+        job
+          :new({
+            command = "haxe",
+            args = { "build.hxml" },
+            cwd = chezmoi.get_chezmoi_dir() .. "/../danielo_nvim",
+          })
+          :start()
+      end,
     },
     -- Re add to chezmoi snippet files, because that is the only way to have live reload of snippets
     {
