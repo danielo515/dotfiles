@@ -3,4 +3,4 @@
 vim.Vim
 
 -D lua-vanilla
--lua lua/danielo/init.lua
+-lua lua/danielo_nvim/init.lua
