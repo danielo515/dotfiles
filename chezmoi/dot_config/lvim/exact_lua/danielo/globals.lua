@@ -22,14 +22,19 @@ function D.require(path, on_success, on_fail)
   local ok, lib = pcall(require, path)
   on_fail = on_fail or D.noop
   if ok then
-    if type(on_success) == 'function' then
+    if type(on_success) == "function" then
       pcall(on_success, lib)
-    else return lib end
+    else
+      return lib
+    end
   else
     vim.notify("Failed to require library: " .. path, vim.log.levels.ERROR, { title = "Danielo" })
     pcall(on_fail)
   end
+  return nil
 end
+
+local fun = D.require "danielo.fun"
 
 ---Requires the configuration module in a protected call
 -- and calls its setup or config function if it exists
@@ -55,7 +60,6 @@ D.noop = function() end
 -- Shortcut
 _G.preq = D.require
 
-local fun = D.require "danielo.fun"
 D = fun.assign(D, fun)
 
 --Better defaults and interfaces for vim commands
@@ -64,3 +68,5 @@ D.file = D.require "danielo.file"
 D.fun = D.require "danielo.fun"
 D.string = D.require "danielo.string"
 D.popup = D.require "danielo.ui.PopupKeys"
+-- Shortcuts
+D.autocmd = D.vim.autocmd

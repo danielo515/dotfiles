@@ -32,4 +32,13 @@ function M.input(callback, completion_list)
   end)
 end
 
+---Create an autocommand, creating the autogroup if needed
+---@param events string[]
+---@param group string
+---@param opts { pattern: string, desc: string, callback: function }
+function M.autocmd(events, group, opts)
+  local real_group = vim.api.nvim_create_augroup(group, { clear = false })
+  vim.api.nvim_create_autocmd(events, fun.assign({ group = real_group }, opts))
+end
+
 return M
