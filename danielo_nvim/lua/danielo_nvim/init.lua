@@ -195,7 +195,6 @@ local Class = _hx_e();
 local Enum = _hx_e();
 
 local _hx_exports = _hx_exports or {}
-_hx_exports["vim"] = _hx_exports["vim"] or _hx_e()
 local Array = _hx_e()
 local Math = _hx_e()
 local String = _hx_e()
@@ -796,16 +795,10 @@ __haxe_iterators_ArrayKeyValueIterator.super = function(self,array)
   self.array = array;
 end
 
-__vim_Vim.new = function() 
-  local self = _hx_new()
-  __vim_Vim.super(self)
-  return self
-end
-__vim_Vim.super = function(self) 
-end
-_hx_exports["vim"]["Vim"] = __vim_Vim
+__vim_Vim.new = {}
+_hx_exports["vim"] = __vim_Vim
 __vim_Vim.main = function() 
-  __haxe_Log.trace("Hello World", _hx_o({__fields__={fileName=true,lineNumber=true,className=true,methodName=true},fileName="src/vim/Vim.hx",lineNumber=8,className="vim.Vim",methodName="main"}));
+  __haxe_Log.trace("Hello World", _hx_o({__fields__={fileName=true,lineNumber=true,className=true,methodName=true},fileName="src/vim/Vim.hx",lineNumber=6,className="vim.Vim",methodName="main"}));
 end
 if _hx_bit_raw then
     _hx_bit_clamp = function(v)

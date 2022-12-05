@@ -1,9 +1,7 @@
 package vim;
 
-@:expose
+@:expose("vim")
 class Vim {
-	public function new() {}
-
 	static public function main() {
 		trace("Hello World");
 	}

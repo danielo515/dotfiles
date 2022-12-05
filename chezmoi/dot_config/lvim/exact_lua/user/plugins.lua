@@ -1,3 +1,4 @@
+local chezmoi = require "user.util.chezmoi"
 local plugins = {
   -- themes
   -- "folke/tokyonight.nvim", -- builtin in lunarvim
@@ -182,5 +183,6 @@ local plugins = {
   require "user.plugins.async-tasks",
   require "user.plugins.leap",
   "jdonaldson/vaxe",
+  { vim.fn.fnamemodify(chezmoi.get_chezmoi_dir(), ":h") .. "/danielo_nvim" },
 }
 return plugins
