@@ -28,6 +28,9 @@ local open_lets = {
     end,
   },
 }
+
+local split_at_nth = require("danielo.string").split_at_nth
+
 local reason_react_helpers = {
   method = null_ls.methods.CODE_ACTION,
   filetypes = { "reason" },
@@ -48,7 +51,8 @@ local reason_react_helpers = {
           {
             title = "split long classname",
             action = function()
-              local lines = { before .. className .. ("{%s}"):format(classString) .. after }
+              local classLeft, classRight = unpack(split_at_nth(classString, classString:len() / 2, " "))
+              local lines = { before .. className .. ('{%s" ++ " %s}'):format(classLeft, classRight) .. after }
 
               vim.api.nvim_buf_set_lines(context.bufnr, row - 1, row, false, lines)
             end,

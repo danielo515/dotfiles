@@ -3,7 +3,7 @@
 
 local M = {}
 
----@alias string_tuple { 0: string, 1: string  }
+---@alias string_tuple { _0: string, _1: string  }
 
 ---Split a string at the given character starting at nth
 ---@param str string
