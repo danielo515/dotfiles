@@ -213,5 +213,10 @@ export PATH="/usr/local/opt/ruby/bin:$PATH"
 
 # opam configuration
 [[ ! -r /Users/danielo/.opam/opam-init/init.zsh ]] || source /Users/danielo/.opam/opam-init/init.zsh  > /dev/null 2> /dev/null
+
+function p10k-on-pre-prompt() {
+  p10k display '1/right/command_execution_time'=show
+}
+
 # - Powerlevel10k load
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
