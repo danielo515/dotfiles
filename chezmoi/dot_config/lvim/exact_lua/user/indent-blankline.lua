@@ -6,9 +6,8 @@ M.config = function()
     vim.notify("Could not load indent_blankline", "warn")
     return
   end
-  vim.api.nvim_create_autocmd({ "ColorScheme" }, {
+  D.autocmd({ "ColorScheme" }, "Danielo-colorscheme", {
     pattern = "*",
-    group = "Danielo-colorscheme",
     desc = "Setups color lines for indent-blankline",
     callback = function()
       vim.cmd [[highlight IndentBlanklineIndent1 guifg=#E06C75 gui=nocombine]]
