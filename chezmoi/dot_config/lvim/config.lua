@@ -23,7 +23,7 @@ lvim.log.level = "debug"
 lvim.format_on_save = true
 -- require("user.theme").tokyonight()
 lvim.colorscheme = "tokyonight"
-lvim.builtin.theme.options.style = "storm"
+lvim.builtin.theme.options.style = "night"
 lvim.builtin.theme.options.dim_inactive = true
 lvim.leader = "space"
 lvim.builtin.alpha.active = true
