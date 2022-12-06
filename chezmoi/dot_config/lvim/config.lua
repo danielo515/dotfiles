@@ -21,10 +21,11 @@ packer.init {
 -- general
 lvim.log.level = "debug"
 lvim.format_on_save = true
--- require("user.theme").tokyonight()
+-- TODO: update on new lvim versions
 lvim.colorscheme = "tokyonight"
 lvim.builtin.theme.options.style = "night"
 lvim.builtin.theme.options.dim_inactive = true
+lvim.builtin.theme.options.lualine_bold = true
 lvim.leader = "space"
 lvim.builtin.alpha.active = true
 lvim.builtin.alpha.mode = "dashboard"
