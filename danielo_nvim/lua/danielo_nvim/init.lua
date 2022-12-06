@@ -859,13 +859,12 @@ __parser_Parser.prototype.advance = function(self)
   elseif (tmp1) == 2 then 
     local buffer = _g[2];
     local pos = _g[3];
-    tmp = (function() 
-      local _hx_1
-      if ((pos + 1) >= #self.string) then 
-      _hx_1 = __parser_State.Finished(_hx_tab_array({}, 0)); else 
-      _hx_1 = __parser_State.Running(buffer, pos + 1); end
-      return _hx_1
-    end )(); end;
+    if ((pos + 1) >= #self.string) then 
+      self.tokens:push(buffer);
+      tmp = __parser_State.Finished(_hx_tab_array({}, 0));
+    else
+      tmp = __parser_State.Running(buffer, pos + 1);
+    end; end;
   self.state = tmp;
   local _g = self.state;
   local tmp = _g[1];
@@ -926,7 +925,7 @@ __parser_ClassName.isNotWhitespace = function(arg)
 end
 __parser_ClassName.main = function() 
   local res = __parser_ClassName.new("a be x-pene nabo:99"):parse();
-  __haxe_Log.trace(res, _hx_o({__fields__={fileName=true,lineNumber=true,className=true,methodName=true},fileName="src/parser/ClassName.hx",lineNumber=85,className="parser.ClassName",methodName="main"}));
+  __haxe_Log.trace(res, _hx_o({__fields__={fileName=true,lineNumber=true,className=true,methodName=true},fileName="src/parser/ClassName.hx",lineNumber=88,className="parser.ClassName",methodName="main"}));
 end
 __parser_ClassName.prototype = _hx_e();
 __parser_ClassName.prototype.parse = function(self) 

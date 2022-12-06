@@ -35,7 +35,10 @@ class Parser {
 			case Finished(tokens): Finished(tokens);
 			case Initial: Running("", 1);
 			case Running(buffer, pos):
-				if (pos + 1 >= this.string.length) Finished([]) else Running(buffer, pos + 1);
+				if (pos + 1 >= this.string.length) {
+					this.tokens.push(buffer);
+					Finished([]);
+				} else Running(buffer, pos + 1);
 		}
 		return switch (this.state) {
 			case Finished(_): this.tokens;
