@@ -59,7 +59,7 @@ M.config = function()
       "", -- for all buffers without a file type
     },
     -- char = "▏",
-    char_list = { "", "¦", "|", "¦", "" },
+    char_list = { "", "¦", "¦", "" },
     char_highlight_list = {
       "IndentBlanklineIndent1",
       "IndentBlanklineIndent2",
