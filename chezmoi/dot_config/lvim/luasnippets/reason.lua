@@ -27,7 +27,16 @@ local node_ops = { node_ext_ops = ext_opts }
 local function switch_match(index)
   return c(index, {
     i(nil, ""),
-    sn(nil, { t "Some(", i(1, "_"), t ")" }),
+    sn(
+      nil,
+      fmt(
+        [[ 
+      | Some({}) => {} 
+      | None => {}
+    ]],
+        { i(1, "_"), i(3), i(0) }
+      )
+    ),
     sn(nil, { t "Ok(", i(1, "_"), t ")" }),
     sn(nil, { t "Error(", i(1, "_"), t ")" }),
   })
