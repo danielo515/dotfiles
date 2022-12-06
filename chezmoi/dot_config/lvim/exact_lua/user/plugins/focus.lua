@@ -12,8 +12,8 @@ return {
       -- Gets the vim variable setcolumn when focus.setup() is run
       -- See :h signcolumn for more options e.g :set signcolum=yes
       -- Default: true, signcolumn=auto
-      signcolumn = true,
-      cursorcolumn = true,
+      signcolumn = false,
+      cursorcolumn = false,
       colorcolumn = { enable = true, width = 100 },
       absolutenumber_unfocussed = true,
       winhighlight = false,
