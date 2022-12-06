@@ -38,7 +38,7 @@ local reason_react_helpers = {
   generator = {
     fn = function(context)
       local current_line_content = context.content[context.row]
-      local before, className, classString, after = current_line_content:match '(.*)(className=)("[%w%s-:.]+")(.*)$'
+      local before, className, classString, after = current_line_content:match '(.*)(className=)("[^"]+")(.*)$'
 
       if classString == nil then
         return
