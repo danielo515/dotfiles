@@ -1,5 +1,5 @@
 local M = {
-  active = true,
+  active = false,
 }
 
 local resize_ignore = { "lazygit", "neo-tree", "NvimTree", "help", "terminal", "command", "toggleterm" }
@@ -36,7 +36,7 @@ function M.resize_window_width()
   -- if current_width >= new_width then -- skip if window is width enough already
   --   return
   -- end
-  if new_width > (terminalWidth * 0.6) then -- skip if new width will be bigger than 80% of screen
+  if new_width > (terminalWidth * 0.6) then -- skip if new width will be bigger than 60% of screen
     return
   end
   local cmd = new_width .. "wincmd |"
@@ -48,11 +48,11 @@ function M.setup()
   -- vim.cmd 'command! ResizeWindow :lua require("user.util").resize_window_width()'
   local desc = "Automatically resize current window to make it fit it's visible content"
   vim.api.nvim_create_user_command("ResizeWindow", M.resize_window_width, { force = true, desc = desc })
-  vim.api.nvim_create_user_command("ResizeWindowDisable", function()
-    M.active = false
+  vim.api.nvim_create_user_command("ResizeWindowToggle", function()
+    M.active = not M.active
   end, { force = true, desc = "Disable automatic window resizing" })
   -- Automatically adjust the window width when you enter it
-  vim.api.nvim_create_autocmd("WinEnter", {
+  vim.api.nvim_create_autocmd({ "WinEnter", "BufEnter" }, {
     callback = M.resize_window_width,
     group = group,
     desc = desc,
