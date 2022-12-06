@@ -195,11 +195,13 @@ local Class = _hx_e();
 local Enum = _hx_e();
 
 local _hx_exports = _hx_exports or {}
+_hx_exports["parser"] = _hx_exports["parser"] or _hx_e()
 local Array = _hx_e()
 local Math = _hx_e()
 local String = _hx_e()
 local Std = _hx_e()
 local Test = _hx_e()
+__haxe_Log = _hx_e()
 __haxe_iterators_ArrayIterator = _hx_e()
 __haxe_iterators_ArrayKeyValueIterator = _hx_e()
 __parser_State = _hx_e()
@@ -758,6 +760,29 @@ Test["or"] = function(v,fallback)
   end;
 end
 
+__haxe_Log.new = {}
+__haxe_Log.formatOutput = function(v,infos) 
+  local str = Std.string(v);
+  if (infos == nil) then 
+    do return str end;
+  end;
+  local pstr = Std.string(Std.string(infos.fileName) .. Std.string(":")) .. Std.string(infos.lineNumber);
+  if (infos.customParams ~= nil) then 
+    local _g = 0;
+    local _g1 = infos.customParams;
+    while (_g < _g1.length) do 
+      local v = _g1[_g];
+      _g = _g + 1;
+      str = Std.string(str) .. Std.string((Std.string(", ") .. Std.string(Std.string(v))));
+    end;
+  end;
+  do return Std.string(Std.string(pstr) .. Std.string(": ")) .. Std.string(str) end;
+end
+__haxe_Log.trace = function(v,infos) 
+  local str = __haxe_Log.formatOutput(v, infos);
+  _hx_print(str);
+end
+
 __haxe_iterators_ArrayIterator.new = function(array) 
   local self = _hx_new(__haxe_iterators_ArrayIterator.prototype)
   __haxe_iterators_ArrayIterator.super(self,array)
@@ -792,67 +817,99 @@ end
 
 __parser_State.Initial = _hx_tab_array({[0]="Initial",0,__enum__ = __parser_State},2)
 
-__parser_State.Finished = _hx_tab_array({[0]="Finished",1,__enum__ = __parser_State},2)
+__parser_State.Finished = function(tokens) local _x = _hx_tab_array({[0]="Finished",1,tokens,__enum__=__parser_State}, 3); return _x; end 
+__parser_State.Running = function(buffer,position) local _x = _hx_tab_array({[0]="Running",2,buffer,position,__enum__=__parser_State}, 4); return _x; end 
 
-__parser_State.Running = function(position) local _x = _hx_tab_array({[0]="Running",2,position,__enum__=__parser_State}, 3); return _x; end 
-
-__parser_Parser.new = function(str) 
+__parser_Parser.new = function(str,checker) 
   local self = _hx_new(__parser_Parser.prototype)
-  __parser_Parser.super(self,str)
+  __parser_Parser.super(self,str,checker)
   return self
 end
-__parser_Parser.super = function(self,str) 
+__parser_Parser.super = function(self,str,checker) 
   self.string = str;
-  self.position = __parser_State.Initial;
+  self.state = __parser_State.Initial;
+  self.tokens = _hx_tab_array({}, 0);
+  self.checker = _hx_funcToField(checker);
 end
 __parser_Parser.prototype = _hx_e();
-__parser_Parser.prototype.seek = function(self,checker) 
+__parser_Parser.prototype.seek = function(self) 
   local nextChar;
-  local _g = self.position;
+  local _g = self.state;
   local nextChar1 = _g[1];
   if (nextChar1) == 0 then 
     nextChar = _G.string.sub(self.string, 1, 1);
   elseif (nextChar1) == 1 then 
-    local _this = self.string;
-    local pos = -1;
-    local len = 1;
-    if ((len == nil) or (len > (pos + #_this))) then 
-      len = #_this;
-    else
-      if (len < 0) then 
-        len = #_this + len;
-      end;
-    end;
-    if (pos < 0) then 
-      pos = #_this + pos;
-    end;
-    if (pos < 0) then 
-      pos = 0;
-    end;
-    nextChar = _G.string.sub(_this, pos + 1, pos + len);
+    local _g = _g[2];
+    nextChar = "";
   elseif (nextChar1) == 2 then 
-    local pos = _g[2];
+    local _g1 = _g[2];
+    local pos = _g[3];
     nextChar = _G.string.sub(self.string, pos + 1, pos + 1); end;
-  checker(nextChar);
+  do return nextChar end
 end
 __parser_Parser.prototype.advance = function(self) 
-  local _g = self.position;
+  local _g = self.state;
   local tmp;
   local tmp1 = _g[1];
   if (tmp1) == 0 then 
-    tmp = __parser_State.Running(1);
+    tmp = __parser_State.Running("", 1);
   elseif (tmp1) == 1 then 
-    tmp = __parser_State.Finished;
+    local tokens = _g[2];
+    tmp = __parser_State.Finished(tokens);
   elseif (tmp1) == 2 then 
-    local pos = _g[2];
+    local buffer = _g[2];
+    local pos = _g[3];
     tmp = (function() 
       local _hx_1
       if ((pos + 1) >= #self.string) then 
-      _hx_1 = __parser_State.Finished; else 
-      _hx_1 = __parser_State.Running(pos + 1); end
+      _hx_1 = __parser_State.Finished(_hx_tab_array({}, 0)); else 
+      _hx_1 = __parser_State.Running(buffer, pos + 1); end
       return _hx_1
     end )(); end;
-  self.position = tmp;
+  self.state = tmp;
+  local _g = self.state;
+  local tmp = _g[1];
+  if (tmp) == 0 then 
+    do return self:tokenize() end;
+  elseif (tmp) == 1 then 
+    local _g = _g[2];
+    do return self.tokens end;
+  elseif (tmp) == 2 then 
+    local _g1 = _g[2];
+    local _g = _g[3];
+    do return self:tokenize() end; end;
+end
+__parser_Parser.prototype.tokenize = function(self) 
+  local nextChar = self:seek();
+  local isValidChar = self:checker(nextChar);
+  local _g = self.state;
+  local tmp;
+  if (isValidChar) then 
+    local tmp1 = _g[1];
+    if (tmp1) == 0 then 
+      tmp = __parser_State.Running(nextChar, 1);
+    elseif (tmp1) == 1 then 
+      local tokens = _g[2];
+      tmp = __parser_State.Finished(tokens);
+    elseif (tmp1) == 2 then 
+      local buffer = _g[2];
+      local pos = _g[3];
+      tmp = __parser_State.Running(Std.string(buffer) .. Std.string(nextChar), pos); end;
+  else
+    local tmp1 = _g[1];
+    if (tmp1) == 0 then 
+      tmp = __parser_State.Running("", 1);
+    elseif (tmp1) == 1 then 
+      local tokens = _g[2];
+      tmp = __parser_State.Finished(tokens);
+    elseif (tmp1) == 2 then 
+      local buffer = _g[2];
+      local pos = _g[3];
+      self.tokens:push(buffer);
+      tmp = __parser_State.Running("", pos); end;
+  end;
+  self.state = tmp;
+  do return self:advance() end
 end
 
 __parser_ClassName.new = function(str) 
@@ -861,16 +918,19 @@ __parser_ClassName.new = function(str)
   return self
 end
 __parser_ClassName.super = function(self,str) 
-  self.state = "";
-  self.classnames = self:parse(str);
+  self.parser = __parser_Parser.new(str, __parser_ClassName.isNotWhitespace);
+end
+_hx_exports["parser"]["ClassName"] = __parser_ClassName
+__parser_ClassName.isNotWhitespace = function(arg) 
+  do return arg ~= " " end;
+end
+__parser_ClassName.main = function() 
+  local res = __parser_ClassName.new("a be x-pene nabo:99"):parse();
+  __haxe_Log.trace(res, _hx_o({__fields__={fileName=true,lineNumber=true,className=true,methodName=true},fileName="src/parser/ClassName.hx",lineNumber=85,className="parser.ClassName",methodName="main"}));
 end
 __parser_ClassName.prototype = _hx_e();
-__parser_ClassName.prototype.parse = function(self,str) 
-  do return _hx_tab_array({[0]=str}, 1) end
-end
-__parser_ClassName.prototype.consume = function(self,str) 
-  self.classnames:push(str);
-  self.state = "";
+__parser_ClassName.prototype.parse = function(self) 
+  do return self.parser:tokenize() end
 end
 
 __vim__Vim_Opts_Impl_.new = {}
@@ -960,6 +1020,18 @@ _hx_array_mt.__index = Array.prototype
 local _hx_static_init = function()
   
 end
+
+_hx_funcToField = function(f)
+  if type(f) == 'function' then
+    return function(self,...)
+      return f(...)
+    end
+  else
+    return f
+  end
+end
+
+_hx_print = print or (function() end)
 
 _hx_static_init();
 return _hx_exports

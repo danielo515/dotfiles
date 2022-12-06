@@ -10,56 +10,78 @@ enum State {
 
 class Parser {
 	private final string:String;
-	private var position:State;
+	private final checker:String->Bool;
+	private var state:State;
 	private var tokens:Array<String>;
 
-	public function new(str:String) {
+	public function new(str:String, checker) {
 		this.string = str;
-		this.position = Initial;
+		this.state = Initial;
 		this.tokens = [];
+		this.checker = checker;
 	}
 
-	public function seek(checker) {
-		var nextChar = switch (this.position) {
+	public function seek() {
+		var nextChar = switch (this.state) {
 			case Initial: string.charAt(0);
-			case Finished(_): string.substr(-1, 1);
 			case Running(_, pos): string.charAt(pos);
+			case Finished(_): "";
 		}
-		var checkResult = checker(nextChar);
-		switch ([checkResult, this.position]) {
+		return nextChar;
+	}
+
+	public function advance() {
+		this.state = switch (this.state) {
+			case Finished(tokens): Finished(tokens);
+			case Initial: Running("", 1);
+			case Running(buffer, pos):
+				if (pos + 1 >= this.string.length) Finished([]) else Running(buffer, pos + 1);
+		}
+		return switch (this.state) {
+			case Finished(_): this.tokens;
+			case Initial | Running(_):
+				this.tokenize();
+		}
+	}
+
+	public function tokenize() {
+		var nextChar = this.seek();
+		var isValidChar = this.checker(nextChar);
+		this.state = switch ([isValidChar, this.state]) {
 			case [true, Running(buffer, pos)]:
 				Running(buffer + nextChar, pos);
 			case [false, Running(buffer, pos)]:
-				Running(buffer, pos + 1);
+				this.tokens.push(buffer);
+				Running("", pos);
 			case [true, Initial]:
 				Running(nextChar, 1);
 			case [false, Initial]:
 				Running("", 1);
-			case [_, Finished(_)]:
-				Finished;
+			case [_, Finished(tokens)]:
+				Finished(tokens);
 		}
+		return this.advance();
 	}
-
-	public function advance() {
-		this.position = switch (this.position) {
-			case Initial: Running("", 1);
-			case Finished(tokens): Finished(tokens);
-			case Running(buffer, pos):
-				if (pos + 1 >= this.string.length) Finished([]) else Running(buffer, pos + 1);
-		}
-	}
-
-	public function tokenize() {}
 }
 
+@:expose
 class ClassName {
 	private final parser:Parser;
 
+	private static function isNotWhitespace(arg) {
+		return arg != " ";
+	}
+
 	public function new(str:String) {
-		this.parser = new Parser(str);
+		this.parser = new Parser(str, isNotWhitespace);
 	}
 
 	private function parse() {
 		return this.parser.tokenize();
+	}
+
+	public static function main() {
+		var res = new ClassName("a be x-pene nabo:99").parse();
+		trace(res);
 	}
 }
