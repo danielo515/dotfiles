@@ -89,6 +89,9 @@ lvim.builtin.telescope.on_config_done = function(tele)
           i = {
             ["<c-d>"] = actions.delete_buffer,
           },
+          n = {
+            ["x"] = actions.delete_buffer,
+          },
         },
       },
       live_grep = {
