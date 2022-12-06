@@ -1,5 +1,7 @@
 local M = {}
 
+local fun = require "danielo.fun"
+
 ---Dummy function to be able to offer auto-complete from lua.
 -- It takes an argument, and returns a function that will return that argument.
 -- This allows you to parametrize the lua function that vim will call
