@@ -12,8 +12,8 @@ abstract Opts(Table<String, Bool>) {
 }
 
 abstract ArgsList(Table<Int, String>) {
-	public inline function new(data) {
-		this = Table.create(data);
+	public inline function new(data:Array<String>) {
+		this = Table.fromArray(data);
 	}
 }
 
@@ -28,11 +28,13 @@ abstract AutoCmdOpts(Table<String, Dynamic>) {
 	}
 }
 
+typedef StrList = Table<Int, String>;
+
 abstract JobOpts(Table<String, Dynamic>) {
-	public inline function new(command:String, args:Array<String>) {
+	public inline function new(command:String, args:StrList) {
 		this = Table.create(null, {
 			command: command,
-			arguments: Table.create(args)
+			arguments: args,
 		});
 	}
 }
@@ -60,6 +62,6 @@ class DanieloVim {
 	}
 
 	static public function chezmoi(args:Array<String>) {
-		new Job(new JobOpts("chezmoi", ["-v"]));
+		new Job(new JobOpts("chezmoi", Table.create(["-v"])));
 	}
 }

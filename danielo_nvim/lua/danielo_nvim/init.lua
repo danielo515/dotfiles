@@ -199,10 +199,16 @@ local Array = _hx_e()
 local Math = _hx_e()
 local String = _hx_e()
 local Std = _hx_e()
+local Test = _hx_e()
 __haxe_iterators_ArrayIterator = _hx_e()
 __haxe_iterators_ArrayKeyValueIterator = _hx_e()
+__vim__Vim_Opts_Impl_ = _hx_e()
+__vim__Vim_ArgsList_Impl_ = _hx_e()
+__vim__Vim_AutoCmdOpts_Impl_ = _hx_e()
+__vim__Vim_JobOpts_Impl_ = _hx_e()
 __vim_Job = _G.require("plenary.job")
 __vim_DanieloVim = _hx_e()
+__vim__Vim_Vim_Fields_ = _hx_e()
 
 local _hx_bind, _hx_bit, _hx_staticToInstance, _hx_funcToField, _hx_maxn, _hx_print, _hx_apply_self, _hx_box_mr, _hx_bit_clamp, _hx_table, _hx_bit_raw
 local _hx_pcall_default = {};
@@ -740,6 +746,15 @@ Std.int = function(x)
   end;
 end
 
+Test.new = {}
+Test["or"] = function(v,fallback) 
+  if (v ~= nil) then 
+    do return v end;
+  else
+    do return fallback end;
+  end;
+end
+
 __haxe_iterators_ArrayIterator.new = function(array) 
   local self = _hx_new(__haxe_iterators_ArrayIterator.prototype)
   __haxe_iterators_ArrayIterator.super(self,array)
@@ -772,6 +787,38 @@ __haxe_iterators_ArrayKeyValueIterator.super = function(self,array)
   self.array = array;
 end
 
+__vim__Vim_Opts_Impl_.new = {}
+__vim__Vim_Opts_Impl_._new = function(clear) 
+  local this1 = ({clear = clear});
+  do return this1 end;
+end
+
+__vim__Vim_ArgsList_Impl_.new = {}
+__vim__Vim_ArgsList_Impl_._new = function(data) 
+  local ret = ({});
+  local _g = 0;
+  local _g1 = data.length;
+  while (_g < _g1) do 
+    _g = _g + 1;
+    local idx = _g - 1;
+    ret[idx + 1] = data[idx];
+  end;
+  local this1 = ret;
+  do return this1 end;
+end
+
+__vim__Vim_AutoCmdOpts_Impl_.new = {}
+__vim__Vim_AutoCmdOpts_Impl_._new = function(pattern,cb,group,description) 
+  local this1 = ({pattern = pattern, callback = cb, group = group, description = description});
+  do return this1 end;
+end
+
+__vim__Vim_JobOpts_Impl_.new = {}
+__vim__Vim_JobOpts_Impl_._new = function(command,args) 
+  local this1 = ({command = command, arguments = args});
+  do return this1 end;
+end
+
 __vim_DanieloVim.new = {}
 _hx_exports["vim"] = __vim_DanieloVim
 __vim_DanieloVim.autocmd = function(groupName,pattern,description,cb) 
@@ -789,6 +836,11 @@ end
 __vim_DanieloVim.chezmoi = function(args) 
   local this1 = ({command = "chezmoi", arguments = ({"-v"})});
   __vim_Job.new(this1);
+end
+
+__vim__Vim_Vim_Fields_.new = {}
+__vim__Vim_Vim_Fields_.comment = function() 
+  ---@diagnostic disable;
 end
 if _hx_bit_raw then
     _hx_bit_clamp = function(v)
