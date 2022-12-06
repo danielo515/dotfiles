@@ -45,6 +45,7 @@ lvim.builtin.alpha["custom"] = { config = alpha_opts }
 vim.wo.relativenumber = true
 -- This is required for vim-surround, otherwise it is too fast
 vim.o.timeoutlen = 500
+vim.o.wrap = true
 
 local options = {
   foldmethod = "expr", -- folding, set to "expr" for treesitter based folding
