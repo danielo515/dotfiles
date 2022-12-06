@@ -202,6 +202,9 @@ local Std = _hx_e()
 local Test = _hx_e()
 __haxe_iterators_ArrayIterator = _hx_e()
 __haxe_iterators_ArrayKeyValueIterator = _hx_e()
+__parser_State = _hx_e()
+__parser_Parser = _hx_e()
+__parser_ClassName = _hx_e()
 __vim__Vim_Opts_Impl_ = _hx_e()
 __vim__Vim_ArgsList_Impl_ = _hx_e()
 __vim__Vim_AutoCmdOpts_Impl_ = _hx_e()
@@ -785,6 +788,89 @@ __haxe_iterators_ArrayKeyValueIterator.new = function(array)
 end
 __haxe_iterators_ArrayKeyValueIterator.super = function(self,array) 
   self.array = array;
+end
+
+__parser_State.Initial = _hx_tab_array({[0]="Initial",0,__enum__ = __parser_State},2)
+
+__parser_State.Finished = _hx_tab_array({[0]="Finished",1,__enum__ = __parser_State},2)
+
+__parser_State.Running = function(position) local _x = _hx_tab_array({[0]="Running",2,position,__enum__=__parser_State}, 3); return _x; end 
+
+__parser_Parser.new = function(str) 
+  local self = _hx_new(__parser_Parser.prototype)
+  __parser_Parser.super(self,str)
+  return self
+end
+__parser_Parser.super = function(self,str) 
+  self.string = str;
+  self.position = __parser_State.Initial;
+end
+__parser_Parser.prototype = _hx_e();
+__parser_Parser.prototype.seek = function(self,checker) 
+  local nextChar;
+  local _g = self.position;
+  local nextChar1 = _g[1];
+  if (nextChar1) == 0 then 
+    nextChar = _G.string.sub(self.string, 1, 1);
+  elseif (nextChar1) == 1 then 
+    local _this = self.string;
+    local pos = -1;
+    local len = 1;
+    if ((len == nil) or (len > (pos + #_this))) then 
+      len = #_this;
+    else
+      if (len < 0) then 
+        len = #_this + len;
+      end;
+    end;
+    if (pos < 0) then 
+      pos = #_this + pos;
+    end;
+    if (pos < 0) then 
+      pos = 0;
+    end;
+    nextChar = _G.string.sub(_this, pos + 1, pos + len);
+  elseif (nextChar1) == 2 then 
+    local pos = _g[2];
+    nextChar = _G.string.sub(self.string, pos + 1, pos + 1); end;
+  checker(nextChar);
+end
+__parser_Parser.prototype.advance = function(self) 
+  local _g = self.position;
+  local tmp;
+  local tmp1 = _g[1];
+  if (tmp1) == 0 then 
+    tmp = __parser_State.Running(1);
+  elseif (tmp1) == 1 then 
+    tmp = __parser_State.Finished;
+  elseif (tmp1) == 2 then 
+    local pos = _g[2];
+    tmp = (function() 
+      local _hx_1
+      if ((pos + 1) >= #self.string) then 
+      _hx_1 = __parser_State.Finished; else 
+      _hx_1 = __parser_State.Running(pos + 1); end
+      return _hx_1
+    end )(); end;
+  self.position = tmp;
+end
+
+__parser_ClassName.new = function(str) 
+  local self = _hx_new(__parser_ClassName.prototype)
+  __parser_ClassName.super(self,str)
+  return self
+end
+__parser_ClassName.super = function(self,str) 
+  self.state = "";
+  self.classnames = self:parse(str);
+end
+__parser_ClassName.prototype = _hx_e();
+__parser_ClassName.prototype.parse = function(self,str) 
+  do return _hx_tab_array({[0]=str}, 1) end
+end
+__parser_ClassName.prototype.consume = function(self,str) 
+  self.classnames:push(str);
+  self.state = "";
 end
 
 __vim__Vim_Opts_Impl_.new = {}
