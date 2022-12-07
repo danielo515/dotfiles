@@ -33,6 +33,7 @@ lvim.builtin.nvimtree.setup.view.mappings.list = {
   { key = "v", action = "vsplit" },
   { key = "s", action = "split" },
   { key = "C", action = "cd" },
+  { key = "i", action = "toggle_git_ignored" },
   { key = "o", action = "edit_no_picker" },
   { key = "<C-F>", action = "live_filter" },
   { key = "f", action = "telescope_find_files", action_cb = telescope_find_files },

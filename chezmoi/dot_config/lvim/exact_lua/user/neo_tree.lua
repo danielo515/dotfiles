@@ -178,6 +178,7 @@ M.plugin = {
             ["<bs>"] = "navigate_up",
             ["."] = "set_root",
             ["I"] = "toggle_hidden",
+            ["i"] = "toggle_hidden",
             ["/"] = "fuzzy_finder",
             ["f"] = "filter_on_submit",
             ["<c-x>"] = "clear_filter",
