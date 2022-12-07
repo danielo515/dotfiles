@@ -11,10 +11,10 @@ abstract Opts(Table<String, Bool>) {
 	}
 }
 
-abstract ArgsList(Table<Int, String>) {
-	public inline function new(data:Array<String>) {
-		this = Table.fromArray(data);
-	}
+@:build(TableBuilder.build())
+abstract JOpts(Table<String, Dynamic>) {
+	extern public inline function new(command:String, args:Array<String>)
+		this = throw "no macro!";
 }
 
 abstract AutoCmdOpts(Table<String, Dynamic>) {
@@ -41,7 +41,7 @@ abstract JobOpts(Table<String, Dynamic>) {
 
 @:luaRequire("plenary.job")
 extern class Job {
-	public function new(args:JobOpts);
+	public function new(args:JOpts);
 }
 
 @:native("vim.api")
@@ -62,6 +62,10 @@ class DanieloVim {
 	}
 
 	static public function chezmoi(args:Array<String>) {
-		new Job(new JobOpts("chezmoi", Table.create(["-v"])));
+		new Job(new JOpts("chezmoi", args));
+	}
+
+	static function main() {
+		chezmoi(["test_arg"]);
 	}
 }
