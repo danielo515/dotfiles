@@ -57,9 +57,9 @@ class Parser {
 				this.tokens.push(buffer);
 				Running("", pos);
 			case [true, Initial]:
-				Running(nextChar, 1);
+				Running(nextChar, 0);
 			case [false, Initial]:
-				Running("", 1);
+				Running("", 0);
 			case [_, Finished(tokens)]:
 				Finished(tokens);
 		}
