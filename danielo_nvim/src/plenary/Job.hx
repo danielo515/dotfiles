@@ -4,17 +4,17 @@ import lua.Table;
 
 @:build(TableBuilder.build())
 abstract JOpts(Table<String, Dynamic>) {
-	extern public inline function new(command:String, args:Array<String>)
+	extern public inline function new(command:String, args:Array<String>, ?cwd:String)
 		this = throw "no macro!";
 }
 
-typedef StrList = Table<Int, String>;
-
 abstract JobOpts(Table<String, Dynamic>) {
-	public inline function new(command:String, args:StrList) {
+	public inline function new(command:String, args:Array<String>, ?cwd:String) {
+		final args = Table.fromArray(args);
 		this = Table.create(null, {
 			command: command,
 			arguments: args,
+			cwd: cwd,
 		});
 	}
 }
@@ -22,9 +22,8 @@ abstract JobOpts(Table<String, Dynamic>) {
 @:luaRequire("plenary.job")
 extern class Job {
 	static inline function make(args:JobOpts):Job {
-		return Job._make(Job, args);
+		return untyped __lua__("{0}:new({1})", Job, args);
 	}
-	@:native('new')
-	static function _make(self:Dynamic, args:JobOpts):Job;
 	function start():Job;
+	function sync():Job;
 }
