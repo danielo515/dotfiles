@@ -22,9 +22,9 @@ abstract JobOpts(Table<String, Dynamic>) {
 @:luaRequire("plenary.job")
 extern class Job {
 	static inline function make(args:JobOpts):Job {
-		return untyped __lua__('require"plenary.job":new({0})', args);
+		return Job._make(Job, args);
 	}
 	@:native('new')
-	function _make(args:JobOpts):Job;
+	static function _make(self:Dynamic, args:JobOpts):Job;
 	function start():Job;
 }
