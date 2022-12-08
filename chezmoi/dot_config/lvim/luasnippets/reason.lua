@@ -37,8 +37,16 @@ local function switch_match(index)
         { i(1, "_"), i(3), i(0) }
       )
     ),
-    sn(nil, { t "Ok(", i(1, "_"), t ")" }),
-    sn(nil, { t "Error(", i(1, "_"), t ")" }),
+    sn(
+      nil,
+      fmt(
+        [[ 
+      | Ok({}) => {} 
+      | Error(error) => {}
+    ]],
+        { i(1, "_"), i(3), i(0) }
+      )
+    ),
   })
 end
 
@@ -49,7 +57,7 @@ local normal_ones = {
     fmt(
       [[
         switch({}) {{
-          | {} => {}
+           {} => {}
           }};
         ]],
       {
@@ -57,6 +65,23 @@ local normal_ones = {
         switch_match(2),
         i(0),
       }
+    )
+  ),
+  s(
+    { trig = "recfn", dscr = "function with inner recursive loop", regTrig = false },
+
+    fmt(
+      [[
+      let  {} = ({}) => {{ 
+
+        let rec loop = (acc) =>{{
+        {}
+        }};
+
+        loop([||]);
+      }} 
+    ]],
+      { i(1), i(2), i(0) }
     )
   ),
   s(
@@ -79,7 +104,7 @@ local normal_ones = {
   ),
   s(
     { trig = "sm", dscr = "switch match", regTrig = false },
-    fmt([[ | {} => {} ]], {
+    fmt([[ {} => {} ]], {
       switch_match(1),
       i(0),
     })
