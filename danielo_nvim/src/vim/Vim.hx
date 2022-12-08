@@ -4,6 +4,11 @@ using Test;
 
 import haxe.Constraints.Function;
 import lua.Table;
+import plenary.Job;
+
+inline function comment() {
+	untyped __lua__("---@diagnostic disable");
+}
 
 abstract Opts(Table<String, Bool>) {
 	public inline function new(clear:Bool) {
@@ -11,14 +16,8 @@ abstract Opts(Table<String, Bool>) {
 	}
 }
 
-@:build(TableBuilder.build())
-abstract JOpts(Table<String, Dynamic>) {
-	extern public inline function new(command:String, args:Array<String>)
-		this = throw "no macro!";
-}
-
 abstract AutoCmdOpts(Table<String, Dynamic>) {
-	public inline function new(pattern, cb, group, description:String) {
+	public inline function new(pattern:String, cb, group, description:String) {
 		this = Table.create(null, {
 			pattern: pattern,
 			callback: cb,
@@ -28,30 +27,10 @@ abstract AutoCmdOpts(Table<String, Dynamic>) {
 	}
 }
 
-typedef StrList = Table<Int, String>;
-
-abstract JobOpts(Table<String, Dynamic>) {
-	public inline function new(command:String, args:StrList) {
-		this = Table.create(null, {
-			command: command,
-			arguments: args,
-		});
-	}
-}
-
-@:luaRequire("plenary.job")
-extern class Job {
-	public function new(args:JOpts);
-}
-
 @:native("vim.api")
 extern class Api {
 	static function nvim_create_augroup(group:String, opts:Opts):Int;
 	static function nvim_create_autocmd(opts:AutoCmdOpts):Int;
-}
-
-inline function comment() {
-	untyped __lua__("---@diagnostic disable");
 }
 
 @:expose("vim")
@@ -62,10 +41,11 @@ class DanieloVim {
 	}
 
 	static public function chezmoi(args:Array<String>) {
-		new Job(new JOpts("chezmoi", args));
+		final job = Job.make(new JobOpts("chezmoi", Table.fromArray(args)));
+		return job.start();
 	}
 
 	static function main() {
-		chezmoi(["test_arg"]);
+		trace(chezmoi(["-v"]));
 	}
 }
