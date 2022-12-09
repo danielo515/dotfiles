@@ -51,10 +51,22 @@ Imagine I want to wrap `Job.new` into a function that always calls it with all t
 but allos a configurable list of arguments:
 
 ```haxe
-	static public function chezmoi(args:Array<String>) {
-		final job = Job.make(new JobOpts("chezmoi", args));
-		return job.start();
+
+abstract JobOpts(Table<String, Dynamic>) {
+	public inline function new(command:String, args:Array<String>, ?cwd:String) {
+		final args = Table.fromArray(args);
+		this = Table.create(null, {
+			command: command,
+			arguments: args,
+			cwd: cwd,
+		});
 	}
+}
+
+static public function chezmoi(args:Array<String>) {
+    final job = Job.make(new JobOpts("chezmoi", args));
+    return job.start();
+}
 ```
 
 That only works because `JobOpts` calls `Table.fromArray` on the args argument, which has some

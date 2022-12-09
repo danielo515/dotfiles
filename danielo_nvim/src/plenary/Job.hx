@@ -15,17 +15,6 @@ abstract JOpts(Table<String, Dynamic>) {
 		this = throw "no macro!";
 }
 
-abstract JobOpts(Table<String, Dynamic>) {
-	public inline function new(command:String, args:Array<String>, ?cwd:String) {
-		final args = Table.fromArray(args);
-		this = Table.create(null, {
-			command: command,
-			arguments: args,
-			cwd: cwd,
-		});
-	}
-}
-
 @:luaRequire("plenary.job")
 extern class Job {
 	private static inline function create(args:Table<String, Dynamic>):Job {
