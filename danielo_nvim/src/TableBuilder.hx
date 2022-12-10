@@ -1,8 +1,7 @@
-import haxe.rtti.CType.Typedef;
-
 using haxe.macro.Tools;
-using haxe.macro.TypeTools;
 
+// using haxe.macro.TypeTools;
+import haxe.macro.ExprTools;
 import haxe.macro.Expr;
 import haxe.macro.Context;
 
@@ -26,42 +25,59 @@ class TableBuilder {
 		var fields = Context.getBuildFields();
 		for (field in fields) {
 			if (field.name != "make")
-				continue; // look for new()
+				continue; // ignore other methods
 
 			var f = switch (field.kind) { // ... that's a function
 				case FFun(_f): _f;
 				default: continue;
 			}
+			// Locate the function call within the function body
+			// we will inject the table creation there
 			var val = switch (f.expr.expr) {
 				case EBlock([{expr: EReturn({expr: ECall(_, params)})}]): params;
 				default: continue;
 			}
+
 			var objFields:Array<ObjectField> = [];
 			for (arg in f.args) {
 				var argVal = arg.value;
 				switch (arg.type) {
-					case TPath({name: x}):
+					case TPath({
+						pack: pack,
+						name: x,
+						params: params,
+						sub: sub
+					}):
 						var theType = (Context.getType(x).follow());
 						switch (theType) {
 							case TAnonymous(ref):
 								final fields = ref.get();
-								// trace('anon', fields);
 								for (field in fields.fields) {
 									var name = field.name;
+									trace(field.name, field.type);
+									var plain_expr = macro($i{arg.name}).$name;
+									var expr = switch (field.type) {
+										case TInst(_.get().name => "Array", _):
+											plain_expr;
+										// macro(lua.Table.create($plain_expr));
+										case other: plain_expr;
+									};
 									objFields.push({
 										field: name,
-										expr: macro($i{arg.name}).$name,
+										expr: expr,
 									});
 								}
-							case _: continue;
+							case other:
+								trace("other", other);
+								continue;
 						}
 					default:
 						continue;
 				}
 			}
 			var objExpr:Expr = {expr: EObjectDecl(objFields), pos: Context.currentPos()};
-			trace(objFields.toString());
 			val[0].expr = (macro lua.Table.create(null, $objExpr)).expr;
+			// trace(val[0].toString());
 		}
 		return fields;
 	}
