@@ -207,8 +207,9 @@ __haxe_iterators_ArrayKeyValueIterator = _hx_e()
 __parser_State = _hx_e()
 __parser_Parser = _hx_e()
 __parser_ClassName = _hx_e()
-__plenary__Job_JobOpts_Impl_ = _hx_e()
+__plenary__Job_LuaArray_Impl_ = _hx_e()
 __plenary_Job = _G.require("plenary.job")
+__plenary__Job_Job_Fields_ = _hx_e()
 __vim__Vim_Opts_Impl_ = _hx_e()
 __vim__Vim_AutoCmdOpts_Impl_ = _hx_e()
 __vim_DanieloVim = _hx_e()
@@ -931,19 +932,34 @@ __parser_ClassName.prototype.parse = function(self)
   do return self.parser:tokenize() end
 end
 
-__plenary__Job_JobOpts_Impl_.new = {}
-__plenary__Job_JobOpts_Impl_._new = function(command,args,cwd) 
+__plenary__Job_LuaArray_Impl_.new = {}
+__plenary__Job_LuaArray_Impl_.from = function(arr) 
   local ret = ({});
   local _g = 0;
-  local _g1 = args.length;
+  local _g1 = arr.length;
   while (_g < _g1) do 
     _g = _g + 1;
     local idx = _g - 1;
-    ret[idx + 1] = args[idx];
+    ret[idx + 1] = arr[idx];
   end;
-  local args = ret;
-  local this1 = ({command = command, arguments = args, cwd = cwd});
-  do return this1 end;
+  do return ret end;
+end
+
+__plenary__Job_Job_Fields_.new = {}
+__plenary__Job_Job_Fields_.main = function() 
+  local arr = _hx_tab_array({[0]="-v"}, 1);
+  local ret = ({});
+  local _g = 0;
+  local _g1 = arr.length;
+  while (_g < _g1) do 
+    _g = _g + 1;
+    local idx = _g - 1;
+    ret[idx + 1] = arr[idx];
+  end;
+  local args = ({command = "chezmoi", cwd = "/Users/danielo/", arguments = ret});
+  vim.pretty_print("job args", args);
+  local job = __plenary_Job:new(args);
+  vim.pretty_print(job);
 end
 
 __vim__Vim_Opts_Impl_.new = {}
@@ -973,41 +989,8 @@ __vim_DanieloVim.autocmd = function(groupName,pattern,description,cb)
   vim.api.nvim_create_autocmd(this1);
 end
 __vim_DanieloVim.chezmoi = function(args) 
-  local cwd = nil;
-  local ret = ({});
-  local _g = 0;
-  local _g1 = args.length;
-  while (_g < _g1) do 
-    _g = _g + 1;
-    local idx = _g - 1;
-    ret[idx + 1] = args[idx];
-  end;
-  local args = ret;
-  local this1 = ({command = "chezmoi", arguments = args, cwd = cwd});
-  local args = this1;
-  local job = __plenary_Job:new(args);
-  do return job:start() end;
 end
 __vim_DanieloVim.main = function() 
-  local args = _hx_tab_array({[0]="-la"}, 1);
-  local cwd = nil;
-  local ret = ({});
-  local _g = 0;
-  local _g1 = args.length;
-  while (_g < _g1) do 
-    _g = _g + 1;
-    local idx = _g - 1;
-    ret[idx + 1] = args[idx];
-  end;
-  local args = ret;
-  local this1 = ({command = "ls", arguments = args, cwd = cwd});
-  local args = this1;
-  local job = __plenary_Job:new(args);
-  local result = job:sync();
-  __haxe_Log.trace(result, _hx_o({__fields__={fileName=true,lineNumber=true,className=true,methodName=true},fileName="src/vim/Vim.hx",lineNumber=60,className="vim.DanieloVim",methodName="main"}));
-  local cwd = nil;
-  local this1 = ({command = "ls", args = ({"-la"}), cwd = cwd});
-  vim.pretty_print(this1);
 end
 
 __vim__Vim_Vim_Fields_.new = {}

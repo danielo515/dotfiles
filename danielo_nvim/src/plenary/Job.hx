@@ -3,17 +3,21 @@ package plenary;
 import lua.Table;
 import vim.Vim;
 
+@:arrayAccess
+abstract LuaArray<T>(lua.Table<Int, T>) from lua.Table<Int, T> to lua.Table<Int, T> {
+	@:from
+	public static inline function from<T>(arr:Array<T>):LuaArray<T> {
+		return lua.Table.fromArray(arr);
+	}
+}
+
 typedef Job_opts = {
 	final command:String;
 	final cwd:Null<String>;
-	// final arguments:Array<String>;
+	final arguments:LuaArray<String>;
 }
 
-@:build(TableBuilder.build())
-abstract JOpts(Table<String, Dynamic>) {
-	extern public inline function new(args:Job_opts)
-		this = throw "no macro!";
-}
+// @:build(TableBuilder.build())
 
 @:luaRequire("plenary.job")
 extern class Job {
@@ -21,19 +25,18 @@ extern class Job {
 		Vim.print("job args", args);
 		return untyped __lua__("{0}:new({1})", Job, args);
 	}
-	static inline function make(args:Job_opts, cmdArgs:Array<String>):Job {
-		final jobArgs = Table.create(null, args);
-		jobArgs.arguments = Table.create(cmdArgs);
-		return create(jobArgs);
+	static inline function make(jobargs:Job_opts):Job {
+		return create(Table.create(jobargs));
 	}
 	function start():Job;
 	function sync():Job;
 }
 
 function main() {
-	final job = Job.make({
+	var job = Job.make({
 		command: "chezmoi",
 		cwd: "/Users/danielo/",
-	}, ["-v",]);
-	Vim.print(job.sync());
+		arguments: ['-v']
+	});
+	Vim.print(job);
 }
