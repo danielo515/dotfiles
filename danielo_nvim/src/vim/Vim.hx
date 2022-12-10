@@ -49,15 +49,14 @@ class DanieloVim {
 	}
 
 	static public function chezmoi(args:Array<String>) {
-		final job = Job.make(new JobOpts("chezmoi", args));
-		return job.start();
+		// final job = Job.make(new JobOpts("chezmoi", args));
+		// return job.start();
 	}
 
 	static function main() {
 		// final job = Job.make(new JobOpts("ls", Table.create(['-la']), '~/Downloads'));
-		final job = Job.make(new JobOpts("ls", ['-la']));
-		var result = job.sync();
-		trace(result);
-		Vim.print(new JOpts("ls", (['-la'])));
+		// final job = Job.make(new JobOpts("ls", ['-la']));
+		// var result = job.sync();
+		// trace(result);
 	}
 }
