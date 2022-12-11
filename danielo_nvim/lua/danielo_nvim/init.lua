@@ -1018,6 +1018,7 @@ __vim_DanieloVim.main = function()
   end;
   __vim_DanieloVim.autocmd("HaxeEvent", ret, "*.hx", "Created from haxe", function() 
     vim.pretty_print("Hello from axe");
+    do return true end;
   end);
 end
 
