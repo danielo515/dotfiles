@@ -201,9 +201,6 @@ local Math = _hx_e()
 local String = _hx_e()
 local Std = _hx_e()
 local Test = _hx_e()
-___VimTypes_LuaArray_Impl_ = _hx_e()
-___VimTypes_BufferId_Impl_ = _hx_e()
-___VimTypes_WindowId_Impl_ = _hx_e()
 __haxe_Log = _hx_e()
 __haxe_iterators_ArrayIterator = _hx_e()
 __haxe_iterators_ArrayKeyValueIterator = _hx_e()
@@ -214,6 +211,9 @@ __vim__Vim_GroupOpts_Impl_ = _hx_e()
 __vim__Vim_AutoCmdOpts_Impl_ = _hx_e()
 __vim_DanieloVim = _hx_e()
 __vim__Vim_Vim_Fields_ = _hx_e()
+__vim__VimTypes_LuaArray_Impl_ = _hx_e()
+__vim__VimTypes_BufferId_Impl_ = _hx_e()
+__vim__VimTypes_WindowId_Impl_ = _hx_e()
 
 local _hx_bind, _hx_bit, _hx_staticToInstance, _hx_funcToField, _hx_maxn, _hx_print, _hx_apply_self, _hx_box_mr, _hx_bit_clamp, _hx_table, _hx_bit_raw
 local _hx_pcall_default = {};
@@ -760,37 +760,6 @@ Test["or"] = function(v,fallback)
   end;
 end
 
-___VimTypes_LuaArray_Impl_.new = {}
-___VimTypes_LuaArray_Impl_.from = function(arr) 
-  local ret = ({});
-  local _g = 0;
-  local _g1 = arr.length;
-  while (_g < _g1) do 
-    _g = _g + 1;
-    local idx = _g - 1;
-    ret[idx + 1] = arr[idx];
-  end;
-  do return ret end;
-end
-
-___VimTypes_BufferId_Impl_.new = {}
-___VimTypes_BufferId_Impl_._new = function(buf) 
-  local this1 = buf;
-  do return this1 end;
-end
-___VimTypes_BufferId_Impl_.from = function(bufNum) 
-  do return ___VimTypes_BufferId_Impl_._new(bufNum) end;
-end
-
-___VimTypes_WindowId_Impl_.new = {}
-___VimTypes_WindowId_Impl_._new = function(id) 
-  local this1 = id;
-  do return this1 end;
-end
-___VimTypes_WindowId_Impl_.from = function(id) 
-  do return ___VimTypes_WindowId_Impl_._new(id) end;
-end
-
 __haxe_Log.new = {}
 __haxe_Log.formatOutput = function(v,infos) 
   local str = Std.string(v);
@@ -1003,7 +972,7 @@ end
 __vim_DanieloVim.chezmoi = function(args) 
 end
 __vim_DanieloVim.main = function() 
-  __vim_DanieloVim.autocmd("HaxeEvent", ___VimTypes_LuaArray_Impl_.from(_hx_tab_array({[0]="BufWritePost"}, 1)), "*.hx", "Created from haxe", function() 
+  __vim_DanieloVim.autocmd("HaxeEvent", __vim__VimTypes_LuaArray_Impl_.from(_hx_tab_array({[0]="BufWritePost"}, 1)), "*.hx", "Created from haxe", function() 
     vim.pretty_print("Hello from axe");
     do return true end;
   end);
@@ -1012,6 +981,37 @@ end
 __vim__Vim_Vim_Fields_.new = {}
 __vim__Vim_Vim_Fields_.comment = function() 
   ---@diagnostic disable;
+end
+
+__vim__VimTypes_LuaArray_Impl_.new = {}
+__vim__VimTypes_LuaArray_Impl_.from = function(arr) 
+  local ret = ({});
+  local _g = 0;
+  local _g1 = arr.length;
+  while (_g < _g1) do 
+    _g = _g + 1;
+    local idx = _g - 1;
+    ret[idx + 1] = arr[idx];
+  end;
+  do return ret end;
+end
+
+__vim__VimTypes_BufferId_Impl_.new = {}
+__vim__VimTypes_BufferId_Impl_._new = function(buf) 
+  local this1 = buf;
+  do return this1 end;
+end
+__vim__VimTypes_BufferId_Impl_.from = function(bufNum) 
+  do return __vim__VimTypes_BufferId_Impl_._new(bufNum) end;
+end
+
+__vim__VimTypes_WindowId_Impl_.new = {}
+__vim__VimTypes_WindowId_Impl_._new = function(id) 
+  local this1 = id;
+  do return this1 end;
+end
+__vim__VimTypes_WindowId_Impl_.from = function(id) 
+  do return __vim__VimTypes_WindowId_Impl_._new(id) end;
 end
 if _hx_bit_raw then
     _hx_bit_clamp = function(v)
