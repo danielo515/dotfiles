@@ -33,12 +33,14 @@ return {
   s(
     { trig = "fmt", dscr = "fmt snippet to use with snip" },
     fmta(
-      [[ 
-    fmt( "{<>}" , { 
-      <> = i(<>,"default") 
-      })
+      [[ fmt([[
+        <>
+        \]\], 
+       { 
+       i(1,"default"),
+       })
     ]],
-      { i(1, "key"), rep(1), i(2, "1") }
+      { i(1) }
     )
   ),
   s({ trig = "(%w+)tmap", dscr = "Wrap current table with a map method", regTrig = true }, {
