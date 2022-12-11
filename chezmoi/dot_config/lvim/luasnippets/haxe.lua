@@ -17,9 +17,9 @@ local t = ls.text_node
 local rec_ls
 rec_ls = function(pos, _nodes)
   assert(type(_nodes) == "table", "List of nodes must be a table")
-  local nodes = vim.list_extend({ t "" }, _nodes)
+  local nodes = vim.list_extend({ t "" }, _nodes:copy())
   return function()
-    table.insert(nodes, d(pos, rec_ls(pos, _nodes), {}))
+    table.insert(nodes, d(pos, rec_ls(pos, _nodes:copy()), {}))
     vim.pretty_print(nodes)
     return sn(nil, {
       c(1, {
@@ -62,13 +62,17 @@ abstract {}<T>({}) {{
 
     fmt(
       [[ extern class {} {{
-              {}
+           static function {}({}):{};
               {}
               }}
     ]],
       {
         i(1),
-        d(2, rec_ls(2, fmt(" static function {}({}):{};", { i(1), i(2), i(3) })), {}),
+        i(2),
+        i(3),
+        i(4),
+        i(0),
+        -- d(5, rec_ls(2, fmt(" static function {}({}):{};", { i(1), i(2), i(3) })), {}),
       }
     )
   ),
