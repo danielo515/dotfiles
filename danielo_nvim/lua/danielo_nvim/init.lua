@@ -985,7 +985,7 @@ end
 
 __vim__Vim_AutoCmdOpts_Impl_.new = {}
 __vim__Vim_AutoCmdOpts_Impl_._new = function(pattern,cb,group,description) 
-  local this1 = ({pattern = pattern, callback = cb, group = group, description = description});
+  local this1 = ({pattern = pattern, callback = cb, group = group, desc = description});
   do return this1 end;
 end
 
@@ -995,7 +995,7 @@ __vim_DanieloVim.autocmd = function(groupName,events,pattern,description,cb)
   local inlobj_clear = false;
   local this1 = ({clear = inlobj_clear});
   local group = vim.api.nvim_create_augroup(groupName, this1);
-  local this1 = ({pattern = pattern, callback = cb, group = group, description = (function() 
+  local this1 = ({pattern = pattern, callback = cb, group = group, desc = (function() 
     local _hx_1
     if (description ~= nil) then 
     _hx_1 = description; else 
@@ -1007,6 +1007,18 @@ end
 __vim_DanieloVim.chezmoi = function(args) 
 end
 __vim_DanieloVim.main = function() 
+  local arr = _hx_tab_array({[0]="BufWritePost"}, 1);
+  local ret = ({});
+  local _g = 0;
+  local _g1 = arr.length;
+  while (_g < _g1) do 
+    _g = _g + 1;
+    local idx = _g - 1;
+    ret[idx + 1] = arr[idx];
+  end;
+  __vim_DanieloVim.autocmd("HaxeEvent", ret, "*.hx", "Created from haxe", function() 
+    vim.pretty_print("Hello from axe");
+  end);
 end
 
 __vim__Vim_Vim_Fields_.new = {}

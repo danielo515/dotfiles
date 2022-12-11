@@ -51,7 +51,7 @@ abstract AutoCmdOpts(Table<String, Dynamic>) {
 			pattern: pattern,
 			callback: cb,
 			group: group,
-			description: description
+			desc: description
 		});
 	}
 }
@@ -90,9 +90,6 @@ class DanieloVim {
 	}
 
 	static function main() {
-		// final job = Job.make(new JobOpts("ls", Table.create(['-la']), '~/Downloads'));
-		// final job = Job.make(new JobOpts("ls", ['-la']));
-		// var result = job.sync();
-		// trace(result);
+		autocmd('HaxeEvent', [BufWritePost], "*.hx", "Created from haxe", () -> Vim.print('Hello from axe'));
 	}
 }
