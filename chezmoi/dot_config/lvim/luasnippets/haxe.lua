@@ -15,17 +15,21 @@ local t = ls.text_node
 
 -- Yeah, they need to be separated
 local rec_ls
-rec_ls = function(_nodes)
+rec_ls = function(pos, _nodes)
+  assert(type(_nodes) == "table", "List of nodes must be a table")
   local nodes = vim.list_extend({ t "" }, _nodes)
-  nodes:insert(d(#nodes, rec_ls, {}))
-  return sn(nil, {
-    c(1, {
-      -- important!! Having the sn(...) as the first choice will cause infinite recursion.
-      t { "" },
-      -- The same dynamicNode as in the snippet (also note: self reference).
-      sn(nil, nodes),
-    }),
-  })
+  return function()
+    table.insert(nodes, d(pos, rec_ls(pos, _nodes), {}))
+    vim.pretty_print(nodes)
+    return sn(nil, {
+      c(1, {
+        -- important!! Having the sn(...) as the first choice will cause infinite recursion.
+        t { "" },
+        -- The same dynamicNode as in the snippet (also note: self reference).
+        sn(nil, nodes),
+      }),
+    })
+  end
 end
 
 local snippets = {
@@ -57,15 +61,14 @@ abstract {}<T>({}) {{
     { trig = "ext", dscr = "Extern class", regTrig = false },
 
     fmt(
-      [[
-extern class {} {{
-{}
-}}
-
+      [[ extern class {} {{
+              {}
+              {}
+              }}
     ]],
       {
         i(1),
-        d(rec_ls(fmt(" static function {}({}):{}; ", { i(1), i(2), i(0) }))),
+        d(2, rec_ls(2, fmt(" static function {}({}):{};", { i(1), i(2), i(3) })), {}),
       }
     )
   ),
