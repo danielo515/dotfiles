@@ -58,8 +58,8 @@ class TableBuilder {
 									var plain_expr = macro($i{arg.name}).$name;
 									var expr = switch (field.type) {
 										case TInst(_.get().name => "Array", _):
-											plain_expr;
-										// macro(lua.Table.create($plain_expr));
+											// plain_expr;
+											macro(lua.Table.fromArray($plain_expr));
 										case other: plain_expr;
 									};
 									objFields.push({
