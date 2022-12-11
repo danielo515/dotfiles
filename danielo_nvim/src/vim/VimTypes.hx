@@ -9,6 +9,23 @@ abstract LuaArray<T>(lua.Table<Int, T>) from lua.Table<Int, T> to lua.Table<Int,
 	}
 }
 
+@:forward // automatically get fields from underlying type
+abstract LuaObj<T>(T) {
+	@:from
+	public static inline function fromType<T>(obj:T):LuaObj<T> {
+		@:nullSafety(Off) untyped obj.__fields__ = null;
+		@:nullSafety(Off) lua.Lua.setmetatable(cast obj, null);
+		return cast obj;
+	}
+
+	// could add a @:from lua table, but that will automatically accept/convert any lua table, probably want to make it explicit
+
+	@:to
+	public function to():lua.Table<String, Dynamic> {
+		return cast this;
+	}
+}
+
 // Some boilerplate here for type safety
 abstract BufferId(Int) from Int {
 	public function new(buf:Int) {
@@ -118,4 +135,16 @@ enum abstract VimEvent(String) {
 	final QuitPre; // when using :quit, before deciding whether to quit
 	final VimLeavePre; // before exiting Vim, before writing the viminfo file
 	final VimLeave; // before exiting Vim, after writing the viminfo file
+}
+
+enum abstract PathModifier(String) to String {
+	final FullPath = ":p";
+	final Head = ":h";
+	final Tail = ":t";
+}
+
+abstract ExpandString(String) {
+	public function new(path:String, modifiers:PathModifier) {
+		this = path + modifiers;
+	}
 }
