@@ -12,6 +12,28 @@ inline function comment() {
 	untyped __lua__("---@diagnostic disable");
 }
 
+abstract BufferId(Int) from Int {
+	public function new(buf:Int) {
+		this = buf;
+	}
+
+	@:from
+	public static inline function from(bufNum:Int):BufferId {
+		return new BufferId(bufNum);
+	}
+}
+
+abstract WindowId(Int) from Int {
+	public function new(id:Int) {
+		this = id;
+	}
+
+	@:from
+	public static inline function from(id:Int):WindowId {
+		return new WindowId(id);
+	}
+}
+
 abstract Opts(Table<String, Bool>) {
 	public inline function new(clear:Bool) {
 		this = Table.create(null, {clear: clear});
@@ -29,10 +51,19 @@ abstract AutoCmdOpts(Table<String, Dynamic>) {
 	}
 }
 
+enum abstract VimEvent(String) {
+	final FileType;
+	final CursorHold;
+	final BufWrite;
+	final BufWritePre;
+	final BufWritePost;
+	final VimEnter;
+}
+
 @:native("vim.api")
 extern class Api {
 	static function nvim_create_augroup(group:String, opts:Opts):Int;
-	static function nvim_create_autocmd(opts:AutoCmdOpts):Int;
+	static function nvim_create_autocmd(event:LuaArray<VimEvent>, opts:AutoCmdOpts):Int;
 }
 
 @:native("vim")
@@ -43,9 +74,9 @@ extern class Vim {
 
 @:expose("vim")
 class DanieloVim {
-	static public function autocmd(groupName:String, pattern:String, ?description:String, cb:Function) {
+	static public function autocmd(groupName:String, events:LuaArray<VimEvent>, pattern:String, ?description:String, cb:Function) {
 		var group = Api.nvim_create_augroup(groupName, new Opts(false));
-		Api.nvim_create_autocmd(new AutoCmdOpts(pattern, cb, group, description.or('$groupName:[$pattern]')));
+		Api.nvim_create_autocmd(events, new AutoCmdOpts(pattern, cb, group, description.or('$groupName:[$pattern]')));
 	}
 
 	static public function chezmoi(args:Array<String>) {

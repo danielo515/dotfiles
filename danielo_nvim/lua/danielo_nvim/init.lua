@@ -210,6 +210,8 @@ __parser_ClassName = _hx_e()
 __plenary__Job_LuaArray_Impl_ = _hx_e()
 __plenary_Job = _G.require("plenary.job")
 __plenary__Job_Job_Fields_ = _hx_e()
+__vim__Vim_BufferId_Impl_ = _hx_e()
+__vim__Vim_WindowId_Impl_ = _hx_e()
 __vim__Vim_Opts_Impl_ = _hx_e()
 __vim__Vim_AutoCmdOpts_Impl_ = _hx_e()
 __vim_DanieloVim = _hx_e()
@@ -947,19 +949,28 @@ end
 
 __plenary__Job_Job_Fields_.new = {}
 __plenary__Job_Job_Fields_.main = function() 
-  local arr = _hx_tab_array({[0]="-v"}, 1);
-  local ret = ({});
-  local _g = 0;
-  local _g1 = arr.length;
-  while (_g < _g1) do 
-    _g = _g + 1;
-    local idx = _g - 1;
-    ret[idx + 1] = arr[idx];
-  end;
-  local args = ({command = "chezmoi", cwd = "/Users/danielo/", arguments = ret});
+  local args = ({command = "chezmoi", cwd = "/Users/danielo/", arguments = _hx_tab_array({[0]="-v"}, 1), nested = _hx_o({__fields__={x=true},x="X"})});
   vim.pretty_print("job args", args);
   local job = __plenary_Job:new(args);
   vim.pretty_print(job);
+end
+
+__vim__Vim_BufferId_Impl_.new = {}
+__vim__Vim_BufferId_Impl_._new = function(buf) 
+  local this1 = buf;
+  do return this1 end;
+end
+__vim__Vim_BufferId_Impl_.from = function(bufNum) 
+  do return __vim__Vim_BufferId_Impl_._new(bufNum) end;
+end
+
+__vim__Vim_WindowId_Impl_.new = {}
+__vim__Vim_WindowId_Impl_._new = function(id) 
+  local this1 = id;
+  do return this1 end;
+end
+__vim__Vim_WindowId_Impl_.from = function(id) 
+  do return __vim__Vim_WindowId_Impl_._new(id) end;
 end
 
 __vim__Vim_Opts_Impl_.new = {}
@@ -976,7 +987,7 @@ end
 
 __vim_DanieloVim.new = {}
 _hx_exports["vim"] = __vim_DanieloVim
-__vim_DanieloVim.autocmd = function(groupName,pattern,description,cb) 
+__vim_DanieloVim.autocmd = function(groupName,events,pattern,description,cb) 
   local this1 = ({clear = false});
   local group = vim.api.nvim_create_augroup(groupName, this1);
   local this1 = ({pattern = pattern, callback = cb, group = group, description = (function() 
@@ -986,7 +997,7 @@ __vim_DanieloVim.autocmd = function(groupName,pattern,description,cb)
     _hx_1 = Std.string(Std.string(Std.string(Std.string("") .. Std.string(groupName)) .. Std.string(":[")) .. Std.string(pattern)) .. Std.string("]"); end
     return _hx_1
   end )()});
-  vim.api.nvim_create_autocmd(this1);
+  vim.api.nvim_create_autocmd(events, this1);
 end
 __vim_DanieloVim.chezmoi = function(args) 
 end
