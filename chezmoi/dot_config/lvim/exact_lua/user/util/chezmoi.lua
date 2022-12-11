@@ -1,16 +1,29 @@
 local log = require "lvim.core.log"
+local Job = require "plenary.job"
 local has_chezmoi = vim.fn.executable "chezmoi" == 1
 local M = { has_chezmoi = has_chezmoi }
 
+local function executeChezmoi(args)
+  local result, _ = Job:new({
+    command = "chezmoi",
+    args = args,
+    -- Do not set env prop or it will  fail
+    on_exit = function(_, return_val)
+      if return_val ~= 0 then
+        print("Chezmoi command failed to execute: " .. table.concat(args, " "))
+        return
+      end
+    end,
+  }):sync()
+  return result
+end
+
 function M.get_chezmoi_dir()
-  local results = vim.fn.execute "!chezmoi source-path"
-  local results_split = vim.split(results, "\n", { trimempty = true })
-  local path = results_split[3]
+  local results = executeChezmoi { "source-path" }
+  local path = results[1]
   log:debug("Using " .. path .. " as chezmoi path", { title = "Danielo" })
   return path
 end
-
-local Job = require "plenary.job"
 
 function M.re_add(path)
   local result, _ = Job:new({
@@ -19,7 +32,7 @@ function M.re_add(path)
     -- Do not set env prop or it will  fail
     on_exit = function(_, return_val)
       if return_val ~= 0 then
-        print "Command failed to execute"
+        print "Chezmoi command failed to execute"
         return
       end
     end,
@@ -40,5 +53,6 @@ function M.re_add(path)
 end
 
 _G.re_add = M.re_add
+_G.executeChezmoi = executeChezmoi
 
 return M
