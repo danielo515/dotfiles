@@ -30,17 +30,15 @@ abstract AutoCmdOpts(Table<String, Dynamic>) {
 			callback: cb,
 			group: group,
 			desc: description,
-      once: once,
-      nested: nested,
+			once: once,
+			nested: nested,
 		});
 	}
 }
 
-
 @:native("vim.api")
 extern class Api {
 	static function nvim_create_augroup(group:String, opts:GroupOpts):Int;
-
 	static function nvim_create_autocmd(event:LuaArray<VimEvent>, opts:AutoCmdOpts):Int;
 }
 
@@ -48,6 +46,7 @@ extern class Api {
 extern class Vim {
 	@:native("pretty_print")
 	static function print(args:Rest<Dynamic>):Void;
+	static function expand(string:ExpandString):Void;
 }
 
 @:expose("vim")
