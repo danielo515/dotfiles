@@ -34,9 +34,14 @@ abstract WindowId(Int) from Int {
 	}
 }
 
-abstract Opts(Table<String, Bool>) {
+abstract GroupOpts(Table<String, Bool>) {
 	public inline function new(clear:Bool) {
 		this = Table.create(null, {clear: clear});
+	}
+
+	@:from
+	public inline static function fromObj(arg:{clear:Bool}) {
+		return new GroupOpts(arg.clear);
 	}
 }
 
@@ -62,7 +67,7 @@ enum abstract VimEvent(String) {
 
 @:native("vim.api")
 extern class Api {
-	static function nvim_create_augroup(group:String, opts:Opts):Int;
+	static function nvim_create_augroup(group:String, opts:GroupOpts):Int;
 	static function nvim_create_autocmd(event:LuaArray<VimEvent>, opts:AutoCmdOpts):Int;
 }
 
@@ -75,7 +80,7 @@ extern class Vim {
 @:expose("vim")
 class DanieloVim {
 	static public function autocmd(groupName:String, events:LuaArray<VimEvent>, pattern:String, ?description:String, cb:Function) {
-		var group = Api.nvim_create_augroup(groupName, new Opts(false));
+		var group = Api.nvim_create_augroup(groupName, {clear: false});
 		Api.nvim_create_autocmd(events, new AutoCmdOpts(pattern, cb, group, description.or('$groupName:[$pattern]')));
 	}
 

@@ -212,7 +212,7 @@ __plenary_Job = _G.require("plenary.job")
 __plenary__Job_Job_Fields_ = _hx_e()
 __vim__Vim_BufferId_Impl_ = _hx_e()
 __vim__Vim_WindowId_Impl_ = _hx_e()
-__vim__Vim_Opts_Impl_ = _hx_e()
+__vim__Vim_GroupOpts_Impl_ = _hx_e()
 __vim__Vim_AutoCmdOpts_Impl_ = _hx_e()
 __vim_DanieloVim = _hx_e()
 __vim__Vim_Vim_Fields_ = _hx_e()
@@ -973,9 +973,13 @@ __vim__Vim_WindowId_Impl_.from = function(id)
   do return __vim__Vim_WindowId_Impl_._new(id) end;
 end
 
-__vim__Vim_Opts_Impl_.new = {}
-__vim__Vim_Opts_Impl_._new = function(clear) 
+__vim__Vim_GroupOpts_Impl_.new = {}
+__vim__Vim_GroupOpts_Impl_._new = function(clear) 
   local this1 = ({clear = clear});
+  do return this1 end;
+end
+__vim__Vim_GroupOpts_Impl_.fromObj = function(arg) 
+  local this1 = ({clear = arg.clear});
   do return this1 end;
 end
 
@@ -988,7 +992,8 @@ end
 __vim_DanieloVim.new = {}
 _hx_exports["vim"] = __vim_DanieloVim
 __vim_DanieloVim.autocmd = function(groupName,events,pattern,description,cb) 
-  local this1 = ({clear = false});
+  local inlobj_clear = false;
+  local this1 = ({clear = inlobj_clear});
   local group = vim.api.nvim_create_augroup(groupName, this1);
   local this1 = ({pattern = pattern, callback = cb, group = group, description = (function() 
     local _hx_1
