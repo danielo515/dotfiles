@@ -212,8 +212,10 @@ __vim__Vim_AutoCmdOpts_Impl_ = _hx_e()
 __vim_DanieloVim = _hx_e()
 __vim__Vim_Vim_Fields_ = _hx_e()
 __vim__VimTypes_LuaArray_Impl_ = _hx_e()
+__vim__VimTypes_LuaObj_Impl_ = _hx_e()
 __vim__VimTypes_BufferId_Impl_ = _hx_e()
 __vim__VimTypes_WindowId_Impl_ = _hx_e()
+__vim__VimTypes_ExpandString_Impl_ = _hx_e()
 
 local _hx_bind, _hx_bit, _hx_staticToInstance, _hx_funcToField, _hx_maxn, _hx_print, _hx_apply_self, _hx_box_mr, _hx_bit_clamp, _hx_table, _hx_bit_raw
 local _hx_pcall_default = {};
@@ -973,7 +975,9 @@ __vim_DanieloVim.chezmoi = function(args)
 end
 __vim_DanieloVim.main = function() 
   __vim_DanieloVim.autocmd("HaxeEvent", __vim__VimTypes_LuaArray_Impl_.from(_hx_tab_array({[0]="BufWritePost"}, 1)), "*.hx", "Created from haxe", function() 
-    vim.pretty_print("Hello from axe");
+    local this1 = "%";
+    local filename = vim.fn.expand(_G.string.format("%s%s", this1, ":p"));
+    vim.pretty_print("Hello from axe", filename);
     do return true end;
   end);
 end
@@ -996,6 +1000,16 @@ __vim__VimTypes_LuaArray_Impl_.from = function(arr)
   do return ret end;
 end
 
+__vim__VimTypes_LuaObj_Impl_.new = {}
+__vim__VimTypes_LuaObj_Impl_.fromType = function(obj) 
+  obj.__fields__ = nil;
+  _G.setmetatable(obj, nil);
+  do return obj end;
+end
+__vim__VimTypes_LuaObj_Impl_.to = function(this1) 
+  do return this1 end;
+end
+
 __vim__VimTypes_BufferId_Impl_.new = {}
 __vim__VimTypes_BufferId_Impl_._new = function(buf) 
   local this1 = buf;
@@ -1012,6 +1026,15 @@ __vim__VimTypes_WindowId_Impl_._new = function(id)
 end
 __vim__VimTypes_WindowId_Impl_.from = function(id) 
   do return __vim__VimTypes_WindowId_Impl_._new(id) end;
+end
+
+__vim__VimTypes_ExpandString_Impl_.new = {}
+__vim__VimTypes_ExpandString_Impl_._new = function(path) 
+  local this1 = path;
+  do return this1 end;
+end
+__vim__VimTypes_ExpandString_Impl_.plus = function(path,modifiers) 
+  do return _G.string.format("%s%s", path, modifiers) end;
 end
 if _hx_bit_raw then
     _hx_bit_clamp = function(v)

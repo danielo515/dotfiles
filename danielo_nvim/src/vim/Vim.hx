@@ -42,11 +42,18 @@ extern class Api {
 	static function nvim_create_autocmd(event:LuaArray<VimEvent>, opts:AutoCmdOpts):Int;
 }
 
+@:native("vim.fn")
+extern class Fn {
+	static function expand(string:ExpandString):String;
+}
+
 @:native("vim")
 extern class Vim {
 	@:native("pretty_print")
 	static function print(args:Rest<Dynamic>):Void;
-	static function expand(string:ExpandString):Void;
+	static inline function expand(string:ExpandString):String {
+		return Fn.expand(string);
+	};
 }
 
 @:expose("vim")
@@ -63,7 +70,8 @@ class DanieloVim {
 
 	static function main() {
 		autocmd('HaxeEvent', [BufWritePost], "*.hx", "Created from haxe", () -> {
-			Vim.print('Hello from axe');
+			var filename = Vim.expand(new ExpandString(CurentFile) + FullPath);
+			Vim.print('Hello from axe', filename);
 			return true;
 		});
 	}

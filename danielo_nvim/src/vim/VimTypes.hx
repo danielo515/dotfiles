@@ -1,5 +1,7 @@
 package vim;
 
+import lua.NativeStringTools;
+
 @:arrayAccess
 abstract LuaArray<T>(lua.Table<Int, T>) from lua.Table<Int, T> to lua.Table<Int, T> {
 	// Can this be converted into a macro to avoid even calling fromArray ?
@@ -137,14 +139,23 @@ enum abstract VimEvent(String) {
 	final VimLeave; // before exiting Vim, after writing the viminfo file
 }
 
+// Yes, it is intentional that you can not create this from a string
 enum abstract PathModifier(String) to String {
 	final FullPath = ":p";
 	final Head = ":h";
 	final Tail = ":t";
 }
 
-abstract ExpandString(String) {
-	public function new(path:String, modifiers:PathModifier) {
-		this = path + modifiers;
+enum abstract VimRef(String) from String to String {
+	final CurentFile = "%";
+}
+
+abstract ExpandString(String) from VimRef {
+	public inline function new(path:VimRef) {
+		this = path;
+	}
+
+	@:op(A + B) public static inline function plus(path:ExpandString, modifiers:PathModifier):ExpandString {
+		return cast NativeStringTools.format("%s%s", path, modifiers);
 	}
 }
