@@ -146,13 +146,18 @@ enum abstract PathModifier(String) to String {
 	final Tail = ":t";
 }
 
-enum abstract VimRef(String) from String to String {
+enum abstract VimRef(String) to String {
 	final CurentFile = "%";
 }
 
 abstract ExpandString(String) from VimRef {
 	public inline function new(path:VimRef) {
 		this = path;
+	}
+
+	@:from
+	public static inline function from(ref:VimRef) {
+		return new ExpandString(ref);
 	}
 
 	@:op(A + B) public static inline function plus(path:ExpandString, modifiers:PathModifier):ExpandString {

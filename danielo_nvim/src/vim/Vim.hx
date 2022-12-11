@@ -70,7 +70,7 @@ class DanieloVim {
 
 	static function main() {
 		autocmd('HaxeEvent', [BufWritePost], "*.hx", "Created from haxe", () -> {
-			var filename = Vim.expand(new ExpandString(CurentFile) + FullPath);
+			var filename = Vim.expand(ExpandString.plus(CurentFile, FullPath));
 			Vim.print('Hello from axe', filename);
 			return true;
 		});

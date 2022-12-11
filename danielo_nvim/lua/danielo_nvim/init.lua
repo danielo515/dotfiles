@@ -975,8 +975,7 @@ __vim_DanieloVim.chezmoi = function(args)
 end
 __vim_DanieloVim.main = function() 
   __vim_DanieloVim.autocmd("HaxeEvent", __vim__VimTypes_LuaArray_Impl_.from(_hx_tab_array({[0]="BufWritePost"}, 1)), "*.hx", "Created from haxe", function() 
-    local this1 = "%";
-    local filename = vim.fn.expand(_G.string.format("%s%s", this1, ":p"));
+    local filename = vim.fn.expand(_G.string.format("%s%s", "%", ":p"));
     vim.pretty_print("Hello from axe", filename);
     do return true end;
   end);
@@ -1031,6 +1030,10 @@ end
 __vim__VimTypes_ExpandString_Impl_.new = {}
 __vim__VimTypes_ExpandString_Impl_._new = function(path) 
   local this1 = path;
+  do return this1 end;
+end
+__vim__VimTypes_ExpandString_Impl_.from = function(ref) 
+  local this1 = ref;
   do return this1 end;
 end
 __vim__VimTypes_ExpandString_Impl_.plus = function(path,modifiers) 
