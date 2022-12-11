@@ -4,34 +4,12 @@ import haxe.Rest;
 
 using Test;
 
+import VimTypes.LuaArray;
 import haxe.Constraints.Function;
 import lua.Table;
-import plenary.Job;
 
 inline function comment() {
 	untyped __lua__("---@diagnostic disable");
-}
-
-abstract BufferId(Int) from Int {
-	public function new(buf:Int) {
-		this = buf;
-	}
-
-	@:from
-	public static inline function from(bufNum:Int):BufferId {
-		return new BufferId(bufNum);
-	}
-}
-
-abstract WindowId(Int) from Int {
-	public function new(id:Int) {
-		this = id;
-	}
-
-	@:from
-	public static inline function from(id:Int):WindowId {
-		return new WindowId(id);
-	}
 }
 
 abstract GroupOpts(Table<String, Bool>) {
@@ -46,12 +24,14 @@ abstract GroupOpts(Table<String, Bool>) {
 }
 
 abstract AutoCmdOpts(Table<String, Dynamic>) {
-	public inline function new(pattern:String, cb, group, description:String) {
+	public inline function new(pattern:String, cb, group, description:String, once = false, nested = false) {
 		this = Table.create(null, {
 			pattern: pattern,
 			callback: cb,
 			group: group,
-			desc: description
+			desc: description,
+      once: once,
+      nested: nested,
 		});
 	}
 }
@@ -170,6 +150,9 @@ class DanieloVim {
 	}
 
 	static function main() {
-		autocmd('HaxeEvent', [BufWritePost], "*.hx", "Created from haxe", () -> Vim.print('Hello from axe'));
+		autocmd('HaxeEvent', [BufWritePost], "*.hx", "Created from haxe", () -> {
+			Vim.print('Hello from axe');
+			return true;
+		});
 	}
 }

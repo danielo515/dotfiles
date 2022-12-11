@@ -201,17 +201,15 @@ local Math = _hx_e()
 local String = _hx_e()
 local Std = _hx_e()
 local Test = _hx_e()
+___VimTypes_LuaArray_Impl_ = _hx_e()
+___VimTypes_BufferId_Impl_ = _hx_e()
+___VimTypes_WindowId_Impl_ = _hx_e()
 __haxe_Log = _hx_e()
 __haxe_iterators_ArrayIterator = _hx_e()
 __haxe_iterators_ArrayKeyValueIterator = _hx_e()
 __parser_State = _hx_e()
 __parser_Parser = _hx_e()
 __parser_ClassName = _hx_e()
-__plenary__Job_LuaArray_Impl_ = _hx_e()
-__plenary_Job = _G.require("plenary.job")
-__plenary__Job_Job_Fields_ = _hx_e()
-__vim__Vim_BufferId_Impl_ = _hx_e()
-__vim__Vim_WindowId_Impl_ = _hx_e()
 __vim__Vim_GroupOpts_Impl_ = _hx_e()
 __vim__Vim_AutoCmdOpts_Impl_ = _hx_e()
 __vim_DanieloVim = _hx_e()
@@ -762,6 +760,37 @@ Test["or"] = function(v,fallback)
   end;
 end
 
+___VimTypes_LuaArray_Impl_.new = {}
+___VimTypes_LuaArray_Impl_.from = function(arr) 
+  local ret = ({});
+  local _g = 0;
+  local _g1 = arr.length;
+  while (_g < _g1) do 
+    _g = _g + 1;
+    local idx = _g - 1;
+    ret[idx + 1] = arr[idx];
+  end;
+  do return ret end;
+end
+
+___VimTypes_BufferId_Impl_.new = {}
+___VimTypes_BufferId_Impl_._new = function(buf) 
+  local this1 = buf;
+  do return this1 end;
+end
+___VimTypes_BufferId_Impl_.from = function(bufNum) 
+  do return ___VimTypes_BufferId_Impl_._new(bufNum) end;
+end
+
+___VimTypes_WindowId_Impl_.new = {}
+___VimTypes_WindowId_Impl_._new = function(id) 
+  local this1 = id;
+  do return this1 end;
+end
+___VimTypes_WindowId_Impl_.from = function(id) 
+  do return ___VimTypes_WindowId_Impl_._new(id) end;
+end
+
 __haxe_Log.new = {}
 __haxe_Log.formatOutput = function(v,infos) 
   local str = Std.string(v);
@@ -934,45 +963,6 @@ __parser_ClassName.prototype.parse = function(self)
   do return self.parser:tokenize() end
 end
 
-__plenary__Job_LuaArray_Impl_.new = {}
-__plenary__Job_LuaArray_Impl_.from = function(arr) 
-  local ret = ({});
-  local _g = 0;
-  local _g1 = arr.length;
-  while (_g < _g1) do 
-    _g = _g + 1;
-    local idx = _g - 1;
-    ret[idx + 1] = arr[idx];
-  end;
-  do return ret end;
-end
-
-__plenary__Job_Job_Fields_.new = {}
-__plenary__Job_Job_Fields_.main = function() 
-  local args = ({command = "chezmoi", cwd = "/Users/danielo/", arguments = _hx_tab_array({[0]="-v"}, 1), nested = _hx_o({__fields__={x=true},x="X"})});
-  vim.pretty_print("job args", args);
-  local job = __plenary_Job:new(args);
-  vim.pretty_print(job);
-end
-
-__vim__Vim_BufferId_Impl_.new = {}
-__vim__Vim_BufferId_Impl_._new = function(buf) 
-  local this1 = buf;
-  do return this1 end;
-end
-__vim__Vim_BufferId_Impl_.from = function(bufNum) 
-  do return __vim__Vim_BufferId_Impl_._new(bufNum) end;
-end
-
-__vim__Vim_WindowId_Impl_.new = {}
-__vim__Vim_WindowId_Impl_._new = function(id) 
-  local this1 = id;
-  do return this1 end;
-end
-__vim__Vim_WindowId_Impl_.from = function(id) 
-  do return __vim__Vim_WindowId_Impl_._new(id) end;
-end
-
 __vim__Vim_GroupOpts_Impl_.new = {}
 __vim__Vim_GroupOpts_Impl_._new = function(clear) 
   local this1 = ({clear = clear});
@@ -984,8 +974,14 @@ __vim__Vim_GroupOpts_Impl_.fromObj = function(arg)
 end
 
 __vim__Vim_AutoCmdOpts_Impl_.new = {}
-__vim__Vim_AutoCmdOpts_Impl_._new = function(pattern,cb,group,description) 
-  local this1 = ({pattern = pattern, callback = cb, group = group, desc = description});
+__vim__Vim_AutoCmdOpts_Impl_._new = function(pattern,cb,group,description,once,nested) 
+  if (nested == nil) then 
+    nested = false;
+  end;
+  if (once == nil) then 
+    once = false;
+  end;
+  local this1 = ({pattern = pattern, callback = cb, group = group, desc = description, once = once, nested = nested});
   do return this1 end;
 end
 
@@ -1001,22 +997,13 @@ __vim_DanieloVim.autocmd = function(groupName,events,pattern,description,cb)
     _hx_1 = description; else 
     _hx_1 = Std.string(Std.string(Std.string(Std.string("") .. Std.string(groupName)) .. Std.string(":[")) .. Std.string(pattern)) .. Std.string("]"); end
     return _hx_1
-  end )()});
+  end )(), once = false, nested = false});
   vim.api.nvim_create_autocmd(events, this1);
 end
 __vim_DanieloVim.chezmoi = function(args) 
 end
 __vim_DanieloVim.main = function() 
-  local arr = _hx_tab_array({[0]="BufWritePost"}, 1);
-  local ret = ({});
-  local _g = 0;
-  local _g1 = arr.length;
-  while (_g < _g1) do 
-    _g = _g + 1;
-    local idx = _g - 1;
-    ret[idx + 1] = arr[idx];
-  end;
-  __vim_DanieloVim.autocmd("HaxeEvent", ret, "*.hx", "Created from haxe", function() 
+  __vim_DanieloVim.autocmd("HaxeEvent", ___VimTypes_LuaArray_Impl_.from(_hx_tab_array({[0]="BufWritePost"}, 1)), "*.hx", "Created from haxe", function() 
     vim.pretty_print("Hello from axe");
     do return true end;
   end);

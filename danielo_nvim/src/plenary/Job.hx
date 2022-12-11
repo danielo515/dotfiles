@@ -3,18 +3,11 @@ package plenary;
 import lua.Table;
 import vim.Vim;
 
-@:arrayAccess
-abstract LuaArray<T>(lua.Table<Int, T>) from lua.Table<Int, T> to lua.Table<Int, T> {
-	@:from
-	public static inline function from<T>(arr:Array<T>):LuaArray<T> {
-		return lua.Table.fromArray(arr);
-	}
-}
-
 typedef Job_opts = {
 	final command:String;
 	final cwd:Null<String>;
-	final arguments:LuaArray<String>;
+	final arguments:Array<String>;
+	final nested:{x:String};
 }
 
 // @:build(TableBuilder.build())
@@ -36,7 +29,8 @@ function main() {
 	var job = Job.make({
 		command: "chezmoi",
 		cwd: "/Users/danielo/",
-		arguments: ['-v']
+		arguments: ['-v'],
+		nested: {x: "X"},
 	});
 	Vim.print(job);
 }
