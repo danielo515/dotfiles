@@ -1,4 +1,4 @@
-package vim.ui;
+package vim;
 
 import vim.VimTypes;
 import haxe.Constraints.Function;
