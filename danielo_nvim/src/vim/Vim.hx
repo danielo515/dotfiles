@@ -36,10 +36,21 @@ abstract AutoCmdOpts(Table<String, Dynamic>) {
 	}
 }
 
+typedef CommandCallbackArgs = {
+	final args:String;
+	final bang:Bool;
+	final line1:Int;
+	final line2:Int;
+	final count:Int;
+	final reg:String;
+	final mods:String;
+}
+
 @:native("vim.api")
 extern class Api {
 	static function nvim_create_augroup(group:String, opts:GroupOpts):Int;
 	static function nvim_create_autocmd(event:LuaArray<VimEvent>, opts:AutoCmdOpts):Int;
+	static function nvim_create_user_command(command_name:String, command:LuaObj<CommandCallbackArgs>->Void, opts:LuaObj<{desc:String, force:Bool}>):Void;
 }
 
 @:native("vim.fn")
