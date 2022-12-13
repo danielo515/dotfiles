@@ -160,6 +160,10 @@ abstract ExpandString(String) from VimRef {
 		return new ExpandString(ref);
 	}
 
+	@:op(A + B) public inline function plus0(modifiers:PathModifier):ExpandString {
+		return cast NativeStringTools.format("%s%s", this, modifiers);
+	}
+
 	@:op(A + B) public static inline function plus(path:ExpandString, modifiers:PathModifier):ExpandString {
 		return cast NativeStringTools.format("%s%s", path, modifiers);
 	}

@@ -1036,6 +1036,9 @@ __vim__VimTypes_ExpandString_Impl_.from = function(ref)
   local this1 = ref;
   do return this1 end;
 end
+__vim__VimTypes_ExpandString_Impl_.plus0 = function(this1,modifiers) 
+  do return _G.string.format("%s%s", this1, modifiers) end;
+end
 __vim__VimTypes_ExpandString_Impl_.plus = function(path,modifiers) 
   do return _G.string.format("%s%s", path, modifiers) end;
 end

@@ -15,7 +15,6 @@ typedef Job_opts = {
 @:luaRequire("plenary.job")
 extern class Job {
 	private static inline function create(args:Table<String, Dynamic>):Job {
-		Vim.print("job args", args);
 		return untyped __lua__("{0}:new({1})", Job, args);
 	}
 	static inline function make(jobargs:Job_opts):Job {
