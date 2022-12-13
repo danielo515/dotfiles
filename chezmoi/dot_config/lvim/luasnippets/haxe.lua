@@ -1,5 +1,6 @@
 ---@diagnostic disable: unused-local
 local ls = require "luasnip"
+ls.setup_snip_env()
 local sn = ls.snippet_node
 local extras = require "luasnip.extras"
 local s = ls.s
@@ -17,21 +18,20 @@ local t = ls.text_node
 local rec_ls
 rec_ls = function(pos, _nodes)
   assert(type(_nodes) == "table", "List of nodes must be a table")
-  local nodes = vim.list_extend({ t "" }, _nodes:copy())
+  -- flat-copy nodes, otherwise we'd insert `d(...)` in every iteration.
+  local nodes = { unpack(_nodes) }
   return function()
-    table.insert(nodes, d(pos, rec_ls(pos, _nodes:copy()), {}))
-    vim.pretty_print(nodes)
+    table.insert(nodes, d(pos, rec_ls(pos, _nodes), {}))
     return sn(nil, {
       c(1, {
         -- important!! Having the sn(...) as the first choice will cause infinite recursion.
         t { "" },
-        -- The same dynamicNode as in the snippet (also note: self reference).
-        sn(nil, nodes),
+        -- deep copy of nodes here.
+        sn(nil, nodes):copy(),
       }),
     })
   end
 end
-
 local snippets = {
 
   s(
@@ -62,17 +62,14 @@ abstract {}<T>({}) {{
 
     fmt(
       [[ extern class {} {{
-           static function {}({}):{};
-              {}
-              }}
+               {}
+               {}
+            }}
     ]],
       {
         i(1),
-        i(2),
+        d(2, rec_ls(2, fmt(" static function {}({}):{};", { i(1), i(2), i(3) })), {}),
         i(3),
-        i(4),
-        i(0),
-        -- d(5, rec_ls(2, fmt(" static function {}({}):{};", { i(1), i(2), i(3) })), {}),
       }
     )
   ),
