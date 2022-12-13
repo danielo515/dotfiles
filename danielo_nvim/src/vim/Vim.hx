@@ -74,17 +74,4 @@ class DanieloVim {
 		var group = Api.nvim_create_augroup(groupName, {clear: false});
 		Api.nvim_create_autocmd(events, new AutoCmdOpts(pattern, cb, group, description.or('$groupName:[$pattern]')));
 	}
-
-	static public function chezmoi(args:Array<String>) {
-		// final job = Job.make(new JobOpts("chezmoi", args));
-		// return job.start();
-	}
-
-	static function main() {
-		autocmd('HaxeEvent', [BufWritePost], "*.hx", "Created from haxe", () -> {
-			var filename = Vim.expand(ExpandString.plus(CurentFile, FullPath));
-			Vim.print('Hello from axe', filename);
-			return true;
-		});
-	}
 }

@@ -183,7 +183,12 @@ local plugins = {
   require "user.plugins.async-tasks",
   require "user.plugins.leap",
   "jdonaldson/vaxe",
-  require "plugins.vim-notify",
-  { vim.fn.fnamemodify(chezmoi.get_chezmoi_dir(), ":h") .. "/danielo_nvim" },
+  require "user.plugins.vim-notify",
+  {
+    vim.fn.fnamemodify(chezmoi.get_chezmoi_dir(), ":h") .. "/danielo_nvim",
+    config = function()
+      require "danielo_nvim"
+    end,
+  },
 }
 return plugins

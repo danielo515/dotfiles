@@ -1,9 +1,11 @@
-
 --macro nullSafety("vim", Strict)
 --macro nullSafety("plenary", Strict)
 --macro nullSafety("parser", Strict)
 -cp src
--main Main
+
+vim.Vim
+parser.ClassName
+
 -dce std
 -D lua-vanilla
 -D luajit
