@@ -24,7 +24,7 @@ class Main {
 			command: "gh",
 			args: args,
 			on_stderr: (args, return_val) -> {
-				Vim.print("Job ran", args, return_val);
+				Vim.print("Job got stderr", args, return_val);
 			}
 		});
 		return job.sync();
@@ -32,12 +32,26 @@ class Main {
 
 	static function openInGh(_) {
 		final currentFile = vim.Fn.expand(CurentFile);
-		runGh(["browse", currentFile]);
+		final curentBranch = get_branch();
+		runGh(["browse", currentFile, "--branch", curentBranch[1]]);
+	}
+
+	static function get_branch() {
+		var args = lua.Table.create(["rev-parse", "--abbrev-ref", "HEAD"]);
+		final job = Job.make({
+			command: "git",
+			args: args,
+			on_stderr: (args, return_val) -> {
+				Vim.print("Something may have  failed", args, return_val);
+			}
+		});
+		return job.sync();
 	}
 
 	static function copyGhUrl(_) {
 		final currentFile = vim.Fn.expand(CurentFile);
-		var lines = runGh(["browse", currentFile, "--no-browser"]);
+		final curentBranch = get_branch();
+		var lines = runGh(["browse", currentFile, "--no-browser", "--branch", curentBranch[1]]);
 		switch (lines) {
 			case null:
 				Vim.print("No URL");

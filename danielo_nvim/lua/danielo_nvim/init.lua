@@ -572,18 +572,28 @@ Main.runGh = function(args)
     do return nil end;
   end;
   local args = ({command = "gh", args = args, on_stderr = function(args,return_val) 
-    vim.pretty_print("Job ran", args, return_val);
+    vim.pretty_print("Job got stderr", args, return_val);
   end});
   local job = __plenary_Job:new(args);
   do return job:sync() end;
 end
 Main.openInGh = function(_) 
   local currentFile = vim.fn.expand("%");
-  Main.runGh(__vim__VimTypes_LuaArray_Impl_.from(_hx_tab_array({[0]="browse", currentFile}, 2)));
+  local curentBranch = Main.get_branch();
+  Main.runGh(__vim__VimTypes_LuaArray_Impl_.from(_hx_tab_array({[0]="browse", currentFile, "--branch", curentBranch[1]}, 4)));
+end
+Main.get_branch = function() 
+  local args = ({"rev-parse","--abbrev-ref","HEAD"});
+  local args = ({command = "git", args = args, on_stderr = function(args,return_val) 
+    vim.pretty_print("Something may have  failed", args, return_val);
+  end});
+  local job = __plenary_Job:new(args);
+  do return job:sync() end;
 end
 Main.copyGhUrl = function(_) 
   local currentFile = vim.fn.expand("%");
-  local lines = Main.runGh(__vim__VimTypes_LuaArray_Impl_.from(_hx_tab_array({[0]="browse", currentFile, "--no-browser"}, 3)));
+  local curentBranch = Main.get_branch();
+  local lines = Main.runGh(__vim__VimTypes_LuaArray_Impl_.from(_hx_tab_array({[0]="browse", currentFile, "--no-browser", "--branch", curentBranch[1]}, 5)));
   if (lines == nil) then 
     vim.pretty_print("No URL");
   else
