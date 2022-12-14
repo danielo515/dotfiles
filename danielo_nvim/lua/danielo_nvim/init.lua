@@ -202,8 +202,12 @@ local Math = _hx_e()
 local String = _hx_e()
 local Std = _hx_e()
 local Test = _hx_e()
+__haxe_IMap = _hx_e()
+__haxe_ds_StringMap = _hx_e()
 __haxe_iterators_ArrayIterator = _hx_e()
 __haxe_iterators_ArrayKeyValueIterator = _hx_e()
+__plenary_Job = _G.require("plenary.job")
+__plenary__Job_Job_Fields_ = _hx_e()
 __vim__Vim_GroupOpts_Impl_ = _hx_e()
 __vim__Vim_AutoCmdOpts_Impl_ = _hx_e()
 __vim_DanieloVim = _hx_e()
@@ -555,6 +559,14 @@ Main.main = function()
     do return true end;
   end);
 end
+Main.openInGh = function() 
+  if (vim.fn.executable("gh") ~= 1) then 
+    do return end;
+  end;
+  local currentFile = vim.fn.expand("%");
+  local args = ({command = "gh", arguments = _hx_tab_array({[0]=currentFile}, 1), cwd = nil});
+  __plenary_Job:new(args):sync();
+end
 
 ___Main_Main_Fields_.new = {}
 ___Main_Main_Fields_.setup = function() 
@@ -780,6 +792,18 @@ Test["or"] = function(v,fallback)
   end;
 end
 
+__haxe_IMap.new = {}
+
+__haxe_ds_StringMap.new = function() 
+  local self = _hx_new()
+  __haxe_ds_StringMap.super(self)
+  return self
+end
+__haxe_ds_StringMap.super = function(self) 
+  self.h = ({});
+end
+__haxe_ds_StringMap.__interfaces__ = {__haxe_IMap}
+
 __haxe_iterators_ArrayIterator.new = function(array) 
   local self = _hx_new(__haxe_iterators_ArrayIterator.prototype)
   __haxe_iterators_ArrayIterator.super(self,array)
@@ -812,6 +836,13 @@ __haxe_iterators_ArrayKeyValueIterator.super = function(self,array)
   self.array = array;
 end
 
+__plenary__Job_Job_Fields_.new = {}
+__plenary__Job_Job_Fields_.main = function() 
+  local args = ({command = "chezmoi", cwd = "/Users/danielo/", arguments = _hx_tab_array({[0]="-v"}, 1)});
+  local job = __plenary_Job:new(args);
+  vim.pretty_print(job);
+end
+
 __vim__Vim_GroupOpts_Impl_.new = {}
 __vim__Vim_GroupOpts_Impl_._new = function(clear) 
   local this1 = ({clear = clear});
@@ -834,7 +865,14 @@ __vim__Vim_AutoCmdOpts_Impl_._new = function(pattern,cb,group,description,once,n
   do return this1 end;
 end
 
-__vim_DanieloVim.new = {}
+__vim_DanieloVim.new = function() 
+  local self = _hx_new()
+  __vim_DanieloVim.super(self)
+  return self
+end
+__vim_DanieloVim.super = function(self) 
+  self.autogroups = __haxe_ds_StringMap.new();
+end
 _hx_exports["vim"] = __vim_DanieloVim
 __vim_DanieloVim.autocmd = function(groupName,events,pattern,description,cb) 
   local inlobj_clear = false;

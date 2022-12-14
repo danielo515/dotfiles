@@ -7,7 +7,6 @@ typedef Job_opts = {
 	final command:String;
 	final cwd:Null<String>;
 	final arguments:Array<String>;
-	final nested:{x:String};
 }
 
 // @:build(TableBuilder.build())
@@ -29,7 +28,6 @@ function main() {
 		command: "chezmoi",
 		cwd: "/Users/danielo/",
 		arguments: ['-v'],
-		nested: {x: "X"},
 	});
 	Vim.print(job);
 }
