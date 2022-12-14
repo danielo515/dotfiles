@@ -1,5 +1,6 @@
 package vim;
 
+import haxe.ds.StringMap;
 import haxe.Rest;
 
 using Test;
@@ -57,6 +58,7 @@ extern class Api {
 extern class Fn {
 	static function expand(string:ExpandString):String;
 	static function fnamemodify(file:String, string:PathModifier):String;
+	static function executable(binaryName:String):Int;
 }
 
 @:native("vim")
@@ -70,8 +72,16 @@ extern class Vim {
 
 @:expose("vim")
 class DanieloVim {
+	public static final autogroups:StringMap<Int> = new StringMap();
+
 	static public function autocmd(groupName:String, events:LuaArray<VimEvent>, pattern:String, ?description:String, cb:Function) {
-		var group = Api.nvim_create_augroup(groupName, {clear: false});
+		var group = switch (autogroups.get(groupName)) {
+			case null:
+				final newGroup = Api.nvim_create_augroup(groupName, {clear: false});
+				autogroups.set(groupName, newGroup);
+				newGroup;
+			case group: group;
+		};
 		Api.nvim_create_autocmd(events, new AutoCmdOpts(pattern, cb, group, description.or('$groupName:[$pattern]')));
 	}
 }
