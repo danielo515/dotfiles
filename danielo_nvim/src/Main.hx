@@ -1,3 +1,4 @@
+import plenary.Job;
 import vim.Vim;
 import vim.VimTypes;
 
@@ -11,6 +12,14 @@ class Main {
 			Vim.print('Hello from axe', filename);
 			return true;
 		});
+	}
+
+	static function openInGh() {
+		if (vim.Fn.executable("gh") != 1)
+			return;
+
+		final currentFile = vim.Fn.expand(CurentFile);
+		Job.make({command: "gh", arguments: [currentFile], cwd: null}).sync();
 	}
 }
 
