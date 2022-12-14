@@ -2,6 +2,16 @@
 --macro nullSafety("vim", Strict)
 --macro nullSafety("plenary", Strict)
 --macro nullSafety("parser", Strict)
+
+-D analyzer-module
+-D analyzer-optimize
+-D analyzer-user-var-fusion
+-D analyzer-const_propagation
+-D analyzer-copy_propagation
+-D analyzer-local_dce
+-D analyzer-fusion
+-D analyzer-purity_inference
+
 -cp src
 -main Main
 -dce std

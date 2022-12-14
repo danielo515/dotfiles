@@ -234,29 +234,25 @@ Array.prototype = _hx_e();
 Array.prototype.concat = function(self,a) 
   local _g = _hx_tab_array({}, 0);
   local _g1 = 0;
-  local _g2 = self;
-  while (_g1 < _g2.length) do 
-    local i = _g2[_g1];
+  while (_g1 < self.length) do 
+    local i = self[_g1];
     _g1 = _g1 + 1;
     _g:push(i);
   end;
-  local ret = _g;
-  local _g = 0;
-  while (_g < a.length) do 
-    local i = a[_g];
-    _g = _g + 1;
-    ret:push(i);
+  local _g1 = 0;
+  while (_g1 < a.length) do 
+    local i = a[_g1];
+    _g1 = _g1 + 1;
+    _g:push(i);
   end;
-  do return ret end
+  do return _g end
 end
 Array.prototype.join = function(self,sep) 
   local tbl = ({});
   local _g_current = 0;
-  local _g_array = self;
-  while (_g_current < _g_array.length) do 
+  while (_g_current < self.length) do 
     _g_current = _g_current + 1;
-    local i = _g_array[_g_current - 1];
-    _G.table.insert(tbl, Std.string(i));
+    _G.table.insert(tbl, Std.string(self[_g_current - 1]));
   end;
   do return _G.table.concat(tbl, sep) end
 end
@@ -319,8 +315,7 @@ Array.prototype.slice = function(self,pos,_end)
   local _g1 = _end;
   while (_g < _g1) do 
     _g = _g + 1;
-    local i = _g - 1;
-    ret:push(self[i]);
+    ret:push(self[_g - 1]);
   end;
   do return ret end
 end
@@ -371,8 +366,7 @@ Array.prototype.splice = function(self,pos,len)
     local i = _g - 1;
     self[i] = self[i + len];
   end;
-  local tmp = self;
-  tmp.length = tmp.length - len;
+  self.length = self.length - len;
   do return ret end
 end
 Array.prototype.toString = function(self) 
@@ -385,8 +379,7 @@ end
 Array.prototype.unshift = function(self,x) 
   local len = self.length;
   local _g = 0;
-  local _g1 = len;
-  while (_g < _g1) do 
+  while (_g < len) do 
     _g = _g + 1;
     local i = _g - 1;
     self[len - i] = self[(len - i) - 1];
@@ -436,8 +429,7 @@ Array.prototype.contains = function(self,x)
   local _g1 = self.length;
   while (_g < _g1) do 
     _g = _g + 1;
-    local i = _g - 1;
-    if (self[i] == x) then 
+    if (self[_g - 1] == x) then 
       do return true end;
     end;
   end;
@@ -456,8 +448,7 @@ Array.prototype.indexOf = function(self,x,fromIndex)
     end;
   end;
   local _g = fromIndex;
-  local _g1 = _end;
-  while (_g < _g1) do 
+  while (_g < _end) do 
     _g = _g + 1;
     local i = _g - 1;
     if (x == self[i]) then 
@@ -490,9 +481,8 @@ end
 Array.prototype.copy = function(self) 
   local _g = _hx_tab_array({}, 0);
   local _g1 = 0;
-  local _g2 = self;
-  while (_g1 < _g2.length) do 
-    local i = _g2[_g1];
+  while (_g1 < self.length) do 
+    local i = self[_g1];
     _g1 = _g1 + 1;
     _g:push(i);
   end;
@@ -501,9 +491,8 @@ end
 Array.prototype.map = function(self,f) 
   local _g = _hx_tab_array({}, 0);
   local _g1 = 0;
-  local _g2 = self;
-  while (_g1 < _g2.length) do 
-    local i = _g2[_g1];
+  while (_g1 < self.length) do 
+    local i = self[_g1];
     _g1 = _g1 + 1;
     _g:push(f(i));
   end;
@@ -512,9 +501,8 @@ end
 Array.prototype.filter = function(self,f) 
   local _g = _hx_tab_array({}, 0);
   local _g1 = 0;
-  local _g2 = self;
-  while (_g1 < _g2.length) do 
-    local i = _g2[_g1];
+  while (_g1 < self.length) do 
+    local i = self[_g1];
     _g1 = _g1 + 1;
     if (f(i)) then 
       _g:push(i);
@@ -537,8 +525,7 @@ Array.prototype.resize = function(self,len)
       local _g1 = self.length;
       while (_g < _g1) do 
         _g = _g + 1;
-        local i = _g - 1;
-        self[i] = nil;
+        self[_g - 1] = nil;
       end;
       self.length = len;
     end;
@@ -554,8 +541,7 @@ Main.main = function()
     vim.pretty_print(args);
   end, obj);
   __vim_DanieloVim.autocmd("HaxeEvent", __vim__VimTypes_LuaArray_Impl_.from(_hx_tab_array({[0]="BufWritePost"}, 1)), "*.hx", "Created from haxe", function() 
-    local filename = vim.fn.expand(_G.string.format("%s%s", "%", ":p"));
-    vim.pretty_print("Hello from axe", filename);
+    vim.pretty_print("Hello from axe", vim.fn.expand(_G.string.format("%s%s", "%", ":p")));
     do return true end;
   end);
   local obj = _hx_o({__fields__={desc=true,force=true},desc="Open the current file in github",force=true});
@@ -574,26 +560,19 @@ Main.runGh = function(args)
   local args = ({command = "gh", args = args, on_stderr = function(args,return_val) 
     vim.pretty_print("Job got stderr", args, return_val);
   end});
-  local job = __plenary_Job:new(args);
-  do return job:sync() end;
+  do return __plenary_Job:new(args):sync() end;
 end
 Main.openInGh = function(_) 
-  local currentFile = vim.fn.expand("%");
-  local curentBranch = Main.get_branch();
-  Main.runGh(__vim__VimTypes_LuaArray_Impl_.from(_hx_tab_array({[0]="browse", currentFile, "--branch", curentBranch[1]}, 4)));
+  Main.runGh(__vim__VimTypes_LuaArray_Impl_.from(_hx_tab_array({[0]="browse", vim.fn.expand("%"), "--branch", Main.get_branch()[1]}, 4)));
 end
 Main.get_branch = function() 
-  local args = ({"rev-parse","--abbrev-ref","HEAD"});
-  local args = ({command = "git", args = args, on_stderr = function(args,return_val) 
+  local args = ({command = "git", args = ({"rev-parse","--abbrev-ref","HEAD"}), on_stderr = function(args,return_val) 
     vim.pretty_print("Something may have  failed", args, return_val);
   end});
-  local job = __plenary_Job:new(args);
-  do return job:sync() end;
+  do return __plenary_Job:new(args):sync() end;
 end
 Main.copyGhUrl = function(_) 
-  local currentFile = vim.fn.expand("%");
-  local curentBranch = Main.get_branch();
-  local lines = Main.runGh(__vim__VimTypes_LuaArray_Impl_.from(_hx_tab_array({[0]="browse", currentFile, "--no-browser", "--branch", curentBranch[1]}, 5)));
+  local lines = Main.runGh(__vim__VimTypes_LuaArray_Impl_.from(_hx_tab_array({[0]="browse", vim.fn.expand("%"), "--no-browser", "--branch", Main.get_branch()[1]}, 5)));
   if (lines == nil) then 
     vim.pretty_print("No URL");
   else
@@ -752,8 +731,7 @@ String.prototype.split = function(self,delimiter)
       end;
     end;
     if (newidx ~= nil) then 
-      local match = _G.string.sub(self, idx, newidx - 1);
-      ret:push(match);
+      ret:push(_G.string.sub(self, idx, newidx - 1));
       idx = newidx + #delimiter;
     else
       ret:push(_G.string.sub(self, idx, #self));
@@ -872,18 +850,15 @@ end
 __plenary__Job_Job_Fields_.new = {}
 __plenary__Job_Job_Fields_.main = function() 
   local args = ({command = "chezmoi", cwd = "/Users/danielo/", args = __vim__VimTypes_LuaArray_Impl_.from(_hx_tab_array({[0]="-v"}, 1))});
-  local job = __plenary_Job:new(args);
-  vim.pretty_print(job);
+  vim.pretty_print(__plenary_Job:new(args));
 end
 
 __vim__Vim_GroupOpts_Impl_.new = {}
 __vim__Vim_GroupOpts_Impl_._new = function(clear) 
-  local this1 = ({clear = clear});
-  do return this1 end;
+  do return ({clear = clear}) end;
 end
 __vim__Vim_GroupOpts_Impl_.fromObj = function(arg) 
-  local this1 = ({clear = arg.clear});
-  do return this1 end;
+  do return ({clear = arg.clear}) end;
 end
 
 __vim__Vim_AutoCmdOpts_Impl_.new = {}
@@ -894,8 +869,7 @@ __vim__Vim_AutoCmdOpts_Impl_._new = function(pattern,cb,group,description,once,n
   if (once == nil) then 
     once = false;
   end;
-  local this1 = ({pattern = pattern, callback = cb, group = group, desc = description, once = once, nested = nested});
-  do return this1 end;
+  do return ({pattern = pattern, callback = cb, group = group, desc = description, once = once, nested = nested}) end;
 end
 
 __vim_DanieloVim.new = {}
@@ -908,9 +882,7 @@ __vim_DanieloVim.autocmd = function(groupName,events,pattern,description,cb)
   end;
   local _g = ret;
   if (_g == nil) then 
-    local inlobj_clear = true;
-    local this1 = ({clear = inlobj_clear});
-    group = vim.api.nvim_create_augroup(groupName, this1);
+    group = vim.api.nvim_create_augroup(groupName, ({clear = true}));
     local _this = __vim_DanieloVim.autogroups;
     if (group == nil) then 
       _this.h[groupName] = __haxe_ds_StringMap.tnull;
@@ -918,17 +890,15 @@ __vim_DanieloVim.autocmd = function(groupName,events,pattern,description,cb)
       _this.h[groupName] = group;
     end;
   else
-    local x = _g;
-    group = x;
+    group = _g;
   end;
-  local this1 = ({pattern = pattern, callback = cb, group = group, desc = (function() 
+  vim.api.nvim_create_autocmd(events, ({pattern = pattern, callback = cb, group = group, desc = (function() 
     local _hx_1
     if (description ~= nil) then 
     _hx_1 = description; else 
     _hx_1 = Std.string(Std.string(Std.string(Std.string("") .. Std.string(groupName)) .. Std.string(":[")) .. Std.string(pattern)) .. Std.string("]"); end
     return _hx_1
-  end )(), once = false, nested = false});
-  vim.api.nvim_create_autocmd(events, this1);
+  end )(), once = false, nested = false}));
 end
 
 __vim__Vim_Vim_Fields_.new = {}
@@ -961,8 +931,7 @@ end
 
 __vim__VimTypes_BufferId_Impl_.new = {}
 __vim__VimTypes_BufferId_Impl_._new = function(buf) 
-  local this1 = buf;
-  do return this1 end;
+  do return buf end;
 end
 __vim__VimTypes_BufferId_Impl_.from = function(bufNum) 
   do return __vim__VimTypes_BufferId_Impl_._new(bufNum) end;
@@ -970,8 +939,7 @@ end
 
 __vim__VimTypes_WindowId_Impl_.new = {}
 __vim__VimTypes_WindowId_Impl_._new = function(id) 
-  local this1 = id;
-  do return this1 end;
+  do return id end;
 end
 __vim__VimTypes_WindowId_Impl_.from = function(id) 
   do return __vim__VimTypes_WindowId_Impl_._new(id) end;
@@ -979,12 +947,10 @@ end
 
 __vim__VimTypes_ExpandString_Impl_.new = {}
 __vim__VimTypes_ExpandString_Impl_._new = function(path) 
-  local this1 = path;
-  do return this1 end;
+  do return path end;
 end
 __vim__VimTypes_ExpandString_Impl_.from = function(ref) 
-  local this1 = ref;
-  do return this1 end;
+  do return ref end;
 end
 __vim__VimTypes_ExpandString_Impl_.plus0 = function(this1,modifiers) 
   do return _G.string.format("%s%s", this1, modifiers) end;
