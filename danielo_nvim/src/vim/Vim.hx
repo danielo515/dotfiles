@@ -77,12 +77,11 @@ class DanieloVim {
 	public static final autogroups:StringMap<Group> = new StringMap();
 
 	static public function autocmd(groupName:String, events:LuaArray<VimEvent>, pattern:String, ?description:String, cb:Function) {
-		var group;
-		switch (autogroups.get(groupName)) {
+		var group:Group;
+		switch (@:nullSafety(Off) autogroups.get(groupName)) {
 			case null:
-				final newGroup = Api.nvim_create_augroup(groupName, {clear: false});
-				autogroups.set(groupName, newGroup);
-				group = newGroup;
+				group = Api.nvim_create_augroup(groupName, {clear: true});
+				autogroups.set(groupName, group);
 			case x:
 				group = x;
 		};

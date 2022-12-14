@@ -882,16 +882,15 @@ __vim_DanieloVim.autocmd = function(groupName,events,pattern,description,cb)
   end;
   local _g = ret;
   if (_g == nil) then 
-    local inlobj_clear = false;
+    local inlobj_clear = true;
     local this1 = ({clear = inlobj_clear});
-    local newGroup = vim.api.nvim_create_augroup(groupName, this1);
+    group = vim.api.nvim_create_augroup(groupName, this1);
     local _this = __vim_DanieloVim.autogroups;
-    if (newGroup == nil) then 
+    if (group == nil) then 
       _this.h[groupName] = __haxe_ds_StringMap.tnull;
     else
-      _this.h[groupName] = newGroup;
+      _this.h[groupName] = group;
     end;
-    group = newGroup;
   else
     local x = _g;
     group = x;
