@@ -13,21 +13,37 @@ class Main {
 			return true;
 		});
 		vim.Api.nvim_create_user_command("OpenInGh", openInGh, {desc: "Open the current file in github", force: true});
+		vim.Api.nvim_create_user_command("CopyGhUrl", copyGhUrl, {desc: "Copy current file github URL", force: true});
 	}
 
-	static function openInGh(_) {
+	static function runGh(args):Null<lua.Table<Int, String>> {
 		if (vim.Fn.executable("gh") != 1)
-			return;
+			return null;
 
-		final currentFile = vim.Fn.expand(CurentFile);
 		final job = Job.make({
 			command: "gh",
-			args: ["browse", currentFile],
+			args: args,
 			on_stderr: (args, return_val) -> {
 				Vim.print("Job ran", args, return_val);
 			}
 		});
-		job.sync();
+		return job.sync();
+	}
+
+	static function openInGh(_) {
+		final currentFile = vim.Fn.expand(CurentFile);
+		runGh(["browse", currentFile]);
+	}
+
+	static function copyGhUrl(_) {
+		final currentFile = vim.Fn.expand(CurentFile);
+		var lines = runGh(["browse", currentFile, "--no-browser"]);
+		switch (lines) {
+			case null:
+				Vim.print("No URL");
+			case _:
+				Vim.print("lines", lines[1]);
+		}
 	}
 }
 

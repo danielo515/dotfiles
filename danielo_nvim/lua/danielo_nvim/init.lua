@@ -562,17 +562,33 @@ Main.main = function()
   obj.__fields__ = nil;
   _G.setmetatable(obj, nil);
   vim.api.nvim_create_user_command("OpenInGh", Main.openInGh, obj);
+  local obj = _hx_o({__fields__={desc=true,force=true},desc="Copy current file github URL",force=true});
+  obj.__fields__ = nil;
+  _G.setmetatable(obj, nil);
+  vim.api.nvim_create_user_command("CopyGhUrl", Main.copyGhUrl, obj);
 end
-Main.openInGh = function(_) 
+Main.runGh = function(args) 
   if (vim.fn.executable("gh") ~= 1) then 
-    do return end;
+    do return nil end;
   end;
-  local currentFile = vim.fn.expand("%");
-  local args = ({command = "gh", args = __vim__VimTypes_LuaArray_Impl_.from(_hx_tab_array({[0]="browse", currentFile}, 2)), on_stderr = function(args,return_val) 
+  local args = ({command = "gh", args = args, on_stderr = function(args,return_val) 
     vim.pretty_print("Job ran", args, return_val);
   end});
   local job = __plenary_Job:new(args);
-  job:sync();
+  do return job:sync() end;
+end
+Main.openInGh = function(_) 
+  local currentFile = vim.fn.expand("%");
+  Main.runGh(__vim__VimTypes_LuaArray_Impl_.from(_hx_tab_array({[0]="browse", currentFile}, 2)));
+end
+Main.copyGhUrl = function(_) 
+  local currentFile = vim.fn.expand("%");
+  local lines = Main.runGh(__vim__VimTypes_LuaArray_Impl_.from(_hx_tab_array({[0]="browse", currentFile, "--no-browser"}, 3)));
+  if (lines == nil) then 
+    vim.pretty_print("No URL");
+  else
+    vim.pretty_print("lines", lines[1]);
+  end;
 end
 
 ___Main_Main_Fields_.new = {}
