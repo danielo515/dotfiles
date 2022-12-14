@@ -12,9 +12,10 @@ class Main {
 			Vim.print('Hello from axe', filename);
 			return true;
 		});
+		vim.Api.nvim_create_user_command("OpenInGh", openInGh, {desc: "Open the current file in github", force: true});
 	}
 
-	static function openInGh() {
+	static function openInGh(_) {
 		if (vim.Fn.executable("gh") != 1)
 			return;
 
