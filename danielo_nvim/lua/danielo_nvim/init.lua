@@ -201,22 +201,13 @@ ___Main_Main_Fields_ = _hx_e()
 local Math = _hx_e()
 local String = _hx_e()
 local Std = _hx_e()
-local Test = _hx_e()
 __haxe_IMap = _hx_e()
 __haxe_ds_StringMap = _hx_e()
 __haxe_iterators_ArrayIterator = _hx_e()
 __haxe_iterators_ArrayKeyValueIterator = _hx_e()
 __plenary_Job = _G.require("plenary.job")
-__plenary__Job_Job_Fields_ = _hx_e()
-__vim__Vim_GroupOpts_Impl_ = _hx_e()
-__vim__Vim_AutoCmdOpts_Impl_ = _hx_e()
 __vim_DanieloVim = _hx_e()
-__vim__Vim_Vim_Fields_ = _hx_e()
 __vim__VimTypes_LuaArray_Impl_ = _hx_e()
-__vim__VimTypes_LuaObj_Impl_ = _hx_e()
-__vim__VimTypes_BufferId_Impl_ = _hx_e()
-__vim__VimTypes_WindowId_Impl_ = _hx_e()
-__vim__VimTypes_ExpandString_Impl_ = _hx_e()
 
 local _hx_bind, _hx_bit, _hx_staticToInstance, _hx_funcToField, _hx_maxn, _hx_print, _hx_apply_self, _hx_box_mr, _hx_bit_clamp, _hx_table, _hx_bit_raw
 local _hx_pcall_default = {};
@@ -794,15 +785,6 @@ Std.int = function(x)
   end;
 end
 
-Test.new = {}
-Test["or"] = function(v,fallback) 
-  if (v ~= nil) then 
-    do return v end;
-  else
-    do return fallback end;
-  end;
-end
-
 __haxe_IMap.new = {}
 
 __haxe_ds_StringMap.new = function() 
@@ -847,31 +829,6 @@ __haxe_iterators_ArrayKeyValueIterator.super = function(self,array)
   self.array = array;
 end
 
-__plenary__Job_Job_Fields_.new = {}
-__plenary__Job_Job_Fields_.main = function() 
-  local args = ({command = "chezmoi", cwd = "/Users/danielo/", args = __vim__VimTypes_LuaArray_Impl_.from(_hx_tab_array({[0]="-v"}, 1))});
-  vim.pretty_print(__plenary_Job:new(args));
-end
-
-__vim__Vim_GroupOpts_Impl_.new = {}
-__vim__Vim_GroupOpts_Impl_._new = function(clear) 
-  do return ({clear = clear}) end;
-end
-__vim__Vim_GroupOpts_Impl_.fromObj = function(arg) 
-  do return ({clear = arg.clear}) end;
-end
-
-__vim__Vim_AutoCmdOpts_Impl_.new = {}
-__vim__Vim_AutoCmdOpts_Impl_._new = function(pattern,cb,group,description,once,nested) 
-  if (nested == nil) then 
-    nested = false;
-  end;
-  if (once == nil) then 
-    once = false;
-  end;
-  do return ({pattern = pattern, callback = cb, group = group, desc = description, once = once, nested = nested}) end;
-end
-
 __vim_DanieloVim.new = {}
 _hx_exports["vim"] = __vim_DanieloVim
 __vim_DanieloVim.autocmd = function(groupName,events,pattern,description,cb) 
@@ -901,11 +858,6 @@ __vim_DanieloVim.autocmd = function(groupName,events,pattern,description,cb)
   end )(), once = false, nested = false}));
 end
 
-__vim__Vim_Vim_Fields_.new = {}
-__vim__Vim_Vim_Fields_.comment = function() 
-  ---@diagnostic disable;
-end
-
 __vim__VimTypes_LuaArray_Impl_.new = {}
 __vim__VimTypes_LuaArray_Impl_.from = function(arr) 
   local ret = ({});
@@ -917,46 +869,6 @@ __vim__VimTypes_LuaArray_Impl_.from = function(arr)
     ret[idx + 1] = arr[idx];
   end;
   do return ret end;
-end
-
-__vim__VimTypes_LuaObj_Impl_.new = {}
-__vim__VimTypes_LuaObj_Impl_.fromType = function(obj) 
-  obj.__fields__ = nil;
-  _G.setmetatable(obj, nil);
-  do return obj end;
-end
-__vim__VimTypes_LuaObj_Impl_.to = function(this1) 
-  do return this1 end;
-end
-
-__vim__VimTypes_BufferId_Impl_.new = {}
-__vim__VimTypes_BufferId_Impl_._new = function(buf) 
-  do return buf end;
-end
-__vim__VimTypes_BufferId_Impl_.from = function(bufNum) 
-  do return __vim__VimTypes_BufferId_Impl_._new(bufNum) end;
-end
-
-__vim__VimTypes_WindowId_Impl_.new = {}
-__vim__VimTypes_WindowId_Impl_._new = function(id) 
-  do return id end;
-end
-__vim__VimTypes_WindowId_Impl_.from = function(id) 
-  do return __vim__VimTypes_WindowId_Impl_._new(id) end;
-end
-
-__vim__VimTypes_ExpandString_Impl_.new = {}
-__vim__VimTypes_ExpandString_Impl_._new = function(path) 
-  do return path end;
-end
-__vim__VimTypes_ExpandString_Impl_.from = function(ref) 
-  do return ref end;
-end
-__vim__VimTypes_ExpandString_Impl_.plus0 = function(this1,modifiers) 
-  do return _G.string.format("%s%s", this1, modifiers) end;
-end
-__vim__VimTypes_ExpandString_Impl_.plus = function(path,modifiers) 
-  do return _G.string.format("%s%s", path, modifiers) end;
 end
 if _hx_bit_raw then
     _hx_bit_clamp = function(v)

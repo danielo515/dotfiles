@@ -11,10 +11,10 @@
 -D analyzer-local_dce
 -D analyzer-fusion
 -D analyzer-purity_inference
+-D lua-vanilla
+-D luajit
 
 -cp src
 -main Main
 -dce std
--D lua-vanilla
--D luajit
 -lua lua/danielo_nvim/init.lua
