@@ -20,7 +20,14 @@ class Main {
 			return;
 
 		final currentFile = vim.Fn.expand(CurentFile);
-		Job.make({command: "gh", arguments: [currentFile], cwd: null}).sync();
+		final job = Job.make({
+			command: "gh",
+			args: ["browse", currentFile],
+			on_stderr: (args, return_val) -> {
+				Vim.print("Job ran", args, return_val);
+			}
+		});
+		job.sync();
 	}
 }
 

@@ -558,14 +558,21 @@ Main.main = function()
     vim.pretty_print("Hello from axe", filename);
     do return true end;
   end);
+  local obj = _hx_o({__fields__={desc=true,force=true},desc="Open the current file in github",force=true});
+  obj.__fields__ = nil;
+  _G.setmetatable(obj, nil);
+  vim.api.nvim_create_user_command("OpenInGh", Main.openInGh, obj);
 end
-Main.openInGh = function() 
+Main.openInGh = function(_) 
   if (vim.fn.executable("gh") ~= 1) then 
     do return end;
   end;
   local currentFile = vim.fn.expand("%");
-  local args = ({command = "gh", arguments = _hx_tab_array({[0]=currentFile}, 1), cwd = nil});
-  __plenary_Job:new(args):sync();
+  local args = ({command = "gh", args = __vim__VimTypes_LuaArray_Impl_.from(_hx_tab_array({[0]="browse", currentFile}, 2)), on_stderr = function(args,return_val) 
+    vim.pretty_print("Job ran", args, return_val);
+  end});
+  local job = __plenary_Job:new(args);
+  job:sync();
 end
 
 ___Main_Main_Fields_.new = {}
@@ -838,7 +845,7 @@ end
 
 __plenary__Job_Job_Fields_.new = {}
 __plenary__Job_Job_Fields_.main = function() 
-  local args = ({command = "chezmoi", cwd = "/Users/danielo/", arguments = _hx_tab_array({[0]="-v"}, 1)});
+  local args = ({command = "chezmoi", cwd = "/Users/danielo/", args = __vim__VimTypes_LuaArray_Impl_.from(_hx_tab_array({[0]="-v"}, 1))});
   local job = __plenary_Job:new(args);
   vim.pretty_print(job);
 end
@@ -865,19 +872,30 @@ __vim__Vim_AutoCmdOpts_Impl_._new = function(pattern,cb,group,description,once,n
   do return this1 end;
 end
 
-__vim_DanieloVim.new = function() 
-  local self = _hx_new()
-  __vim_DanieloVim.super(self)
-  return self
-end
-__vim_DanieloVim.super = function(self) 
-  self.autogroups = __haxe_ds_StringMap.new();
-end
+__vim_DanieloVim.new = {}
 _hx_exports["vim"] = __vim_DanieloVim
 __vim_DanieloVim.autocmd = function(groupName,events,pattern,description,cb) 
-  local inlobj_clear = false;
-  local this1 = ({clear = inlobj_clear});
-  local group = vim.api.nvim_create_augroup(groupName, this1);
+  local group;
+  local ret = __vim_DanieloVim.autogroups.h[groupName];
+  if (ret == __haxe_ds_StringMap.tnull) then 
+    ret = nil;
+  end;
+  local _g = ret;
+  if (_g == nil) then 
+    local inlobj_clear = false;
+    local this1 = ({clear = inlobj_clear});
+    local newGroup = vim.api.nvim_create_augroup(groupName, this1);
+    local _this = __vim_DanieloVim.autogroups;
+    if (newGroup == nil) then 
+      _this.h[groupName] = __haxe_ds_StringMap.tnull;
+    else
+      _this.h[groupName] = newGroup;
+    end;
+    group = newGroup;
+  else
+    local x = _g;
+    group = x;
+  end;
   local this1 = ({pattern = pattern, callback = cb, group = group, desc = (function() 
     local _hx_1
     if (description ~= nil) then 
@@ -979,6 +997,10 @@ end;
 _hx_array_mt.__index = Array.prototype
 
 local _hx_static_init = function()
+  __haxe_ds_StringMap.tnull = ({});
+  
+  __vim_DanieloVim.autogroups = __haxe_ds_StringMap.new();
+  
   
 end
 

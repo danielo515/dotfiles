@@ -75,12 +75,13 @@ class DanieloVim {
 	public static final autogroups:StringMap<Int> = new StringMap();
 
 	static public function autocmd(groupName:String, events:LuaArray<VimEvent>, pattern:String, ?description:String, cb:Function) {
-		var group = switch (autogroups.get(groupName)) {
+		// This is dumb, this is strictly following the manual
+		@:nullSafety(Off) var group = switch (autogroups.get(groupName)) {
 			case null:
 				final newGroup = Api.nvim_create_augroup(groupName, {clear: false});
 				autogroups.set(groupName, newGroup);
 				newGroup;
-			case group: group;
+			case x: x;
 		};
 		Api.nvim_create_autocmd(events, new AutoCmdOpts(pattern, cb, group, description.or('$groupName:[$pattern]')));
 	}
