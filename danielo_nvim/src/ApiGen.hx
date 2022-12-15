@@ -20,7 +20,9 @@ macro function generateApi():Void {
 		name: "API",
 		isExtern: true,
 		kind: TDClass(),
+		#if !dump
 		meta: [meta("native", [macro "vim.api"])],
+		#end
 		fields: [
 			for (f in(specs.functions : Array<FunctionDef>)) {
 				{
