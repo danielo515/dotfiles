@@ -1,4 +1,6 @@
 name: CI-dots
+env:
+  GITHUB_USERNAME: "${{ github.actor }}"
 on:
   push:
     branches:
@@ -34,7 +36,6 @@ jobs:
       - name: Install chezmoi
         run: |
           sh -c "$(curl -fsLS chezmoi.io/get)" -- -b $HOME/bin 
-          $HOME/bin/chezmoi init --source $GITHUB_WORKSPACE
       - name: Install neovim binary
         uses: rhysd/action-setup-vim@v1
         with:
@@ -46,7 +47,9 @@ jobs:
          LV_BRANCH=rolling bash <(curl -s https://raw.githubusercontent.com/lunarvim/lunarvim/rolling/utils/installer/install.sh) -s -- -n
       - name: Apply my config
         timeout-minutes: 1
-        run: $HOME/bin/chezmoi apply     
+        run: |
+          $HOME/bin/chezmoi init --source $GITHUB_USERNAME --apply
+    
       - name: run lvim!
         timeout-minutes: 1
         run: $HOME/.local/bin/lvim -Es -c 'autocmd User PackerComplete quitall' -c 'PackerSync'
