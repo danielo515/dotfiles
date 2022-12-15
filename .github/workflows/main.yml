@@ -34,7 +34,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - name: Install chezmoi
-        run: sh -c "$(curl -fsLS chezmoi.io/get)" -- -b $HOME/bin --source $GITHUB_WORKSPACE
+        run: sh -c "$(curl -fsLS chezmoi.io/get)" -- -b $HOME/bin init --source $GITHUB_WORKSPACE
       - name: Install neovim binary
         uses: rhysd/action-setup-vim@v1
         with:
