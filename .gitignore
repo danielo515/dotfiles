@@ -7,3 +7,4 @@
 secrets
 chezmoi/Brewfile.lock.json
 zsh/custom/plugins
+danielo_nvim/nvim-api.msgpack
