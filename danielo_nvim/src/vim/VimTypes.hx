@@ -2,8 +2,9 @@ package vim;
 
 import lua.NativeStringTools;
 
-@:arrayAccess
-abstract LuaArray<T>(lua.Table<Int, T>) from lua.Table<Int, T> to lua.Table<Int, T> {
+abstract TabPage(Int) {}
+
+@:arrayAccess abstract LuaArray<T>(lua.Table<Int, T>) from lua.Table<Int, T> to lua.Table<Int, T> {
 	// Can this be converted into a macro to avoid even calling fromArray ?
 	@:from
 	public static function from<T>(arr:Array<T>):LuaArray<T> {

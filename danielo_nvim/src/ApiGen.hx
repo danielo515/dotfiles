@@ -50,6 +50,8 @@ function resolveType(fun:String, arg:Null<String>, t:String):ComplexType {
 	return switch (t) {
 		case "String": macro
 		:String;
+		case "LuaRef": macro
+		:haxe.Constraints.Function;
 		case "Window": macro
 		:vim.VimTypes.WindowId;
 		case "Buffer": macro
@@ -58,6 +60,8 @@ function resolveType(fun:String, arg:Null<String>, t:String):ComplexType {
 		:Int;
 		case "Float": macro
 		:Float;
+		case "Tabpage": macro
+		:vim.VimTypes.TabPage;
 		case "Dictionary": macro
 		:lua.Table<String, Dynamic>;
 		case "Boolean": macro
