@@ -2,7 +2,6 @@ package plenary;
 
 import vim.VimTypes.LuaArray;
 import lua.Table;
-import vim.Vim;
 
 typedef Job_opts = {
 	final command:String;
@@ -22,15 +21,6 @@ extern class Job {
 	static inline function make(jobargs:Job_opts):Job {
 		return create(Table.create(jobargs));
 	}
-	function start():Job;
+	function start():Void;
 	function sync():Table<Int, String>;
-}
-
-function main() {
-	var job = Job.make({
-		command: "chezmoi",
-		cwd: "/Users/danielo/",
-		args: ['-v'],
-	});
-	Vim.print(job);
 }

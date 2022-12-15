@@ -201,13 +201,20 @@ ___Main_Main_Fields_ = _hx_e()
 local Math = _hx_e()
 local String = _hx_e()
 local Std = _hx_e()
-__haxe_IMap = _hx_e()
-__haxe_ds_StringMap = _hx_e()
+local Test = _hx_e()
 __haxe_iterators_ArrayIterator = _hx_e()
 __haxe_iterators_ArrayKeyValueIterator = _hx_e()
+__lua_StringMap = _hx_e()
 __plenary_Job = _G.require("plenary.job")
+__vim__Vim_GroupOpts_Impl_ = _hx_e()
+__vim__Vim_AutoCmdOpts_Impl_ = _hx_e()
 __vim_DanieloVim = _hx_e()
+__vim__Vim_Vim_Fields_ = _hx_e()
 __vim__VimTypes_LuaArray_Impl_ = _hx_e()
+__vim__VimTypes_LuaObj_Impl_ = _hx_e()
+__vim__VimTypes_BufferId_Impl_ = _hx_e()
+__vim__VimTypes_WindowId_Impl_ = _hx_e()
+__vim__VimTypes_ExpandString_Impl_ = _hx_e()
 
 local _hx_bind, _hx_bit, _hx_staticToInstance, _hx_funcToField, _hx_maxn, _hx_print, _hx_apply_self, _hx_box_mr, _hx_bit_clamp, _hx_table, _hx_bit_raw
 local _hx_pcall_default = {};
@@ -525,24 +532,15 @@ end
 
 Main.new = {}
 Main.main = function() 
-  local obj = _hx_o({__fields__={desc=true,force=true},desc="Testing from haxe",force=true});
-  obj.__fields__ = nil;
-  _G.setmetatable(obj, nil);
   vim.api.nvim_create_user_command("HaxeCmd", function(args) 
     vim.pretty_print(args);
-  end, obj);
+  end, ({desc = "Testing from haxe", force = true}));
   __vim_DanieloVim.autocmd("HaxeEvent", __vim__VimTypes_LuaArray_Impl_.from(_hx_tab_array({[0]="BufWritePost"}, 1)), "*.hx", "Created from haxe", function() 
     vim.pretty_print("Hello from axe", vim.fn.expand(_G.string.format("%s%s", "%", ":p")));
     do return true end;
   end);
-  local obj = _hx_o({__fields__={desc=true,force=true},desc="Open the current file in github",force=true});
-  obj.__fields__ = nil;
-  _G.setmetatable(obj, nil);
-  vim.api.nvim_create_user_command("OpenInGh", Main.openInGh, obj);
-  local obj = _hx_o({__fields__={desc=true,force=true},desc="Copy current file github URL",force=true});
-  obj.__fields__ = nil;
-  _G.setmetatable(obj, nil);
-  vim.api.nvim_create_user_command("CopyGhUrl", Main.copyGhUrl, obj);
+  vim.api.nvim_create_user_command("OpenInGh", Main.openInGh, ({desc = "Open the current file in github", force = true}));
+  vim.api.nvim_create_user_command("CopyGhUrl", Main.copyGhUrl, ({desc = "Copy current file github URL", force = true}));
 end
 Main.runGh = function(args) 
   if (vim.fn.executable("gh") ~= 1) then 
@@ -785,17 +783,14 @@ Std.int = function(x)
   end;
 end
 
-__haxe_IMap.new = {}
-
-__haxe_ds_StringMap.new = function() 
-  local self = _hx_new()
-  __haxe_ds_StringMap.super(self)
-  return self
+Test.new = {}
+Test["or"] = function(v,fallback) 
+  if (v ~= nil) then 
+    do return v end;
+  else
+    do return fallback end;
+  end;
 end
-__haxe_ds_StringMap.super = function(self) 
-  self.h = ({});
-end
-__haxe_ds_StringMap.__interfaces__ = {__haxe_IMap}
 
 __haxe_iterators_ArrayIterator.new = function(array) 
   local self = _hx_new(__haxe_iterators_ArrayIterator.prototype)
@@ -829,33 +824,69 @@ __haxe_iterators_ArrayKeyValueIterator.super = function(self,array)
   self.array = array;
 end
 
+__lua_StringMap.new = function() 
+  local self = _hx_new(__lua_StringMap.prototype)
+  __lua_StringMap.super(self)
+  return self
+end
+__lua_StringMap.super = function(self) 
+  self.h = ({});
+end
+__lua_StringMap.prototype = _hx_e();
+__lua_StringMap.prototype.set = function(self,key,value) 
+  if (value == nil) then 
+    self.h[key] = __lua_StringMap.tnull;
+  else
+    self.h[key] = value;
+  end;
+end
+__lua_StringMap.prototype.get = function(self,key) 
+  local ret = self.h[key];
+  if (ret == __lua_StringMap.tnull) then 
+    do return nil end;
+  end;
+  do return ret end
+end
+__lua_StringMap.prototype.exists = function(self,key) 
+  do return self.h[key] ~= nil end
+end
+
+__vim__Vim_GroupOpts_Impl_.new = {}
+__vim__Vim_GroupOpts_Impl_._new = function(clear) 
+  do return ({clear = clear}) end;
+end
+__vim__Vim_GroupOpts_Impl_.fromObj = function(arg) 
+  do return ({clear = arg.clear}) end;
+end
+
+__vim__Vim_AutoCmdOpts_Impl_.new = {}
+__vim__Vim_AutoCmdOpts_Impl_._new = function(pattern,cb,group,description,once,nested) 
+  if (nested == nil) then 
+    nested = false;
+  end;
+  if (once == nil) then 
+    once = false;
+  end;
+  do return ({pattern = pattern, callback = cb, group = group, desc = description, once = once, nested = nested}) end;
+end
+
 __vim_DanieloVim.new = {}
 _hx_exports["vim"] = __vim_DanieloVim
 __vim_DanieloVim.autocmd = function(groupName,events,pattern,description,cb) 
   local group;
-  local ret = __vim_DanieloVim.autogroups.h[groupName];
-  if (ret == __haxe_ds_StringMap.tnull) then 
-    ret = nil;
-  end;
-  local _g = ret;
+  local _g = __vim_DanieloVim.autogroups:get(groupName);
   if (_g == nil) then 
     group = vim.api.nvim_create_augroup(groupName, ({clear = true}));
-    local _this = __vim_DanieloVim.autogroups;
-    if (group == nil) then 
-      _this.h[groupName] = __haxe_ds_StringMap.tnull;
-    else
-      _this.h[groupName] = group;
-    end;
+    __vim_DanieloVim.autogroups:set(groupName, group);
   else
     group = _g;
   end;
-  vim.api.nvim_create_autocmd(events, ({pattern = pattern, callback = cb, group = group, desc = (function() 
-    local _hx_1
-    if (description ~= nil) then 
-    _hx_1 = description; else 
-    _hx_1 = Std.string(Std.string(Std.string(Std.string("") .. Std.string(groupName)) .. Std.string(":[")) .. Std.string(pattern)) .. Std.string("]"); end
-    return _hx_1
-  end )(), once = false, nested = false}));
+  vim.api.nvim_create_autocmd(events, ({pattern = pattern, callback = cb, group = group, desc = Test["or"](description, Std.string(Std.string(Std.string(Std.string("") .. Std.string(groupName)) .. Std.string(":[")) .. Std.string(pattern)) .. Std.string("]")), once = false, nested = false}));
+end
+
+__vim__Vim_Vim_Fields_.new = {}
+__vim__Vim_Vim_Fields_.comment = function() 
+  ---@diagnostic disable;
 end
 
 __vim__VimTypes_LuaArray_Impl_.new = {}
@@ -869,6 +900,46 @@ __vim__VimTypes_LuaArray_Impl_.from = function(arr)
     ret[idx + 1] = arr[idx];
   end;
   do return ret end;
+end
+
+__vim__VimTypes_LuaObj_Impl_.new = {}
+__vim__VimTypes_LuaObj_Impl_.fromType = function(obj) 
+  obj.__fields__ = nil;
+  _G.setmetatable(obj, nil);
+  do return obj end;
+end
+__vim__VimTypes_LuaObj_Impl_.to = function(this1) 
+  do return this1 end;
+end
+
+__vim__VimTypes_BufferId_Impl_.new = {}
+__vim__VimTypes_BufferId_Impl_._new = function(buf) 
+  do return buf end;
+end
+__vim__VimTypes_BufferId_Impl_.from = function(bufNum) 
+  do return __vim__VimTypes_BufferId_Impl_._new(bufNum) end;
+end
+
+__vim__VimTypes_WindowId_Impl_.new = {}
+__vim__VimTypes_WindowId_Impl_._new = function(id) 
+  do return id end;
+end
+__vim__VimTypes_WindowId_Impl_.from = function(id) 
+  do return __vim__VimTypes_WindowId_Impl_._new(id) end;
+end
+
+__vim__VimTypes_ExpandString_Impl_.new = {}
+__vim__VimTypes_ExpandString_Impl_._new = function(path) 
+  do return path end;
+end
+__vim__VimTypes_ExpandString_Impl_.from = function(ref) 
+  do return ref end;
+end
+__vim__VimTypes_ExpandString_Impl_.plus0 = function(this1,modifiers) 
+  do return _G.string.format("%s%s", this1, modifiers) end;
+end
+__vim__VimTypes_ExpandString_Impl_.plus = function(path,modifiers) 
+  do return _G.string.format("%s%s", path, modifiers) end;
 end
 if _hx_bit_raw then
     _hx_bit_clamp = function(v)
@@ -900,9 +971,9 @@ end;
 _hx_array_mt.__index = Array.prototype
 
 local _hx_static_init = function()
-  __haxe_ds_StringMap.tnull = ({});
+  __lua_StringMap.tnull = ({});
   
-  __vim_DanieloVim.autogroups = __haxe_ds_StringMap.new();
+  __vim_DanieloVim.autogroups = __lua_StringMap.new();
   
   
 end

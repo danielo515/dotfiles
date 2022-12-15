@@ -1,6 +1,6 @@
 package vim;
 
-import haxe.ds.StringMap;
+import lua.StringMap;
 import haxe.Rest;
 
 using Test;
@@ -53,7 +53,8 @@ typedef CommandCallbackArgs = {
 extern class Api {
 	static function nvim_create_augroup(group:String, opts:GroupOpts):Group;
 	static function nvim_create_autocmd(event:LuaArray<VimEvent>, opts:AutoCmdOpts):Int;
-	static function nvim_create_user_command(command_name:String, command:LuaObj<CommandCallbackArgs>->Void, opts:LuaObj<{desc:String, force:Bool}>):Void;
+	static function nvim_create_user_command(command_name:String, command:LuaObj<CommandCallbackArgs>->Void,
+		opts:TableWrapper<{desc:String, force:Bool}>):Void;
 }
 
 @:native("vim.fn")
@@ -78,7 +79,7 @@ class DanieloVim {
 
 	static public function autocmd(groupName:String, events:LuaArray<VimEvent>, pattern:String, ?description:String, cb:Function) {
 		var group:Group;
-		switch (@:nullSafety(Off) autogroups.get(groupName)) {
+		switch (autogroups.get(groupName)) {
 			case null:
 				group = Api.nvim_create_augroup(groupName, {clear: true});
 				autogroups.set(groupName, group);
