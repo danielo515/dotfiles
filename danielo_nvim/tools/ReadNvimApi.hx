@@ -4,7 +4,7 @@ import org.msgpack.MsgPack;
 using Lambda;
 
 typedef ApiData = {
-	final functions:Array<{name:String, return_type:String}>;
+	final functions:Array<{name:String, return_type:String, deprecated_since:Null<Int>}>;
 }
 
 class ReadNvimApi {
@@ -23,6 +23,6 @@ class ReadNvimApi {
 			case functions:
 				functions;
 		};
-		functions.iter(item -> trace(item.name));
+		functions.filter(x -> x.deprecated_since == null).iter(Sys.println);
 	}
 }
