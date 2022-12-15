@@ -14,8 +14,6 @@
 -D lua-vanilla
 -D luajit
 
---library msgpack-haxe:1.15.1
-
 -cp src
 -main Main
 -dce std

@@ -1,5 +1,0 @@
--cp tools
--main ReadNvimApi
-
---library msgpack-haxe:1.15.1
---interp
