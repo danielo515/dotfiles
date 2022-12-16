@@ -529,8 +529,8 @@ Array.prototype.resize = function(self,len)
 end
 
 Main.new = {}
-Main.command = function(name,fn,description,args) 
-  vim.api.nvim_create_user_command(name, fn, ({desc = description, force = true, nargs = args}));
+Main.command = function(name,description,fn,nargs) 
+  vim.api.nvim_create_user_command(name, fn, ({desc = description, force = true, nargs = nargs}));
 end
 Main.main = function() 
   vim.api.nvim_create_user_command("HaxeCmd", function(args) 
@@ -540,8 +540,10 @@ Main.main = function()
     vim.pretty_print("Hello from axe", vim.fn.expand(_G.string.format("%s%s", "%", ":p")));
     do return true end;
   end);
-  vim.api.nvim_create_user_command("OpenInGh", Main.openInGh, ({desc = "Open the current file in github", force = true, nargs = 0}));
-  vim.api.nvim_create_user_command("CopyGhUrl", Main.copyGhUrl, ({desc = "Copy current file github URL", force = true, nargs = 0}));
+  local nargs = nil;
+  vim.api.nvim_create_user_command("OpenInGh", Main.openInGh, ({desc = "Open the current file in github", force = true, nargs = nargs}));
+  local nargs = nil;
+  vim.api.nvim_create_user_command("CopyGhUrl", Main.copyGhUrl, ({desc = "Copy current file github URL", force = true, nargs = nargs}));
   vim.api.nvim_create_user_command("CopyMessagesToClipboard", function(args) 
     Main.copy_messages_to_clipboard(args.args);
   end, ({desc = "Copy the n number of messages to clipboard", force = true, nargs = 1}));

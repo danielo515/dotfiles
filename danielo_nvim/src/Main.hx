@@ -7,8 +7,8 @@ using lua.NativeStringTools;
 using Test;
 
 class Main {
-  public static inline function command(name, fn, description, args) {
-    vim.Api.nvim_create_user_command(name, fn, {desc: description, force: true, nargs: args});
+  public static inline function command(name, description, fn, ?nargs) {
+    vim.Api.nvim_create_user_command(name, fn, {desc: description, force: true, nargs: nargs});
   }
 
   static function main() {
@@ -24,21 +24,13 @@ class Main {
       Vim.print('Hello from axe', filename);
       return true;
     });
-    vim.Api.nvim_create_user_command(
-      "OpenInGh",
-      openInGh,
-      {desc: "Open the current file in github", force: true, nargs: None}
-    );
-    vim.Api.nvim_create_user_command(
-      "CopyGhUrl",
-      copyGhUrl,
-      {desc: "Copy current file github URL", force: true, nargs: None}
-    );
+    command("OpenInGh", "Open the current file in github", openInGh);
+    command("CopyGhUrl", "Copy current file github URL", copyGhUrl);
 
     command(
       "CopyMessagesToClipboard",
-      (args) -> copy_messages_to_clipboard(args.args),
       "Copy the n number of messages to clipboard",
+      (args) -> copy_messages_to_clipboard(args.args),
       ExactlyOne
     );
     final keymaps = nvim.API.nvim_buf_get_keymap(CurrentBuffer, "n");
