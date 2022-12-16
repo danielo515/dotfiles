@@ -17,6 +17,7 @@
 		}
 	},
 	"wrapping": {
+		"maxLineLength": 100,
 		"arrayWrap": {
 			"rules": [
 				{
@@ -103,5 +104,14 @@
 		"arrowFunctionsPolicy": "around",
 		"functionTypeHaxe3Policy": "around",
 		"functionTypeHaxe4Policy": "around"
+    "parenConfig": {
+      "conditionParens": {
+        "openingPolicy": "onlyAfter",
+        "closingPolicy": "around"
+      }
+    },
+    "typeParamOpenPolicy": "onlyAfter",
+    "typeParamClosePolicy": "before",
+    "functionTypeHaxe3Policy": "around"
 	}
 }

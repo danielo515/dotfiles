@@ -27,7 +27,8 @@ abstract GroupOpts(Table<String, Bool>) {
 abstract Group(Int) {}
 
 abstract AutoCmdOpts(Table<String, Dynamic>) {
-	public inline function new(pattern:String, cb, group:Group, description:String, once = false, nested = false) {
+	public inline function new(pattern:String, cb, group:Group, description:String, once = false,
+			nested = false) {
 		this = Table.create(null, {
 			pattern: pattern,
 			callback: cb,
@@ -53,8 +54,9 @@ typedef CommandCallbackArgs = {
 extern class Api {
 	static function nvim_create_augroup(group:String, opts:GroupOpts):Group;
 	static function nvim_create_autocmd(event:LuaArray<VimEvent>, opts:AutoCmdOpts):Int;
-	static function nvim_create_user_command(command_name:String, command:LuaObj<CommandCallbackArgs> -> Void,
-		opts:TableWrapper<{desc:String, force:Bool}>):Void;
+	static function nvim_create_user_command(command_name:String,
+		command:LuaObj<CommandCallbackArgs> -> Void, opts:TableWrapper<{desc:String, force:Bool
+		}>):Void;
 }
 
 @:native("vim.fn")
@@ -79,7 +81,8 @@ extern class Vim {
 class DanieloVim {
 	public static final autogroups:StringMap<Group> = new StringMap();
 
-	static public function autocmd(groupName:String, events:LuaArray<VimEvent>, pattern:String, ?description:String, cb:Function) {
+	static public function autocmd(groupName:String, events:LuaArray<VimEvent>, pattern:String,
+			?description:String, cb:Function) {
 		var group:Group;
 		switch (autogroups.get(groupName)) {
 			case null:
@@ -88,6 +91,7 @@ class DanieloVim {
 			case x:
 				group = x;
 		};
-		Api.nvim_create_autocmd(events, new AutoCmdOpts(pattern, cb, group, description.or('$groupName:[$pattern]')));
+		Api.nvim_create_autocmd(events,
+			new AutoCmdOpts(pattern, cb, group, description.or('$groupName:[$pattern]')));
 	}
 }
