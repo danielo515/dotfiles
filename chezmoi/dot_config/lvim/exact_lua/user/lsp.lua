@@ -58,7 +58,14 @@ function M.config()
   lspManager.setup("jsonls", {
     settings = {
       json = {
-        schemas = require("schemastore").json.schemas(),
+        schemas = vim.list_extend({
+          {
+            description = "Haxe format schema",
+            fileMatch = { "hxformat.json" },
+            name = "hxformat.schema.json",
+            url = "https://raw.githubusercontent.com/vshaxe/vshaxe/master/schemas/hxformat.schema.json",
+          },
+        }, require("schemastore").json.schemas()),
         validate = { enable = true },
       },
     },
