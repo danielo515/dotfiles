@@ -529,21 +529,25 @@ Array.prototype.resize = function(self,len)
 end
 
 Main.new = {}
+Main.command = function(name,fn,description,args) 
+  vim.api.nvim_create_user_command(name, fn, ({desc = description, force = true, nargs = args}));
+end
 Main.main = function() 
   vim.api.nvim_create_user_command("HaxeCmd", function(args) 
     vim.pretty_print(args);
-  end, ({desc = "Testing from haxe", force = true}));
+  end, ({desc = "Testing from haxe", force = true, nargs = "*"}));
   __vim_DanieloVim.autocmd("HaxeEvent", __vim__VimTypes_LuaArray_Impl_.from(_hx_tab_array({[0]="BufWritePost"}, 1)), "*.hx", "Created from haxe", function() 
     vim.pretty_print("Hello from axe", vim.fn.expand(_G.string.format("%s%s", "%", ":p")));
     do return true end;
   end);
-  vim.api.nvim_create_user_command("OpenInGh", Main.openInGh, ({desc = "Open the current file in github", force = true}));
-  vim.api.nvim_create_user_command("CopyGhUrl", Main.copyGhUrl, ({desc = "Copy current file github URL", force = true}));
-  local keymaps = vim.api.nvim_buf_get_keymap(0, "n");
-  vim.pretty_print(vim.api.nvim_get_keymap("n"));
+  vim.api.nvim_create_user_command("OpenInGh", Main.openInGh, ({desc = "Open the current file in github", force = true, nargs = 0}));
+  vim.api.nvim_create_user_command("CopyGhUrl", Main.copyGhUrl, ({desc = "Copy current file github URL", force = true, nargs = 0}));
+  vim.api.nvim_create_user_command("CopyMessagesToClipboard", function(args) 
+    Main.copy_messages_to_clipboard(args.args);
+  end, ({desc = "Copy the n number of messages to clipboard", force = true, nargs = 1}));
   vim.pretty_print(vim.tbl_map(function(x) 
     do return Std.string(Std.string(Std.string(Std.string(Std.string("") .. Std.string(x.lhs)) .. Std.string(" -> ")) .. Std.string(x.rhs)) .. Std.string(" ")) .. Std.string(x.desc) end;
-  end, keymaps));
+  end, vim.api.nvim_buf_get_keymap(0, "n")));
 end
 Main.runGh = function(args) 
   if (vim.fn.executable("gh") ~= 1) then 
@@ -562,6 +566,10 @@ Main.get_branch = function()
     vim.pretty_print("Something may have  failed", args, return_val);
   end});
   do return __plenary_Job:new(args):sync() end;
+end
+Main.copy_messages_to_clipboard = function(number) 
+  vim.cmd(_G.string.format("let @* = execute('%smessages')", Test["or"](number, "")));
+  vim.notify(Std.string(Std.string("") .. Std.string(number)) .. Std.string(" :messages copied to the clipboard"), "info");
 end
 Main.copyGhUrl = function(_) 
   local lines = Main.runGh(__vim__VimTypes_LuaArray_Impl_.from(_hx_tab_array({[0]="browse", vim.fn.expand("%"), "--no-browser", "--branch", Main.get_branch()[1]}, 5)));

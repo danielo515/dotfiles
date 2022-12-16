@@ -87,7 +87,7 @@
           "conditions": [
             {
               "cond": "totalItemLength >= n",
-              "value": 100
+              "value": 80
             }
           ],
           "type": "onePerLineAfterFirst"

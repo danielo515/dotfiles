@@ -48,6 +48,7 @@ abstract AutoCmdOpts(Table< String, Dynamic >) {
 
 typedef CommandCallbackArgs = {
 	final args:String;
+	final fargs:Table< String, String >;
 	final bang:Bool;
 	final line1:Int;
 	final line2:Int;
@@ -65,7 +66,8 @@ extern class Api {
 		command:LuaObj< CommandCallbackArgs > -> Void,
 		opts:TableWrapper< {
 			desc:String,
-			force:Bool
+			force:Bool,
+			?nargs:Nargs,
 		} >
 	):Void;
 }
@@ -87,6 +89,8 @@ extern class Vim {
 		return Fn.expand(string);
 	};
 	public static function tbl_map< T, B >(fn:T -> B, tbl:LuaArray< T >):LuaArray< B >;
+	public static function cmd(command:String):Void;
+	public static function notify(message:String, level:String):Void;
 }
 
 @:expose("vim")

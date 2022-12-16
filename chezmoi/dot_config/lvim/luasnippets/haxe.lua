@@ -35,7 +35,15 @@ end
 local snippets = {
 
   s(
-    { trig = "abs", dscr = "Abstract class", regTrig = false },
+    { trig = "pustif", dscr = "static inline function", regTrig = false },
+    fmt([[ public static inline function {}({}):{}<T> {{ {} }} ]], { i(1), i(2), i(3), i(0) })
+  ),
+  s(
+    { trig = "pustef", dscr = "extern static function", regTrig = false },
+    fmt([[ public static function {}({}):{}<T>;{} ]], { i(1), i(2), i(3), i(0) })
+  ),
+  s(
+    { trig = "abs", dscr = "Abstract value", regTrig = false },
 
     fmt(
       [[
@@ -47,13 +55,7 @@ abstract {}<T>({}) {{
 }}
 
     ]],
-      {
-        i(1),
-        i(2),
-        i(3),
-        i(4),
-        i(0),
-      }
+      { i(1), i(2), i(3), i(4), i(0) }
     )
   ),
 

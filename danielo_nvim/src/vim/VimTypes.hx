@@ -95,6 +95,19 @@ typedef Buffer = EitherType< CurrentBuffer, BufferId >
 abstract WindowId(Int) {}
 typedef Window = EitherType< CurrentWindow, WindowId >
 
+enum abstract NargsInt(Int) {
+	final None;
+	final ExactlyOne;
+}
+
+enum abstract NargsStr(String) {
+	final Any = "*";
+	final ZeroOrOne = "?";
+	final Several = "+";
+}
+
+typedef Nargs = EitherType< NargsInt, NargsStr >
+
 enum abstract VimEvent(String) {
 	final BufNewFile; // starting to edit a file that doesn't exist
 	final BufReadPre; // starting to edit a new buffer, before reading the file
