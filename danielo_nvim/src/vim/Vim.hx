@@ -62,6 +62,8 @@ extern class Fn {
 	static function expand(string:ExpandString):String;
 	static function fnamemodify(file:String, string:PathModifier):String;
 	static function executable(binaryName:String):Int;
+	static function json_encode(value:Dynamic):String;
+	static function json_decode(json:String):Table<String, Dynamic>;
 }
 
 @:native("vim")
