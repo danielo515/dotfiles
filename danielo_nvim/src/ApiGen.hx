@@ -57,7 +57,7 @@ function resolveType(fun:String, arg:Null<String>, t:String):ComplexType {
 		case "Window": macro
 		:vim.VimTypes.WindowId;
 		case "Buffer": macro
-		:vim.VimTypes.BufferId;
+		:vim.VimTypes.Buffer;
 		case "Integer": macro
 		:Int;
 		case "Float": macro

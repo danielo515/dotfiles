@@ -1,6 +1,7 @@
 import plenary.Job;
 import vim.Vim;
 import vim.VimTypes;
+import nvim.API;
 
 class Main {
 	static function main() {
@@ -14,6 +15,7 @@ class Main {
 		});
 		vim.Api.nvim_create_user_command("OpenInGh", openInGh, {desc: "Open the current file in github", force: true});
 		vim.Api.nvim_create_user_command("CopyGhUrl", copyGhUrl, {desc: "Copy current file github URL", force: true});
+		Vim.print(nvim.API.nvim_buf_get_keymap(CurrentBuffer, "n"));
 	}
 
 	static function runGh(args):Null<lua.Table<Int, String>> {

@@ -212,8 +212,6 @@ __vim_DanieloVim = _hx_e()
 __vim__Vim_Vim_Fields_ = _hx_e()
 __vim__VimTypes_LuaArray_Impl_ = _hx_e()
 __vim__VimTypes_LuaObj_Impl_ = _hx_e()
-__vim__VimTypes_BufferId_Impl_ = _hx_e()
-__vim__VimTypes_WindowId_Impl_ = _hx_e()
 __vim__VimTypes_ExpandString_Impl_ = _hx_e()
 
 local _hx_bind, _hx_bit, _hx_staticToInstance, _hx_funcToField, _hx_maxn, _hx_print, _hx_apply_self, _hx_box_mr, _hx_bit_clamp, _hx_table, _hx_bit_raw
@@ -541,6 +539,7 @@ Main.main = function()
   end);
   vim.api.nvim_create_user_command("OpenInGh", Main.openInGh, ({desc = "Open the current file in github", force = true}));
   vim.api.nvim_create_user_command("CopyGhUrl", Main.copyGhUrl, ({desc = "Copy current file github URL", force = true}));
+  vim.pretty_print(vim.api.nvim_buf_get_keymap(0, "n"));
 end
 Main.runGh = function(args) 
   if (vim.fn.executable("gh") ~= 1) then 
@@ -910,22 +909,6 @@ __vim__VimTypes_LuaObj_Impl_.fromType = function(obj)
 end
 __vim__VimTypes_LuaObj_Impl_.to = function(this1) 
   do return this1 end;
-end
-
-__vim__VimTypes_BufferId_Impl_.new = {}
-__vim__VimTypes_BufferId_Impl_._new = function(buf) 
-  do return buf end;
-end
-__vim__VimTypes_BufferId_Impl_.from = function(bufNum) 
-  do return __vim__VimTypes_BufferId_Impl_._new(bufNum) end;
-end
-
-__vim__VimTypes_WindowId_Impl_.new = {}
-__vim__VimTypes_WindowId_Impl_._new = function(id) 
-  do return id end;
-end
-__vim__VimTypes_WindowId_Impl_.from = function(id) 
-  do return __vim__VimTypes_WindowId_Impl_._new(id) end;
 end
 
 __vim__VimTypes_ExpandString_Impl_.new = {}

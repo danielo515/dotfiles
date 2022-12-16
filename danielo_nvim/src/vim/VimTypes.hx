@@ -1,5 +1,6 @@
 package vim;
 
+import haxe.extern.EitherType;
 import lua.NativeStringTools;
 
 abstract TabPage(Int) {}
@@ -30,27 +31,18 @@ abstract LuaObj<T>(T) {
 }
 
 // Some boilerplate here for type safety
-abstract BufferId(Int) from Int {
-	public function new(buf:Int) {
-		this = buf;
-	}
-
-	@:from
-	public static inline function from(bufNum:Int):BufferId {
-		return new BufferId(bufNum);
-	}
+enum abstract CurrentBuffer(Int) {
+	final CurrentBuffer = 0;
 }
 
-abstract WindowId(Int) from Int {
-	public function new(id:Int) {
-		this = id;
-	}
-
-	@:from
-	public static inline function from(id:Int):WindowId {
-		return new WindowId(id);
-	}
+enum abstract CurrentWindow(Int) {
+	final CurrentWindow = 0;
 }
+
+abstract BufferId(Int) {}
+typedef Buffer = EitherType<CurrentBuffer, BufferId>
+abstract WindowId(Int) {}
+typedef Window = EitherType<CurrentWindow, WindowId>
 
 enum abstract VimEvent(String) {
 	final BufNewFile; // starting to edit a file that doesn't exist
