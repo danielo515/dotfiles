@@ -1,4 +1,7 @@
 {
+  "indentation": {
+    "character": "  "
+  },
   "sameLine": {
     "caseBody": "next",
     "tryCatch": "next",
@@ -77,20 +80,11 @@
         {
           "conditions": [
             {
-              "cond": "itemCount <= n",
-              "value": 7
-            }
-          ],
-          "type": "fillLine"
-        },
-        {
-          "conditions": [
-            {
               "cond": "totalItemLength >= n",
               "value": 80
             }
           ],
-          "type": "onePerLineAfterFirst"
+          "type": "onePerLine"
         },
         {
           "conditions": [
