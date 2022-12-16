@@ -1,6 +1,6 @@
 package parser;
 
-typedef Tokens = Array<String>;
+typedef Tokens = Array< String >;
 
 enum State {
 	Initial;
@@ -10,9 +10,9 @@ enum State {
 
 class Parser {
 	private final string:String;
-	private final checker:String->Bool;
+	private final checker:String -> Bool;
 	private var state:State;
-	private var tokens:Array<String>;
+	private var tokens:Array< String >;
 
 	public function new(str:String, checker) {
 		this.string = str;

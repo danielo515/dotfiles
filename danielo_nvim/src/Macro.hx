@@ -13,7 +13,7 @@ class StructureCombiner {
 		var block = [];
 		var cnt = 1;
 		// since we want to allow duplicate field names, we use a Map. The last occurrence wins.
-		var all = new Map<String, ObjectField>();
+		var all = new Map< String, ObjectField >();
 		var trest = Context.typeof(rest);
 		switch (trest.follow()) {
 			case TAnonymous(_.get() => tr):

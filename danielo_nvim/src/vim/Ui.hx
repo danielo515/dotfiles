@@ -9,5 +9,9 @@ typedef SelectConfig = {
 
 @:native('vim.ui')
 extern class Ui {
-	static function select(options:LuaArray<String>, config:LuaObj<SelectConfig>, onSelect:(Null<String>, Null<Int>) -> Void):Void;
+	static function select(
+		options:LuaArray< String >,
+		config:LuaObj< SelectConfig >,
+		onSelect:(Null< String >, Null< Int >) -> Void
+	):Void;
 }

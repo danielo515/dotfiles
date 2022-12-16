@@ -4,10 +4,10 @@ import haxe.macro.Expr;
 import sys.io.File;
 
 var patches = [
-	"nvim_create_augroup" => macro:vim.Vim.Group,
-	"nvim_buf_get_keymap" => macro:vim.VimTypes.LuaArray< vim.VimTypes.MapInfo >,
-	"nvim_create_user_command.command" => macro:vim.VimTypes.LuaObj< vim.Vim.CommandCallbackArgs > -> Void,
-	"nvim_create_user_command.opts" => macro:TableWrapper< {
+	"nvim_create_augroup" => macro :vim.Vim.Group,
+	"nvim_buf_get_keymap" => macro :vim.VimTypes.LuaArray< vim.VimTypes.MapInfo >,
+	"nvim_create_user_command.command" => macro :vim.VimTypes.LuaObj< vim.Vim.CommandCallbackArgs > -> Void,
+	"nvim_create_user_command.opts" => macro :TableWrapper< {
 		desc:String,
 		force:Bool
 	} >
@@ -24,7 +24,7 @@ macro function generateApi():Void {
 		#if !dump
 		meta: [meta("native", [macro "vim.api"])],
 		#end
-		fields: [for (f in(specs.functions : Array< FunctionDef >)) {
+		fields: [for (f in (specs.functions : Array< FunctionDef >)) {
 			{
 				name: f.name,
 				access: [AStatic, APublic],
@@ -43,58 +43,37 @@ macro function generateApi():Void {
 	});
 }
 
-function resolveType(
-	fun:String,
-	arg:Null< String >,
-	t:String
-):ComplexType {
+function resolveType(fun:String, arg:Null< String >, t:String):ComplexType {
 	var patch = patches.get(arg == null ? fun : '$fun.$arg');
-	if( patch != null ) return patch;
+	if (patch != null) return patch;
 
-	return switch( t ) {
-		case "String": macro
-		:String;
-		case "LuaRef": macro
-		:haxe.Constraints.Function;
-		case "Window": macro
-		:vim.VimTypes.WindowId;
-		case "Buffer": macro
-		:vim.VimTypes.Buffer;
-		case "Integer": macro
-		:Int;
-		case "Float": macro
-		:Float;
-		case "Tabpage": macro
-		:vim.VimTypes.TabPage;
-		case "Dictionary": macro
-		:lua.Table< String, Dynamic >;
-		case "Boolean": macro
-		:Bool;
-		case "Object": macro
-		:Dynamic;
-		case "Array": macro
-		:vim.VimTypes.LuaArray< Dynamic >;
-		case "void": macro
-		:Void;
+	return switch (t) {
+		case "String": macro :String;
+		case "LuaRef": macro :haxe.Constraints.Function;
+		case "Window": macro :vim.VimTypes.WindowId;
+		case "Buffer": macro :vim.VimTypes.Buffer;
+		case "Integer": macro :Int;
+		case "Float": macro :Float;
+		case "Tabpage": macro :vim.VimTypes.TabPage;
+		case "Dictionary": macro :lua.Table< String, Dynamic >;
+		case "Boolean": macro :Bool;
+		case "Object": macro :Dynamic;
+		case "Array": macro :vim.VimTypes.LuaArray< Dynamic >;
+		case "void": macro :Void;
 
-		case t if( StringTools.startsWith(t, "ArrayOf(") ):
+		case t if (StringTools.startsWith(t, "ArrayOf(")):
 			final regexArrayArg = ~/ArrayOf\(([a-zA-Z]+),?/i;
 			regexArrayArg.match(t);
 			var itemType = resolveType(fun, (arg == null ? "" : arg) + "[]", regexArrayArg.matched(1));
-			macro
-		:vim.VimTypes.LuaArray< $itemType >;
+			macro :vim.VimTypes.LuaArray< $itemType >;
 
 		case _:
 			Context.warning('Cannot resolve type $t', (macro null).pos);
-			macro
-		:Dynamic;
+			macro :Dynamic;
 	};
 }
 
-function meta(
-	m:String,
-	?params:Array< Expr >
-):MetadataEntry {
+function meta(m:String, ?params:Array< Expr >):MetadataEntry {
 	return {name: ':$m', params: params, pos: (macro null).pos};
 }
 
@@ -107,9 +86,7 @@ typedef FunctionDef = {
 	@:optional final deprecated_since:Int;
 }
 
-abstract ParamDef(
-	Array< String >
-) {
+abstract ParamDef(Array< String >) {
 	public var type(get, never):String;
 
 	function get_type():String

@@ -8,13 +8,13 @@ using haxe.macro.TypeTools;
 // Class that transforms any Haxe object into a plain lua table
 // Thanks to @kLabz
 #if macro
-abstract TableWrapper<T:{}>(Dynamic) {
+abstract TableWrapper< T:{} >(Dynamic) {
 #else
-abstract TableWrapper<T:{}>(lua.Table<String, Dynamic>) {
+abstract TableWrapper< T:{} >(lua.Table< String, Dynamic >) {
 #end
 
 @:pure @:noCompletion
-extern public static function check<T:{}>(v:T):TableWrapper<T>;
+extern public static function check< T:{} >(v:T):TableWrapper< T >;
 
 @:from
 public static macro function fromExpr(e:Expr):Expr {
@@ -28,32 +28,29 @@ public static macro function fromExpr(e:Expr):Expr {
 					var inputFields = inputFields.copy();
 					var fieldExprs = [for (f in inputFields) f.field => f.expr];
 
-					var objFields:Array<ObjectField> = [
-						for (f in fields) {
-							switch (f.type) {
-								case _.toComplexType() => macro:Array<String>:{
-									field:f.name,
-									expr:macro
-									lua.Table.create
-									(${fieldExprs.get(f.name)})
-								};
+					var objFields:Array< ObjectField > = [for (f in fields) {
+						switch (f.type) {
+							case _.toComplexType() => macro :Array< String > :{
+								field:f.name,
+								expr:macro
+								lua.Table.create
+								(${fieldExprs.get(f.name)})
+							};
 
-								case TAbstract(_.toString() => "TableWrapper", [_]):
-									var ct = f.type.toComplexType();
+							case TAbstract(_.toString() => "TableWrapper", [_]):
+								var ct = f.type.toComplexType();
 
-									for (inf in inputFields)
-										if (inf.field == f.name) {
-											inf.expr = macro(TableWrapper.check(${inf.expr}) : $ct);
-											break;
-										}
+								for (inf in inputFields) if (inf.field == f.name) {
+									inf.expr = macro(TableWrapper.check(${inf.expr}) : $ct);
+									break;
+								}
 
-									{field: f.name, expr: macro(TableWrapper.fromExpr(${fieldExprs.get(f.name)}) : $ct)};
+								{field: f.name, expr: macro(TableWrapper.fromExpr(${fieldExprs.get(f.name)}) : $ct)};
 
-								case _:
-									{field: f.name, expr: macro ${fieldExprs.get(f.name)}};
-							}
+							case _:
+								{field: f.name, expr: macro ${fieldExprs.get(f.name)}};
 						}
-					];
+					}];
 
 					var inputObj = {expr: EObjectDecl(inputFields), pos: e.pos};
 					var obj = {expr: EObjectDecl(objFields), pos: e.pos};

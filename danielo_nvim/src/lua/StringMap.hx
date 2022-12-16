@@ -1,7 +1,7 @@
 package lua;
 
-class StringMap<T> {
-	private var h:lua.Table<String, T>;
+class StringMap< T > {
+	private var h:lua.Table< String, T >;
 
 	static var tnull:Dynamic = lua.Table.create();
 
@@ -17,7 +17,7 @@ class StringMap<T> {
 		}
 	}
 
-	public function get(key:String):Null<T> {
+	public function get(key:String):Null< T > {
 		var ret = h[untyped key];
 		if (ret == tnull) {
 			return null;

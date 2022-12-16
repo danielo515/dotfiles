@@ -5,9 +5,7 @@ import vim.VimTypes;
 class Main {
 	static function main() {
 		// vim.Ui.select(["a"], {prompt: "Pick one sexy option"}, (choice, _) -> Vim.print(choice));
-		vim.Api.nvim_create_user_command("HaxeCmd", (
-			args
-		) -> Vim.print(args), {desc: "Testing from haxe", force: true});
+		vim.Api.nvim_create_user_command("HaxeCmd", (args) -> Vim.print(args), {desc: "Testing from haxe", force: true});
 
 		DanieloVim.autocmd('HaxeEvent', [BufWritePost], "*.hx", "Created from haxe", () -> {
 			var filename = Vim.expand(ExpandString.plus(CurentFile, FullPath));
@@ -17,21 +15,17 @@ class Main {
 		vim.Api.nvim_create_user_command("OpenInGh", openInGh, {desc: "Open the current file in github", force: true});
 		vim.Api.nvim_create_user_command("CopyGhUrl", copyGhUrl, {desc: "Copy current file github URL", force: true});
 		final keymaps = nvim.API.nvim_buf_get_keymap(CurrentBuffer, "n");
+		Vim.print(nvim.API.nvim_get_keymap("n"));
 		Vim.print(keymaps.map(x -> '${x.lhs} -> ${x.rhs} ${x.desc}'));
 	}
 
-	static function runGh(
-		args
-	):Null< lua.Table< Int, String > > {
-		if( vim.Fn.executable("gh") != 1 ) return null;
+	static function runGh(args):Null< lua.Table< Int, String > > {
+		if (vim.Fn.executable("gh") != 1) return null;
 
 		final job = Job.make({
 			command: "gh",
 			args: args,
-			on_stderr: (
-				args,
-				return_val
-			) -> {
+			on_stderr: (args, return_val) -> {
 				Vim.print("Job got stderr", args, return_val);
 			}
 		});
@@ -49,10 +43,7 @@ class Main {
 		final job = Job.make({
 			command: "git",
 			args: args,
-			on_stderr: (
-				args,
-				return_val
-			) -> {
+			on_stderr: (args, return_val) -> {
 				Vim.print("Something may have  failed", args, return_val);
 			}
 		});
@@ -63,7 +54,7 @@ class Main {
 		final currentFile = vim.Fn.expand(CurentFile);
 		final curentBranch = get_branch();
 		var lines = runGh(["browse", currentFile, "--no-browser", "--branch", curentBranch[1]]);
-		switch( lines ) {
+		switch (lines) {
 			case null:
 				Vim.print("No URL");
 			case _:

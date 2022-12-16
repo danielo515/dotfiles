@@ -8,7 +8,7 @@ import haxe.macro.Context;
 // Thanks to
 // https://stackoverflow.com/a/74711862/1734815
 class TableBuilder {
-	macro public static function getFields(td:Expr):Array<Field> {
+	macro public static function getFields(td:Expr):Array< Field > {
 		var t = Context.getType(td.toString()).follow();
 		var anon = switch (t) {
 			case TAnonymous(ref): ref.get();
@@ -21,11 +21,10 @@ class TableBuilder {
 		return null;
 	}
 
-	public static macro function build():Array<Field> {
+	public static macro function build():Array< Field > {
 		var fields = Context.getBuildFields();
 		for (field in fields) {
-			if (field.name != "make")
-				continue; // ignore other methods
+			if (field.name != "make") continue; // ignore other methods
 
 			var f = switch (field.kind) { // ... that's a function
 				case FFun(_f): _f;
@@ -38,7 +37,7 @@ class TableBuilder {
 				default: continue;
 			}
 
-			var objFields:Array<ObjectField> = [];
+			var objFields:Array< ObjectField > = [];
 			for (arg in f.args) {
 				var argVal = arg.value;
 				switch (arg.type) {

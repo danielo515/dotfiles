@@ -13,28 +13,20 @@ inline function comment() {
 	untyped __lua__("---@diagnostic disable");
 }
 
-abstract GroupOpts(
-	Table< String, Bool >
-) {
-	public inline function new(
-		clear:Bool
-	) {
+abstract GroupOpts(Table< String, Bool >) {
+	public inline function new(clear:Bool) {
 		this = Table.create(null, {clear: clear});
 	}
 
 	@:from
-	public inline static function fromObj(
-		arg:{clear:Bool}
-	) {
+	public inline static function fromObj(arg:{clear:Bool}) {
 		return new GroupOpts(arg.clear);
 	}
 }
 
 abstract Group(Int) {}
 
-abstract AutoCmdOpts(
-	Table< String, Dynamic >
-) {
+abstract AutoCmdOpts(Table< String, Dynamic >) {
 	public inline function new(
 		pattern:String,
 		cb,
@@ -66,14 +58,8 @@ typedef CommandCallbackArgs = {
 
 @:native("vim.api")
 extern class Api {
-	static function nvim_create_augroup(
-		group:String,
-		opts:GroupOpts
-	):Group;
-	static function nvim_create_autocmd(
-		event:LuaArray< VimEvent >,
-		opts:AutoCmdOpts
-	):Int;
+	static function nvim_create_augroup(group:String, opts:GroupOpts):Group;
+	static function nvim_create_autocmd(event:LuaArray< VimEvent >, opts:AutoCmdOpts):Int;
 	static function nvim_create_user_command(
 		command_name:String,
 		command:LuaObj< CommandCallbackArgs > -> Void,
@@ -86,39 +72,21 @@ extern class Api {
 
 @:native("vim.fn")
 extern class Fn {
-	static function expand(
-		string:ExpandString
-	):String;
-	static function fnamemodify(
-		file:String,
-		string:PathModifier
-	):String;
-	static function executable(
-		binaryName:String
-	):Int;
-	static function json_encode(
-		value:Dynamic
-	):String;
-	static function json_decode(
-		json:String
-	):Table< String, Dynamic >;
+	static function expand(string:ExpandString):String;
+	static function fnamemodify(file:String, string:PathModifier):String;
+	static function executable(binaryName:String):Int;
+	static function json_encode(value:Dynamic):String;
+	static function json_decode(json:String):Table< String, Dynamic >;
 }
 
 @:native("vim")
 extern class Vim {
 	@:native("pretty_print")
-	static function print(
-		args:Rest< Dynamic >
-	):Void;
-	static inline function expand(
-		string:ExpandString
-	):String {
+	static function print(args:Rest< Dynamic >):Void;
+	static inline function expand(string:ExpandString):String {
 		return Fn.expand(string);
 	};
-	public static function tbl_map< T, B >(
-		fn:T -> B,
-		tbl:LuaArray< T >
-	):LuaArray< B >;
+	public static function tbl_map< T, B >(fn:T -> B, tbl:LuaArray< T >):LuaArray< B >;
 }
 
 @:expose("vim")
@@ -133,7 +101,7 @@ class DanieloVim {
 		cb:Function
 	) {
 		var group:Group;
-		switch( autogroups.get(groupName) ) {
+		switch (autogroups.get(groupName)) {
 			case null:
 				group = Api.nvim_create_augroup(groupName, {clear: true});
 				autogroups.set(groupName, group);
