@@ -73,7 +73,7 @@ function resolveType(
 		case "Object": macro
 		:Dynamic;
 		case "Array": macro
-		:Array< Dynamic >;
+		:vim.VimTypes.LuaArray< Dynamic >;
 		case "void": macro
 		:Void;
 
@@ -82,7 +82,7 @@ function resolveType(
 			regexArrayArg.match(t);
 			var itemType = resolveType(fun, (arg == null ? "" : arg) + "[]", regexArrayArg.matched(1));
 			macro
-		:Array< $itemType >;
+		:vim.VimTypes.LuaArray< $itemType >;
 
 		case _:
 			Context.warning('Cannot resolve type $t', (macro null).pos);

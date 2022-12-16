@@ -539,9 +539,11 @@ Main.main = function()
   end);
   vim.api.nvim_create_user_command("OpenInGh", Main.openInGh, ({desc = "Open the current file in github", force = true}));
   vim.api.nvim_create_user_command("CopyGhUrl", Main.copyGhUrl, ({desc = "Copy current file github URL", force = true}));
+  local keymaps = vim.api.nvim_buf_get_keymap(0, "n");
+  vim.pretty_print(vim.api.nvim_get_keymap("n"));
   vim.pretty_print(vim.tbl_map(function(x) 
     do return Std.string(Std.string(Std.string(Std.string(Std.string("") .. Std.string(x.lhs)) .. Std.string(" -> ")) .. Std.string(x.rhs)) .. Std.string(" ")) .. Std.string(x.desc) end;
-  end, vim.api.nvim_buf_get_keymap(0, "n")));
+  end, keymaps));
 end
 Main.runGh = function(args) 
   if (vim.fn.executable("gh") ~= 1) then 

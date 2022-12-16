@@ -84,7 +84,7 @@ typedef MapInfo = {
 	final sid:Int;
 
 	/** The keymap description */
-	final desc:String;
+	final desc:Null< String >;
 }
 
 // Some boilerplate here for type safety
