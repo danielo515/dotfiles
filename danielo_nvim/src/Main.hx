@@ -1,7 +1,6 @@
 import plenary.Job;
 import vim.Vim;
 import vim.VimTypes;
-import nvim.API;
 
 class Main {
 	static function main() {

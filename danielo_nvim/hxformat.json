@@ -17,7 +17,20 @@
 		}
 	},
 	"wrapping": {
-		"maxLineLength": 100,
+		"functionSignature": {
+			"defaultWrap": "noWrap",
+			"rules": [
+				{
+					"conditions": [
+						{
+							"cond": "totalItemLength >= n",
+							"value": 4
+						}
+					],
+					"type": "onePerLine"
+				}
+			]
+		},
 		"arrayWrap": {
 			"rules": [
 				{
@@ -103,15 +116,14 @@
 	"whitespace": {
 		"arrowFunctionsPolicy": "around",
 		"functionTypeHaxe3Policy": "around",
-		"functionTypeHaxe4Policy": "around"
-    "parenConfig": {
-      "conditionParens": {
-        "openingPolicy": "onlyAfter",
-        "closingPolicy": "around"
-      }
-    },
-    "typeParamOpenPolicy": "onlyAfter",
-    "typeParamClosePolicy": "before",
-    "functionTypeHaxe3Policy": "around"
+		"functionTypeHaxe4Policy": "around",
+		"parenConfig": {
+			"conditionParens": {
+				"openingPolicy": "onlyAfter",
+				"closingPolicy": "around"
+			}
+		},
+		"typeParamOpenPolicy": "onlyAfter",
+		"typeParamClosePolicy": "before"
 	}
 }

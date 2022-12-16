@@ -30,6 +30,41 @@ abstract LuaObj<T>(T) {
 	}
 }
 
+typedef MapInfo = {
+/** The {lhs} of the mapping as it would be typed */
+ final lhs: String;
+/** The {lhs} of the mapping as raw bytes */
+ final lhsraw: String;
+/** The {lhs} of the mapping as raw bytes, alternate      form, only present when it differs from "lhsraw" */
+ final lhsrawalt: String;
+/** The {rhs} of the mapping as typed. */
+ final rhs: String;
+/** 1 for a |:map-silent| mapping, else 0. */
+ final silent: Int;
+/** 1 if the {rhs} of the mapping is not remappable. */
+ final noremap: Int;
+/** 1 if mapping was defined with <script>. */
+ final script: Int;
+/** 1 for an expression mapping (|:map-<expr>|). */
+ final expr: Int;
+/** 1 for a buffer local mapping (|:map-local|). */
+ final buffer: BufferId;
+/** Modes for which the mapping is defined. 
+  In addition to the modes mentioned above, these			     characters will be used:
+  " "     Normal, Visual and Operator-pending			    
+  "!"     Insert and Commandline mode
+  */
+ final mode: String;
+/** The line number in "sid", zero if unknown. */
+ final lnum: Int;
+/** Do not wait for other, longer mappings. */
+ final nowait: Int;
+ /** The script local ID, used for <sid> mappings */
+ final sid:Int;
+ /** The keymap description */
+ final desc:String;
+}
+
 // Some boilerplate here for type safety
 enum abstract CurrentBuffer(Int) {
 	final CurrentBuffer = 0;
