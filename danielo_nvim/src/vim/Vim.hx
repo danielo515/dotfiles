@@ -53,7 +53,7 @@ typedef CommandCallbackArgs = {
 extern class Api {
 	static function nvim_create_augroup(group:String, opts:GroupOpts):Group;
 	static function nvim_create_autocmd(event:LuaArray<VimEvent>, opts:AutoCmdOpts):Int;
-	static function nvim_create_user_command(command_name:String, command:LuaObj<CommandCallbackArgs>->Void,
+	static function nvim_create_user_command(command_name:String, command:LuaObj<CommandCallbackArgs> -> Void,
 		opts:TableWrapper<{desc:String, force:Bool}>):Void;
 }
 
