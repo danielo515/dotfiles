@@ -115,6 +115,10 @@ extern class Vim {
 	):String {
 		return Fn.expand(string);
 	};
+	public static function tbl_map< T, B >(
+		fn:T -> B,
+		tbl:LuaArray< T >
+	):LuaArray< B >;
 }
 
 @:expose("vim")

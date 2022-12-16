@@ -5,64 +5,86 @@ import lua.NativeStringTools;
 
 abstract TabPage(Int) {}
 
-@:arrayAccess abstract LuaArray<T>(lua.Table<Int, T>) from lua.Table<Int, T> to lua.Table<Int, T> {
+@:arrayAccess abstract LuaArray< T >(
+	lua.Table< Int, T >
+) from lua.Table< Int, T > to lua.Table< Int, T > {
 	// Can this be converted into a macro to avoid even calling fromArray ?
 	@:from
-	public static function from<T>(arr:Array<T>):LuaArray<T> {
+	public static function from< T >(
+		arr:Array< T >
+	):LuaArray< T > {
 		return lua.Table.fromArray(arr);
+	}
+
+	public inline function map(fn) {
+		return Vim.tbl_map(fn, this);
 	}
 }
 
 @:forward // automatically get fields from underlying type
-abstract LuaObj<T>(T) {
+abstract LuaObj< T >(T) {
 	@:from
-	public static inline function fromType<T>(obj:T):LuaObj<T> {
+	public static inline function fromType< T >(
+		obj:T
+	):LuaObj< T > {
 		@:nullSafety(Off) untyped obj.__fields__ = null;
 		@:nullSafety(Off) lua.Lua.setmetatable(cast obj, null);
 		return cast obj;
 	}
 
 	// could add a @:from lua table, but that will automatically accept/convert any lua table, probably want to make it explicit
-
 	@:to
-	public function to():lua.Table<String, Dynamic> {
+	public function to():lua.Table< String, Dynamic > {
 		return cast this;
 	}
 }
 
 typedef MapInfo = {
-/** The {lhs} of the mapping as it would be typed */
- final lhs: String;
-/** The {lhs} of the mapping as raw bytes */
- final lhsraw: String;
-/** The {lhs} of the mapping as raw bytes, alternate      form, only present when it differs from "lhsraw" */
- final lhsrawalt: String;
-/** The {rhs} of the mapping as typed. */
- final rhs: String;
-/** 1 for a |:map-silent| mapping, else 0. */
- final silent: Int;
-/** 1 if the {rhs} of the mapping is not remappable. */
- final noremap: Int;
-/** 1 if mapping was defined with <script>. */
- final script: Int;
-/** 1 for an expression mapping (|:map-<expr>|). */
- final expr: Int;
-/** 1 for a buffer local mapping (|:map-local|). */
- final buffer: BufferId;
-/** Modes for which the mapping is defined. 
-  In addition to the modes mentioned above, these			     characters will be used:
-  " "     Normal, Visual and Operator-pending			    
-  "!"     Insert and Commandline mode
-  */
- final mode: String;
-/** The line number in "sid", zero if unknown. */
- final lnum: Int;
-/** Do not wait for other, longer mappings. */
- final nowait: Int;
- /** The script local ID, used for <sid> mappings */
- final sid:Int;
- /** The keymap description */
- final desc:String;
+	/** The {lhs} of the mapping as it would be typed */
+	final lhs:String;
+
+	/** The {lhs} of the mapping as raw bytes */
+	final lhsraw:String;
+
+	/** The {lhs} of the mapping as raw bytes, alternate      form, only present when it differs from "lhsraw" */
+	final lhsrawalt:String;
+
+	/** The {rhs} of the mapping as typed. */
+	final rhs:String;
+
+	/** 1 for a |:map-silent| mapping, else 0. */
+	final silent:Int;
+
+	/** 1 if the {rhs} of the mapping is not remappable. */
+	final noremap:Int;
+
+	/** 1 if mapping was defined with <script>. */
+	final script:Int;
+
+	/** 1 for an expression mapping (|:map-<expr>|). */
+	final expr:Int;
+
+	/** 1 for a buffer local mapping (|:map-local|). */
+	final buffer:BufferId;
+
+	/** Modes for which the mapping is defined. 
+		In addition to the modes mentioned above, these			     characters will be used:
+		" "     Normal, Visual and Operator-pending			    
+		"!"     Insert and Commandline mode
+	 */
+	final mode:String;
+
+	/** The line number in "sid", zero if unknown. */
+	final lnum:Int;
+
+	/** Do not wait for other, longer mappings. */
+	final nowait:Int;
+
+	/** The script local ID, used for <sid> mappings */
+	final sid:Int;
+
+	/** The keymap description */
+	final desc:String;
 }
 
 // Some boilerplate here for type safety
@@ -75,11 +97,13 @@ enum abstract CurrentWindow(Int) {
 }
 
 abstract BufferId(Int) {}
-typedef Buffer = EitherType<CurrentBuffer, BufferId>
+typedef Buffer = EitherType< CurrentBuffer, BufferId >
 abstract WindowId(Int) {}
-typedef Window = EitherType<CurrentWindow, WindowId>
+typedef Window = EitherType< CurrentWindow, WindowId >
 
-enum abstract VimEvent(String) {
+enum abstract VimEvent(
+	String
+) {
 	final BufNewFile; // starting to edit a file that doesn't exist
 	final BufReadPre; // starting to edit a new buffer, before reading the file
 	final BufRead; // starting to edit a new buffer, after reading the file
@@ -168,31 +192,46 @@ enum abstract VimEvent(String) {
 }
 
 // Yes, it is intentional that you can not create this from a string
-enum abstract PathModifier(String) to String {
+enum abstract PathModifier(
+	String
+) to String {
 	final FullPath = ":p";
 	final Head = ":h";
 	final Tail = ":t";
 }
 
-enum abstract VimRef(String) to String {
+enum abstract VimRef(
+	String
+) to String {
 	final CurentFile = "%";
 }
 
-abstract ExpandString(String) from VimRef {
-	public inline function new(path:VimRef) {
+abstract ExpandString(
+	String
+) from VimRef {
+	public inline function new(
+		path:VimRef
+	) {
 		this = path;
 	}
 
 	@:from
-	public static inline function from(ref:VimRef) {
+	public static inline function from(
+		ref:VimRef
+	) {
 		return new ExpandString(ref);
 	}
 
-	@:op(A + B) public inline function plus0(modifiers:PathModifier):ExpandString {
+	@:op(A + B) public inline function plus0(
+		modifiers:PathModifier
+	):ExpandString {
 		return cast NativeStringTools.format("%s%s", this, modifiers);
 	}
 
-	@:op(A + B) public static inline function plus(path:ExpandString, modifiers:PathModifier):ExpandString {
+	@:op(A + B) public static inline function plus(
+		path:ExpandString,
+		modifiers:PathModifier
+	):ExpandString {
 		return cast NativeStringTools.format("%s%s", path, modifiers);
 	}
 }
