@@ -7,23 +7,35 @@ using Test;
 
 class Main {
   public static inline function command(name, description, fn, ?nargs) {
-    vim.Api.nvim_create_user_command(name, fn, {desc: description, force: true, nargs: nargs});
+    vim.Api.nvim_create_user_command(name, fn, {
+      desc: description,
+      force: true,
+      nargs: nargs,
+      bang: false,
+      range: Yes,
+    });
   }
 
   static function main() {
     // vim.Ui.select(["a"], {prompt: "Pick one sexy option"}, (choice, _) -> Vim.print(choice));
-    vim.Api.nvim_create_user_command(
-      "HaxeCmd",
-      (args) -> Vim.print(args),
-      {desc: "Testing from haxe", force: true, nargs: Any}
-    );
+    vim.Api.nvim_create_user_command("HaxeCmd", (args) -> Vim.print(args), {
+      desc: "Testing from haxe",
+      force: true,
+      nargs: Any,
+      bang: true,
+      range: WholeFile,
+    });
 
     DanieloVim.autocmd('HaxeEvent', [BufWritePost], "*.hx", "Created from haxe", () -> {
       var filename = Vim.expand(ExpandString.plus(CurentFile, FullPath));
       Vim.print('Hello from axe', filename);
       return true;
     });
-    command("OpenInGh", "Open the current file in github", openInGh);
+    command(
+      "OpenInGh",
+      "Open the current file in github",
+      args -> openInGh(args.count > 0 ? ':${args.count}' : "")
+    );
     command("CopyGhUrl", "Copy current file github URL", copyGhUrl);
 
     command(
@@ -49,10 +61,10 @@ class Main {
     return job.sync();
   }
 
-  static function openInGh(_) {
+  static function openInGh(?line) {
     final currentFile = vim.Fn.expand(CurentFile);
     final curentBranch = get_branch();
-    runGh(["browse", currentFile, "--branch", curentBranch[1]]);
+    runGh(["browse", currentFile + line, "--branch", curentBranch[1]]);
   }
 
   static function get_branch() {

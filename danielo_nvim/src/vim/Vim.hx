@@ -57,12 +57,13 @@ typedef CommandCallbackArgs = {
   final mods:String;
 }
 
-typedef UserCommandOpts = {
+typedef UserCommandOpts = TableWrapper< {
   desc:String,
   force:Bool,
   ?nargs:Nargs,
   ?bang:Bool,
-}
+  // ?range:CmdRange,
+} >
 
 @:native("vim.api")
 extern class Api {
@@ -71,7 +72,13 @@ extern class Api {
   static function nvim_create_user_command(
     command_name:String,
     command:LuaObj< CommandCallbackArgs > -> Void,
-    opts:TableWrapper< UserCommandOpts >
+    opts:TableWrapper< {
+      desc:String,
+      force:Bool,
+      ?nargs:Nargs,
+      ?bang:Bool,
+      ?range:CmdRange,
+    } >
   ):Void;
 }
 

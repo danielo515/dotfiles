@@ -114,9 +114,16 @@ typedef Nargs = EitherType< NargsInt, NargsStr >
 /**
   The type of range a user defined command accepts
  */
-enum abstract CmdRange(String) {
+enum abstract CmdRangeStr(String) {
   final WholeFile = "%";
 }
+
+enum abstract CmdRangeBool(Bool) {
+  final Yes = true;
+  final No = false;
+}
+
+typedef CmdRange = EitherType< CmdRangeBool, CmdRangeStr >;
 
 enum abstract VimEvent(String) {
   final BufNewFile; // starting to edit a file that doesn't exist

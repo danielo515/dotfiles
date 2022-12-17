@@ -530,23 +530,31 @@ end
 
 Main.new = {}
 Main.command = function(name,description,fn,nargs) 
-  vim.api.nvim_create_user_command(name, fn, ({desc = description, force = true, nargs = nargs}));
+  vim.api.nvim_create_user_command(name, fn, ({bang = false, desc = description, force = true, nargs = nargs, range = true}));
 end
 Main.main = function() 
   vim.api.nvim_create_user_command("HaxeCmd", function(args) 
     vim.pretty_print(args);
-  end, ({desc = "Testing from haxe", force = true, nargs = "*"}));
+  end, ({bang = true, desc = "Testing from haxe", force = true, nargs = "*", range = "%"}));
   __vim_DanieloVim.autocmd("HaxeEvent", __vim__VimTypes_LuaArray_Impl_.from(_hx_tab_array({[0]="BufWritePost"}, 1)), "*.hx", "Created from haxe", function() 
     vim.pretty_print("Hello from axe", vim.fn.expand(_G.string.format("%s%s", "%", ":p")));
     do return true end;
   end);
   local nargs = nil;
-  vim.api.nvim_create_user_command("OpenInGh", Main.openInGh, ({desc = "Open the current file in github", force = true, nargs = nargs}));
+  vim.api.nvim_create_user_command("OpenInGh", function(args) 
+    Main.openInGh((function() 
+      local _hx_1
+      if (args.count > 0) then 
+      _hx_1 = Std.string(":") .. Std.string(args.count); else 
+      _hx_1 = ""; end
+      return _hx_1
+    end )());
+  end, ({bang = false, desc = "Open the current file in github", force = true, nargs = nargs, range = true}));
   local nargs = nil;
-  vim.api.nvim_create_user_command("CopyGhUrl", Main.copyGhUrl, ({desc = "Copy current file github URL", force = true, nargs = nargs}));
+  vim.api.nvim_create_user_command("CopyGhUrl", Main.copyGhUrl, ({bang = false, desc = "Copy current file github URL", force = true, nargs = nargs, range = true}));
   vim.api.nvim_create_user_command("CopyMessagesToClipboard", function(args) 
     Main.copy_messages_to_clipboard(args.args);
-  end, ({desc = "Copy the n number of messages to clipboard", force = true, nargs = 1}));
+  end, ({bang = false, desc = "Copy the n number of messages to clipboard", force = true, nargs = 1, range = true}));
   vim.pretty_print(vim.tbl_map(function(x) 
     do return Std.string(Std.string(Std.string(Std.string(Std.string("") .. Std.string(x.lhs)) .. Std.string(" -> ")) .. Std.string(x.rhs)) .. Std.string(" ")) .. Std.string(x.desc) end;
   end, vim.api.nvim_buf_get_keymap(0, "n")));
@@ -560,8 +568,8 @@ Main.runGh = function(args)
   end});
   do return __plenary_Job:new(args):sync() end;
 end
-Main.openInGh = function(_) 
-  Main.runGh(__vim__VimTypes_LuaArray_Impl_.from(_hx_tab_array({[0]="browse", vim.fn.expand("%"), "--branch", Main.get_branch()[1]}, 4)));
+Main.openInGh = function(line) 
+  Main.runGh(__vim__VimTypes_LuaArray_Impl_.from(_hx_tab_array({[0]="browse", Std.string(vim.fn.expand("%")) .. Std.string(line), "--branch", Main.get_branch()[1]}, 4)));
 end
 Main.get_branch = function() 
   local args = ({command = "git", args = ({"rev-parse","--abbrev-ref","HEAD"}), on_stderr = function(args,return_val) 
