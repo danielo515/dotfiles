@@ -35,6 +35,16 @@ end
 local snippets = {
 
   s(
+    { trig = "typedef", dscr = "a more convenient typedef", regTrig = false },
+    fmt(
+      [[ typedef {} {{ 
+        final {};
+        {};
+    }}]],
+      { i(1), i(2), i(0) }
+    )
+  ),
+  s(
     { trig = "pustif", dscr = "static inline function", regTrig = false },
     fmt([[ public static inline function {}({}):{}<T> {{ {} }} ]], { i(1), i(2), i(3), i(0) })
   ),
