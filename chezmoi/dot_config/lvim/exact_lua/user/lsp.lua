@@ -53,9 +53,11 @@ function M.config()
   local graphql_lsp_opts = {
     filetypes = { "graphql", "typescriptreact", "javascriptreact", "typescript" },
   }
+  local cmp_nvim_lsp = require "cmp_nvim_lsp"
   local lspManager = require "lvim.lsp.manager"
   lspManager.setup("graphql", graphql_lsp_opts)
   lspManager.setup("jsonls", {
+    capabilities = cmp_nvim_lsp.default_capabilities(vim.lsp.protocol.make_client_capabilities()),
     settings = {
       json = {
         schemas = vim.list_extend({
