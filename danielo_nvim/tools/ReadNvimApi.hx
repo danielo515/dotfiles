@@ -1,3 +1,4 @@
+import haxe.Json;
 import sys.FileSystem;
 import haxe.io.Path;
 import sys.io.Process;
@@ -28,7 +29,8 @@ function executeCommand(cmd, args) {
 
 typedef FunctionBlock = {
   final docs:Array< String >;
-  final args:Array< String >;
+  var args:Array< String >;
+  final annotations:Array< String >;
   var name:String;
 }
 
@@ -49,8 +51,13 @@ typedef FunctionBlock = {
     return file.split("\n\n").filter(x -> x != "" && x != "---@meta").map(x -> x.split("\n"));
   }
 
+  function parseFunctionArgs(annotations, args) {
+    // TODO: handle annotations
+    return args.split(',');
+  }
+
   function parseFunctionBlock(result:FunctionBlock, lines:Array< String >) {
-    final regexFn = ~/function ([A-Z._0-9]+)\(/i;
+    final regexFn = ~/function ([A-Z._0-9]+)\(([^)]*)/i;
     return switch (lines) {
       case []:
         return result;
@@ -60,11 +67,12 @@ typedef FunctionBlock = {
             result.docs.push(line.substr(3));
             return parseFunctionBlock(result, rest);
           case "---":
-            result.args.push(line.substr(3));
+            result.annotations.push(line.substr(3));
             return parseFunctionBlock(result, rest);
           case "fun":
-            result.name = if (regexFn.match(line)) {
-              regexFn.matched(1);
+            if (regexFn.match(line)) {
+              result.name = regexFn.matched(1);
+              result.args = parseFunctionArgs(result.annotations, regexFn.matched(2));
             } else {
               Sys.println(line);
               result.name;
@@ -84,7 +92,12 @@ typedef FunctionBlock = {
 
   public function parseFn() {
     final fnsBlocks = getFunctionBlocks('vim.fn.lua');
-    return fnsBlocks.map(x -> parseFunctionBlock({docs: [], args: [], name: ""}, x));
+    return fnsBlocks.map(x -> parseFunctionBlock({
+      docs: [],
+      args: [],
+      annotations: [],
+      name: ""
+    }, x));
   }
 }
 
@@ -143,7 +156,7 @@ class ReadNvimApi {
         Sys.println(err);
     };
     final neoDev = new NeoDev(tmpDir);
-    trace(neoDev.parseFn()[0]);
+    trace(Json.stringify(neoDev.parseFn().slice(0, 5), null, "  "));
 
     // final functions = switch (vimApi.rawData.functions) {
     //   case null:

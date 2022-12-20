@@ -1,3 +1,4 @@
+libs.hxml
 --macro nullSafety("vim", Strict)
 --macro nullSafety("plenary", Strict)
 --macro nullSafety("parser", Strict)
@@ -11,11 +12,10 @@
 -D analyzer-local_dce
 -D analyzer-fusion
 -D analyzer-purity_inference
+
 -D lua-vanilla
 -D luajit
 
---library msgpack-haxe:1.15.1
---library tink_lang:0.7.0
 
 -cp src
 -main Main
