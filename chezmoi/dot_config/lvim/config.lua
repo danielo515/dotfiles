@@ -41,6 +41,10 @@ lvim.builtin.bufferline.options.numbers = "buffer_id"
 lvim.builtin.alpha.mode = "custom"
 local alpha_opts = require("user.dashboard").config()
 lvim.builtin.alpha["custom"] = { config = alpha_opts }
+--#region Temporal test
+lvim.builtin.nvimtree.setup.update_cwd = false
+lvim.builtin.nvimtree.setup.update_focused_file.update_cwd = false
+--#endregion
 
 vim.wo.relativenumber = true
 -- This is required for vim-surround, otherwise it is too fast
