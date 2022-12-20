@@ -7,6 +7,7 @@ import sys.io.File;
 import org.msgpack.MsgPack;
 
 using Lambda;
+using StringTools;
 
 typedef ApiData = {
   final functions:Array< {name:String, return_type:String, deprecated_since:Null< Int >} >;
@@ -34,6 +35,11 @@ typedef FunctionBlock = {
   var name:String;
 }
 
+enum Annotation {
+  Return(type:String);
+  Param(name:String);
+}
+
 @:tink class NeoDev {
   final repoPath:String;
 
@@ -51,9 +57,34 @@ typedef FunctionBlock = {
     return file.split("\n\n").filter(x -> x != "" && x != "---@meta").map(x -> x.split("\n"));
   }
 
-  function parseFunctionArgs(annotations, args) {
+  function parseAnnotations(annotations:Array< String >) {
+    var result:Map< String, Annotation > = new Map();
+
+    return annotations.fold((annotation, parsed) -> {
+      var returnRegex = ~/@return (.*)/i;
+      var paramRegex = ~/@param ([^ ]*)(.*)/i;
+
+      if (returnRegex.match(annotation)) {
+        parsed.set("return", Return(returnRegex.matched(1)));
+      } else if (paramRegex.match(annotation)) {
+        // Sys.println(annotation);
+        parsed.set(paramRegex.matched(1), Param(paramRegex.matched(2).trim()));
+      }
+      return parsed;
+    }, result);
+  }
+
+  function parseFunctionArgs(annotations:Array< String >, args) {
     // TODO: handle annotations
-    return args.split(',');
+    final args:Array< String > = args.split(',');
+    final parsedAnnotations = parseAnnotations(annotations);
+    trace(parsedAnnotations);
+    return switch (args) {
+      case [''] | []:
+        [];
+      case args:
+        args.map(x -> x);
+    }
   }
 
   function parseFunctionBlock(result:FunctionBlock, lines:Array< String >) {
@@ -75,10 +106,9 @@ typedef FunctionBlock = {
               result.args = parseFunctionArgs(result.annotations, regexFn.matched(2));
             } else {
               Sys.println(line);
-              result.name;
             };
             return parseFunctionBlock(result, rest);
-          case wtf:
+          case _:
             Sys.println("WTF " + line);
             return parseFunctionBlock(result, rest);
         }
@@ -156,7 +186,11 @@ class ReadNvimApi {
         Sys.println(err);
     };
     final neoDev = new NeoDev(tmpDir);
-    trace(Json.stringify(neoDev.parseFn().slice(0, 5), null, "  "));
+    try {
+      final parsed = neoDev.parseFn().slice(0, 5);
+    }
+    catch (e) {}
+    // trace(Json.stringify(parsed, null, "  "));
 
     // final functions = switch (vimApi.rawData.functions) {
     //   case null:
