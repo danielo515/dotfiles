@@ -35,6 +35,7 @@ local sources = {
   { name = "luasnip", priority_weight = 80 },
   {
     name = "nvim_lsp",
+    max_item_count = 20,
     entry_filter = function(entry, ctx)
       local kind = require("cmp.types").lsp.CompletionItemKind[entry:get_kind()]
       if kind == "Snippet" and ctx.prev_context.filetype == "java" then
@@ -183,6 +184,14 @@ lvim.builtin.cmp.mapping["<Tab>"] = cmp.mapping(function(fallback)
     fallback()
   end
 end, { "i", "s" })
+
+lvim.builtin.cmp.mapping["<C-s>"] = cmp.mapping.complete {
+  config = {
+    sources = {
+      { name = "luasnip" },
+    },
+  },
+}
 
 if not cmdlineOk then
   vim.notify("Could not require cmp to setup cmdline", vim.log.levels.ERROR, { title = "Danielo" })
