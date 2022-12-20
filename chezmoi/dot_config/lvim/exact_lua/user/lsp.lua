@@ -56,6 +56,10 @@ function M.config()
   local cmp_nvim_lsp = require "cmp_nvim_lsp"
   local lspManager = require "lvim.lsp.manager"
   lspManager.setup("graphql", graphql_lsp_opts)
+  lspManager.setup(
+    "tailwindcss",
+    { filetypes = { "rescript", "reason", "typescriptreact", "javascript", "javascriptreact" } }
+  )
   lspManager.setup("jsonls", {
     capabilities = cmp_nvim_lsp.default_capabilities(vim.lsp.protocol.make_client_capabilities()),
     settings = {

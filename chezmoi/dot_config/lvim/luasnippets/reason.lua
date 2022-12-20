@@ -103,6 +103,7 @@ local normal_ones = {
     )
   ),
   s({ trig = "instring", dscr = "interpolated string", regTrig = false }, fmt("{{j|{}|j}}", i(0))),
+  s({ trig = "cn", dscr = "className", regTrig = false }, fmt('className="{}"', i(0))),
   s({ trig = "mperr", dscr = "Map error of result", regTrig = false }, fmt("PromiseResult.mapError(~f={})", i(0))),
   s(
     { trig = "sm", dscr = "switch match", regTrig = false },
