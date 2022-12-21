@@ -97,6 +97,9 @@ local whichConfig = {
   -- Contextual section. This will be filled from filetype functions
   x = {
     name = "contextual",
+    u = { "gUiw", "Make word uppercase" },
+    l = { "guiw", "Make word lowercase" },
+    p = { "ysiw(", "Surryound word with parens" },
   },
   ["?"] = { "<cmd>Cheat<CR>", " Cheat.sh" },
 }
