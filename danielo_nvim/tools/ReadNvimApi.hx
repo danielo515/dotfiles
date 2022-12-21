@@ -28,17 +28,26 @@ function executeCommand(cmd, args) {
   }
 }
 
+function prettyPrint(?msg, data:Dynamic) {
+  Sys.println(msg);
+  Sys.println(Json.stringify(data, null, "  "));
+}
+
 typedef FunctionBlock = {
   final docs:Array< String >;
-  var args:Array< String >;
+  var parameters:Array< Array< String > >;
+  var return_type:String;
   final annotations:Array< String >;
   var name:String;
 }
 
 enum Annotation {
   Return(type:String);
-  Param(name:String);
+  Param(name:String, type:String);
+  Optional(name:String, type:String);
 }
+
+typedef AnnotationMap = Map< String, Annotation >;
 
 @:tink class NeoDev {
   final repoPath:String;
@@ -57,33 +66,57 @@ enum Annotation {
     return file.split("\n\n").filter(x -> x != "" && x != "---@meta").map(x -> x.split("\n"));
   }
 
-  function parseAnnotations(annotations:Array< String >) {
-    var result:Map< String, Annotation > = new Map();
+  function formatTypeStr(type:String) {
+    return switch (type) {
+      case 'any[]':
+        'Array<Dyamic>';
+      case 'number[]':
+        'Array<Integer>';
+      case '$kind[]':
+        'Array<$kind>';
+      case 'any': 'Dynamic';
+      case 'number': 'Integer';
+      case value:
+        value.charAt(0).toUpperCase() + value.substr(1);
+    }
+  }
 
-    return annotations.fold((annotation, parsed) -> {
-      var returnRegex = ~/@return (.*)/i;
-      var paramRegex = ~/@param ([^ ]*)(.*)/i;
+  function parseAnnotations(annotations:Array< String >):AnnotationMap {
+    var result = new Map();
 
-      if (returnRegex.match(annotation)) {
-        parsed.set("return", Return(returnRegex.matched(1)));
-      } else if (paramRegex.match(annotation)) {
-        // Sys.println(annotation);
-        parsed.set(paramRegex.matched(1), Param(paramRegex.matched(2).trim()));
+    return annotations.fold((annotation, parsed:AnnotationMap) -> {
+      final returnRegex = ~/@return (.*)/i;
+      final paramRegex = ~/@param ([^ ]*)(.*)/i;
+
+      switch (annotation) {
+        case returnRegex.match(_) => true:
+          parsed.set("return", Return(formatTypeStr(returnRegex.matched(1))));
+        case paramRegex.match(_) => true:
+          final paramName = paramRegex.matched(1);
+          final paramType = formatTypeStr(paramRegex.matched(2).trim());
+          switch (paramName) {
+            case '$name?':
+              parsed.set(name, Optional(name, paramType));
+            case name: parsed.set(name, Param(name, paramType));
+          }
+        case _: "";
       }
+
       return parsed;
     }, result);
   }
 
-  function parseFunctionArgs(annotations:Array< String >, args) {
-    // TODO: handle annotations
-    final args:Array< String > = args.split(',');
-    final parsedAnnotations = parseAnnotations(annotations);
-    trace(parsedAnnotations);
+  function parseFunctionArgs(annotations:AnnotationMap, args) {
+    final args:Array< String > = args.split(',').map(StringTools.trim);
     return switch (args) {
       case [''] | []:
         [];
       case args:
-        args.map(x -> x);
+        args.map(x -> switch (annotations.get(x)) {
+          case Optional(name, type): ['Null<$type>', name];
+          case Param(name, type): [type, name];
+          case _: ['Dynamic', x];
+        });
     }
   }
 
@@ -102,8 +135,13 @@ enum Annotation {
             return parseFunctionBlock(result, rest);
           case "fun":
             if (regexFn.match(line)) {
+              final parsedAnnotations = parseAnnotations(result.annotations);
               result.name = regexFn.matched(1);
-              result.args = parseFunctionArgs(result.annotations, regexFn.matched(2));
+              result.parameters = parseFunctionArgs(parsedAnnotations, regexFn.matched(2));
+              result.return_type = switch (parsedAnnotations.get("return")) {
+                case Return(type): type;
+                case _: 'void';
+              }
             } else {
               Sys.println(line);
             };
@@ -124,9 +162,10 @@ enum Annotation {
     final fnsBlocks = getFunctionBlocks('vim.fn.lua');
     return fnsBlocks.map(x -> parseFunctionBlock({
       docs: [],
-      args: [],
+      parameters: [],
       annotations: [],
-      name: ""
+      name: "",
+      return_type: "void"
     }, x));
   }
 }
@@ -187,10 +226,13 @@ class ReadNvimApi {
     };
     final neoDev = new NeoDev(tmpDir);
     try {
-      final parsed = neoDev.parseFn().slice(0, 5);
+      final parsed = neoDev.parseFn().slice(0, 15);
+      trace(Json.stringify(parsed, null, "  "));
     }
-    catch (e) {}
-    // trace(Json.stringify(parsed, null, "  "));
+    catch (e) {
+      Sys.println("Error during parsing, proceeding to cleanup");
+      Sys.println(e);
+    }
 
     // final functions = switch (vimApi.rawData.functions) {
     //   case null:
