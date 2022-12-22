@@ -130,6 +130,7 @@ typedef AnnotationMap = Map< String, Annotation >;
 
   function parseFunctionBlock(result:FunctionBlock, lines:Array< String >) {
     final regexFn = ~/function ([A-Z._0-9]+)\(([^)]*)/i;
+    final weirdFn = ~/\["([^"]*)"\] = function ?\(([^)]*)/i;
     return switch (lines) {
       case []:
         return result;
@@ -157,7 +158,18 @@ typedef AnnotationMap = Map< String, Annotation >;
             };
             return parseFunctionBlock(result, rest);
           case _:
-            Sys.println("WTF " + line);
+            switch (line) {
+              case weirdFn.match(_) => true:
+                final parsedAnnotations = parseAnnotations(result.annotations);
+                result.name = weirdFn.matched(1);
+                result.parameters = parseFunctionArgs(parsedAnnotations, weirdFn.matched(2));
+                result.return_type = switch (parsedAnnotations.get("return")) {
+                  case Return(type): type;
+                  case _: 'Void';
+                }
+              case _:
+                Sys.println("WTF " + line);
+            }
             return parseFunctionBlock(result, rest);
         }
       case [last]:
