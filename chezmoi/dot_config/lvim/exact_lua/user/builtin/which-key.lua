@@ -100,6 +100,7 @@ local whichConfig = {
     u = { "gUiw", "Make word uppercase" },
     l = { "guiw", "Make word lowercase" },
     p = { "ysiw(", "Surryound word with parens" },
+    r = { "viwP", "Replace word with clipboard content" },
   },
   ["?"] = { "<cmd>Cheat<CR>", " Cheat.sh" },
 }
