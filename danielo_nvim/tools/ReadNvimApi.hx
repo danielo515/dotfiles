@@ -13,6 +13,10 @@ typedef ApiData = {
   final functions:Array< {name:String, return_type:String, deprecated_since:Null< Int >} >;
 }
 
+function capitalize(value:String):String {
+  return value.charAt(0).toUpperCase() + value.substr(1);
+}
+
 enum Result< T > {
   Ok(result:T);
   Error(message:String);
@@ -39,6 +43,7 @@ typedef FunctionBlock = {
   var return_type:String;
   final annotations:Array< String >;
   var name:String;
+  var fullyQualified_name:String;
 }
 
 enum Annotation {
@@ -69,15 +74,16 @@ typedef AnnotationMap = Map< String, Annotation >;
   function formatTypeStr(type:String) {
     return switch (type) {
       case 'any[]':
-        'Array<Dyamic>';
+        'Array<Dynamic>';
       case 'number[]':
         'Array<Integer>';
       case '$kind[]':
         'Array<$kind>';
       case 'any': 'Dynamic';
       case 'number': 'Integer';
-      case value:
-        value.charAt(0).toUpperCase() + value.substr(1);
+      case 'table<string, any>': 'Table<String, Dynamic>';
+      case 'table<string, $b>': 'Table<String, ${capitalize(b)}>';
+      case value: capitalize(value);
     }
   }
 
@@ -136,7 +142,9 @@ typedef AnnotationMap = Map< String, Annotation >;
           case "fun":
             if (regexFn.match(line)) {
               final parsedAnnotations = parseAnnotations(result.annotations);
-              result.name = regexFn.matched(1);
+              final fullyQualifiedName = regexFn.matched(1);
+              result.name = fullyQualifiedName.split(".").pop();
+              result.fullyQualified_name = fullyQualifiedName;
               result.parameters = parseFunctionArgs(parsedAnnotations, regexFn.matched(2));
               result.return_type = switch (parsedAnnotations.get("return")) {
                 case Return(type): type;
@@ -165,6 +173,7 @@ typedef AnnotationMap = Map< String, Annotation >;
       parameters: [],
       annotations: [],
       name: "",
+      fullyQualified_name: "",
       return_type: "void"
     }, x));
   }
@@ -194,6 +203,12 @@ class ReadNvimApi {
 
   static function getTmpDir(path) {
     return executeCommand("mktemp", ["-d", "-t", path]);
+  }
+
+  private static function writeFile(outputPath:String, data:Dynamic) {
+    final handle = File.write(outputPath, false);
+    handle.writeString(Json.stringify(data, null, "  "));
+    handle.close();
   }
 
   function cleanup(tmpdir) {
@@ -226,8 +241,8 @@ class ReadNvimApi {
     };
     final neoDev = new NeoDev(tmpDir);
     try {
-      final parsed = neoDev.parseFn().slice(0, 15);
-      trace(Json.stringify(parsed, null, "  "));
+      final parsed = neoDev.parseFn();
+      writeFile('./res/fn.json', parsed);
     }
     catch (e) {
       Sys.println("Error during parsing, proceeding to cleanup");
