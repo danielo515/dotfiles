@@ -22,11 +22,11 @@ enum Result< T > {
   Error(message:String);
 }
 
-function executeCommand(cmd, args) {
+function executeCommand(cmd, args, readStder = false):Result< String > {
   final res = new Process(cmd, args);
   return switch (res.exitCode(true)) {
     case 0:
-      Ok(res.stdout.readAll().toString());
+      Ok(!readStder ? res.stdout.readAll().toString() : res.stderr.readAll().toString());
     case _:
       Error(res.stderr.readLine());
   }
@@ -203,6 +203,7 @@ class ReadNvimApi {
     final bytes = readMsgpack();
     this.outputPath = outputPath;
     rawData = MsgPack.decode(bytes);
+    trace(getNvimRuntime());
   }
 
   public static function readMsgpack() {
@@ -217,6 +218,18 @@ class ReadNvimApi {
 
   static function getTmpDir(path) {
     return executeCommand("mktemp", ["-d", "-t", path]);
+  }
+
+  public static function getNvimRuntime() {
+    return switch (executeCommand("nvim",
+      ["--clean", "--headless", "--cmd", "echo $VIMRUNTIME | qa "],
+      true)) {
+      case Error(error):
+        Sys.println("Failed to get VIMRUNTIME");
+        Sys.println(error);
+        Error(error);
+      case ok: ok;
+    }
   }
 
   private static function writeFile(outputPath:String, data:Dynamic) {
