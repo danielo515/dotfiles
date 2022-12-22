@@ -83,6 +83,7 @@ extern class Api {
 }
 
 @:native("vim.fn")
+@:build(ApiGen.attachApi("fn"))
 extern class Fn {
   static function expand(string:ExpandString):String;
   static function fnamemodify(file:String, string:PathModifier):String;
