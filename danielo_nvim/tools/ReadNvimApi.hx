@@ -181,7 +181,7 @@ typedef AnnotationMap = Map< String, Annotation >;
   }
 
   public function parseFn() {
-    final fnsBlocks = getFunctionBlocks('vim.fn.lua');
+    final fnsBlocks = getFunctionBlocks('vim.fn.lua').concat(getFunctionBlocks('vim.fn.1.lua'));
     return fnsBlocks.map(x -> parseFunctionBlock({
       docs: [],
       parameters: [],
