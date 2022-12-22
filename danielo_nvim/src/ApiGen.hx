@@ -115,11 +115,12 @@ typedef FunctionDef = {
 
 typedef FunctionWithDocs = {
   > FunctionDef,
+  final parameters:Array< ParamDef >;
   final docs:Array< String >;
 }
 
 // Thanks again @rudy
-function test(typeString:String) {
+function parseTypeFromStr(typeString:String) {
   trace("typeString", typeString);
   return switch (haxe.macro.Context.parse('(null:$typeString)', (macro null).pos).expr) {
     case EParenthesis({expr: ECheckType(_, ct)}):
@@ -131,9 +132,11 @@ function test(typeString:String) {
 
 macro function attachApi(namespace:String):Array< Field > {
   var fields = Context.getBuildFields();
-  var specs = Json.parse(File.getContent('res/$namespace.json'));
+  final existingFields = fields.map(f -> f.name);
+  var specs:Array< FunctionWithDocs > = Json.parse(File.getContent('res/$namespace.json'));
+  specs = specs.filter(x -> !existingFields.contains(x.name) && x.name != "");
 
-  final newFields:Array< Field > = [for (f in(specs.slice(0, 4) : Array< FunctionWithDocs >)) {
+  final newFields:Array< Field > = [for (f in(specs)) {
     {
       name: f.name,
       doc: f.docs.join("\n"),
@@ -142,9 +145,9 @@ macro function attachApi(namespace:String):Array< Field > {
       kind: FFun({
         args: f.parameters.map(p -> ({
           name: p.name,
-          type: test(p.type)
+          type: parseTypeFromStr(p.type)
         } : FunctionArg)),
-        ret: test(f.return_type)
+        ret: parseTypeFromStr(f.return_type)
       }),
       pos: Context.currentPos()
     }

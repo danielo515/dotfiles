@@ -76,13 +76,15 @@ typedef AnnotationMap = Map< String, Annotation >;
       case 'any[]':
         'Array<Dynamic>';
       case 'number[]':
-        'Array<Integer>';
+        'Array<Int>';
       case '$kind[]':
         'Array<$kind>';
       case 'any': 'Dynamic';
-      case 'number': 'Integer';
+      case 'number': 'Int';
       case 'table<string, any>': 'Table<String, Dynamic>';
       case 'table<string, $b>': 'Table<String, ${capitalize(b)}>';
+      case 'fun()': 'Function';
+      case 'boolean': 'Bool';
       case value: capitalize(value);
     }
   }
@@ -148,7 +150,7 @@ typedef AnnotationMap = Map< String, Annotation >;
               result.parameters = parseFunctionArgs(parsedAnnotations, regexFn.matched(2));
               result.return_type = switch (parsedAnnotations.get("return")) {
                 case Return(type): type;
-                case _: 'void';
+                case _: 'Void';
               }
             } else {
               Sys.println(line);
@@ -174,7 +176,7 @@ typedef AnnotationMap = Map< String, Annotation >;
       annotations: [],
       name: "",
       fullyQualified_name: "",
-      return_type: "void"
+      return_type: "Void"
     }, x));
   }
 }

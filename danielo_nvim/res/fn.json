@@ -122,7 +122,7 @@
       "Can also be used as a |method|: >",
       "  :let flag = bits->and(0x80)"
     ],
-    "return_type": "void"
+    "return_type": "Void"
   },
   {
     "annotations": [
@@ -150,7 +150,7 @@
     "name": "append",
     "parameters": [
       [
-        "Integer",
+        "Int",
         "lnum"
       ],
       [
@@ -176,7 +176,7 @@
       "Can also be used as a |method| after a List: >",
       "  mylist->append(lnum)"
     ],
-    "return_type": "Integer"
+    "return_type": "Int"
   },
   {
     "annotations": [
@@ -192,7 +192,7 @@
         "buf"
       ],
       [
-        "Integer",
+        "Int",
         "lnum"
       ],
       [
@@ -225,7 +225,7 @@
       "  mylist->appendbufline(buf, lnum)",
       "```"
     ],
-    "return_type": "Integer"
+    "return_type": "Int"
   },
   {
     "annotations": [
@@ -250,7 +250,7 @@
       "list is used: either the window number or the window ID.",
       "Returns -1 if the {winid} argument is invalid."
     ],
-    "return_type": "Integer"
+    "return_type": "Int"
   },
   {
     "annotations": [
@@ -263,7 +263,7 @@
       "The result is the current index in the argument list.  0 is",
       "  the first file.  argc() - 1 is the last one.  See |arglist|."
     ],
-    "return_type": "Integer"
+    "return_type": "Int"
   },
   {
     "annotations": [
@@ -278,7 +278,7 @@
         "winnr"
       ],
       [
-        "Null<Integer>",
+        "Null<Int>",
         "tabnr"
       ]
     ],
@@ -295,7 +295,7 @@
       "page.",
       "{winnr} can be the window number or the |window-ID|."
     ],
-    "return_type": "Integer"
+    "return_type": "Int"
   },
   {
     "annotations": [
@@ -306,7 +306,7 @@
     "name": "argv",
     "parameters": [
       [
-        "Null<Integer>",
+        "Null<Int>",
         "nr"
       ],
       [
@@ -387,7 +387,7 @@
     "docs": [
       "Number  assert {cmd} causes a beep"
     ],
-    "return_type": "Integer"
+    "return_type": "Int"
   },
   {
     "annotations": [
@@ -413,7 +413,7 @@
     "docs": [
       "Number  assert {exp} is equal to {act}"
     ],
-    "return_type": "Integer"
+    "return_type": "Int"
   },
   {
     "annotations": [
@@ -439,7 +439,7 @@
     "docs": [
       "Number  assert file contents are equal"
     ],
-    "return_type": "Integer"
+    "return_type": "Int"
   },
   {
     "annotations": [
@@ -461,7 +461,7 @@
     "docs": [
       "Number  assert {error} is in v:exception"
     ],
-    "return_type": "Integer"
+    "return_type": "Int"
   },
   {
     "annotations": [
@@ -483,7 +483,7 @@
     "docs": [
       "Number  assert {cmd} fails"
     ],
-    "return_type": "Integer"
+    "return_type": "Int"
   },
   {
     "annotations": [
@@ -505,7 +505,7 @@
     "docs": [
       "Number  assert {actual} is false"
     ],
-    "return_type": "Integer"
+    "return_type": "Int"
   },
   {
     "annotations": [
@@ -535,7 +535,7 @@
     "docs": [
       "Number  assert {actual} is inside the range"
     ],
-    "return_type": "Integer"
+    "return_type": "Int"
   },
   {
     "annotations": [
@@ -562,7 +562,7 @@
     "docs": [
       "Number  assert {pat} matches {text}"
     ],
-    "return_type": "Integer"
+    "return_type": "Int"
   },
   {
     "annotations": [
@@ -579,7 +579,7 @@
     "docs": [
       "Number  assert {cmd} does not cause a beep"
     ],
-    "return_type": "Integer"
+    "return_type": "Int"
   },
   {
     "annotations": [
@@ -605,7 +605,7 @@
     "docs": [
       "Number  assert {exp} is not equal {act}"
     ],
-    "return_type": "Integer"
+    "return_type": "Int"
   },
   {
     "annotations": [
@@ -632,7 +632,7 @@
     "docs": [
       "Number  assert {pat} not matches {text}"
     ],
-    "return_type": "Integer"
+    "return_type": "Int"
   },
   {
     "annotations": [
@@ -649,7 +649,7 @@
     "docs": [
       "Number  report a test failure"
     ],
-    "return_type": "Integer"
+    "return_type": "Int"
   },
   {
     "annotations": [
@@ -671,7 +671,7 @@
     "docs": [
       "Number  assert {actual} is true"
     ],
-    "return_type": "Integer"
+    "return_type": "Int"
   },
   {
     "annotations": [
@@ -841,7 +841,7 @@
       "  let bufnr = 'somename'->bufadd()",
       "```"
     ],
-    "return_type": "Integer"
+    "return_type": "Int"
   },
   {
     "annotations": [
@@ -883,7 +883,7 @@
       "  let exists = 'somename'->bufexists()",
       "```"
     ],
-    "return_type": "Integer"
+    "return_type": "Int"
   },
   {
     "annotations": [
@@ -908,7 +908,7 @@
       "  let listed = 'somename'->buflisted()",
       "```"
     ],
-    "return_type": "Integer"
+    "return_type": "Int"
   },
   {
     "annotations": [
@@ -938,7 +938,7 @@
       "  eval 'somename'->bufload()",
       "```"
     ],
-    "return_type": "Integer"
+    "return_type": "Int"
   },
   {
     "annotations": [
@@ -963,7 +963,7 @@
       "  let loaded = 'somename'->bufloaded()",
       "```"
     ],
-    "return_type": "Integer"
+    "return_type": "Int"
   },
   {
     "annotations": [
@@ -1056,7 +1056,7 @@
       "  echo bufref->bufnr()",
       "```"
     ],
-    "return_type": "Integer"
+    "return_type": "Int"
   },
   {
     "annotations": [
@@ -1087,7 +1087,7 @@
       "    FindBuffer()->bufwinid()",
       "```"
     ],
-    "return_type": "Integer"
+    "return_type": "Int"
   },
   {
     "annotations": [
@@ -1120,7 +1120,7 @@
       "    FindBuffer()->bufwinnr()",
       "```"
     ],
-    "return_type": "Integer"
+    "return_type": "Int"
   },
   {
     "annotations": [
@@ -1149,7 +1149,7 @@
       "  GetOffset()->byte2line()",
       "```"
     ],
-    "return_type": "Integer"
+    "return_type": "Int"
   },
   {
     "annotations": [
@@ -1163,7 +1163,7 @@
         "expr"
       ],
       [
-        "Integer",
+        "Int",
         "nr"
       ]
     ],
@@ -1199,7 +1199,7 @@
       "  GetName()->byteidx(idx)",
       "```"
     ],
-    "return_type": "Integer"
+    "return_type": "Int"
   },
   {
     "annotations": [
@@ -1213,7 +1213,7 @@
         "expr"
       ],
       [
-        "Integer",
+        "Int",
         "nr"
       ]
     ],
@@ -1236,7 +1236,7 @@
       "  GetName()->byteidxcomp(idx)",
       "```"
     ],
-    "return_type": "Integer"
+    "return_type": "Int"
   },
   {
     "annotations": [
@@ -1246,7 +1246,7 @@
     "name": "call",
     "parameters": [
       [
-        "Fun()",
+        "Function",
         "func"
       ],
       [
@@ -1273,7 +1273,7 @@
       "  GetFunc()->call([arg, arg], dict)",
       "```"
     ],
-    "return_type": "void"
+    "return_type": "Void"
   },
   {
     "annotations": [
@@ -1339,7 +1339,7 @@
       "For a socket, there is only one stream, and {stream} should be",
       "omitted."
     ],
-    "return_type": "Integer"
+    "return_type": "Int"
   },
   {
     "annotations": [
@@ -1357,7 +1357,7 @@
       "one less than the number of the undone change.",
       "Returns 0 if the undo list is empty."
     ],
-    "return_type": "Integer"
+    "return_type": "Int"
   },
   {
     "annotations": [
@@ -1395,7 +1395,7 @@
       "was created with `\"rpc\":v:true` then the channel expects RPC",
       "messages, use |rpcnotify()| and |rpcrequest()| instead."
     ],
-    "return_type": "Integer"
+    "return_type": "Int"
   },
   {
     "annotations": [
@@ -1437,7 +1437,7 @@
       "  GetChar()->char2nr()",
       "```"
     ],
-    "return_type": "Integer"
+    "return_type": "Int"
   },
   {
     "annotations": [
@@ -1463,7 +1463,7 @@
       "The class is used in patterns and word motions.",
       "Returns 0 if {string} is not a |String|."
     ],
-    "return_type": "Integer"
+    "return_type": "Int"
   },
   {
     "annotations": [
@@ -1492,7 +1492,7 @@
       "    GetPos()->col()",
       "<"
     ],
-    "return_type": "Integer"
+    "return_type": "Int"
   },
   {
     "annotations": [
@@ -1544,7 +1544,7 @@
       "  GetName()->charidx(idx)",
       "```"
     ],
-    "return_type": "Integer"
+    "return_type": "Int"
   },
   {
     "annotations": [
@@ -1596,7 +1596,7 @@
     "name": "cindent",
     "parameters": [
       [
-        "Integer",
+        "Int",
         "lnum"
       ]
     ],
@@ -1614,7 +1614,7 @@
       "  GetLnum()->cindent()",
       "```"
     ],
-    "return_type": "Integer"
+    "return_type": "Int"
   },
   {
     "annotations": [
@@ -1639,7 +1639,7 @@
       "  GetWin()->clearmatches()",
       "```"
     ],
-    "return_type": "void"
+    "return_type": "Void"
   },
   {
     "annotations": [
@@ -1698,7 +1698,7 @@
       "    GetPos()->col()",
       "<"
     ],
-    "return_type": "Integer"
+    "return_type": "Int"
   },
   {
     "annotations": [],
@@ -1752,7 +1752,7 @@
       "    GetMatches()->complete(col('.'))",
       "```"
     ],
-    "return_type": "void"
+    "return_type": "Void"
   },
   {
     "annotations": [
@@ -1780,7 +1780,7 @@
       "  GetMoreMatches()->complete_add()",
       "```"
     ],
-    "return_type": "Integer"
+    "return_type": "Int"
   },
   {
     "annotations": [
@@ -1797,7 +1797,7 @@
       "Only to be used by the function specified with the",
       "'completefunc' option."
     ],
-    "return_type": "Integer"
+    "return_type": "Int"
   },
   {
     "annotations": [
@@ -1968,7 +1968,7 @@
       "  BuildMessage()->confirm(\"&Yes\\n&No\")",
       "```"
     ],
-    "return_type": "Integer"
+    "return_type": "Int"
   },
   {
     "annotations": [],
@@ -1994,7 +1994,7 @@
       "    mylist->copy()",
       "```"
     ],
-    "return_type": "void"
+    "return_type": "Void"
   },
   {
     "annotations": [
@@ -2080,7 +2080,7 @@
         "ic"
       ],
       [
-        "Null<Integer>",
+        "Null<Int>",
         "start"
       ]
     ],
@@ -2103,7 +2103,7 @@
       "  mylist->count(val)",
       "```"
     ],
-    "return_type": "Integer"
+    "return_type": "Int"
   },
   {
     "annotations": [
@@ -2170,7 +2170,7 @@
       "  cscope_connection(4, \"cscope.out\", \"/usr/local\")  1",
       "```"
     ],
-    "return_type": "Integer"
+    "return_type": "Int"
   },
   {
     "annotations": [
@@ -2180,7 +2180,7 @@
     "name": "ctxget",
     "parameters": [
       [
-        "Null<Integer>",
+        "Null<Int>",
         "index"
       ]
     ],
@@ -2201,7 +2201,7 @@
       "Pops and restores the |context| at the top of the",
       "|context-stack|."
     ],
-    "return_type": "void"
+    "return_type": "Void"
   },
   {
     "annotations": [
@@ -2222,7 +2222,7 @@
       "which |context-types| to include in the pushed context.",
       "Otherwise, all context types are included."
     ],
-    "return_type": "void"
+    "return_type": "Void"
   },
   {
     "annotations": [
@@ -2235,7 +2235,7 @@
         "context"
       ],
       [
-        "Null<Integer>",
+        "Null<Int>",
         "index"
       ]
     ],
@@ -2246,7 +2246,7 @@
       "{context} is a Dictionary with context data (|context-dict|).",
       "If {index} is not given, it is assumed to be 0 (i.e.: top)."
     ],
-    "return_type": "void"
+    "return_type": "Void"
   },
   {
     "annotations": [
@@ -2258,7 +2258,7 @@
     "docs": [
       "Returns the size of the |context-stack|."
     ],
-    "return_type": "Integer"
+    "return_type": "Int"
   },
   {
     "annotations": [
@@ -2309,7 +2309,7 @@
       "  GetCursorPos()->cursor()",
       "```"
     ],
-    "return_type": "Integer"
+    "return_type": "Int"
   },
   {
     "annotations": [
@@ -2337,7 +2337,7 @@
       "  GetPid()->debugbreak()",
       "```"
     ],
-    "return_type": "Integer"
+    "return_type": "Int"
   },
   {
     "annotations": [
@@ -2380,7 +2380,7 @@
       "  GetObject()->deepcopy()",
       "```"
     ],
-    "return_type": "void"
+    "return_type": "Void"
   },
   {
     "annotations": [
@@ -2423,7 +2423,7 @@
       "  GetName()->delete()",
       "```"
     ],
-    "return_type": "Integer"
+    "return_type": "Int"
   },
   {
     "annotations": [
@@ -2466,7 +2466,7 @@
       "  GetBuffer()->deletebufline(1)",
       "```"
     ],
-    "return_type": "Integer"
+    "return_type": "Int"
   },
   {
     "annotations": [
@@ -2484,7 +2484,7 @@
         "pattern"
       ],
       [
-        "Fun()",
+        "Function",
         "callback"
       ]
     ],
@@ -2530,7 +2530,7 @@
       "This function can be used by plugins to implement options with",
       "validation and parsing logic."
     ],
-    "return_type": "void"
+    "return_type": "Void"
   },
   {
     "annotations": [
@@ -2548,7 +2548,7 @@
         "pattern"
       ],
       [
-        "Fun()",
+        "Function",
         "callback"
       ]
     ],
@@ -2558,7 +2558,7 @@
       "arguments must match the ones passed to |dictwatcheradd()| in",
       "order for the watcher to be successfully deleted."
     ],
-    "return_type": "void"
+    "return_type": "Void"
   },
   {
     "annotations": [
@@ -2579,7 +2579,7 @@
       "  editing another buffer to set 'filetype' and load a syntax",
       "  file."
     ],
-    "return_type": "Integer"
+    "return_type": "Int"
   },
   {
     "annotations": [
@@ -2589,7 +2589,7 @@
     "name": "diff_filler",
     "parameters": [
       [
-        "Integer",
+        "Int",
         "lnum"
       ]
     ],
@@ -2608,7 +2608,7 @@
       "  GetLnum()->diff_filler()",
       "```"
     ],
-    "return_type": "Integer"
+    "return_type": "Int"
   },
   {
     "annotations": [
@@ -2619,11 +2619,11 @@
     "name": "diff_hlID",
     "parameters": [
       [
-        "Integer",
+        "Int",
         "lnum"
       ],
       [
-        "Integer",
+        "Int",
         "col"
       ]
     ],
@@ -2644,7 +2644,7 @@
       "  GetLnum()->diff_hlID(col)",
       "```"
     ],
-    "return_type": "Integer"
+    "return_type": "Int"
   },
   {
     "annotations": [
@@ -2756,7 +2756,7 @@
       "  GetString()->digraph_set('あ')",
       "```"
     ],
-    "return_type": "Boolean"
+    "return_type": "Bool"
   },
   {
     "annotations": [
@@ -2793,7 +2793,7 @@
       "    GetList()->digraph_setlist()",
       "```"
     ],
-    "return_type": "Boolean"
+    "return_type": "Bool"
   },
   {
     "annotations": [
@@ -2821,7 +2821,7 @@
       "  mylist->empty()",
       "```"
     ],
-    "return_type": "Integer"
+    "return_type": "Int"
   },
   {
     "annotations": [
@@ -2902,7 +2902,7 @@
       "    argv->join()->eval()",
       "```"
     ],
-    "return_type": "void"
+    "return_type": "Void"
   },
   {
     "annotations": [
@@ -2917,7 +2917,7 @@
       "e.g., when dropping a file on Vim.  This means interactive",
       "commands cannot be used.  Otherwise zero is returned."
     ],
-    "return_type": "Integer"
+    "return_type": "Int"
   },
   {
     "annotations": [
@@ -2959,7 +2959,7 @@
       "  GetCommand()->executable()",
       "```"
     ],
-    "return_type": "Integer"
+    "return_type": "Int"
   },
   {
     "annotations": [
@@ -3154,7 +3154,7 @@
       "    Varname()->exists()",
       "```"
     ],
-    "return_type": "Integer"
+    "return_type": "Int"
   },
   {
     "annotations": [
@@ -3202,7 +3202,7 @@
         "string"
       ],
       [
-        "Null<Boolean>",
+        "Null<Bool>",
         "nosuf"
       ]
     ],
@@ -3480,7 +3480,7 @@
       "  GetInput()->feedkeys()",
       "```"
     ],
-    "return_type": "Integer"
+    "return_type": "Int"
   },
   {
     "annotations": [
@@ -3512,7 +3512,7 @@
       "Can also be used as a |method|: >",
       "  GetName()->filereadable()"
     ],
-    "return_type": "Integer"
+    "return_type": "Int"
   },
   {
     "annotations": [
@@ -3537,7 +3537,7 @@
       "  GetName()->filewritable()",
       "```"
     ],
-    "return_type": "Integer"
+    "return_type": "Int"
   },
   {
     "annotations": [
@@ -3798,7 +3798,7 @@
       "  Compute()->float2nr()",
       "```"
     ],
-    "return_type": "Integer"
+    "return_type": "Int"
   },
   {
     "annotations": [
@@ -3965,7 +3965,7 @@
     "name": "foldclosed",
     "parameters": [
       [
-        "Integer",
+        "Int",
         "lnum"
       ]
     ],
@@ -3982,7 +3982,7 @@
       "  GetLnum()->foldclosed()",
       "```"
     ],
-    "return_type": "Integer"
+    "return_type": "Int"
   },
   {
     "annotations": [
@@ -3992,7 +3992,7 @@
     "name": "foldclosedend",
     "parameters": [
       [
-        "Integer",
+        "Int",
         "lnum"
       ]
     ],
@@ -4009,7 +4009,7 @@
       "  GetLnum()->foldclosedend()",
       "```"
     ],
-    "return_type": "Integer"
+    "return_type": "Int"
   },
   {
     "annotations": [
@@ -4019,7 +4019,7 @@
     "name": "foldlevel",
     "parameters": [
       [
-        "Integer",
+        "Int",
         "lnum"
       ]
     ],
@@ -4041,7 +4041,7 @@
       "  GetLnum()->foldlevel()",
       "```"
     ],
-    "return_type": "Integer"
+    "return_type": "Int"
   },
   {
     "annotations": [
@@ -4079,7 +4079,7 @@
     "name": "foldtextresult",
     "parameters": [
       [
-        "Integer",
+        "Int",
         "lnum"
       ]
     ],
@@ -4170,7 +4170,7 @@
       "  GetFuncname()->funcref([arg])",
       "```"
     ],
-    "return_type": "Fun()"
+    "return_type": "Function"
   },
   {
     "annotations": [
@@ -4276,7 +4276,7 @@
       "  GetFuncname()->function([arg])",
       "```"
     ],
-    "return_type": "void"
+    "return_type": "Void"
   },
   {
     "annotations": [
@@ -4310,7 +4310,7 @@
       "it's safe to perform.  This is when waiting for the user to",
       "type a character."
     ],
-    "return_type": "void"
+    "return_type": "Void"
   },
   {
     "annotations": [
@@ -4319,7 +4319,7 @@
     "name": "get",
     "parameters": [
       [
-        "Fun()",
+        "Function",
         "func"
       ],
       [
@@ -4337,7 +4337,7 @@
       "  \"args\"  The list with arguments",
       "Returns zero on error."
     ],
-    "return_type": "void"
+    "return_type": "Void"
   },
   {
     "annotations": [
@@ -4441,11 +4441,11 @@
         "buf"
       ],
       [
-        "Integer",
+        "Int",
         "lnum"
       ],
       [
-        "Null<Integer>",
+        "Null<Int>",
         "end_"
       ]
     ],
@@ -4529,7 +4529,7 @@
       "  GetBufnr()->getbufvar(varname)",
       "<"
     ],
-    "return_type": "void"
+    "return_type": "Void"
   },
   {
     "annotations": [
@@ -4649,7 +4649,7 @@
       "  :endfunction",
       "```"
     ],
-    "return_type": "Integer"
+    "return_type": "Int"
   },
   {
     "annotations": [
@@ -4674,7 +4674,7 @@
       "character itself are obtained.  Thus Shift-a results in \"A\"",
       "without a modifier.  Returns 0 if no modifiers are used."
     ],
-    "return_type": "Integer"
+    "return_type": "Int"
   },
   {
     "annotations": [
@@ -4820,7 +4820,7 @@
       "Also see |getcmdtype()|, |setcmdpos()|, |getcmdline()| and",
       "|setcmdline()|."
     ],
-    "return_type": "Integer"
+    "return_type": "Int"
   },
   {
     "annotations": [
@@ -4839,7 +4839,7 @@
       "Also see |getcmdpos()|, |setcmdpos()|, |getcmdline()| and",
       "|setcmdline()|."
     ],
-    "return_type": "Integer"
+    "return_type": "Int"
   },
   {
     "annotations": [
@@ -5055,7 +5055,7 @@
         "winnr"
       ],
       [
-        "Null<Integer>",
+        "Null<Int>",
         "tabnr"
       ]
     ],
@@ -5204,7 +5204,7 @@
       "  GetFilename()->getfsize()",
       "```"
     ],
-    "return_type": "Integer"
+    "return_type": "Int"
   },
   {
     "annotations": [
@@ -5230,7 +5230,7 @@
       "  GetFilename()->getftime()",
       "```"
     ],
-    "return_type": "Integer"
+    "return_type": "Int"
   },
   {
     "annotations": [
@@ -5286,7 +5286,7 @@
         "winnr"
       ],
       [
-        "Null<Integer>",
+        "Null<Int>",
         "tabnr"
       ]
     ],
@@ -5328,11 +5328,11 @@
     "name": "getline",
     "parameters": [
       [
-        "Integer",
+        "Int",
         "lnum"
       ],
       [
-        "Null<Integer>",
+        "Null<Int>",
         "end_"
       ]
     ],
@@ -5381,7 +5381,7 @@
     "name": "getloclist",
     "parameters": [
       [
-        "Integer",
+        "Int",
         "nr"
       ],
       [
@@ -5559,7 +5559,7 @@
       "Return a Number which is the process ID of the Vim process.",
       "  This is a unique number, until Vim exits."
     ],
-    "return_type": "Integer"
+    "return_type": "Int"
   },
   {
     "annotations": [
@@ -5867,7 +5867,7 @@
     "name": "gettabinfo",
     "parameters": [
       [
-        "Null<Integer>",
+        "Null<Int>",
         "tabnr"
       ]
     ],
@@ -5900,7 +5900,7 @@
     "name": "gettabvar",
     "parameters": [
       [
-        "Integer",
+        "Int",
         "tabnr"
       ],
       [
@@ -5928,7 +5928,7 @@
       "  GetTabnr()->gettabvar(varname)",
       "```"
     ],
-    "return_type": "void"
+    "return_type": "Void"
   },
   {
     "annotations": [
@@ -5939,7 +5939,7 @@
     "name": "gettabwinvar",
     "parameters": [
       [
-        "Integer",
+        "Int",
         "tabnr"
       ],
       [
@@ -5988,7 +5988,7 @@
       "Can also be used as a |method|: >",
       "  GetTabnr()->gettabwinvar(winnr, varname)"
     ],
-    "return_type": "void"
+    "return_type": "Void"
   },
   {
     "annotations": [
@@ -6146,7 +6146,7 @@
       "  -1 if the information is not available.",
       "  The value can be used with `:winpos`."
     ],
-    "return_type": "Integer"
+    "return_type": "Int"
   },
   {
     "annotations": [
@@ -6161,7 +6161,7 @@
       "  information is not available.",
       "  The value can be used with `:winpos`."
     ],
-    "return_type": "Integer"
+    "return_type": "Int"
   },
   {
     "annotations": [
@@ -6196,7 +6196,7 @@
       "  GetWinnr()->getwinvar(varname)",
       "<"
     ],
-    "return_type": "void"
+    "return_type": "Void"
   },
   {
     "annotations": [
@@ -6213,7 +6213,7 @@
         "expr"
       ],
       [
-        "Null<Boolean>",
+        "Null<Bool>",
         "nosuf"
       ]
     ],
@@ -6455,7 +6455,7 @@
       "    :if has(\"patch-7.4.237\")",
       "```"
     ],
-    "return_type": "Integer"
+    "return_type": "Int"
   },
   {
     "annotations": [
@@ -6484,7 +6484,7 @@
       "  mydict->has_key(key)",
       "```"
     ],
-    "return_type": "Integer"
+    "return_type": "Int"
   },
   {
     "annotations": [
@@ -6499,7 +6499,7 @@
         "winnr"
       ],
       [
-        "Null<Integer>",
+        "Null<Int>",
         "tabnr"
       ]
     ],
@@ -6528,7 +6528,7 @@
       "  GetWinnr()->haslocaldir()",
       "```"
     ],
-    "return_type": "Integer"
+    "return_type": "Int"
   },
   {
     "annotations": [
@@ -6590,7 +6590,7 @@
       "  GetRHS()->hasmapto()",
       "```"
     ],
-    "return_type": "Integer"
+    "return_type": "Int"
   },
   {
     "annotations": [
@@ -6637,7 +6637,7 @@
       "  GetHistory()->histadd('search')",
       "```"
     ],
-    "return_type": "Integer"
+    "return_type": "Int"
   },
   {
     "annotations": [
@@ -6697,7 +6697,7 @@
       "  GetHistory()->histdel()",
       "```"
     ],
-    "return_type": "Integer"
+    "return_type": "Int"
   },
   {
     "annotations": [
@@ -6711,7 +6711,7 @@
         "history"
       ],
       [
-        "Null<Integer>",
+        "Null<Int>",
         "index"
       ]
     ],
@@ -6767,7 +6767,7 @@
       "  GetHistory()->histnr()",
       "<"
     ],
-    "return_type": "Integer"
+    "return_type": "Int"
   },
   {
     "annotations": [
@@ -6796,7 +6796,7 @@
       "    GetName()->hlID()",
       "```"
     ],
-    "return_type": "Integer"
+    "return_type": "Int"
   },
   {
     "annotations": [
@@ -6822,7 +6822,7 @@
       "  GetName()->hlexists()",
       "```"
     ],
-    "return_type": "Integer"
+    "return_type": "Int"
   },
   {
     "annotations": [
@@ -6852,11 +6852,11 @@
         "string"
       ],
       [
-        "Integer",
+        "Int",
         "from"
       ],
       [
-        "Integer",
+        "Int",
         "to"
       ]
     ],
@@ -6919,7 +6919,7 @@
     "name": "indent",
     "parameters": [
       [
-        "Integer",
+        "Int",
         "lnum"
       ]
     ],
@@ -6936,7 +6936,7 @@
       "    GetLnum()->indent()",
       "```"
     ],
-    "return_type": "Integer"
+    "return_type": "Int"
   },
   {
     "annotations": [
@@ -6955,7 +6955,7 @@
         "expr"
       ],
       [
-        "Null<Integer>",
+        "Null<Int>",
         "start"
       ],
       [
@@ -6988,7 +6988,7 @@
       "Can also be used as a |method|: >",
       "  GetObject()->index(what)"
     ],
-    "return_type": "Integer"
+    "return_type": "Int"
   },
   {
     "annotations": [
@@ -7159,7 +7159,7 @@
       "Can also be used as a |method|: >",
       "  GetChoices()->inputlist()"
     ],
-    "return_type": "Integer"
+    "return_type": "Int"
   },
   {
     "annotations": [
@@ -7174,7 +7174,7 @@
       "called.  Calling it more often is harmless though.",
       "Returns TRUE when there is nothing to restore, FALSE otherwise."
     ],
-    "return_type": "Integer"
+    "return_type": "Int"
   },
   {
     "annotations": [
@@ -7191,7 +7191,7 @@
       "many inputrestore() calls.",
       "Returns TRUE when out of memory, FALSE otherwise."
     ],
-    "return_type": "Integer"
+    "return_type": "Int"
   },
   {
     "annotations": [
@@ -7295,7 +7295,7 @@
       ":au BufWritePre * call s:check_typoname(expand('<amatch>'))",
       "```"
     ],
-    "return_type": "void"
+    "return_type": "Void"
   },
   {
     "annotations": [
@@ -7318,7 +7318,7 @@
       "Can also be used as a |method|: >",
       "  :let bits = bits->invert()"
     ],
-    "return_type": "Integer"
+    "return_type": "Int"
   },
   {
     "annotations": [
@@ -7343,7 +7343,7 @@
       "  GetName()->isdirectory()",
       "```"
     ],
-    "return_type": "Integer"
+    "return_type": "Int"
   },
   {
     "annotations": [
@@ -7372,7 +7372,7 @@
       "  Compute()->isinf()",
       "```"
     ],
-    "return_type": "Integer"
+    "return_type": "Int"
   },
   {
     "annotations": [
@@ -7407,7 +7407,7 @@
       "  GetName()->islocked()",
       "```"
     ],
-    "return_type": "Integer"
+    "return_type": "Int"
   },
   {
     "annotations": [
@@ -7433,7 +7433,7 @@
       "  Compute()->isnan()",
       "```"
     ],
-    "return_type": "Integer"
+    "return_type": "Int"
   },
   {
     "annotations": [
@@ -7480,7 +7480,7 @@
     "docs": [
       "Return the PID (process id) of |job-id| {job}."
     ],
-    "return_type": "Integer"
+    "return_type": "Int"
   },
   {
     "annotations": [
@@ -7507,7 +7507,7 @@
       "columns and {height} rows.",
       "Fails if the job was not started with `\"pty\":v:true`."
     ],
-    "return_type": "Integer"
+    "return_type": "Int"
   },
   {
     "annotations": [
@@ -7617,7 +7617,7 @@
       "  - -1 if {cmd}[0] is not executable.",
       "See also |job-control|, |channel|, |msgpack-rpc|."
     ],
-    "return_type": "Integer"
+    "return_type": "Int"
   },
   {
     "annotations": [
@@ -7641,7 +7641,7 @@
       "Returns 1 for valid job id, 0 for invalid id, including jobs have",
       "exited or stopped."
     ],
-    "return_type": "Integer"
+    "return_type": "Int"
   },
   {
     "annotations": [
@@ -7682,7 +7682,7 @@
       "  -2 if the job was interrupted (by |CTRL-C|)",
       "  -3 if the job-id is invalid"
     ],
-    "return_type": "Integer"
+    "return_type": "Int"
   },
   {
     "annotations": [
@@ -7753,7 +7753,7 @@
       "  ReadObject()->json_decode()",
       "```"
     ],
-    "return_type": "void"
+    "return_type": "Void"
   },
   {
     "annotations": [
@@ -7869,7 +7869,7 @@
       "",
       "```"
     ],
-    "return_type": "Integer"
+    "return_type": "Int"
   },
   {
     "annotations": [
@@ -7978,7 +7978,7 @@
       "  GetValue()->libcallnr(\"libc.so\", \"printf\")",
       "```"
     ],
-    "return_type": "Integer"
+    "return_type": "Int"
   },
   {
     "annotations": [
@@ -8035,7 +8035,7 @@
       "  GetValue()->line()",
       "```"
     ],
-    "return_type": "Integer"
+    "return_type": "Int"
   },
   {
     "annotations": [
@@ -8045,7 +8045,7 @@
     "name": "line2byte",
     "parameters": [
       [
-        "Integer",
+        "Int",
         "lnum"
       ]
     ],
@@ -8070,7 +8070,7 @@
       "  GetLnum()->line2byte()",
       "```"
     ],
-    "return_type": "Integer"
+    "return_type": "Int"
   },
   {
     "annotations": [
@@ -8080,7 +8080,7 @@
     "name": "lispindent",
     "parameters": [
       [
-        "Integer",
+        "Int",
         "lnum"
       ]
     ],
@@ -8097,7 +8097,7 @@
       "  GetLnum()->lispindent()",
       "```"
     ],
-    "return_type": "Integer"
+    "return_type": "Int"
   },
   {
     "annotations": [
@@ -8154,7 +8154,7 @@
       "Return the current time, measured as seconds since 1st Jan",
       "1970.  See also |strftime()|, |strptime()| and |getftime()|."
     ],
-    "return_type": "Integer"
+    "return_type": "Int"
   },
   {
     "annotations": [
@@ -8244,7 +8244,7 @@
       "  GetExpr()->luaeval()",
       "```"
     ],
-    "return_type": "void"
+    "return_type": "Void"
   },
   {
     "annotations": [
@@ -8523,7 +8523,7 @@
       "e.g. with `:map!`, you need to save the mapping for all of",
       "them, since they can differ."
     ],
-    "return_type": "void"
+    "return_type": "Void"
   },
   {
     "annotations": [
@@ -8542,7 +8542,7 @@
         "pat"
       ],
       [
-        "Null<Integer>",
+        "Null<Int>",
         "start"
       ],
       [
@@ -8629,7 +8629,7 @@
       "  GetList()->match('word')",
       "```"
     ],
-    "return_type": "Integer"
+    "return_type": "Int"
   },
   {
     "annotations": [
@@ -8727,7 +8727,7 @@
       "  GetGroup()->matchadd('TODO')",
       "```"
     ],
-    "return_type": "Integer"
+    "return_type": "Int"
   },
   {
     "annotations": [
@@ -8744,7 +8744,7 @@
         "group"
       ],
       [
-        "Integer",
+        "Int",
         "pos"
       ],
       [
@@ -8807,7 +8807,7 @@
       "  GetGroup()->matchaddpos([23, 11])",
       "```"
     ],
-    "return_type": "Integer"
+    "return_type": "Int"
   },
   {
     "annotations": [
@@ -8817,7 +8817,7 @@
     "name": "matcharg",
     "parameters": [
       [
-        "Integer",
+        "Int",
         "nr"
       ]
     ],
@@ -8871,7 +8871,7 @@
       "  GetMatch()->matchdelete()",
       "```"
     ],
-    "return_type": "Integer"
+    "return_type": "Int"
   },
   {
     "annotations": [
@@ -8890,7 +8890,7 @@
         "pat"
       ],
       [
-        "Null<Integer>",
+        "Null<Int>",
         "start"
       ],
       [
@@ -8929,7 +8929,7 @@
       "  GetText()->matchend('word')",
       "```"
     ],
-    "return_type": "Integer"
+    "return_type": "Int"
   },
   {
     "annotations": [
@@ -9097,7 +9097,7 @@
         "pat"
       ],
       [
-        "Null<Integer>",
+        "Null<Int>",
         "start"
       ],
       [
@@ -9144,7 +9144,7 @@
         "pat"
       ],
       [
-        "Null<Integer>",
+        "Null<Int>",
         "start"
       ],
       [
@@ -9194,7 +9194,7 @@
         "pat"
       ],
       [
-        "Null<Integer>",
+        "Null<Int>",
         "start"
       ],
       [
@@ -9263,7 +9263,7 @@
       "    mylist->max()",
       "```"
     ],
-    "return_type": "Integer"
+    "return_type": "Int"
   },
   {
     "annotations": [
@@ -9460,7 +9460,7 @@
       "",
       "```"
     ],
-    "return_type": "Integer"
+    "return_type": "Int"
   },
   {
     "annotations": [
@@ -9515,7 +9515,7 @@
       "  GetName()->mkdir()",
       "```"
     ],
-    "return_type": "Integer"
+    "return_type": "Int"
   },
   {
     "annotations": [

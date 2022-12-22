@@ -18,6 +18,7 @@ libs.hxml
 
 
 -cp src
+
 -main Main
 -dce std
 -lua lua/danielo_nvim/init.lua
