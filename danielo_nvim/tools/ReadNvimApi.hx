@@ -2,7 +2,6 @@ import haxe.Json;
 import sys.FileSystem;
 import haxe.io.Path;
 import sys.io.Process;
-import haxe.SysTools;
 import sys.io.File;
 import org.msgpack.MsgPack;
 
@@ -114,10 +113,15 @@ typedef AnnotationMap = Map< String, Annotation >;
     return annotations.fold((annotation, parsed:AnnotationMap) -> {
       final returnRegex = ~/@return (.*)/i;
       final paramRegex = ~/@param ([^ ]*)(.*)/i;
+      final paramWithParens = ~/@param ([^ ]*) \(([^\)]*)\)(.*)/i;
 
       switch (annotation) {
         case returnRegex.match(_) => true:
           parsed.set("return", Return(formatTypeStr(returnRegex.matched(1))));
+        case paramWithParens.match(_) => true:
+          final paramName = paramWithParens.matched(1);
+          final paramType = formatTypeStr(paramWithParens.matched(2).trim());
+          parsed.set(paramName, Param(paramName, paramType));
         case paramRegex.match(_) => true:
           final paramName = paramRegex.matched(1);
           final paramType = formatTypeStr(paramRegex.matched(2).trim());
@@ -195,14 +199,16 @@ typedef AnnotationMap = Map< String, Annotation >;
 
   public function parsePath(leafPath) {
     final fnsBlocks = getFunctionBlocks(leafPath);
-    return fnsBlocks.map(x -> parseFunctionBlock({
-      docs: [],
-      parameters: [],
-      annotations: [],
-      name: "",
-      fullyQualified_name: "",
-      return_type: "Void"
-    }, x));
+    return fnsBlocks.map(
+      x -> parseFunctionBlock({
+        docs: [],
+        parameters: [],
+        annotations: [],
+        name: "",
+        fullyQualified_name: "",
+        return_type: "Void"
+      }, x)
+    ).filter(x -> !(x.name == "" && x.fullyQualified_name == ""));
   }
 
   public function parseFn() {
