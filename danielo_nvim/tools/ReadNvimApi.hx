@@ -1,3 +1,4 @@
+import sys.FileSystem;
 import haxe.Json;
 import tools.Result;
 import tools.GitRepo;
@@ -9,6 +10,7 @@ import org.msgpack.MsgPack;
 
 using Lambda;
 using StringTools;
+using sys.FileSystem;
 
 typedef ApiData = {
   final functions:Array< {name:String, return_type:String, deprecated_since:Null< Int >} >;
@@ -150,7 +152,7 @@ typedef AnnotationMap = Map< String, Annotation >;
             }
             return parseFunctionBlock(result, rest);
           case _:
-            Sys.println("WTF " + line);
+            // Sys.println("WTF " + line);
             return parseFunctionBlock(result, rest);
         }
       case [last]:
@@ -210,7 +212,19 @@ class ReadNvimApi {
   }
 
   static function getTmpDir(path) {
-    return executeCommand("mktemp", ["-d", "-t", path]);
+    final longTermTempPath = Path.join(['.haxe', path]).absolutePath();
+    return try {
+      if (!FileSystem.isDirectory(longTermTempPath)) {
+        FileSystem.createDirectory(longTermTempPath);
+        Ok(longTermTempPath);
+      } else {
+        Ok(longTermTempPath);
+      }
+    }
+    catch (e) {
+      Sys.println('Failed to create $longTermTempPath, fallback to sys temp');
+      return executeCommand("mktemp", ["-d", "-t", path]);
+    }
   }
 
   public static function getNvimRuntime() {
@@ -231,7 +245,7 @@ class ReadNvimApi {
     handle.close();
   }
 
-  function cleanup(tmpdir) {
+  static function cleanup(tmpdir) {
     switch (executeCommand("rm", ["-rf", tmpdir])) {
       case Ok(_):
         Sys.println("Cleanup done");
@@ -256,8 +270,8 @@ class ReadNvimApi {
         Sys.println("Repo cloned");
         Sys.println(output);
       case Error(err):
-        Sys.println("Failed clone neodev repo");
         Sys.println(err);
+        Sys.println("Failed clone neodev repo");
         return;
     };
     final neoDev = new AnnotationParser((leaf) -> Path.join([tmpDir, "types", "stable", leaf]));
@@ -267,9 +281,10 @@ class ReadNvimApi {
       writeFile('./res/fn.json', parsed);
     }
     catch (e) {
-      Sys.println("Error during parsing, proceeding to cleanup");
       Sys.println(e);
+      Sys.println("Error during parsing, proceeding to cleanup");
     }
+    // vimApi.cleanup(tmpDir);
     switch (vimApi.nvimPath) {
       case Ok(path):
         final vimBuiltin = new AnnotationParser((leaf) -> Path.join([path, "lua", "vim", leaf]));
@@ -279,13 +294,5 @@ class ReadNvimApi {
         Sys.println("Could not get neovim path, skip parsing");
         Sys.println(error);
     }
-
-    // final functions = switch (vimApi.rawData.functions) {
-    //   case null:
-    //     throw "Missing functions key in the API data";
-    //   case functions:
-    //     functions;
-    // };
-    vimApi.cleanup(tmpDir);
   }
 }
