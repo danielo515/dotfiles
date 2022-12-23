@@ -77,15 +77,11 @@ class GitRepo {
 
 typedef AnnotationMap = Map< String, Annotation >;
 
-@:tink class NeoDev {
-  final repoPath:String;
+@:tink class AnnotationParser {
+  final getPath:String -> String;
 
-  public function new(repoPath) {
-    this.repoPath = repoPath;
-  }
-
-  function getPath(leaf) {
-    return Path.join([repoPath, "types", "stable", leaf]);
+  public function new(getPath) {
+    this.getPath = getPath;
   }
 
   function getFunctionBlocks(file) {
@@ -287,7 +283,8 @@ class ReadNvimApi {
         Sys.println(err);
         return;
     };
-    final neoDev = new NeoDev(tmpDir);
+    final neoDev = new AnnotationParser((leaf) -> return Path.join([tmpDir, "types", "stable", leaf]));
+
     try {
       final parsed = neoDev.parseFn();
       writeFile('./res/fn.json', parsed);
