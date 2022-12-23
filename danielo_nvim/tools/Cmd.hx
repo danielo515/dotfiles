@@ -11,3 +11,7 @@ function executeCommand(cmd, args, readStder = false):Result< String > {
       Error(res.stderr.readLine());
   }
 }
+
+function getHomeFolder() {
+  return Sys.getEnv(if (Sys.systemName() == "Windows")"UserProfile" else "HOME");
+}

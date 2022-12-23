@@ -212,7 +212,7 @@ class ReadNvimApi {
   }
 
   static function getTmpDir(path) {
-    final longTermTempPath = Path.join(['.haxe', path]).absolutePath();
+    final longTermTempPath = Path.join([getHomeFolder(), '.haxe', path]).absolutePath();
     return try {
       if (!FileSystem.isDirectory(longTermTempPath)) {
         FileSystem.createDirectory(longTermTempPath);
