@@ -154,41 +154,35 @@ typedef AnnotationMap = Map< String, Annotation >;
       case []:
         return result;
       case [line, @rest rest]:
-        switch (line.substr(0, 3)) {
-          case "-- ":
-            result.docs.push(line.substr(3));
-            return parseFunctionBlock(result, rest);
-          case "---":
+        switch (line) {
+          case ~/^--- ?@/:
             result.annotations.push(line.substr(3));
             return parseFunctionBlock(result, rest);
-          case "fun":
-            if (regexFn.match(line)) {
-              final parsedAnnotations = parseAnnotations(result.annotations);
-              final fullyQualifiedName = regexFn.matched(1);
-              result.name = fullyQualifiedName.split(".").pop();
-              result.fullyQualified_name = fullyQualifiedName;
-              result.parameters = parseFunctionArgs(parsedAnnotations, regexFn.matched(2));
-              result.return_type = switch (parsedAnnotations.get("return")) {
-                case Return(type): type;
-                case _: 'Void';
-              }
-            } else {
-              Sys.println(line);
-            };
+          case ~/^---? /:
+            result.docs.push(line.substr(3));
+            return parseFunctionBlock(result, rest);
+          case regexFn.match(_) => true:
+            final parsedAnnotations = parseAnnotations(result.annotations);
+            final fullyQualifiedName = regexFn.matched(1);
+            result.name = fullyQualifiedName.split(".").pop();
+            result.fullyQualified_name = fullyQualifiedName;
+            result.parameters = parseFunctionArgs(parsedAnnotations, regexFn.matched(2));
+            result.return_type = switch (parsedAnnotations.get("return")) {
+              case Return(type): type;
+              case _: 'Void';
+            }
+            return parseFunctionBlock(result, rest);
+          case weirdFn.match(_) => true:
+            final parsedAnnotations = parseAnnotations(result.annotations);
+            result.name = weirdFn.matched(1);
+            result.parameters = parseFunctionArgs(parsedAnnotations, weirdFn.matched(2));
+            result.return_type = switch (parsedAnnotations.get("return")) {
+              case Return(type): type;
+              case _: 'Void';
+            }
             return parseFunctionBlock(result, rest);
           case _:
-            switch (line) {
-              case weirdFn.match(_) => true:
-                final parsedAnnotations = parseAnnotations(result.annotations);
-                result.name = weirdFn.matched(1);
-                result.parameters = parseFunctionArgs(parsedAnnotations, weirdFn.matched(2));
-                result.return_type = switch (parsedAnnotations.get("return")) {
-                  case Return(type): type;
-                  case _: 'Void';
-                }
-              case _:
-                Sys.println("WTF " + line);
-            }
+            Sys.println("WTF " + line);
             return parseFunctionBlock(result, rest);
         }
       case [last]:
@@ -197,6 +191,18 @@ typedef AnnotationMap = Map< String, Annotation >;
       case _:
         throw "Impossible case reached";
     }
+  }
+
+  public function parsePath(leafPath) {
+    final fnsBlocks = getFunctionBlocks(leafPath);
+    return fnsBlocks.map(x -> parseFunctionBlock({
+      docs: [],
+      parameters: [],
+      annotations: [],
+      name: "",
+      fullyQualified_name: "",
+      return_type: "Void"
+    }, x));
   }
 
   public function parseFn() {
@@ -215,7 +221,8 @@ typedef AnnotationMap = Map< String, Annotation >;
 class ReadNvimApi {
   final rawData:ApiData;
   final outputPath:String;
-  final nvimPath:Result< String >;
+
+  public final nvimPath:Result< String >;
 
   static final luadevRepo = "git@github.com:folke/neodev.nvim.git";
 
@@ -283,7 +290,7 @@ class ReadNvimApi {
         Sys.println(err);
         return;
     };
-    final neoDev = new AnnotationParser((leaf) -> return Path.join([tmpDir, "types", "stable", leaf]));
+    final neoDev = new AnnotationParser((leaf) -> Path.join([tmpDir, "types", "stable", leaf]));
 
     try {
       final parsed = neoDev.parseFn();
@@ -292,6 +299,15 @@ class ReadNvimApi {
     catch (e) {
       Sys.println("Error during parsing, proceeding to cleanup");
       Sys.println(e);
+    }
+    switch (vimApi.nvimPath) {
+      case Ok(path):
+        final vimBuiltin = new AnnotationParser((leaf) -> Path.join([path, "lua", "vim", leaf]));
+        final parsed = vimBuiltin.parsePath('fs.lua');
+        writeFile('./res/fs.json', parsed);
+      case Error(error):
+        Sys.println("Could not get neovim path, skip parsing");
+        Sys.println(error);
     }
 
     // final functions = switch (vimApi.rawData.functions) {
