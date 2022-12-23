@@ -28,7 +28,7 @@
       " end",
       " </pre>"
     ],
-    "return_type": "(function) Iterator"
+    "return_type": "Function"
   },
   {
     "annotations": [
@@ -46,7 +46,7 @@
     "docs": [
       " Return the parent directory of the given file or directory"
     ],
-    "return_type": "(string) Parent directory of {file}"
+    "return_type": "String"
   },
   {
     "annotations": [
@@ -64,7 +64,7 @@
     "docs": [
       " Return the basename of the given file or directory"
     ],
-    "return_type": "(string) Basename of {file}"
+    "return_type": "String"
   },
   {
     "annotations": [
@@ -135,7 +135,7 @@
       "                               finding this many matches. Use `math.huge` to",
       "                               place no limit on the number of matches."
     ],
-    "return_type": "(table) The paths of all matching files or directories"
+    "return_type": "Table"
   },
   {
     "annotations": [],
@@ -178,6 +178,6 @@
       " => '/Users/jdoe/.config/nvim/init.vim'",
       " </pre>"
     ],
-    "return_type": "(string) Normalized path"
+    "return_type": "String"
   }
 ]
