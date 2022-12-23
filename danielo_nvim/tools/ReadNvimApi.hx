@@ -52,6 +52,29 @@ enum Annotation {
   Optional(name:String, type:String);
 }
 
+class GitRepo {
+  final path:String;
+  final repoUrl:String;
+
+  public function new(repoUrl, destinationPath) {
+    this.path = destinationPath;
+    this.repoUrl = repoUrl;
+  }
+
+  static function destinationExists(path) {
+    return FileSystem.isDirectory(path);
+  }
+
+  public static function clone(repo, dest):Result< GitRepo > {
+    if (destinationExists(dest)) return Ok(new GitRepo(repo, dest));
+    final status = executeCommand("git", ["clone", repo, dest, "--single-branch"]);
+    return switch (status) {
+      case Ok(_): Ok(new GitRepo(repo, dest));
+      case Error(err): Error(err);
+    }
+  }
+}
+
 typedef AnnotationMap = Map< String, Annotation >;
 
 @:tink class NeoDev {
@@ -71,7 +94,7 @@ typedef AnnotationMap = Map< String, Annotation >;
     return file.split("\n\n").filter(x -> x != "" && x != "---@meta").map(x -> x.split("\n"));
   }
 
-  function formatTypeStr(type:String) {
+  static function formatTypeStr(type:String) {
     return switch (type) {
       case 'any[]':
         'Array<Dynamic>';
@@ -89,7 +112,7 @@ typedef AnnotationMap = Map< String, Annotation >;
     }
   }
 
-  function parseAnnotations(annotations:Array< String >):AnnotationMap {
+  static function parseAnnotations(annotations:Array< String >):AnnotationMap {
     var result = new Map();
 
     return annotations.fold((annotation, parsed:AnnotationMap) -> {
@@ -114,7 +137,7 @@ typedef AnnotationMap = Map< String, Annotation >;
     }, result);
   }
 
-  function parseFunctionArgs(annotations:AnnotationMap, args) {
+  static function parseFunctionArgs(annotations:AnnotationMap, args) {
     final args:Array< String > = args.split(',').map(StringTools.trim);
     return switch (args) {
       case [''] | []:
@@ -128,7 +151,7 @@ typedef AnnotationMap = Map< String, Annotation >;
     }
   }
 
-  function parseFunctionBlock(result:FunctionBlock, lines:Array< String >) {
+  static function parseFunctionBlock(result:FunctionBlock, lines:Array< String >) {
     final regexFn = ~/function ([A-Z._0-9]+)\(([^)]*)/i;
     final weirdFn = ~/\["([^"]*)"\] = function ?\(([^)]*)/i;
     return switch (lines) {
@@ -196,6 +219,7 @@ typedef AnnotationMap = Map< String, Annotation >;
 class ReadNvimApi {
   final rawData:ApiData;
   final outputPath:String;
+  final nvimPath:Result< String >;
 
   static final luadevRepo = "git@github.com:folke/neodev.nvim.git";
 
@@ -203,17 +227,13 @@ class ReadNvimApi {
     final bytes = readMsgpack();
     this.outputPath = outputPath;
     rawData = MsgPack.decode(bytes);
-    trace(getNvimRuntime());
+    nvimPath = getNvimRuntime();
   }
 
   public static function readMsgpack() {
     final readLines = new Process("nvim", ["--api-info"]);
 
     return readLines.stdout.readAll();
-  }
-
-  static function clone(repo, dest) {
-    return executeCommand("git", ["clone", repo, dest, "--single-branch"]);
   }
 
   static function getTmpDir(path) {
@@ -258,13 +278,14 @@ class ReadNvimApi {
         Sys.println('Failed getting temp dir: $msg');
         throw "TMP_DIR_FAIL";
     }
-    switch (clone(luadevRepo, tmpDir)) {
+    switch (GitRepo.clone(luadevRepo, tmpDir)) {
       case Ok(output):
         Sys.println("Repo cloned");
         Sys.println(output);
       case Error(err):
         Sys.println("Failed clone neodev repo");
         Sys.println(err);
+        return;
     };
     final neoDev = new NeoDev(tmpDir);
     try {
