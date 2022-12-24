@@ -81,7 +81,7 @@ typedef AnnotationMap = Map< String, Annotation >;
     return annotations.fold((annotation, parsed:AnnotationMap) -> {
       final returnRegex = ~/@return (.*)/i;
       final returnWithParens = ~/@return \(([^\)]*)\)(.*)/i;
-      final paramSimple = ~/@param ([a-z]*) ([a-z]*) (.*)/i;
+      final paramSimple = ~/@param ([a-z_]*) ([a-z_]*) (.*)/i;
       final paramRegex = ~/@param ([^ ]*)(.*)/i;
       final paramWithParens = ~/@param ([^ ]*) \(([^\)]*)\)(.*)/i;
 

@@ -722,7 +722,7 @@
         "bufnr"
       ],
       [
-        "Number Client id",
+        "Int",
         "client_id"
       ]
     ],
@@ -764,7 +764,7 @@
     "name": "get_client_by_id",
     "parameters": [
       [
-        "Number client id",
+        "Int",
         "client_id"
       ]
     ],
@@ -783,7 +783,7 @@
     "name": "get_buffers_by_client_id",
     "parameters": [
       [
-        "Number client id",
+        "Int",
         "client_id"
       ]
     ],
@@ -801,7 +801,7 @@
     "name": "stop_client",
     "parameters": [
       [
-        "Client id or |vim.lsp.client| object, or list thereof",
+        "Client",
         "client_id"
       ],
       [
