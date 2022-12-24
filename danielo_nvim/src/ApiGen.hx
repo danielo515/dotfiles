@@ -121,12 +121,18 @@ typedef FunctionWithDocs = {
 
 // Thanks again @rudy
 function parseTypeFromStr(typeString:String) {
-  trace("typeString", typeString);
-  return switch (haxe.macro.Context.parse('(null:$typeString)', (macro null).pos).expr) {
-    case EParenthesis({expr: ECheckType(_, ct)}):
-      ct;
+  try {
+    return switch (haxe.macro.Context.parse('(null:$typeString)', (macro null).pos).expr) {
+      case EParenthesis({expr: ECheckType(_, ct)}):
+        ct;
 
-    case _: throw 'Unable to parse $typeString';
+      case _: throw 'Unable to parse $typeString';
+    }
+  }
+  catch (e) {
+    trace("Unable to parse typestring", e);
+    trace("bad type string: ", typeString);
+    throw 'Unable to parse $typeString';
   }
 }
 

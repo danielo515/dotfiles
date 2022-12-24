@@ -81,6 +81,7 @@ typedef AnnotationMap = Map< String, Annotation >;
     return annotations.fold((annotation, parsed:AnnotationMap) -> {
       final returnRegex = ~/@return (.*)/i;
       final returnWithParens = ~/@return \(([^\)]*)\)(.*)/i;
+      final paramSimple = ~/@param ([a-z]*) ([a-z]*) (.*)/i;
       final paramRegex = ~/@param ([^ ]*)(.*)/i;
       final paramWithParens = ~/@param ([^ ]*) \(([^\)]*)\)(.*)/i;
 
@@ -91,6 +92,10 @@ typedef AnnotationMap = Map< String, Annotation >;
           parsed.set("return", Return(formatTypeStr(returnWithParens.matched(1))));
         case returnRegex.match(_) => true:
           parsed.set("return", Return(formatTypeStr(returnRegex.matched(1))));
+        case paramSimple.match(_) => true:
+          final name = paramSimple.matched(1);
+          final paramType = paramSimple.matched(2);
+          parsed.set(name, Param(name, formatTypeStr(paramType)));
         case paramWithParens.match(_) => true:
           final paramName = paramWithParens.matched(1);
           final paramType = formatTypeStr(paramWithParens.matched(2).trim());
@@ -297,6 +302,8 @@ class ReadNvimApi {
         final vimBuiltin = new AnnotationParser((leaf) -> Path.join([path, "lua", "vim", leaf]));
         final parsed = vimBuiltin.parsePath('fs.lua');
         writeFile('./res/fs.json', parsed);
+        final lsp = vimBuiltin.parsePath('lsp.lua').filter(x -> !x.annotations.contains("@private"));
+        writeFile('./res/lsp.json', lsp);
       case Error(error):
         Sys.println("Could not get neovim path, skip parsing");
         Sys.println(error);

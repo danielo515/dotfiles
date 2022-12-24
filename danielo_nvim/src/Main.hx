@@ -1,3 +1,4 @@
+import vim.Lsp;
 import plenary.Job;
 import vim.Vim;
 import vim.VimTypes;
