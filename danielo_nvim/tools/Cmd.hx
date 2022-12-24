@@ -27,6 +27,13 @@ function getHomeFolder():String {
   }
 }
 
+/*
+  Returns a temporary folder to be used.
+  It tries to folow the XDG spec, and if not
+  tries to use platform specific folders reading env variables.
+  If that is not available, fallback to the user home folder
+  with the provided namespace.
+ */
 function getTempFolderPath(namespace:String):String {
   var temp = Sys.getEnv("XDG_RUNTIME_DIR");
   if (temp != null) {
