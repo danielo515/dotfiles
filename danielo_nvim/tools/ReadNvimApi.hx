@@ -65,10 +65,12 @@ typedef AnnotationMap = Map< String, Annotation >;
         'Array<$kind>';
       case 'any': 'Dynamic';
       case 'number': 'Int';
+      case 'table': 'Table<Int, Dynamic>';
       case 'table<string, any>': 'Table<String, Dynamic>';
       case 'table<string, $b>': 'Table<String, ${capitalize(b)}>';
       case 'fun()': 'Function';
       case 'boolean': 'Bool';
+      case ~/[a-z][|][a-z]/i: 'Dynamic';
       case value: capitalize(value);
     }
   }
@@ -83,6 +85,8 @@ typedef AnnotationMap = Map< String, Annotation >;
       final paramWithParens = ~/@param ([^ ]*) \(([^\)]*)\)(.*)/i;
 
       switch (annotation) {
+        case ~/@return Iterator /:
+          parsed.set("return", Return("Function")); // TODO: handle real iterator
         case returnWithParens.match(_) => true:
           parsed.set("return", Return(formatTypeStr(returnWithParens.matched(1))));
         case returnRegex.match(_) => true:

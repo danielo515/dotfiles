@@ -85,7 +85,7 @@
       "        two values: name and type. Each \"name\" is the basename of the file or",
       "        directory relative to {path}. Type is one of \"file\" or \"directory\"."
     ],
-    "return_type": "Iterator over files and directories in {path}. Each iteration yields"
+    "return_type": "Function"
   },
   {
     "annotations": [
@@ -96,11 +96,11 @@
     "name": "find",
     "parameters": [
       [
-        "String|table|fun(name: string",
+        "Dynamic",
         "names"
       ],
       [
-        "Table",
+        "Table<Int, Dynamic>",
         "opts"
       ]
     ],
@@ -135,7 +135,7 @@
       "                               finding this many matches. Use `math.huge` to",
       "                               place no limit on the number of matches."
     ],
-    "return_type": "Table"
+    "return_type": "Table<Int, Dynamic>"
   },
   {
     "annotations": [],

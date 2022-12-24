@@ -82,6 +82,10 @@ extern class Api {
   ):Void;
 }
 
+@:native("vim.fs")
+@:build(ApiGen.attachApi("fs"))
+extern class Fs {}
+
 @:native("vim.fn")
 @:build(ApiGen.attachApi("fn"))
 extern class Fn {
