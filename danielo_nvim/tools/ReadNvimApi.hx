@@ -65,7 +65,7 @@ typedef AnnotationMap = Map< String, Annotation >;
         'Array<$kind>';
       case 'any': 'Dynamic';
       case 'number': 'Int';
-      case 'table': 'Table<Int, Dynamic>';
+      case 'table' | 'List': 'Table<Int, Dynamic>';
       case 'table<string, any>': 'Table<String, Dynamic>';
       case 'table<string, $b>': 'Table<String, ${capitalize(b)}>';
       case 'fun()': 'Function';

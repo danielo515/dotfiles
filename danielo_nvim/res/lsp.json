@@ -9,7 +9,7 @@
     "name": "_cmd_parts",
     "parameters": [
       [
-        "List",
+        "Table<Int, Dynamic>",
         "input"
       ]
     ],
