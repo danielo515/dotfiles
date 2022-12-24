@@ -130,8 +130,8 @@ function parseTypeFromStr(typeString:String) {
     }
   }
   catch (e) {
-    trace("Unable to parse typestring", e);
-    trace('bad type string: $typeString');
+    Context.warning('bad type string: `$typeString`', (macro null).pos);
+    trace("parsing error: ", e);
     throw 'Unable to parse $typeString';
   }
 }
@@ -141,6 +141,8 @@ macro function attachApi(namespace:String):Array< Field > {
   final existingFields = fields.map(f -> f.name);
   var specs:Array< FunctionWithDocs > = Json.parse(File.getContent('res/$namespace.json'));
   specs = specs.filter(x -> !existingFields.contains(x.name) && x.name != "");
+
+  final failures = [];
 
   final newFields:Array< Field > = [for (f in(specs)) {
     try {
@@ -160,9 +162,10 @@ macro function attachApi(namespace:String):Array< Field > {
       }
     }
     catch (error) {
-      trace('unable to convert ${Json.stringify(f, null, " ")}');
+      failures.push(f);
       continue;
     }
   }];
+  trace('unable to convert ${Json.stringify(failures, null, " ")}');
   return fields.concat(newFields);
 }
