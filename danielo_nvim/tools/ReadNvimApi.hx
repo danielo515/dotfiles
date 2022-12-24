@@ -64,7 +64,7 @@ typedef AnnotationMap = Map< String, Annotation >;
       case '$kind[]':
         'Array<$kind>';
       case 'any': 'Dynamic';
-      case 'number': 'Int';
+      case 'number' | 'Number': 'Int';
       case 'table' | 'List': 'lua.Table<Int, Dynamic>';
       case 'table<string, any>': 'lua.Table<String, Dynamic>';
       case 'table<string, $b>': 'lua.Table<String, ${formatTypeStr(b)}>';
@@ -302,7 +302,9 @@ class ReadNvimApi {
         final vimBuiltin = new AnnotationParser((leaf) -> Path.join([path, "lua", "vim", leaf]));
         final parsed = vimBuiltin.parsePath('fs.lua');
         writeFile('./res/fs.json', parsed);
-        final lsp = vimBuiltin.parsePath('lsp.lua').filter(x -> !x.annotations.contains("@private"));
+        final lsp = vimBuiltin.parsePath('lsp.lua').filter(
+          x -> !(x.annotations.contains("@private") || x.annotations.contains('@internal'))
+        );
         writeFile('./res/lsp.json', lsp);
       case Error(error):
         Sys.println("Could not get neovim path, skip parsing");

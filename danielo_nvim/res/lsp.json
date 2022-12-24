@@ -1,26 +1,5 @@
 [
   {
-    "annotations": [
-      "@internal",
-      "@param input (List)",
-      "@returns (string) the command",
-      "@returns (list of strings) its arguments"
-    ],
-    "name": "_cmd_parts",
-    "parameters": [
-      [
-        "lua.Table<Int, Dynamic>",
-        "input"
-      ]
-    ],
-    "fullyQualified_name": "lsp._cmd_parts",
-    "docs": [
-      " Parses a command invocation into the command itself and its args. If there",
-      " are no arguments, an empty table is returned as the second argument."
-    ],
-    "return_type": "Void"
-  },
-  {
     "annotations": [],
     "name": "group_key",
     "parameters": [
@@ -1084,7 +1063,7 @@
     "name": "client_is_stopped",
     "parameters": [
       [
-        "Number",
+        "Int",
         "client_id"
       ]
     ],
