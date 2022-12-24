@@ -148,7 +148,7 @@
       "       :lua print(vim.inspect(vim.fn.api_info()))",
       "```"
     ],
-    "return_type": "Table<String, Dynamic>"
+    "return_type": "lua.Table<String, Dynamic>"
   },
   {
     "annotations": [
@@ -1263,7 +1263,7 @@
         "arglist"
       ],
       [
-        "Null<Table<String, Dynamic>>",
+        "Null<lua.Table<String, Dynamic>>",
         "dict"
       ]
     ],
@@ -1885,7 +1885,7 @@
       "  GetItems()->complete_info()",
       "<"
     ],
-    "return_type": "Table<String, Dynamic>"
+    "return_type": "lua.Table<String, Dynamic>"
   },
   {
     "annotations": [
@@ -2199,7 +2199,7 @@
       "from the top of the |context-stack| (see |context-dict|).",
       "If {index} is not given, it is assumed to be 0 (i.e.: top)."
     ],
-    "return_type": "Table<String, Dynamic>"
+    "return_type": "lua.Table<String, Dynamic>"
   },
   {
     "annotations": [],
@@ -2485,7 +2485,7 @@
     "name": "dictwatcheradd",
     "parameters": [
       [
-        "Table<String, Dynamic>",
+        "lua.Table<String, Dynamic>",
         "dict"
       ],
       [
@@ -2549,7 +2549,7 @@
     "name": "dictwatcherdel",
     "parameters": [
       [
-        "Table<String, Dynamic>",
+        "lua.Table<String, Dynamic>",
         "dict"
       ],
       [
@@ -2851,7 +2851,7 @@
       "  :echo index(keys(environ()), 'HOME', 0, 1) != -1",
       "```"
     ],
-    "return_type": "Table<String, Dynamic>"
+    "return_type": "lua.Table<String, Dynamic>"
   },
   {
     "annotations": [
@@ -4157,7 +4157,7 @@
         "arglist"
       ],
       [
-        "Null<Table<String, Dynamic>>",
+        "Null<lua.Table<String, Dynamic>>",
         "dict"
       ]
     ],
@@ -4198,7 +4198,7 @@
         "arglist"
       ],
       [
-        "Null<Table<String, Dynamic>>",
+        "Null<lua.Table<String, Dynamic>>",
         "dict"
       ]
     ],
@@ -4369,7 +4369,7 @@
     "name": "getbufinfo",
     "parameters": [
       [
-        "Null<Table<String, Dynamic>>",
+        "Null<lua.Table<String, Dynamic>>",
         "dict"
       ]
     ],
@@ -4757,7 +4757,7 @@
       "```",
       "Also see |setcharsearch()|."
     ],
-    "return_type": "Table<String, Dynamic>"
+    "return_type": "lua.Table<String, Dynamic>"
   },
   {
     "annotations": [
@@ -5445,7 +5445,7 @@
       "  :echo getloclist(5, {'filewinid': 0})",
       "```"
     ],
-    "return_type": "Table<String, Dynamic>"
+    "return_type": "lua.Table<String, Dynamic>"
   },
   {
     "annotations": [
@@ -5568,7 +5568,7 @@
       "When using |getchar()| the Vim variables |v:mouse_lnum|,",
       "|v:mouse_col| and |v:mouse_winid| also provide these values."
     ],
-    "return_type": "Table<String, Dynamic>"
+    "return_type": "lua.Table<String, Dynamic>"
   },
   {
     "annotations": [
@@ -5749,7 +5749,7 @@
       "  :echo getqflist({'lines' : [\"F1:10:L10\"]})",
       "```"
     ],
-    "return_type": "Table<String, Dynamic>"
+    "return_type": "lua.Table<String, Dynamic>"
   },
   {
     "annotations": [
@@ -5848,7 +5848,7 @@
       "  GetRegname()->getreginfo()",
       "```"
     ],
-    "return_type": "Table<String, Dynamic>"
+    "return_type": "lua.Table<String, Dynamic>"
   },
   {
     "annotations": [
@@ -6058,7 +6058,7 @@
       "  GetWinnr()->gettagstack()",
       "```"
     ],
-    "return_type": "Table<String, Dynamic>"
+    "return_type": "lua.Table<String, Dynamic>"
   },
   {
     "annotations": [
@@ -6487,7 +6487,7 @@
     "name": "has_key",
     "parameters": [
       [
-        "Table<String, Dynamic>",
+        "lua.Table<String, Dynamic>",
         "dict"
       ],
       [
@@ -7020,7 +7020,7 @@
     "name": "input",
     "parameters": [
       [
-        "Table<String, Dynamic>",
+        "lua.Table<String, Dynamic>",
         "opts"
       ]
     ],
@@ -7465,7 +7465,7 @@
     "name": "items",
     "parameters": [
       [
-        "Table<String, Dynamic>",
+        "lua.Table<String, Dynamic>",
         "dict"
       ]
     ],
@@ -7543,7 +7543,7 @@
         "cmd"
       ],
       [
-        "Null<Table<String, Dynamic>>",
+        "Null<lua.Table<String, Dynamic>>",
         "opts"
       ]
     ],
@@ -7816,7 +7816,7 @@
     "name": "keys",
     "parameters": [
       [
-        "Table<String, Dynamic>",
+        "lua.Table<String, Dynamic>",
         "dict"
       ]
     ],
@@ -8368,7 +8368,7 @@
         "abbr"
       ],
       [
-        "Null<Table<String, Dynamic>>",
+        "Null<lua.Table<String, Dynamic>>",
         "dict"
       ]
     ],
@@ -8523,7 +8523,7 @@
         "abbr"
       ],
       [
-        "Table<String, Dynamic>",
+        "lua.Table<String, Dynamic>",
         "dict"
       ]
     ],
@@ -8679,7 +8679,7 @@
         "id"
       ],
       [
-        "Null<Table<String, Dynamic>>",
+        "Null<lua.Table<String, Dynamic>>",
         "dict"
       ]
     ],
@@ -8778,7 +8778,7 @@
         "id"
       ],
       [
-        "Null<Table<String, Dynamic>>",
+        "Null<lua.Table<String, Dynamic>>",
         "dict"
       ]
     ],
@@ -8971,7 +8971,7 @@
         "str"
       ],
       [
-        "Null<Table<String, Dynamic>>",
+        "Null<lua.Table<String, Dynamic>>",
         "dict"
       ]
     ],
@@ -9069,7 +9069,7 @@
         "str"
       ],
       [
-        "Null<Table<String, Dynamic>>",
+        "Null<lua.Table<String, Dynamic>>",
         "dict"
       ]
     ],
@@ -9450,7 +9450,7 @@
       "",
       "```"
     ],
-    "return_type": "Table<String, Dynamic>"
+    "return_type": "lua.Table<String, Dynamic>"
   },
   {
     "annotations": [
@@ -10385,7 +10385,7 @@
       "",
       "The values are the same as in |v:event| during |CompleteChanged|."
     ],
-    "return_type": "Table<String, Dynamic>"
+    "return_type": "lua.Table<String, Dynamic>"
   },
   {
     "annotations": [
@@ -10886,7 +10886,7 @@
     "name": "remove",
     "parameters": [
       [
-        "Table<String, Dynamic>",
+        "lua.Table<String, Dynamic>",
         "dict"
       ],
       [
@@ -11364,7 +11364,7 @@
       "  GetWinid()->screenpos(lnum, col)",
       "```"
     ],
-    "return_type": "Table<String, Dynamic>"
+    "return_type": "lua.Table<String, Dynamic>"
   },
   {
     "annotations": [
@@ -11568,7 +11568,7 @@
     "name": "searchcount",
     "parameters": [
       [
-        "Null<Table<String, Dynamic>>",
+        "Null<lua.Table<String, Dynamic>>",
         "options"
       ]
     ],
@@ -11705,7 +11705,7 @@
       "  GetSearchOpts()->searchcount()",
       "```"
     ],
-    "return_type": "Table<String, Dynamic>"
+    "return_type": "lua.Table<String, Dynamic>"
   },
   {
     "annotations": [
@@ -12282,7 +12282,7 @@
     "name": "setcharsearch",
     "parameters": [
       [
-        "Table<String, Dynamic>",
+        "lua.Table<String, Dynamic>",
         "dict"
       ]
     ],
@@ -12314,7 +12314,7 @@
       "  SavedSearch()->setcharsearch()",
       "```"
     ],
-    "return_type": "Table<String, Dynamic>"
+    "return_type": "lua.Table<String, Dynamic>"
   },
   {
     "annotations": [
@@ -12857,7 +12857,7 @@
         "value"
       ],
       [
-        "Null<Table<String, Dynamic>>",
+        "Null<lua.Table<String, Dynamic>>",
         "options"
       ]
     ],
@@ -13034,7 +13034,7 @@
         "nr"
       ],
       [
-        "Table<String, Dynamic>",
+        "lua.Table<String, Dynamic>",
         "dict"
       ],
       [
@@ -13300,7 +13300,7 @@
         "buf"
       ],
       [
-        "Null<Table<String, Dynamic>>",
+        "Null<lua.Table<String, Dynamic>>",
         "dict"
       ]
     ],
@@ -13361,7 +13361,7 @@
         "buf"
       ],
       [
-        "Null<Table<String, Dynamic>>",
+        "Null<lua.Table<String, Dynamic>>",
         "dict"
       ]
     ],
@@ -13419,7 +13419,7 @@
         "group"
       ],
       [
-        "Null<Table<String, Dynamic>>",
+        "Null<lua.Table<String, Dynamic>>",
         "dict"
       ]
     ],
@@ -13564,7 +13564,7 @@
         "address"
       ],
       [
-        "Null<Table<String, Dynamic>>",
+        "Null<lua.Table<String, Dynamic>>",
         "opts"
       ]
     ],
@@ -13610,7 +13610,7 @@
         "func"
       ],
       [
-        "Null<Table<String, Dynamic>>",
+        "Null<lua.Table<String, Dynamic>>",
         "dict"
       ]
     ],
@@ -13963,7 +13963,7 @@
     "name": "stdioopen",
     "parameters": [
       [
-        "Table<String, Dynamic>",
+        "lua.Table<String, Dynamic>",
         "opts"
       ]
     ],
@@ -14884,7 +14884,7 @@
       "  GetFilename()->swapinfo()",
       "```"
     ],
-    "return_type": "Table<String, Dynamic>"
+    "return_type": "lua.Table<String, Dynamic>"
   },
   {
     "annotations": [
@@ -15548,7 +15548,7 @@
         "cmd"
       ],
       [
-        "Null<Table<String, Dynamic>>",
+        "Null<lua.Table<String, Dynamic>>",
         "opts"
       ]
     ],
@@ -15663,7 +15663,7 @@
         "callback"
       ],
       [
-        "Null<Table<String, Dynamic>>",
+        "Null<lua.Table<String, Dynamic>>",
         "options"
       ]
     ],
@@ -16079,7 +16079,7 @@
         "func"
       ],
       [
-        "Null<Table<String, Dynamic>>",
+        "Null<lua.Table<String, Dynamic>>",
         "dict"
       ]
     ],
@@ -16111,7 +16111,7 @@
     "name": "values",
     "parameters": [
       [
-        "Table<String, Dynamic>",
+        "lua.Table<String, Dynamic>",
         "dict"
       ]
     ],
@@ -16653,7 +16653,7 @@
         "target"
       ],
       [
-        "Null<Table<String, Dynamic>>",
+        "Null<lua.Table<String, Dynamic>>",
         "options"
       ]
     ],
@@ -16921,7 +16921,7 @@
     "name": "winrestview",
     "parameters": [
       [
-        "Table<String, Dynamic>",
+        "lua.Table<String, Dynamic>",
         "dict"
       ]
     ],
@@ -16980,7 +16980,7 @@
       "    skipcol    columns skipped",
       "  Note that no option values are saved."
     ],
-    "return_type": "Table<String, Dynamic>"
+    "return_type": "lua.Table<String, Dynamic>"
   },
   {
     "annotations": [
@@ -17046,7 +17046,7 @@
       "  visual_words    Number of words visually selected",
       "      (only in Visual mode)"
     ],
-    "return_type": "Table<String, Dynamic>"
+    "return_type": "lua.Table<String, Dynamic>"
   },
   {
     "annotations": [

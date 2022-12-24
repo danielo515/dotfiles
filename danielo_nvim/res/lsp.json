@@ -9,7 +9,7 @@
     "name": "_cmd_parts",
     "parameters": [
       [
-        "Table<Int, Dynamic>",
+        "lua.Table<Int, Dynamic>",
         "input"
       ]
     ],
@@ -321,7 +321,7 @@
     "name": "start",
     "parameters": [
       [
-        "Table<Int, Dynamic>",
+        "lua.Table<Int, Dynamic>",
         "config"
       ],
       [
@@ -1038,7 +1038,7 @@
     "name": "formatexpr",
     "parameters": [
       [
-        "Table<Int, Dynamic>",
+        "lua.Table<Int, Dynamic>",
         "opts"
       ]
     ],
@@ -1186,7 +1186,7 @@
         "handler"
       ],
       [
-        "Table<Int, Dynamic>",
+        "lua.Table<Int, Dynamic>",
         "override_config"
       ]
     ],

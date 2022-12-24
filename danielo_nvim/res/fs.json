@@ -100,7 +100,7 @@
         "names"
       ],
       [
-        "Table<Int, Dynamic>",
+        "lua.Table<Int, Dynamic>",
         "opts"
       ]
     ],
@@ -135,7 +135,7 @@
       "                               finding this many matches. Use `math.huge` to",
       "                               place no limit on the number of matches."
     ],
-    "return_type": "Table<Int, Dynamic>"
+    "return_type": "lua.Table<Int, Dynamic>"
   },
   {
     "annotations": [],

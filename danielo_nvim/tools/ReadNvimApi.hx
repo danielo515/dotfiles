@@ -55,7 +55,7 @@ typedef AnnotationMap = Map< String, Annotation >;
     return file.split("\n\n").filter(x -> x != "" && x != "---@meta").map(x -> x.split("\n"));
   }
 
-  static function formatTypeStr(type:String) {
+  static function formatTypeStr(type:String):String {
     return switch (type) {
       case 'any[]':
         'Array<Dynamic>';
@@ -65,9 +65,9 @@ typedef AnnotationMap = Map< String, Annotation >;
         'Array<$kind>';
       case 'any': 'Dynamic';
       case 'number': 'Int';
-      case 'table' | 'List': 'Table<Int, Dynamic>';
-      case 'table<string, any>': 'Table<String, Dynamic>';
-      case 'table<string, $b>': 'Table<String, ${capitalize(b)}>';
+      case 'table' | 'List': 'lua.Table<Int, Dynamic>';
+      case 'table<string, any>': 'lua.Table<String, Dynamic>';
+      case 'table<string, $b>': 'lua.Table<String, ${formatTypeStr(b)}>';
       case 'fun()': 'Function';
       case 'boolean': 'Bool';
       case ~/[a-z][|][a-z]/i: 'Dynamic';
