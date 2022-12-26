@@ -1,11 +1,12 @@
+import lua.Table.AnyTable;
 import vim.Vim;
 import vim.VimTypes;
-import lua.Table.create;
+import lua.Table.create in t;
 
 @:luaRequire('lualine')
 extern class Lualine {
-  static function setup(config:LuaObj< {
-    options:LuaObj< {
+  static function setup(config:TableWrapper< {
+    options:TableWrapper< {
       icons_enabled:Bool,
       theme:String,
       component_separators:String,
@@ -39,9 +40,55 @@ extern class Comment {
   static function setup():Void;
 }
 
+@:luaRequire('neodev')
+extern class Neodev {
+  static function setup():Void;
+}
+
+@:luaRequire('mason')
+extern class Mason {
+  static function setup():Void;
+}
+
+@:luaRequire('fidget')
+extern class Fidget {
+  static function setup():Void;
+}
+
+@:luaRequire('cmp')
+extern class Cmp {
+  static function setup():Void;
+}
+
+@:luaRequire('mason-lspconfig')
+extern class MasonLspConfig {
+  static function setup(opts:TableWrapper< {ensure_installed:Array< String >} >):Void;
+  static function setup_handlers(handlers:Array< (name:String) -> Void >):Void;
+}
+
+typedef LspConfigSetupFn = {
+  final setup:(
+    config:TableWrapper< {on_attach:(a:Dynamic, bufnr:Buffer) -> Void, Settings:AnyTable, capabilities:Dynamic} >
+  ) -> Void;
+}
+
+@:luaRequire('lspconfig')
+extern class Lspconfig {
+  final sumneko_lua:LspConfigSetupFn;
+}
+
+@:luaRequire('luasnip')
+extern class Luasnip {
+  static function lsp_expand(args:Dynamic):Void;
+  static function expand_or_jumpable():Bool;
+  static function expand_or_jump():Void;
+  static function jumpable(?direction:Int):Bool;
+  static function jump(?direction:Int):Void;
+}
+
 inline function keymaps() {
   Keymap.set(
-    create([Normal, Visual]),
+    t([Normal, Visual]),
     '<Space>',
     '<Nop>',
     {desc: 'do nothing', silent: true, expr: false}
@@ -66,7 +113,7 @@ inline function keymaps() {
 function main() {
   DanieloVim.autocmd(
     "Kickstart",
-    create([BufWritePost]),
+    t([BufWritePost]),
     Fn.expand(MYVIMRC),
     "Reload the config",
     () -> Vim.cmd("source <afile> | PackerCompile")
@@ -84,7 +131,7 @@ function main() {
   // -- See `:help lualine.txt`
   Lualine.setup({
     options: {
-      icons_enabled: false,
+      icons_enabled: true,
       theme: 'onedark',
       component_separators: '|',
       section_separators: '',
@@ -94,7 +141,7 @@ function main() {
   Comment.setup();
 
   // -- See `:help indent_blankline.txt`
-  IndentBlankline.setup(create({
+  IndentBlankline.setup(t({
     char: '┊',
     show_trailing_blankline_indent: false,
   }));
@@ -119,4 +166,8 @@ function main() {
       },
     },
   });
+
+  Neodev.setup();
+  Mason.setup();
+  Fidget.setup();
 }

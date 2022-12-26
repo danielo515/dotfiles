@@ -7,6 +7,7 @@ local s = ls.s
 local fmt = require("luasnip.extras.fmt").fmt
 local i = ls.i
 local l = extras.lambda
+local dl = extras.dynamic_lambda
 local f = ls.function_node
 local c = ls.choice_node
 local d = ls.dynamic_node
@@ -37,7 +38,7 @@ local snippets = {
   s(
     { trig = "typedef", dscr = "a more convenient typedef", regTrig = false },
     fmt(
-      [[ typedef {} {{ 
+      [[ typedef {} = {{ 
         final {};
         {};
     }}]],
@@ -69,6 +70,27 @@ abstract {}<T>({}) {{
     )
   ),
 
+  s(
+    { trig = "lext", dscr = "lua extern class", regTrig = false },
+
+    fmt(
+      [[ 
+      @:luaRequire('{}')
+      extern class {} {{
+       static function {}({}):{};
+               {}
+      }}
+    ]],
+      {
+        i(1),
+        dl(2, l._1:sub(1, 1):upper() .. l._1:sub(2), 1),
+        i(3, "setup"),
+        i(4),
+        i(5, "Void"),
+        i(0),
+      }
+    )
+  ),
   s(
     { trig = "ext", dscr = "Extern class", regTrig = false },
 

@@ -200,6 +200,9 @@ Lualine = _G.require("lualine")
 IndentBlankline = _G.require("indent_blankline")
 Gitsigns = _G.require("gitsigns")
 Comment = _G.require("Comment")
+Neodev = _G.require("neodev")
+Mason = _G.require("mason")
+Fidget = _G.require("fidget")
 ___Kickstart_Kickstart_Fields_ = _hx_e()
 local Math = _hx_e()
 local String = _hx_e()
@@ -550,18 +553,17 @@ ___Kickstart_Kickstart_Fields_.main = function()
   vim.keymap.set("n", "k", "v:count == 0 ? 'gk' : 'k'", ({desc = "up when word-wrap", expr = true, silent = true}));
   local _ = nil;
   vim.keymap.set("n", "j", "v:count == 0 ? 'gj' : 'j'", ({desc = "down when word-wrap", expr = true, silent = true}));
-  local obj = _hx_o({__fields__={icons_enabled=true,theme=true,component_separators=true,section_separators=true},icons_enabled=false,theme="onedark",component_separators="|",section_separators=""});
-  obj.__fields__ = nil;
-  _G.setmetatable(obj, nil);
-  local obj = _hx_o({__fields__={options=true},options=obj});
-  obj.__fields__ = nil;
-  _G.setmetatable(obj, nil);
-  Lualine.setup(obj);
+  local _ = nil;
+  local _ = nil;
+  Lualine.setup(({options = ({component_separators = "|", icons_enabled = true, section_separators = "", theme = "onedark"})}));
   Comment.setup();
   IndentBlankline.setup(({char = "┊", show_trailing_blankline_indent = false}));
   local _ = nil;
   local _ = nil;
   Gitsigns.setup(({signs = ({add = _hx_o({__fields__={text=true},text="+"}), change = _hx_o({__fields__={text=true},text="~"}), changedelete = _hx_o({__fields__={text=true},text="~"}), delete = _hx_o({__fields__={text=true},text="_"}), topdelete = _hx_o({__fields__={text=true},text="‾"})})}));
+  Neodev.setup();
+  Mason.setup();
+  Fidget.setup();
 end
 
 Math.new = {}
