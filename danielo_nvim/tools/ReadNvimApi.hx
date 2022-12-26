@@ -267,6 +267,10 @@ class ReadNvimApi {
     }
   }
 
+  static function removePrivate(x:FunctionBlock):Bool {
+    return !(x.annotations.contains("@private") || x.annotations.contains('@internal'));
+  }
+
   static function main() {
     final vimApi = new ReadNvimApi('./res/nvim-api.json');
     final tmpDir = switch (getTmpDir("nvim-api")) {
@@ -302,10 +306,11 @@ class ReadNvimApi {
         final vimBuiltin = new AnnotationParser((leaf) -> Path.join([path, "lua", "vim", leaf]));
         final parsed = vimBuiltin.parsePath('fs.lua');
         writeFile('./res/fs.json', parsed);
-        final lsp = vimBuiltin.parsePath('lsp.lua').filter(
-          x -> !(x.annotations.contains("@private") || x.annotations.contains('@internal'))
-        );
+        final lsp = vimBuiltin.parsePath('lsp.lua').filter(removePrivate);
         writeFile('./res/lsp.json', lsp);
+        final lspBuf = vimBuiltin.parsePath('lsp/buf.lua').filter(removePrivate);
+        writeFile('./res/lsp_buf.json', lsp);
+
       case Error(error):
         Sys.println("Could not get neovim path, skip parsing");
         Sys.println(error);

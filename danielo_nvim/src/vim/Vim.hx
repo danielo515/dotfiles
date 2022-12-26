@@ -99,11 +99,20 @@ extern class Fn {
 
 @:native("vim.keymap")
 extern class Keymap {
+  /*Set a keymap in one or more modes*/
   public static function set(
     mode:EitherType< VimMode, LuaArray< VimMode > >,
     keys:String,
     map:EitherType< Function, String >,
     opts:TableWrapper< {desc:String, silent:Bool, expr:Bool} >
+  ):Void;
+
+  @:native('set')
+  public static function setBuf(
+    mode:VimMode,
+    keys:String,
+    map:EitherType< Function, String >,
+    opts:TableWrapper< {desc:String, buffer:Buffer} >
   ):Void;
 }
 
