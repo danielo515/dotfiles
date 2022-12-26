@@ -196,6 +196,7 @@ enum abstract VimEvent(String) {
   final InsertCharPre; // when a character was typed in Insert mode, before inserting it
   final TextChanged; // after a change was made to the text in Normal mode
   final TextChangedI; // after a change was made to the text in Insert mode
+  final TextYankPost; // after text yanked
   final ColorScheme; // after loading a color scheme
   final RemoteReply; // a reply from a server Vim was received
   final QuickFixCmdPre; // before a quickfix command is run
@@ -222,6 +223,7 @@ enum abstract PathModifier(String) to String {
 
 enum abstract VimRef(String) to String {
   final CurentFile = "%";
+  final MYVIMRC = "$MYVIMRC";
 }
 
 abstract ExpandString(String) from VimRef {
@@ -241,4 +243,11 @@ abstract ExpandString(String) from VimRef {
   @:op(A + B) public static inline function plus(path:ExpandString, modifiers:PathModifier):ExpandString {
     return cast NativeStringTools.format("%s%s", path, modifiers);
   }
+}
+
+enum abstract VimMode(String) {
+  final Normal = "n";
+  final Visual = "v";
+  final Insert = "i";
+  final Select = "x";
 }
