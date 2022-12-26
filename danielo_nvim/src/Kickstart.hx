@@ -40,7 +40,24 @@ extern class Comment {
 }
 
 inline function keymaps() {
-  Keymap.set(create([Normal, Visual]), '<Space>', '<Nop>', {desc: 'do nothing'});
+  Keymap.set(
+    create([Normal, Visual]),
+    '<Space>',
+    '<Nop>',
+    {desc: 'do nothing', silent: true, expr: false}
+  );
+  Keymap.set(
+    Normal,
+    'k',
+    "v:count == 0 ? 'gk' : 'k'",
+    {desc: 'up word-wrap', silent: true, expr: true}
+  );
+  Keymap.set(
+    Normal,
+    'j',
+    "v:count == 0 ? 'gj' : 'j'",
+    {desc: 'down word-wrap', silent: true, expr: true}
+  );
 }
 
 /**

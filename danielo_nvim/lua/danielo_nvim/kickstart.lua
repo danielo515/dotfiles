@@ -532,7 +532,9 @@ end
 
 ___Kickstart_Kickstart_Fields_.new = {}
 ___Kickstart_Kickstart_Fields_.keymaps = function() 
-  vim.keymap.set(({"n","v"}), "<Space>", "<Nop>", ({desc = "do nothing"}));
+  vim.keymap.set(({"n","v"}), "<Space>", "<Nop>", ({desc = "do nothing", expr = false, silent = true}));
+  vim.keymap.set("n", "k", "v:count == 0 ? 'gk' : 'k'", ({desc = "up word-wrap", expr = true, silent = true}));
+  vim.keymap.set("n", "j", "v:count == 0 ? 'gj' : 'j'", ({desc = "down word-wrap", expr = true, silent = true}));
 end
 ___Kickstart_Kickstart_Fields_.main = function() 
   __vim_DanieloVim.autocmd("Kickstart", ({"BufWritePost"}), vim.fn.expand("$MYVIMRC"), "Reload the config", function() 
@@ -543,7 +545,11 @@ ___Kickstart_Kickstart_Fields_.main = function()
   end);
   vim.cmd("colorscheme onedark");
   local _ = nil;
-  vim.keymap.set(({"n","v"}), "<Space>", "<Nop>", ({desc = "do nothing"}));
+  vim.keymap.set(({"n","v"}), "<Space>", "<Nop>", ({desc = "do nothing", expr = false, silent = true}));
+  local _ = nil;
+  vim.keymap.set("n", "k", "v:count == 0 ? 'gk' : 'k'", ({desc = "up word-wrap", expr = true, silent = true}));
+  local _ = nil;
+  vim.keymap.set("n", "j", "v:count == 0 ? 'gj' : 'j'", ({desc = "down word-wrap", expr = true, silent = true}));
   local obj = _hx_o({__fields__={icons_enabled=true,theme=true,component_separators=true,section_separators=true},icons_enabled=false,theme="onedark",component_separators="|",section_separators=""});
   obj.__fields__ = nil;
   _G.setmetatable(obj, nil);

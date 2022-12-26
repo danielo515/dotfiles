@@ -103,7 +103,7 @@ extern class Keymap {
     mode:EitherType< VimMode, LuaArray< VimMode > >,
     keys:String,
     map:EitherType< Function, String >,
-    opts:TableWrapper< {desc:String} >
+    opts:TableWrapper< {desc:String, silent:Bool, expr:Bool} >
   ):Void;
 }
 
