@@ -1,5 +1,6 @@
 package vim;
 
+import haxe.extern.EitherType;
 import lua.StringMap;
 import haxe.Rest;
 
@@ -94,6 +95,16 @@ extern class Fn {
   static function executable(binaryName:String):Int;
   static function json_encode(value:Dynamic):String;
   static function json_decode(json:String):Table< String, Dynamic >;
+}
+
+@:native("vim.keymap")
+extern class Keymap {
+  public static function set(
+    mode:EitherType< VimMode, LuaArray< VimMode > >,
+    keys:String,
+    map:EitherType< Function, String >,
+    opts:TableWrapper< {desc:String} >
+  ):Void;
 }
 
 @:native("vim")

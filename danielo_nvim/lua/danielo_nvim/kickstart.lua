@@ -531,14 +531,19 @@ Array.prototype.resize = function(self,len)
 end
 
 ___Kickstart_Kickstart_Fields_.new = {}
+___Kickstart_Kickstart_Fields_.keymaps = function() 
+  vim.keymap.set(({"n","v"}), "<Space>", "<Nop>", ({desc = "do nothing"}));
+end
 ___Kickstart_Kickstart_Fields_.main = function() 
-  __vim_DanieloVim.autocmd("Kickstart", __vim__VimTypes_LuaArray_Impl_.from(_hx_tab_array({[0]="BufWritePost"}, 1)), vim.fn.expand("$MYVIMRC"), "Reload the config", function() 
+  __vim_DanieloVim.autocmd("Kickstart", ({"BufWritePost"}), vim.fn.expand("$MYVIMRC"), "Reload the config", function() 
     vim.cmd("source <afile> | PackerCompile");
   end);
   __vim_DanieloVim.autocmd("Kickstart-yank", __vim__VimTypes_LuaArray_Impl_.from(_hx_tab_array({[0]="TextYankPost"}, 1)), "*", "Highlight on yank", function() 
     do return vim.highlight.on_yank() end;
   end);
   vim.cmd("colorscheme onedark");
+  local _ = nil;
+  vim.keymap.set(({"n","v"}), "<Space>", "<Nop>", ({desc = "do nothing"}));
   local obj = _hx_o({__fields__={icons_enabled=true,theme=true,component_separators=true,section_separators=true},icons_enabled=false,theme="onedark",component_separators="|",section_separators=""});
   obj.__fields__ = nil;
   _G.setmetatable(obj, nil);
@@ -548,28 +553,9 @@ ___Kickstart_Kickstart_Fields_.main = function()
   Lualine.setup(obj);
   Comment.setup();
   IndentBlankline.setup(({char = "┊", show_trailing_blankline_indent = false}));
-  local obj = _hx_o({__fields__={text=true},text="+"});
-  obj.__fields__ = nil;
-  _G.setmetatable(obj, nil);
-  local obj1 = _hx_o({__fields__={text=true},text="~"});
-  obj1.__fields__ = nil;
-  _G.setmetatable(obj1, nil);
-  local obj2 = _hx_o({__fields__={text=true},text="_"});
-  obj2.__fields__ = nil;
-  _G.setmetatable(obj2, nil);
-  local obj3 = _hx_o({__fields__={text=true},text="‾"});
-  obj3.__fields__ = nil;
-  _G.setmetatable(obj3, nil);
-  local obj4 = _hx_o({__fields__={text=true},text="~"});
-  obj4.__fields__ = nil;
-  _G.setmetatable(obj4, nil);
-  local obj = _hx_o({__fields__={add=true,change=true,delete=true,topdelete=true,changedelete=true},add=obj,change=obj1,delete=obj2,topdelete=obj3,changedelete=obj4});
-  obj.__fields__ = nil;
-  _G.setmetatable(obj, nil);
-  local obj = _hx_o({__fields__={signs=true},signs=obj});
-  obj.__fields__ = nil;
-  _G.setmetatable(obj, nil);
-  Gitsigns.setup(obj);
+  local _ = nil;
+  local _ = nil;
+  Gitsigns.setup(({signs = ({add = _hx_o({__fields__={text=true},text="+"}), change = _hx_o({__fields__={text=true},text="~"}), changedelete = _hx_o({__fields__={text=true},text="~"}), delete = _hx_o({__fields__={text=true},text="_"}), topdelete = _hx_o({__fields__={text=true},text="‾"})})}));
 end
 
 Math.new = {}

@@ -18,7 +18,14 @@ libs.hxml
 
 
 -cp src
+--dce std
 
--main Main
--dce std
--lua lua/danielo_nvim/init.lua
+--each
+
+--main Main
+--lua lua/danielo_nvim/init.lua
+
+--next
+
+--main Kickstart
+--lua lua/danielo_nvim/kickstart.lua

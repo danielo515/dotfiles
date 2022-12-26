@@ -557,7 +557,7 @@ Main.main = function()
   end, ({bang = false, desc = "Copy the n number of messages to clipboard", force = true, nargs = 1, range = true}));
   vim.pretty_print(vim.tbl_map(function(x) 
     do return Std.string(Std.string(Std.string(Std.string(Std.string("") .. Std.string(x.lhs)) .. Std.string(" -> ")) .. Std.string(x.rhs)) .. Std.string(" ")) .. Std.string(x.desc) end;
-  end, nvim.API.nvim_buf_get_keymap(0, "n")));
+  end, vim.api.nvim_buf_get_keymap(0, "n")));
 end
 Main.runGh = function(args) 
   if (vim.fn.executable("gh") ~= 1) then 

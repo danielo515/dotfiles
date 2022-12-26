@@ -19,17 +19,17 @@ extern class IndentBlankline {
   static function setup(config:lua.Table< String, Dynamic >):Void;
 }
 
-typedef SignDefinition = LuaObj< {text:String} >
+typedef SignDefinition = TableWrapper< {text:String} >
 
 @:luaRequire('gitsigns')
 extern class Gitsigns {
-  static function setup(config:LuaObj< {
-    signs:LuaObj< {
-      add:SignDefinition,
-      change:SignDefinition,
-      delete:SignDefinition,
-      topdelete:SignDefinition,
-      changedelete:SignDefinition,
+  static function setup(config:TableWrapper< {
+    signs:TableWrapper< {
+      add:{text:String},
+      change:{text:String},
+      delete:{text:String},
+      topdelete:{text:String},
+      changedelete:{text:String},
     } >
   } >):Void;
 }
@@ -39,13 +39,17 @@ extern class Comment {
   static function setup():Void;
 }
 
+inline function keymaps() {
+  Keymap.set(create([Normal, Visual]), '<Space>', '<Nop>', {desc: 'do nothing'});
+}
+
 /**
   Port to Haxe of https://github.com/nvim-lua/kickstart.nvim
  */
 function main() {
   DanieloVim.autocmd(
     "Kickstart",
-    [BufWritePost],
+    create([BufWritePost]),
     Fn.expand(MYVIMRC),
     "Reload the config",
     () -> Vim.cmd("source <afile> | PackerCompile")
@@ -58,6 +62,7 @@ function main() {
     () -> untyped __lua__("vim.highlight.on_yank()")
   );
   Vim.cmd("colorscheme onedark");
+  keymaps();
   // -- Set lualine as statusline
   // -- See `:help lualine.txt`
   Lualine.setup({

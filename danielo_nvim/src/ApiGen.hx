@@ -166,6 +166,6 @@ macro function attachApi(namespace:String):Array< Field > {
       continue;
     }
   }];
-  trace('unable to convert ${Json.stringify(failures, null, " ")}');
+  if (failures.length > 0)trace('unable to convert ${Json.stringify(failures, null, " ")}');
   return fields.concat(newFields);
 }
