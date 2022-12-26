@@ -50,13 +50,13 @@ inline function keymaps() {
     Normal,
     'k',
     "v:count == 0 ? 'gk' : 'k'",
-    {desc: 'up word-wrap', silent: true, expr: true}
+    {desc: 'up when word-wrap', silent: true, expr: true}
   );
   Keymap.set(
     Normal,
     'j',
     "v:count == 0 ? 'gj' : 'j'",
-    {desc: 'down word-wrap', silent: true, expr: true}
+    {desc: 'down when word-wrap', silent: true, expr: true}
   );
 }
 
