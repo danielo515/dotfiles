@@ -1,7 +1,9 @@
+package kickstart;
+
 import lua.Table.AnyTable;
 import vim.Vim;
 import vim.VimTypes;
-import lua.Table.create in t;
+import lua.Table.create as t;
 
 @:luaRequire('lualine')
 extern class Lualine {
@@ -94,13 +96,13 @@ inline function keymaps() {
     {desc: 'do nothing', silent: true, expr: false}
   );
   Keymap.set(
-    Normal,
+    t([Normal]),
     'k',
     "v:count == 0 ? 'gk' : 'k'",
     {desc: 'up when word-wrap', silent: true, expr: true}
   );
   Keymap.set(
-    Normal,
+    t([Normal]),
     'j',
     "v:count == 0 ? 'gj' : 'j'",
     {desc: 'down when word-wrap', silent: true, expr: true}

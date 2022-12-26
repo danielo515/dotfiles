@@ -27,5 +27,5 @@ libs.hxml
 
 --next
 
---main Kickstart
+--main kickstart.Kickstart
 --lua lua/danielo_nvim/kickstart.lua

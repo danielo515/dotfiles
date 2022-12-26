@@ -196,20 +196,20 @@ local Enum = _hx_e();
 
 local _hx_exports = _hx_exports or {}
 local Array = _hx_e()
-Lualine = _G.require("lualine")
-IndentBlankline = _G.require("indent_blankline")
-Gitsigns = _G.require("gitsigns")
-Comment = _G.require("Comment")
-Neodev = _G.require("neodev")
-Mason = _G.require("mason")
-Fidget = _G.require("fidget")
-___Kickstart_Kickstart_Fields_ = _hx_e()
 local Math = _hx_e()
 local String = _hx_e()
 local Std = _hx_e()
 local Test = _hx_e()
 __haxe_iterators_ArrayIterator = _hx_e()
 __haxe_iterators_ArrayKeyValueIterator = _hx_e()
+__kickstart_Lualine = _G.require("lualine")
+__kickstart_IndentBlankline = _G.require("indent_blankline")
+__kickstart_Gitsigns = _G.require("gitsigns")
+__kickstart_Comment = _G.require("Comment")
+__kickstart_Neodev = _G.require("neodev")
+__kickstart_Mason = _G.require("mason")
+__kickstart_Fidget = _G.require("fidget")
+__kickstart__Kickstart_Kickstart_Fields_ = _hx_e()
 __lua_StringMap = _hx_e()
 __vim__Vim_GroupOpts_Impl_ = _hx_e()
 __vim__Vim_AutoCmdOpts_Impl_ = _hx_e()
@@ -533,39 +533,6 @@ Array.prototype.resize = function(self,len)
   end;
 end
 
-___Kickstart_Kickstart_Fields_.new = {}
-___Kickstart_Kickstart_Fields_.keymaps = function() 
-  vim.keymap.set(({"n","v"}), "<Space>", "<Nop>", ({desc = "do nothing", expr = false, silent = true}));
-  vim.keymap.set("n", "k", "v:count == 0 ? 'gk' : 'k'", ({desc = "up when word-wrap", expr = true, silent = true}));
-  vim.keymap.set("n", "j", "v:count == 0 ? 'gj' : 'j'", ({desc = "down when word-wrap", expr = true, silent = true}));
-end
-___Kickstart_Kickstart_Fields_.main = function() 
-  __vim_DanieloVim.autocmd("Kickstart", ({"BufWritePost"}), vim.fn.expand("$MYVIMRC"), "Reload the config", function() 
-    vim.cmd("source <afile> | PackerCompile");
-  end);
-  __vim_DanieloVim.autocmd("Kickstart-yank", __vim__VimTypes_LuaArray_Impl_.from(_hx_tab_array({[0]="TextYankPost"}, 1)), "*", "Highlight on yank", function() 
-    do return vim.highlight.on_yank() end;
-  end);
-  vim.cmd("colorscheme onedark");
-  local _ = nil;
-  vim.keymap.set(({"n","v"}), "<Space>", "<Nop>", ({desc = "do nothing", expr = false, silent = true}));
-  local _ = nil;
-  vim.keymap.set("n", "k", "v:count == 0 ? 'gk' : 'k'", ({desc = "up when word-wrap", expr = true, silent = true}));
-  local _ = nil;
-  vim.keymap.set("n", "j", "v:count == 0 ? 'gj' : 'j'", ({desc = "down when word-wrap", expr = true, silent = true}));
-  local _ = nil;
-  local _ = nil;
-  Lualine.setup(({options = ({component_separators = "|", icons_enabled = true, section_separators = "", theme = "onedark"})}));
-  Comment.setup();
-  IndentBlankline.setup(({char = "┊", show_trailing_blankline_indent = false}));
-  local _ = nil;
-  local _ = nil;
-  Gitsigns.setup(({signs = ({add = _hx_o({__fields__={text=true},text="+"}), change = _hx_o({__fields__={text=true},text="~"}), changedelete = _hx_o({__fields__={text=true},text="~"}), delete = _hx_o({__fields__={text=true},text="_"}), topdelete = _hx_o({__fields__={text=true},text="‾"})})}));
-  Neodev.setup();
-  Mason.setup();
-  Fidget.setup();
-end
-
 Math.new = {}
 Math.isNaN = function(f) 
   do return f ~= f end;
@@ -815,6 +782,39 @@ __haxe_iterators_ArrayKeyValueIterator.super = function(self,array)
   self.array = array;
 end
 
+__kickstart__Kickstart_Kickstart_Fields_.new = {}
+__kickstart__Kickstart_Kickstart_Fields_.keymaps = function() 
+  vim.keymap.set(({"n","v"}), "<Space>", "<Nop>", ({desc = "do nothing", expr = false, silent = true}));
+  vim.keymap.set(({"n"}), "k", "v:count == 0 ? 'gk' : 'k'", ({desc = "up when word-wrap", expr = true, silent = true}));
+  vim.keymap.set(({"n"}), "j", "v:count == 0 ? 'gj' : 'j'", ({desc = "down when word-wrap", expr = true, silent = true}));
+end
+__kickstart__Kickstart_Kickstart_Fields_.main = function() 
+  __vim_DanieloVim.autocmd("Kickstart", ({"BufWritePost"}), vim.fn.expand("$MYVIMRC"), "Reload the config", function() 
+    vim.cmd("source <afile> | PackerCompile");
+  end);
+  __vim_DanieloVim.autocmd("Kickstart-yank", __vim__VimTypes_LuaArray_Impl_.from(_hx_tab_array({[0]="TextYankPost"}, 1)), "*", "Highlight on yank", function() 
+    do return vim.highlight.on_yank() end;
+  end);
+  vim.cmd("colorscheme onedark");
+  local _ = nil;
+  vim.keymap.set(({"n","v"}), "<Space>", "<Nop>", ({desc = "do nothing", expr = false, silent = true}));
+  local _ = nil;
+  vim.keymap.set(({"n"}), "k", "v:count == 0 ? 'gk' : 'k'", ({desc = "up when word-wrap", expr = true, silent = true}));
+  local _ = nil;
+  vim.keymap.set(({"n"}), "j", "v:count == 0 ? 'gj' : 'j'", ({desc = "down when word-wrap", expr = true, silent = true}));
+  local _ = nil;
+  local _ = nil;
+  __kickstart_Lualine.setup(({options = ({component_separators = "|", icons_enabled = true, section_separators = "", theme = "onedark"})}));
+  __kickstart_Comment.setup();
+  __kickstart_IndentBlankline.setup(({char = "┊", show_trailing_blankline_indent = false}));
+  local _ = nil;
+  local _ = nil;
+  __kickstart_Gitsigns.setup(({signs = ({add = _hx_o({__fields__={text=true},text="+"}), change = _hx_o({__fields__={text=true},text="~"}), changedelete = _hx_o({__fields__={text=true},text="~"}), delete = _hx_o({__fields__={text=true},text="_"}), topdelete = _hx_o({__fields__={text=true},text="‾"})})}));
+  __kickstart_Neodev.setup();
+  __kickstart_Mason.setup();
+  __kickstart_Fidget.setup();
+end
+
 __lua_StringMap.new = function() 
   local self = _hx_new(__lua_StringMap.prototype)
   __lua_StringMap.super(self)
@@ -957,5 +957,5 @@ local _hx_static_init = function()
 end
 
 _hx_static_init();
-_G.xpcall(___Kickstart_Kickstart_Fields_.main, _hx_error)
+_G.xpcall(__kickstart__Kickstart_Kickstart_Fields_.main, _hx_error)
 return _hx_exports
