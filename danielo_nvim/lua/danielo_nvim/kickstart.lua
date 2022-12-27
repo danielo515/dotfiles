@@ -842,7 +842,7 @@ __kickstart__Kickstart_Kickstart_Fields_.main = function()
       local obj = _hx_o({__fields__={capabilities=true,on_attach=true,settings=true},capabilities=capabilities,on_attach=function(_,...) return __kickstart__Kickstart_Kickstart_Fields_.onAttach(...) end,settings=({lua = ({workspace = _hx_o({__fields__={checkThirdParty=true},checkThirdParty=false}), telemetry = _hx_o({__fields__={enable=true},enable=false})})})});
       obj.__fields__ = nil;
       _G.setmetatable(obj, nil);
-      __kickstart_Lspconfig.sumneko_lua:setup(obj);
+      __kickstart_Lspconfig.sumneko_lua.setup(obj);
     else
       vim.pretty_print(Std.string("Ignoring ") .. Std.string(server_name));
     end;
