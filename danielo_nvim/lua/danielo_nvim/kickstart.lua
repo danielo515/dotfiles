@@ -209,7 +209,9 @@ __kickstart_Comment = _G.require("Comment")
 __kickstart_Neodev = _G.require("neodev")
 __kickstart_Mason = _G.require("mason")
 __kickstart_Fidget = _G.require("fidget")
+__kickstart_MasonLspConfig = _G.require("mason-lspconfig")
 __kickstart__Kickstart_Kickstart_Fields_ = _hx_e()
+__kickstart_Lspconfig = _G.require("lspconfig")
 __lua_StringMap = _hx_e()
 __vim__Vim_GroupOpts_Impl_ = _hx_e()
 __vim__Vim_AutoCmdOpts_Impl_ = _hx_e()
@@ -788,6 +790,27 @@ __kickstart__Kickstart_Kickstart_Fields_.keymaps = function()
   vim.keymap.set(({"n"}), "k", "v:count == 0 ? 'gk' : 'k'", ({desc = "up when word-wrap", expr = true, silent = true}));
   vim.keymap.set(({"n"}), "j", "v:count == 0 ? 'gj' : 'j'", ({desc = "down when word-wrap", expr = true, silent = true}));
 end
+__kickstart__Kickstart_Kickstart_Fields_.onAttach = function(x,bufnr) 
+  local nmap = function(keys,func,desc) 
+    vim.keymap.set("n", keys, func, ({buffer = bufnr, desc = Std.string("LSP: ") .. Std.string(desc)}));
+  end;
+  nmap("<leader>rn", vim.lsp.buf.rename, "[R]e[n]ame");
+  nmap("<leader>ca", vim.lsp.buf.code_action, "[C]ode [A]ction");
+  nmap("gd", vim.lsp.buf.definition, "[G]oto [D]efinition");
+  nmap("gI", vim.lsp.buf.implementation, "[G]oto [I]mplementation");
+  nmap("<leader>D", vim.lsp.buf.type_definition, "Type [D]efinition");
+  nmap("K", vim.lsp.buf.hover, "Hover Documentation");
+  nmap("<C-k>", vim.lsp.buf.signature_help, "Signature Documentation");
+  nmap("gD", vim.lsp.buf.declaration, "[G]oto [D]eclaration");
+  nmap("<leader>wa", vim.lsp.buf.add_workspace_folder, "[W]orkspace [A]dd Folder");
+  nmap("<leader>wr", vim.lsp.buf.remove_workspace_folder, "[W]orkspace [R]emove Folder");
+  nmap("<leader>wl", function() 
+    vim.pretty_print(vim.lsp.buf.list_workspace_folders());
+  end, "[W]orkspace [L]ist Folders");
+  vim.api.nvim_buf_create_user_command(bufnr, "Format", function(_) 
+    vim.lsp.buf.format(_hx_e());
+  end, ({desc = "Format current buffer with LSP"}));
+end
 __kickstart__Kickstart_Kickstart_Fields_.main = function() 
   __vim_DanieloVim.autocmd("Kickstart", ({"BufWritePost"}), vim.fn.expand("$MYVIMRC"), "Reload the config", function() 
     vim.cmd("source <afile> | PackerCompile");
@@ -810,9 +833,20 @@ __kickstart__Kickstart_Kickstart_Fields_.main = function()
   local _ = nil;
   local _ = nil;
   __kickstart_Gitsigns.setup(({signs = ({add = _hx_o({__fields__={text=true},text="+"}), change = _hx_o({__fields__={text=true},text="~"}), changedelete = _hx_o({__fields__={text=true},text="~"}), delete = _hx_o({__fields__={text=true},text="_"}), topdelete = _hx_o({__fields__={text=true},text="‾"})})}));
+  local capabilities = vim.lsp.protocol.make_client_capabilities();
   __kickstart_Neodev.setup();
   __kickstart_Mason.setup();
   __kickstart_Fidget.setup();
+  __kickstart_MasonLspConfig.setup_handlers(({function(server_name) 
+    if (server_name == "sumneko_lua") then 
+      local obj = _hx_o({__fields__={capabilities=true,on_attach=true,settings=true},capabilities=capabilities,on_attach=function(_,...) return __kickstart__Kickstart_Kickstart_Fields_.onAttach(...) end,settings=({lua = ({workspace = _hx_o({__fields__={checkThirdParty=true},checkThirdParty=false}), telemetry = _hx_o({__fields__={enable=true},enable=false})})})});
+      obj.__fields__ = nil;
+      _G.setmetatable(obj, nil);
+      __kickstart_Lspconfig.sumneko_lua:setup(obj);
+    else
+      vim.pretty_print(Std.string("Ignoring ") .. Std.string(server_name));
+    end;
+  end}));
 end
 
 __lua_StringMap.new = function() 

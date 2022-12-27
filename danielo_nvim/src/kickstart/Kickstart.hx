@@ -66,7 +66,7 @@ extern class Cmp {
 @:luaRequire('mason-lspconfig')
 extern class MasonLspConfig {
   static function setup(opts:TableWrapper< {ensure_installed:Array< String >} >):Void;
-  static function setup_handlers(handlers:Array< (name:String) -> Void >):Void;
+  static function setup_handlers(handlers:LuaArray< (name:String) -> Void >):Void;
 }
 
 @:luaRequire('luasnip')
@@ -208,9 +208,9 @@ function main() {
   Neodev.setup();
   Mason.setup();
   Fidget.setup();
-  MasonLspConfig.setup_handlers([server_name -> {
+  MasonLspConfig.setup_handlers(t([server_name -> {
     switch (server_name) {
-      case 'sumneko_lua': Lspconfig.sumneko_lua.setup({
+      case 'sumneko_lua': Lspconfig.sumneko_lua.setup(({
           capabilities: capabilities,
           on_attach: onAttach,
           settings: t({
@@ -219,7 +219,8 @@ function main() {
               telemetry: {enable: false},
             })
           })
-        });
+        }));
+      case _: Vim.print('Ignoring $server_name');
     }
-  }]);
+  }]));
 }
