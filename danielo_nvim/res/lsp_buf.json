@@ -245,19 +245,6 @@
     "return_type": "Void"
   },
   {
-    "annotations": [],
-    "name": "rename",
-    "parameters": [
-      [
-        "Dynamic",
-        "name"
-      ]
-    ],
-    "fullyQualified_name": "rename",
-    "docs": [],
-    "return_type": "Void"
-  },
-  {
     "annotations": [
       "@param context (table) Context for the request",
       "@see https://microsoft.github.io/language-server-protocol/specifications/specification-current/#textDocument_references",
