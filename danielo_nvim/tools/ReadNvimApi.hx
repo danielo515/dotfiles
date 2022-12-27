@@ -81,7 +81,7 @@ typedef AnnotationMap = Map< String, Annotation >;
     return annotations.fold((annotation, parsed:AnnotationMap) -> {
       final returnRegex = ~/@return (.*)/i;
       final returnWithParens = ~/@return \(([^\)]*)\)(.*)/i;
-      final paramSimple = ~/@param ([a-z_]*) ([a-z_]*) (.*)/i;
+      final paramSimple = ~/@param (\w*) ([a-z_]*) (.*)/i;
       final paramRegex = ~/@param ([^ ]*)(.*)/i;
       final paramWithParens = ~/@param ([^ ]*) \(([^\)]*)\)(.*)/i;
 
@@ -309,7 +309,7 @@ class ReadNvimApi {
         final lsp = vimBuiltin.parsePath('lsp.lua').filter(removePrivate);
         writeFile('./res/lsp.json', lsp);
         final lspBuf = vimBuiltin.parsePath('lsp/buf.lua').filter(removePrivate);
-        writeFile('./res/lsp_buf.json', lsp);
+        writeFile('./res/lsp_buf.json', lspBuf);
 
       case Error(error):
         Sys.println("Could not get neovim path, skip parsing");

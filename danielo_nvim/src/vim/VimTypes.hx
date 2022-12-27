@@ -4,6 +4,7 @@ import haxe.extern.EitherType;
 import lua.NativeStringTools;
 
 abstract TabPage(Int) {}
+abstract Client(Int) {}
 
 @:arrayAccess abstract LuaArray< T >(lua.Table< Int, T >) from lua.Table< Int, T > to lua.Table< Int, T > {
   // Can this be converted into a macro to avoid even calling fromArray ?

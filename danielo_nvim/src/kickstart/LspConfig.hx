@@ -2,6 +2,7 @@ package kickstart;
 
 import lua.Table.AnyTable;
 import vim.Vim;
+import vim.Lsp;
 import vim.VimTypes;
 import lua.Table.create as t;
 
@@ -39,10 +40,10 @@ function on_attach(_:Dynamic, bufnr:Buffer) {
   //   '<leader>ws',
   //   require('telescope.builtin').lsp_dynamic_workspace_symbols,
   //   '[W]orkspace [S]ymbols'
-  // ) // See `:help K` for why this keymap
+  // ); // See `:help K` for why this keymap
 
   nmap('K', LspBuf.hover, 'Hover Documentation');
-  nmap('<C-k>', LspBuf.signature_help, 'Signature Documentation') // Lesser used LSP functionality
+  nmap('<C-k>', LspBuf.signature_help, 'Signature Documentation'); // Lesser used LSP functionality
 
   nmap('gD', LspBuf.declaration, '[G]oto [D]eclaration');
   nmap('<leader>wa', LspBuf.add_workspace_folder, '[W]orkspace [A]dd Folder');
@@ -51,12 +52,12 @@ function on_attach(_:Dynamic, bufnr:Buffer) {
     '<leader>wl',
     () -> Vim.print(LspBuf.list_workspace_folders()),
     '[W]orkspace [L]ist Folders'
-  ) // Create a command `:Format` local to the LSP buffer
+  ); // Create a command `:Format` local to the LSP buffer
 
   nvim.API.nvim_buf_create_user_command(
     bufnr,
     'Format',
-    (_) -> LspBuf.format(),
+    (_) -> LspBuf.format({}),
     t({desc: 'Format current buffer with LSP'})
   );
 }

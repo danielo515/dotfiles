@@ -1,6 +1,5 @@
 package kickstart;
 
-import lua.Table.AnyTable;
 import vim.Vim;
 import vim.VimTypes;
 import lua.Table.create as t;
@@ -66,17 +65,6 @@ extern class Cmp {
 extern class MasonLspConfig {
   static function setup(opts:TableWrapper< {ensure_installed:Array< String >} >):Void;
   static function setup_handlers(handlers:Array< (name:String) -> Void >):Void;
-}
-
-typedef LspConfigSetupFn = {
-  final setup:(
-    config:TableWrapper< {on_attach:(a:Dynamic, bufnr:Buffer) -> Void, Settings:AnyTable, capabilities:Dynamic} >
-  ) -> Void;
-}
-
-@:luaRequire('lspconfig')
-extern class Lspconfig {
-  final sumneko_lua:LspConfigSetupFn;
 }
 
 @:luaRequire('luasnip')

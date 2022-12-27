@@ -1,14 +1,15 @@
 import haxe.Json;
+import haxe.io.Path;
 import haxe.macro.Context;
 import haxe.macro.Expr;
 import haxe.macro.MacroType;
 import sys.io.File;
 
 var patches = [
-  "nvim_create_augroup" => macro:vim.Vim.Group,
-  "nvim_buf_get_keymap" => macro:vim.VimTypes.LuaArray< vim.VimTypes.MapInfo >,
-  "nvim_create_user_command.command" => macro:vim.VimTypes.LuaObj< vim.Vim.CommandCallbackArgs > -> Void,
-  "nvim_create_user_command.opts" => macro:TableWrapper< {
+  "nvim_create_augroup" => macro :vim.Vim.Group,
+  "nvim_buf_get_keymap" => macro :vim.VimTypes.LuaArray< vim.VimTypes.MapInfo >,
+  "nvim_create_user_command.command" => macro :vim.VimTypes.LuaObj< vim.Vim.CommandCallbackArgs > -> Void,
+  "nvim_create_user_command.opts" => macro :TableWrapper< {
     desc:String,
     force:Bool
   } >
@@ -25,7 +26,7 @@ macro function generateApi():Void {
     #if !dump
     meta: [meta("native", [macro "vim.api"])],
     #end
-    fields: [for (f in(specs.functions : Array< FunctionDef >)) {
+    fields: [for (f in (specs.functions : Array< FunctionDef >)) {
       {
         name: f.name,
         access: [AStatic, APublic],
@@ -49,42 +50,29 @@ function resolveType(fun:String, arg:Null< String >, t:String):ComplexType {
   if (patch != null) return patch;
 
   return switch (t) {
-    case "String": macro
-    :String;
-    case "LuaRef": macro
-    :haxe.Constraints.Function;
-    case "Window": macro
-    :vim.VimTypes.WindowId;
-    case "Buffer": macro
-    :vim.VimTypes.Buffer;
-    case "Integer": macro
-    :Int;
-    case "Float": macro
-    :Float;
-    case "Tabpage": macro
-    :vim.VimTypes.TabPage;
-    case "Dictionary": macro
-    :lua.Table< String, Dynamic >;
-    case "Boolean": macro
-    :Bool;
-    case "Object": macro
-    :Dynamic;
-    case "Array": macro
-    :vim.VimTypes.LuaArray< Dynamic >;
-    case "void": macro
-    :Void;
+    case "String": macro :String;
+    case "LuaRef": macro :haxe.Constraints.Function;
+    case "Window": macro :vim.VimTypes.WindowId;
+    case "Client": macro :vim.VimTypes.Client;
+    case "Buffer": macro :vim.VimTypes.Buffer;
+    case "Integer": macro :Int;
+    case "Float": macro :Float;
+    case "Tabpage": macro :vim.VimTypes.TabPage;
+    case "Dictionary": macro :lua.Table< String, Dynamic >;
+    case "Boolean": macro :Bool;
+    case "Object": macro :Dynamic;
+    case "Array": macro :vim.VimTypes.LuaArray< Dynamic >;
+    case "void": macro :Void;
 
     case t if (StringTools.startsWith(t, "ArrayOf(")):
       final regexArrayArg = ~/ArrayOf\(([a-zA-Z]+),?/i;
       regexArrayArg.match(t);
       var itemType = resolveType(fun, (arg == null ? "" : arg) + "[]", regexArrayArg.matched(1));
-      macro
-    :vim.VimTypes.LuaArray< $itemType >;
+      macro :vim.VimTypes.LuaArray< $itemType >;
 
     case _:
       Context.warning('Cannot resolve type $t', (macro null).pos);
-      macro
-    :Dynamic;
+      macro :Dynamic;
   };
 }
 
@@ -131,7 +119,7 @@ function parseTypeFromStr(typeString:String) {
   }
   catch (e) {
     Context.warning('bad type string: `$typeString`', (macro null).pos);
-    trace("parsing error: ", e);
+    trace('parsing error of ("$typeString"): ', e);
     throw 'Unable to parse $typeString';
   }
 }
@@ -144,7 +132,7 @@ macro function attachApi(namespace:String):Array< Field > {
 
   final failures = [];
 
-  final newFields:Array< Field > = [for (f in(specs)) {
+  final newFields:Array< Field > = [for (f in (specs)) {
     try {
       {
         name: f.name,
@@ -161,11 +149,15 @@ macro function attachApi(namespace:String):Array< Field > {
         pos: Context.currentPos()
       }
     }
-    catch (error) {
-      failures.push(f);
+    catch (error:String) {
+      failures.push({block: f, error: error});
       continue;
     }
   }];
-  if (failures.length > 0)trace('unable to convert ${Json.stringify(failures, null, " ")}');
+  if (failures.length > 0) {
+    final handle = File.write(Path.join(['dump', namespace + '-error.json']), false);
+    handle.writeString(Json.stringify(failures, null, " "));
+    handle.close();
+  }
   return fields.concat(newFields);
 }
