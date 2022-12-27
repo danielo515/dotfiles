@@ -82,7 +82,11 @@ typedef AnnotationMap = Map< String, Annotation >;
       final returnRegex = ~/@return (.*)/i;
       final returnWithParens = ~/@return \(([^\)]*)\)(.*)/i;
       final paramSimple = ~/@param (\w*) ([a-z_]*) (.*)/i;
+      final paramSimple2 = ~/@param (\w+) \[([a-z_]*)\]: (.*)/i;
       final paramRegex = ~/@param ([^ ]*)(.*)/i;
+      final paramOptional1 = ~/@param (\w+) \(optional, (\w+)\)/i;
+      final paramOptional2 = ~/@param (\w+) \[([a-z_]*)\] \(optional\): (.*)/i;
+      final paramOptional3 = ~/@param (\w+) \((\w+), optional\)/i;
       final paramWithParens = ~/@param ([^ ]*) \(([^\)]*)\)(.*)/i;
 
       switch (annotation) {
@@ -95,6 +99,22 @@ typedef AnnotationMap = Map< String, Annotation >;
         case paramSimple.match(_) => true:
           final name = paramSimple.matched(1);
           final paramType = paramSimple.matched(2);
+          parsed.set(name, Param(name, formatTypeStr(paramType)));
+        case paramSimple2.match(_) => true:
+          final name = paramSimple2.matched(1);
+          final paramType = paramSimple2.matched(2);
+          parsed.set(name, Param(name, formatTypeStr(paramType)));
+        case paramOptional1.match(_) => true:
+          final name = paramOptional1.matched(1);
+          final paramType = paramOptional1.matched(2);
+          parsed.set(name, Param(name, formatTypeStr(paramType)));
+        case paramOptional2.match(_) => true:
+          final name = paramOptional2.matched(1);
+          final paramType = paramOptional2.matched(2);
+          parsed.set(name, Param(name, formatTypeStr(paramType)));
+        case paramOptional3.match(_) => true:
+          final name = paramOptional3.matched(1);
+          final paramType = paramOptional3.matched(2);
           parsed.set(name, Param(name, formatTypeStr(paramType)));
         case paramWithParens.match(_) => true:
           final paramName = paramWithParens.matched(1);
@@ -295,6 +315,8 @@ class ReadNvimApi {
     try {
       final parsed = neoDev.parseFn();
       writeFile('./res/fn.json', parsed);
+      final api = neoDev.parsePath('api.lua');
+      writeFile('./res/api.json', api);
     }
     catch (e) {
       Sys.println(e);

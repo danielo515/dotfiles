@@ -114,13 +114,13 @@ function parseTypeFromStr(typeString:String) {
       case EParenthesis({expr: ECheckType(_, ct)}):
         ct;
 
-      case _: throw 'Unable to parse $typeString';
+      case _: throw 'Unable to parse: $typeString';
     }
   }
   catch (e) {
     Context.warning('bad type string: `$typeString`', (macro null).pos);
     trace('parsing error of ("$typeString"): ', e);
-    throw 'Unable to parse $typeString';
+    throw 'Unable to parse: $typeString';
   }
 }
 

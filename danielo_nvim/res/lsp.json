@@ -879,7 +879,7 @@
         "method"
       ],
       [
-        "Optional, table",
+        "lua.Table<Int, Dynamic>",
         "params"
       ],
       [
@@ -934,7 +934,7 @@
         "method"
       ],
       [
-        "Optional, table",
+        "lua.Table<Int, Dynamic>",
         "params"
       ],
       [
@@ -964,15 +964,15 @@
     "name": "buf_notify",
     "parameters": [
       [
-        "[number] (optional): The number of the buffer",
+        "Int",
         "bufnr"
       ],
       [
-        "[string]: Name of the request method",
+        "String",
         "method"
       ],
       [
-        "[string]: Arguments to send to the server",
+        "String",
         "params"
       ]
     ],
@@ -1080,7 +1080,7 @@
     "name": "buf_get_clients",
     "parameters": [
       [
-        "Optional, number",
+        "Int",
         "bufnr"
       ]
     ],
