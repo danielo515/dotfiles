@@ -26,3 +26,15 @@ extern class LspConfigSetupFn {
 extern class Lspconfig {
   static final sumneko_lua:LspConfigSetupFn;
 }
+
+typedef X = {
+  doX:(a:Int, b:Int) -> Int,
+  test:Bool,
+};
+
+typedef W = TableWrapper< X >;
+extern function testMethod(x:W):Void;
+
+function doY() {
+  testMethod({doX: (a, b) -> a + b});
+}
