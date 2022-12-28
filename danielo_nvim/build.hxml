@@ -2,7 +2,6 @@ libs.hxml
 --macro nullSafety("vim", Strict)
 --macro nullSafety("plenary", Strict)
 --macro nullSafety("parser", Strict)
---macro ApiGen.generateApi()
 
 -D analyzer-module
 -D analyzer-optimize

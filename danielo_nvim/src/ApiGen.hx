@@ -8,7 +8,6 @@ import sys.io.File;
 var patches = [
   "nvim_create_augroup" => macro :vim.Vim.Group,
   "nvim_buf_get_keymap" => macro :vim.VimTypes.LuaArray< vim.VimTypes.MapInfo >,
-  "nvim_create_user_command.command" => macro :vim.VimTypes.LuaObj< vim.Vim.CommandCallbackArgs > -> Void,
   "nvim_create_user_command.opts" => macro :TableWrapper< {
     desc:String,
     force:Bool
