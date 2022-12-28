@@ -28,7 +28,7 @@ extern class Lspconfig {
 }
 
 typedef X = {
-  doX:(a:Int, b:Int) -> Int,
+  doX:Int,
   test:Bool,
 };
 
@@ -36,5 +36,5 @@ typedef W = TableWrapper< X >;
 extern function testMethod(x:W):Void;
 
 function doY() {
-  testMethod({doX: (a, b) -> a + b});
+  testMethod({doX: 99, test: true});
 }

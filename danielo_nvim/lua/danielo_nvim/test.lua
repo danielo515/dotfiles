@@ -206,16 +206,6 @@ __haxe_Exception = _hx_e()
 __haxe_NativeStackTrace = _hx_e()
 __haxe_iterators_ArrayIterator = _hx_e()
 __haxe_iterators_ArrayKeyValueIterator = _hx_e()
-__kickstart_Lualine = _G.require("lualine")
-__kickstart_IndentBlankline = _G.require("indent_blankline")
-__kickstart_Gitsigns = _G.require("gitsigns")
-__kickstart_Comment = _G.require("Comment")
-__kickstart_Neodev = _G.require("neodev")
-__kickstart_Mason = _G.require("mason")
-__kickstart_Fidget = _G.require("fidget")
-__kickstart_MasonLspConfig = _G.require("mason-lspconfig")
-__kickstart__Kickstart_Kickstart_Fields_ = _hx_e()
-__kickstart_Lspconfig = _G.require("lspconfig")
 __kickstart__LspConfig_LspConfig_Fields_ = _hx_e()
 __lua_StringMap = _hx_e()
 __lua_Thread = _hx_e()
@@ -245,25 +235,29 @@ Array.prototype = _hx_e();
 Array.prototype.concat = function(self,a) 
   local _g = _hx_tab_array({}, 0);
   local _g1 = 0;
-  while (_g1 < self.length) do 
-    local i = self[_g1];
+  local _g2 = self;
+  while (_g1 < _g2.length) do 
+    local i = _g2[_g1];
     _g1 = _g1 + 1;
     _g:push(i);
   end;
-  local _g1 = 0;
-  while (_g1 < a.length) do 
-    local i = a[_g1];
-    _g1 = _g1 + 1;
-    _g:push(i);
+  local ret = _g;
+  local _g = 0;
+  while (_g < a.length) do 
+    local i = a[_g];
+    _g = _g + 1;
+    ret:push(i);
   end;
-  do return _g end
+  do return ret end
 end
 Array.prototype.join = function(self,sep) 
   local tbl = ({});
   local _g_current = 0;
-  while (_g_current < self.length) do 
+  local _g_array = self;
+  while (_g_current < _g_array.length) do 
     _g_current = _g_current + 1;
-    _G.table.insert(tbl, Std.string(self[_g_current - 1]));
+    local i = _g_array[_g_current - 1];
+    _G.table.insert(tbl, Std.string(i));
   end;
   do return _G.table.concat(tbl, sep) end
 end
@@ -326,7 +320,8 @@ Array.prototype.slice = function(self,pos,_end)
   local _g1 = _end;
   while (_g < _g1) do 
     _g = _g + 1;
-    ret:push(self[_g - 1]);
+    local i = _g - 1;
+    ret:push(self[i]);
   end;
   do return ret end
 end
@@ -377,7 +372,8 @@ Array.prototype.splice = function(self,pos,len)
     local i = _g - 1;
     self[i] = self[i + len];
   end;
-  self.length = self.length - len;
+  local tmp = self;
+  tmp.length = tmp.length - len;
   do return ret end
 end
 Array.prototype.toString = function(self) 
@@ -390,7 +386,8 @@ end
 Array.prototype.unshift = function(self,x) 
   local len = self.length;
   local _g = 0;
-  while (_g < len) do 
+  local _g1 = len;
+  while (_g < _g1) do 
     _g = _g + 1;
     local i = _g - 1;
     self[len - i] = self[(len - i) - 1];
@@ -440,7 +437,8 @@ Array.prototype.contains = function(self,x)
   local _g1 = self.length;
   while (_g < _g1) do 
     _g = _g + 1;
-    if (self[_g - 1] == x) then 
+    local i = _g - 1;
+    if (self[i] == x) then 
       do return true end;
     end;
   end;
@@ -459,7 +457,8 @@ Array.prototype.indexOf = function(self,x,fromIndex)
     end;
   end;
   local _g = fromIndex;
-  while (_g < _end) do 
+  local _g1 = _end;
+  while (_g < _g1) do 
     _g = _g + 1;
     local i = _g - 1;
     if (x == self[i]) then 
@@ -492,8 +491,9 @@ end
 Array.prototype.copy = function(self) 
   local _g = _hx_tab_array({}, 0);
   local _g1 = 0;
-  while (_g1 < self.length) do 
-    local i = self[_g1];
+  local _g2 = self;
+  while (_g1 < _g2.length) do 
+    local i = _g2[_g1];
     _g1 = _g1 + 1;
     _g:push(i);
   end;
@@ -502,8 +502,9 @@ end
 Array.prototype.map = function(self,f) 
   local _g = _hx_tab_array({}, 0);
   local _g1 = 0;
-  while (_g1 < self.length) do 
-    local i = self[_g1];
+  local _g2 = self;
+  while (_g1 < _g2.length) do 
+    local i = _g2[_g1];
     _g1 = _g1 + 1;
     _g:push(f(i));
   end;
@@ -512,8 +513,9 @@ end
 Array.prototype.filter = function(self,f) 
   local _g = _hx_tab_array({}, 0);
   local _g1 = 0;
-  while (_g1 < self.length) do 
-    local i = self[_g1];
+  local _g2 = self;
+  while (_g1 < _g2.length) do 
+    local i = _g2[_g1];
     _g1 = _g1 + 1;
     if (f(i)) then 
       _g:push(i);
@@ -536,7 +538,8 @@ Array.prototype.resize = function(self,len)
       local _g1 = self.length;
       while (_g < _g1) do 
         _g = _g + 1;
-        self[_g - 1] = nil;
+        local i = _g - 1;
+        self[i] = nil;
       end;
       self.length = len;
     end;
@@ -739,7 +742,8 @@ String.prototype.split = function(self,delimiter)
       end;
     end;
     if (newidx ~= nil) then 
-      ret:push(_G.string.sub(self, idx, newidx - 1));
+      local match = _G.string.sub(self, idx, newidx - 1);
+      ret:push(match);
       idx = newidx + #delimiter;
     else
       ret:push(_G.string.sub(self, idx, #self));
@@ -847,24 +851,26 @@ __haxe_NativeStackTrace.callStack = function()
   if (_g == nil) then 
     do return _hx_tab_array({}, 0) end;
   else
+    local s = _g;
     local idx = 1;
     local ret = _hx_tab_array({}, 0);
     while (idx ~= nil) do 
       local newidx = 0;
       if (#"\n" > 0) then 
-        newidx = _G.string.find(_g, "\n", idx, true);
+        newidx = _G.string.find(s, "\n", idx, true);
       else
-        if (idx >= #_g) then 
+        if (idx >= #s) then 
           newidx = nil;
         else
           newidx = idx + 1;
         end;
       end;
       if (newidx ~= nil) then 
-        ret:push(_G.string.sub(_g, idx, newidx - 1));
+        local match = _G.string.sub(s, idx, newidx - 1);
+        ret:push(match);
         idx = newidx + #"\n";
       else
-        ret:push(_G.string.sub(_g, idx, #_g));
+        ret:push(_G.string.sub(s, idx, #s));
         idx = nil;
       end;
     end;
@@ -907,77 +913,9 @@ __haxe_iterators_ArrayKeyValueIterator.super = function(self,array)
   self.array = array;
 end
 
-__kickstart__Kickstart_Kickstart_Fields_.new = {}
-__kickstart__Kickstart_Kickstart_Fields_.keymaps = function() 
-  vim.keymap.set(({"n","v"}), "<Space>", "<Nop>", ({desc = "do nothing", expr = false, silent = true}));
-  vim.keymap.set(({"n"}), "k", "v:count == 0 ? 'gk' : 'k'", ({desc = "up when word-wrap", expr = true, silent = true}));
-  vim.keymap.set(({"n"}), "j", "v:count == 0 ? 'gj' : 'j'", ({desc = "down when word-wrap", expr = true, silent = true}));
-end
-__kickstart__Kickstart_Kickstart_Fields_.onAttach = function(x,bufnr) 
-  local nmap = function(keys,func,desc) 
-    vim.keymap.set("n", keys, func, ({buffer = bufnr, desc = Std.string("LSP: ") .. Std.string(desc)}));
-  end;
-  nmap("<leader>rn", vim.lsp.buf.rename, "[R]e[n]ame");
-  nmap("<leader>ca", vim.lsp.buf.code_action, "[C]ode [A]ction");
-  nmap("gd", vim.lsp.buf.definition, "[G]oto [D]efinition");
-  nmap("gI", vim.lsp.buf.implementation, "[G]oto [I]mplementation");
-  nmap("<leader>D", vim.lsp.buf.type_definition, "Type [D]efinition");
-  nmap("K", vim.lsp.buf.hover, "Hover Documentation");
-  nmap("<C-k>", vim.lsp.buf.signature_help, "Signature Documentation");
-  nmap("gD", vim.lsp.buf.declaration, "[G]oto [D]eclaration");
-  nmap("<leader>wa", vim.lsp.buf.add_workspace_folder, "[W]orkspace [A]dd Folder");
-  nmap("<leader>wr", vim.lsp.buf.remove_workspace_folder, "[W]orkspace [R]emove Folder");
-  nmap("<leader>wl", function() 
-    vim.pretty_print(vim.lsp.buf.list_workspace_folders());
-  end, "[W]orkspace [L]ist Folders");
-  vim.api.nvim_buf_create_user_command(bufnr, "Format", function(_) 
-    vim.lsp.buf.format();
-  end, ({bang = false, desc = "Format current buffer with LSP", force = true, nargs = 0, range = false}));
-end
-__kickstart__Kickstart_Kickstart_Fields_.main = function() 
-  __vim_DanieloVim.autocmd("Kickstart", ({"BufWritePost"}), vim.fn.expand("$MYVIMRC"), "Reload the config", function() 
-    vim.cmd("source <afile> | PackerCompile");
-  end);
-  __vim_DanieloVim.autocmd("Kickstart-yank", __vim__VimTypes_LuaArray_Impl_.from(_hx_tab_array({[0]="TextYankPost"}, 1)), "*", "Highlight on yank", function() 
-    do return vim.highlight.on_yank() end;
-  end);
-  vim.cmd("colorscheme onedark");
-  local _ = ___TableWrapper_TableWrapper_Impl_.check(_hx_o({__fields__={desc=true,silent=true,expr=true},desc="do nothing",silent=true,expr=false}));
-  vim.keymap.set(({"n","v"}), "<Space>", "<Nop>", ({desc = "do nothing", expr = false, silent = true}));
-  local _ = ___TableWrapper_TableWrapper_Impl_.check(_hx_o({__fields__={desc=true,silent=true,expr=true},desc="up when word-wrap",silent=true,expr=true}));
-  vim.keymap.set(({"n"}), "k", "v:count == 0 ? 'gk' : 'k'", ({desc = "up when word-wrap", expr = true, silent = true}));
-  local _ = ___TableWrapper_TableWrapper_Impl_.check(_hx_o({__fields__={desc=true,silent=true,expr=true},desc="down when word-wrap",silent=true,expr=true}));
-  vim.keymap.set(({"n"}), "j", "v:count == 0 ? 'gj' : 'j'", ({desc = "down when word-wrap", expr = true, silent = true}));
-  local _ = ___TableWrapper_TableWrapper_Impl_.check(_hx_o({__fields__={options=true},options=___TableWrapper_TableWrapper_Impl_.check(_hx_o({__fields__={icons_enabled=true,theme=true,component_separators=true,section_separators=true},icons_enabled=true,theme="onedark",component_separators="|",section_separators=""}))}));
-  local _ = ___TableWrapper_TableWrapper_Impl_.check(_hx_o({__fields__={icons_enabled=true,theme=true,component_separators=true,section_separators=true},icons_enabled=true,theme="onedark",component_separators="|",section_separators=""}));
-  __kickstart_Lualine.setup(({options = ({component_separators = "|", icons_enabled = true, section_separators = "", theme = "onedark"})}));
-  __kickstart_Comment.setup();
-  __kickstart_IndentBlankline.setup(({char = "┊", show_trailing_blankline_indent = false}));
-  local _ = ___TableWrapper_TableWrapper_Impl_.check(_hx_o({__fields__={signs=true},signs=___TableWrapper_TableWrapper_Impl_.check(_hx_o({__fields__={add=true,change=true,delete=true,topdelete=true,changedelete=true},add=_hx_o({__fields__={text=true},text="+"}),change=_hx_o({__fields__={text=true},text="~"}),delete=_hx_o({__fields__={text=true},text="_"}),topdelete=_hx_o({__fields__={text=true},text="‾"}),changedelete=_hx_o({__fields__={text=true},text="~"})}))}));
-  local _ = ___TableWrapper_TableWrapper_Impl_.check(_hx_o({__fields__={add=true,change=true,delete=true,topdelete=true,changedelete=true},add=_hx_o({__fields__={text=true},text="+"}),change=_hx_o({__fields__={text=true},text="~"}),delete=_hx_o({__fields__={text=true},text="_"}),topdelete=_hx_o({__fields__={text=true},text="‾"}),changedelete=_hx_o({__fields__={text=true},text="~"})}));
-  __kickstart_Gitsigns.setup(({signs = ({add = _hx_o({__fields__={text=true},text="+"}), change = _hx_o({__fields__={text=true},text="~"}), changedelete = _hx_o({__fields__={text=true},text="~"}), delete = _hx_o({__fields__={text=true},text="_"}), topdelete = _hx_o({__fields__={text=true},text="‾"})})}));
-  local capabilities = vim.lsp.protocol.make_client_capabilities();
-  __kickstart_Neodev.setup();
-  __kickstart_Mason.setup();
-  __kickstart_Fidget.setup();
-  __kickstart_MasonLspConfig.setup_handlers(({function(server_name) 
-    if (server_name == "sumneko_lua") then 
-      local config_capabilities = capabilities;
-      local config_on_attach = __kickstart__Kickstart_Kickstart_Fields_.onAttach;
-      local config_settings = ({lua = ({workspace = ({checkThirdParty = false}), telemetry = ({enable = false})})});
-      __kickstart_Lspconfig.sumneko_lua.setup({
-      on_attach = config_on_attach,
-      settings = config_settings,
-      capabilities = config_capabilities,
-    });
-    else
-      vim.pretty_print(Std.string("Ignoring ") .. Std.string(server_name));
-    end;
-  end}));
-end
-
 __kickstart__LspConfig_LspConfig_Fields_.new = {}
 __kickstart__LspConfig_LspConfig_Fields_.doY = function() 
+  local _ = ___TableWrapper_TableWrapper_Impl_.check(_hx_o({__fields__={doX=true,test=true},doX=99,test=true}));
   __kickstart__LspConfig_LspConfig_Fields_.testMethod(({doX = 99, test = true}));
 end
 
@@ -1042,7 +980,8 @@ __vim__Api_AutoCmdOpts_Impl_._new = function(pattern,cb,group,description,once,n
   if (once == nil) then 
     once = false;
   end;
-  do return ({pattern = pattern, callback = cb, group = group, desc = description, once = once, nested = nested}) end;
+  local this1 = ({pattern = pattern, callback = cb, group = group, desc = description, once = once, nested = nested});
+  do return this1 end;
 end
 
 __vim_DanieloVim.new = {}
@@ -1051,12 +990,16 @@ __vim_DanieloVim.autocmd = function(groupName,events,pattern,description,cb)
   local group;
   local _g = __vim_DanieloVim.autogroups:get(groupName);
   if (_g == nil) then 
-    group = vim.api.nvim_create_augroup(groupName, ({clear = true}));
+    local inlobj_clear = true;
+    local this1 = ({clear = inlobj_clear});
+    group = vim.api.nvim_create_augroup(groupName, this1);
     __vim_DanieloVim.autogroups:set(groupName, group);
   else
-    group = _g;
+    local x = _g;
+    group = x;
   end;
-  vim.api.nvim_create_autocmd(events, ({pattern = pattern, callback = cb, group = group, desc = Test["or"](description, Std.string(Std.string(Std.string(Std.string("") .. Std.string(groupName)) .. Std.string(":[")) .. Std.string(pattern)) .. Std.string("]")), once = false, nested = false}));
+  local this1 = ({pattern = pattern, callback = cb, group = group, desc = Test["or"](description, Std.string(Std.string(Std.string(Std.string("") .. Std.string(groupName)) .. Std.string(":[")) .. Std.string(pattern)) .. Std.string("]")), once = false, nested = false});
+  vim.api.nvim_create_autocmd(events, this1);
 end
 
 __vim__Vim_Vim_Fields_.new = {}
@@ -1066,10 +1009,12 @@ end
 
 __vim__VimTypes_GroupOpts_Impl_.new = {}
 __vim__VimTypes_GroupOpts_Impl_._new = function(clear) 
-  do return ({clear = clear}) end;
+  local this1 = ({clear = clear});
+  do return this1 end;
 end
 __vim__VimTypes_GroupOpts_Impl_.fromObj = function(arg) 
-  do return ({clear = arg.clear}) end;
+  local this1 = ({clear = arg.clear});
+  do return this1 end;
 end
 
 __vim__VimTypes_LuaArray_Impl_.new = {}
@@ -1100,10 +1045,12 @@ end
 
 __vim__VimTypes_ExpandString_Impl_.new = {}
 __vim__VimTypes_ExpandString_Impl_._new = function(path) 
-  do return path end;
+  local this1 = path;
+  do return this1 end;
 end
 __vim__VimTypes_ExpandString_Impl_.from = function(ref) 
-  do return ref end;
+  local this1 = ref;
+  do return this1 end;
 end
 __vim__VimTypes_ExpandString_Impl_.plus0 = function(this1,modifiers) 
   do return _G.string.format("%s%s", this1, modifiers) end;
@@ -1149,5 +1096,4 @@ local _hx_static_init = function()
 end
 
 _hx_static_init();
-_G.xpcall(__kickstart__Kickstart_Kickstart_Fields_.main, _hx_error)
 return _hx_exports

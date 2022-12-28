@@ -8,10 +8,8 @@ using haxe.macro.TypeTools;
 
 // Class that transforms any Haxe object into a plain lua table
 // Thanks to @kLabz
-#if macro abstract TableWrapper< T:{} >(Dynamic) { #else abstract TableWrapper< T:{} >(lua.Table< String, Dynamic >) {#end @:pure @:noCompletion extern public static inline function check< T:{} >(v:T):TableWrapper< T > {
-
-  return null;
-};
+#if macro abstract TableWrapper< T:{} >(Dynamic) { #else abstract TableWrapper< T:{} >(lua.Table< String, Dynamic >) {#end
+@:pure @:noCompletion extern public static function check< T:{} >(v:T):TableWrapper< T >;
 
 #if macro
 public static function followTypesUp(arg:haxe.macro.Type) {
@@ -45,8 +43,8 @@ static function extractObjFields(objExpr) {
   var complexType = expected.toComplexType();
 
   switch expected {
-    case TAbstract(_, [type]):
-      final fields = followTypesUp(type);
+    case TAbstract(_, [_]) | TType(_, _):
+      final fields = followTypesUp(expected);
       final x = extractObjFields(ex);
       final inputFields = x.inputFields;
       final fieldExprs = x.fieldExprs;
@@ -71,6 +69,7 @@ static function extractObjFields(objExpr) {
             {field: f.name, expr: macro(TableWrapper.fromExpr(${fieldExprs.get(f.name)}) : $ct)};
 
           case _:
+            // TODO: handle missing fields
             {field: f.name, expr: macro ${fieldExprs.get(f.name)}};
         }
       }];

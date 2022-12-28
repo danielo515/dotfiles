@@ -1,0 +1,10 @@
+libs.hxml
+
+-D lua-vanilla
+-D luajit
+
+kickstart.LspConfig
+
+-cp src
+
+--lua lua/danielo_nvim/test.lua
