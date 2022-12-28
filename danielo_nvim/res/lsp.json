@@ -323,7 +323,7 @@
       "                     Buffer handle to attach to if starting or re-using a",
       "                     client (0 for current)."
     ],
-    "return_type": "Dynamic"
+    "return_type": "Null<Int>"
   },
   {
     "annotations": [
@@ -805,7 +805,7 @@
     "name": "get_active_clients",
     "parameters": [
       [
-        "Dynamic",
+        "Null<lua.Table<Int, Dynamic>>",
         "filter"
       ]
     ],

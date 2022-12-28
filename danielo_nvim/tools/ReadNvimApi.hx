@@ -57,10 +57,6 @@ typedef AnnotationMap = Map< String, Annotation >;
 
   static function formatTypeStr(type:String):String {
     return switch (type) {
-      case 'any[]':
-        'Array<Dynamic>';
-      case 'number[]':
-        'Array<Int>';
       case '$kind[]':
         'Array<${formatTypeStr(kind)}>';
       case 'any': 'Dynamic';
@@ -70,6 +66,7 @@ typedef AnnotationMap = Map< String, Annotation >;
       case 'table<string, $b>': 'lua.Table<String, ${formatTypeStr(b)}>';
       case 'fun()': 'Function';
       case 'boolean': 'Bool';
+      case '$type|nil': 'Null<${formatTypeStr(type)}>';
       case ~/[a-z][|][a-z]/i: 'Dynamic';
       case value: capitalize(value);
     }

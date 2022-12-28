@@ -31,7 +31,7 @@
     "name": "declaration",
     "parameters": [
       [
-        "Dynamic",
+        "Null<lua.Table<Int, Dynamic>>",
         "options"
       ]
     ],
@@ -50,7 +50,7 @@
     "name": "definition",
     "parameters": [
       [
-        "Dynamic",
+        "Null<lua.Table<Int, Dynamic>>",
         "options"
       ]
     ],
@@ -69,7 +69,7 @@
     "name": "type_definition",
     "parameters": [
       [
-        "Dynamic",
+        "Null<lua.Table<Int, Dynamic>>",
         "options"
       ]
     ],
@@ -88,7 +88,7 @@
     "name": "implementation",
     "parameters": [
       [
-        "Dynamic",
+        "Null<lua.Table<Int, Dynamic>>",
         "options"
       ]
     ],
@@ -139,7 +139,7 @@
     "name": "format",
     "parameters": [
       [
-        "Dynamic",
+        "Null<lua.Table<Int, Dynamic>>",
         "options"
       ]
     ],
@@ -206,11 +206,11 @@
     "name": "rename",
     "parameters": [
       [
-        "Dynamic",
+        "Null<String>",
         "new_name"
       ],
       [
-        "Dynamic",
+        "Null<lua.Table<Int, Dynamic>>",
         "options"
       ]
     ],
@@ -257,7 +257,7 @@
         "context"
       ],
       [
-        "Dynamic",
+        "Null<lua.Table<Int, Dynamic>>",
         "options"
       ]
     ],
@@ -275,7 +275,7 @@
     "name": "document_symbol",
     "parameters": [
       [
-        "Dynamic",
+        "Null<lua.Table<Int, Dynamic>>",
         "options"
       ]
     ],
@@ -318,7 +318,7 @@
     "docs": [
       " List workspace folders."
     ],
-    "return_type": "Array<String>"
+    "return_type": "Void"
   },
   {
     "annotations": [],
@@ -361,11 +361,11 @@
     "name": "workspace_symbol",
     "parameters": [
       [
-        "String, optional",
+        "String",
         "query"
       ],
       [
-        "Dynamic",
+        "Null<lua.Table<Int, Dynamic>>",
         "options"
       ]
     ],
@@ -462,7 +462,7 @@
     "name": "code_action",
     "parameters": [
       [
-        "Dynamic",
+        "Null<lua.Table<Int, Dynamic>>",
         "options"
       ]
     ],
