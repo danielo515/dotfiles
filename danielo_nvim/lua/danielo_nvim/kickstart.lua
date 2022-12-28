@@ -955,7 +955,7 @@ __kickstart__Kickstart_Kickstart_Fields_.main = function()
   __kickstart_IndentBlankline.setup(({char = "┊", show_trailing_blankline_indent = false}));
   local _ = ___TableWrapper_TableWrapper_Impl_.check(_hx_o({__fields__={signs=true},signs=___TableWrapper_TableWrapper_Impl_.check(_hx_o({__fields__={add=true,change=true,delete=true,topdelete=true,changedelete=true},add=_hx_o({__fields__={text=true},text="+"}),change=_hx_o({__fields__={text=true},text="~"}),delete=_hx_o({__fields__={text=true},text="_"}),topdelete=_hx_o({__fields__={text=true},text="‾"}),changedelete=_hx_o({__fields__={text=true},text="~"})}))}));
   local _ = ___TableWrapper_TableWrapper_Impl_.check(_hx_o({__fields__={add=true,change=true,delete=true,topdelete=true,changedelete=true},add=_hx_o({__fields__={text=true},text="+"}),change=_hx_o({__fields__={text=true},text="~"}),delete=_hx_o({__fields__={text=true},text="_"}),topdelete=_hx_o({__fields__={text=true},text="‾"}),changedelete=_hx_o({__fields__={text=true},text="~"})}));
-  __kickstart_Gitsigns.setup(({signs = ({add = _hx_o({__fields__={text=true},text="+"}), change = _hx_o({__fields__={text=true},text="~"}), changedelete = _hx_o({__fields__={text=true},text="~"}), delete = _hx_o({__fields__={text=true},text="_"}), topdelete = _hx_o({__fields__={text=true},text="‾"})})}));
+  __kickstart_Gitsigns.setup(({signs = ({add = ({text = "+"}), change = ({text = "~"}), changedelete = ({text = "~"}), delete = ({text = "_"}), topdelete = ({text = "‾"})})}));
   local capabilities = vim.lsp.protocol.make_client_capabilities();
   __kickstart_Neodev.setup();
   __kickstart_Mason.setup();
@@ -978,7 +978,7 @@ end
 
 __kickstart__LspConfig_LspConfig_Fields_.new = {}
 __kickstart__LspConfig_LspConfig_Fields_.doY = function() 
-  __kickstart__LspConfig_LspConfig_Fields_.testMethod(({doX = 99, test = true}));
+  __kickstart__LspConfig_LspConfig_Fields_.testMethod(({doX = 99, nest = ({a = 1.1}), test = true}));
 end
 
 __lua_StringMap.new = function() 

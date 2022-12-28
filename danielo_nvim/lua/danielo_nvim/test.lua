@@ -915,8 +915,8 @@ end
 
 __kickstart__LspConfig_LspConfig_Fields_.new = {}
 __kickstart__LspConfig_LspConfig_Fields_.doY = function() 
-  local _ = ___TableWrapper_TableWrapper_Impl_.check(_hx_o({__fields__={doX=true,test=true},doX=99,test=true}));
-  __kickstart__LspConfig_LspConfig_Fields_.testMethod(({doX = 99, test = true}));
+  local _ = ___TableWrapper_TableWrapper_Impl_.check(_hx_o({__fields__={doX=true,test=true,nest=true},doX=99,test=true,nest=_hx_o({__fields__={a=true},a=1.1})}));
+  __kickstart__LspConfig_LspConfig_Fields_.testMethod(({doX = 99, nest = ({a = 1.1}), test = true}));
 end
 
 __lua_StringMap.new = function() 

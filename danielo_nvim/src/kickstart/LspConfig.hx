@@ -30,11 +30,12 @@ extern class Lspconfig {
 typedef X = {
   doX:Int,
   test:Bool,
+  nest:{a:Float},
 };
 
 typedef W = TableWrapper< X >;
 extern function testMethod(x:W):Void;
 
 function doY() {
-  testMethod({doX: 99, test: true});
+  testMethod({doX: 99, test: true, nest: {a: 1.1}});
 }

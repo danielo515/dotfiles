@@ -68,8 +68,10 @@ static function extractObjFields(objExpr) {
 
             {field: f.name, expr: macro(TableWrapper.fromExpr(${fieldExprs.get(f.name)}) : $ct)};
 
+          case TAnonymous(_):
+            {field: f.name, expr: macro lua.Table.create(${fieldExprs.get(f.name)})};
           case _:
-            // TODO: handle missing fields
+            trace(f.name, fieldExprs.get(f.name), f.type);
             {field: f.name, expr: macro ${fieldExprs.get(f.name)}};
         }
       }];

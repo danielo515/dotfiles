@@ -5,6 +5,7 @@ libs.hxml
 
 kickstart.LspConfig
 
+-dce std
 -cp src
 
 --lua lua/danielo_nvim/test.lua
