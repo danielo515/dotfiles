@@ -62,11 +62,11 @@ typedef AnnotationMap = Map< String, Annotation >;
       case 'number[]':
         'Array<Int>';
       case '$kind[]':
-        'Array<$kind>';
+        'Array<${formatTypeStr(kind)}>';
       case 'any': 'Dynamic';
       case 'number' | 'Number': 'Int';
       case 'table' | 'List': 'lua.Table<Int, Dynamic>';
-      case 'table<string, any>': 'lua.Table<String, Dynamic>';
+      case 'table<string, any>' | 'object': 'lua.Table<String, Dynamic>';
       case 'table<string, $b>': 'lua.Table<String, ${formatTypeStr(b)}>';
       case 'fun()': 'Function';
       case 'boolean': 'Bool';

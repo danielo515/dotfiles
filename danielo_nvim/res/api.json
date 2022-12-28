@@ -386,7 +386,7 @@
       "    Return value of function. NB: will deepcopy lua values currently, use",
       "    upvalues to send lua references in and out."
     ],
-    "return_type": "Object"
+    "return_type": "lua.Table<String, Dynamic>"
   },
   {
     "annotations": [
@@ -449,7 +449,7 @@
         "name"
       ],
       [
-        "Object",
+        "lua.Table<String, Dynamic>",
         "command"
       ],
       [
@@ -779,11 +779,11 @@
         "ns_id"
       ],
       [
-        "Object",
+        "lua.Table<String, Dynamic>",
         "start"
       ],
       [
-        "Object",
+        "lua.Table<String, Dynamic>",
         "end_"
       ],
       [
@@ -918,7 +918,7 @@
       "Return: ~",
       "    Array of lines, or empty array for unloaded buffer."
     ],
-    "return_type": "Array<string>"
+    "return_type": "Array<String>"
   },
   {
     "annotations": [
@@ -1048,7 +1048,7 @@
       "Return: ~",
       "    Option value"
     ],
-    "return_type": "Object"
+    "return_type": "lua.Table<String, Dynamic>"
   },
   {
     "annotations": [
@@ -1110,7 +1110,7 @@
       "Return: ~",
       "    Array of lines, or empty array for unloaded buffer."
     ],
-    "return_type": "Array<string>"
+    "return_type": "Array<String>"
   },
   {
     "annotations": [
@@ -1140,7 +1140,7 @@
       "Return: ~",
       "    Variable value"
     ],
-    "return_type": "Object"
+    "return_type": "lua.Table<String, Dynamic>"
   },
   {
     "annotations": [
@@ -1437,7 +1437,7 @@
         "strict_indexing"
       ],
       [
-        "Array<string>",
+        "Array<String>",
         "replacement"
       ]
     ],
@@ -1571,7 +1571,7 @@
         "name"
       ],
       [
-        "Object",
+        "lua.Table<String, Dynamic>",
         "value"
       ]
     ],
@@ -1619,7 +1619,7 @@
         "end_col"
       ],
       [
-        "Array<string>",
+        "Array<String>",
         "replacement"
       ]
     ],
@@ -1671,7 +1671,7 @@
         "name"
       ],
       [
-        "Object",
+        "lua.Table<String, Dynamic>",
         "value"
       ]
     ],
@@ -1696,7 +1696,7 @@
     "name": "nvim_call_dict_function",
     "parameters": [
       [
-        "Object",
+        "lua.Table<String, Dynamic>",
         "dict"
       ],
       [
@@ -1722,7 +1722,7 @@
       "Return: ~",
       "    Result of the function call"
     ],
-    "return_type": "Object"
+    "return_type": "lua.Table<String, Dynamic>"
   },
   {
     "annotations": [
@@ -1754,7 +1754,7 @@
       "Return: ~",
       "    Result of the function call"
     ],
-    "return_type": "Object"
+    "return_type": "lua.Table<String, Dynamic>"
   },
   {
     "annotations": [
@@ -1967,7 +1967,7 @@
     "name": "nvim_create_autocmd",
     "parameters": [
       [
-        "Object",
+        "lua.Table<String, Dynamic>",
         "event"
       ],
       [
@@ -2164,7 +2164,7 @@
         "name"
       ],
       [
-        "Object",
+        "lua.Table<String, Dynamic>",
         "command"
       ],
       [
@@ -2527,7 +2527,7 @@
       "Return: ~",
       "    Evaluation result or expanded object"
     ],
-    "return_type": "Object"
+    "return_type": "lua.Table<String, Dynamic>"
   },
   {
     "annotations": [
@@ -2631,7 +2631,7 @@
     "name": "nvim_exec_autocmds",
     "parameters": [
       [
-        "Object",
+        "lua.Table<String, Dynamic>",
         "event"
       ],
       [
@@ -3207,7 +3207,7 @@
       "Return: ~",
       "    Option value (global)"
     ],
-    "return_type": "Object"
+    "return_type": "lua.Table<String, Dynamic>"
   },
   {
     "annotations": [
@@ -3283,7 +3283,7 @@
       "Return: ~",
       "    Option value"
     ],
-    "return_type": "Object"
+    "return_type": "lua.Table<String, Dynamic>"
   },
   {
     "annotations": [
@@ -3304,7 +3304,7 @@
       "Return: ~",
       "    Map of process properties, or NIL if process not found."
     ],
-    "return_type": "Object"
+    "return_type": "lua.Table<String, Dynamic>"
   },
   {
     "annotations": [
@@ -3365,7 +3365,7 @@
       "Return: ~",
       "    list of absolute paths to the found files"
     ],
-    "return_type": "Array<string>"
+    "return_type": "Array<String>"
   },
   {
     "annotations": [
@@ -3389,7 +3389,7 @@
       "Return: ~",
       "    Variable value"
     ],
-    "return_type": "Object"
+    "return_type": "lua.Table<String, Dynamic>"
   },
   {
     "annotations": [
@@ -3413,7 +3413,7 @@
       "Return: ~",
       "    Variable value"
     ],
-    "return_type": "Object"
+    "return_type": "lua.Table<String, Dynamic>"
   },
   {
     "annotations": [
@@ -3571,7 +3571,7 @@
       "Return: ~",
       "    List of paths"
     ],
-    "return_type": "Array<string>"
+    "return_type": "Array<String>"
   },
   {
     "annotations": [
@@ -3642,7 +3642,7 @@
       "Parameters: ~",
       "  • {dict}  |Context| map."
     ],
-    "return_type": "Object"
+    "return_type": "lua.Table<String, Dynamic>"
   },
   {
     "annotations": [
@@ -3678,7 +3678,7 @@
       "  • {log_level}  The log level",
       "  • {opts}       Reserved for future use."
     ],
-    "return_type": "Object"
+    "return_type": "lua.Table<String, Dynamic>"
   },
   {
     "annotations": [
@@ -4167,7 +4167,7 @@
     "name": "nvim_put",
     "parameters": [
       [
-        "Array<string>",
+        "Array<String>",
         "lines"
       ],
       [
@@ -4660,7 +4660,7 @@
         "name"
       ],
       [
-        "Object",
+        "lua.Table<String, Dynamic>",
         "value"
       ]
     ],
@@ -4687,7 +4687,7 @@
         "name"
       ],
       [
-        "Object",
+        "lua.Table<String, Dynamic>",
         "value"
       ],
       [
@@ -4726,7 +4726,7 @@
         "name"
       ],
       [
-        "Object",
+        "lua.Table<String, Dynamic>",
         "value"
       ]
     ],
@@ -4752,7 +4752,7 @@
         "name"
       ],
       [
-        "Object",
+        "lua.Table<String, Dynamic>",
         "value"
       ]
     ],
@@ -4869,7 +4869,7 @@
       "Return: ~",
       "    Variable value"
     ],
-    "return_type": "Object"
+    "return_type": "lua.Table<String, Dynamic>"
   },
   {
     "annotations": [
@@ -4960,7 +4960,7 @@
         "name"
       ],
       [
-        "Object",
+        "lua.Table<String, Dynamic>",
         "value"
       ]
     ],
@@ -5012,7 +5012,7 @@
       "    |win_execute()|",
       "    |nvim_buf_call()|"
     ],
-    "return_type": "Object"
+    "return_type": "lua.Table<String, Dynamic>"
   },
   {
     "annotations": [
@@ -5225,7 +5225,7 @@
       "Return: ~",
       "    Option value"
     ],
-    "return_type": "Object"
+    "return_type": "lua.Table<String, Dynamic>"
   },
   {
     "annotations": [
@@ -5303,7 +5303,7 @@
       "Return: ~",
       "    Variable value"
     ],
-    "return_type": "Object"
+    "return_type": "lua.Table<String, Dynamic>"
   },
   {
     "annotations": [
@@ -5541,7 +5541,7 @@
         "name"
       ],
       [
-        "Object",
+        "lua.Table<String, Dynamic>",
         "value"
       ]
     ],
@@ -5574,7 +5574,7 @@
         "name"
       ],
       [
-        "Object",
+        "lua.Table<String, Dynamic>",
         "value"
       ]
     ],

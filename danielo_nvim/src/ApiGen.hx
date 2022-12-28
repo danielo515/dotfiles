@@ -46,7 +46,8 @@ macro function generateApi():Void {
 
 function resolveType(fun:String, arg:Null< String >, t:String):ComplexType {
   var patch = patches.get(arg == null ? fun : '$fun.$arg');
-  if (patch != null) return patch;
+  if (patch != null)
+    return patch;
 
   return switch (t) {
     case "String": macro :String;
@@ -118,7 +119,6 @@ function parseTypeFromStr(typeString:String) {
   }
   catch (e) {
     Context.warning('bad type string: `$typeString`', (macro null).pos);
-    trace('parsing error of ("$typeString"): ', e);
     throw 'Unable to parse: $typeString';
   }
 }

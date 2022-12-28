@@ -206,10 +206,10 @@ __haxe_iterators_ArrayIterator = _hx_e()
 __haxe_iterators_ArrayKeyValueIterator = _hx_e()
 __lua_StringMap = _hx_e()
 __plenary_Job = _G.require("plenary.job")
-__vim__Vim_GroupOpts_Impl_ = _hx_e()
-__vim__Vim_AutoCmdOpts_Impl_ = _hx_e()
+__vim__Api_AutoCmdOpts_Impl_ = _hx_e()
 __vim_DanieloVim = _hx_e()
 __vim__Vim_Vim_Fields_ = _hx_e()
+__vim__VimTypes_GroupOpts_Impl_ = _hx_e()
 __vim__VimTypes_LuaArray_Impl_ = _hx_e()
 __vim__VimTypes_LuaObj_Impl_ = _hx_e()
 __vim__VimTypes_ExpandString_Impl_ = _hx_e()
@@ -555,9 +555,6 @@ Main.main = function()
   vim.api.nvim_create_user_command("CopyMessagesToClipboard", function(args) 
     Main.copy_messages_to_clipboard(args.args);
   end, ({bang = false, desc = "Copy the n number of messages to clipboard", force = true, nargs = 1, range = true}));
-  vim.pretty_print(vim.tbl_map(function(x) 
-    do return Std.string(Std.string(Std.string(Std.string(Std.string("") .. Std.string(x.lhs)) .. Std.string(" -> ")) .. Std.string(x.rhs)) .. Std.string(" ")) .. Std.string(x.desc) end;
-  end, vim.api.nvim_buf_get_keymap(0, "n")));
 end
 Main.runGh = function(args) 
   if (vim.fn.executable("gh") ~= 1) then 
@@ -872,16 +869,8 @@ __lua_StringMap.prototype.exists = function(self,key)
   do return self.h[key] ~= nil end
 end
 
-__vim__Vim_GroupOpts_Impl_.new = {}
-__vim__Vim_GroupOpts_Impl_._new = function(clear) 
-  do return ({clear = clear}) end;
-end
-__vim__Vim_GroupOpts_Impl_.fromObj = function(arg) 
-  do return ({clear = arg.clear}) end;
-end
-
-__vim__Vim_AutoCmdOpts_Impl_.new = {}
-__vim__Vim_AutoCmdOpts_Impl_._new = function(pattern,cb,group,description,once,nested) 
+__vim__Api_AutoCmdOpts_Impl_.new = {}
+__vim__Api_AutoCmdOpts_Impl_._new = function(pattern,cb,group,description,once,nested) 
   if (nested == nil) then 
     nested = false;
   end;
@@ -908,6 +897,14 @@ end
 __vim__Vim_Vim_Fields_.new = {}
 __vim__Vim_Vim_Fields_.comment = function() 
   ---@diagnostic disable;
+end
+
+__vim__VimTypes_GroupOpts_Impl_.new = {}
+__vim__VimTypes_GroupOpts_Impl_._new = function(clear) 
+  do return ({clear = clear}) end;
+end
+__vim__VimTypes_GroupOpts_Impl_.fromObj = function(arg) 
+  do return ({clear = arg.clear}) end;
 end
 
 __vim__VimTypes_LuaArray_Impl_.new = {}
