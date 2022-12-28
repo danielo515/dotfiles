@@ -197,16 +197,19 @@ typedef AnnotationMap = Map< String, Annotation >;
 
   public function parsePath(leafPath) {
     final fnsBlocks = getFunctionBlocks(leafPath);
-    return fnsBlocks.map(
-      x -> parseFunctionBlock({
+    return fnsBlocks.fold((x, acc:Array< FunctionBlock >) -> {
+      final block = parseFunctionBlock({
         docs: [],
         parameters: [],
         annotations: [],
         name: "",
         fullyQualified_name: "",
         return_type: "Void"
-      }, x)
-    ).filter(x -> !(x.name == "" && x.fullyQualified_name == ""));
+      }, x);
+      if (block.name != "" && block.fullyQualified_name != "" && !acc.exists(x -> x.name == block.name))
+        acc.push(block);
+      return acc;
+    }, []);
   }
 
   public function parseFn() {

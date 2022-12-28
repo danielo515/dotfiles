@@ -170,31 +170,6 @@
   },
   {
     "annotations": [],
-    "name": "send_changes",
-    "parameters": [
-      [
-        "Dynamic",
-        "bufnr"
-      ],
-      [
-        "Dynamic",
-        "firstline"
-      ],
-      [
-        "Dynamic",
-        "lastline"
-      ],
-      [
-        "Dynamic",
-        "new_lastline"
-      ]
-    ],
-    "fullyQualified_name": "changetracking.send_changes",
-    "docs": [],
-    "return_type": "Void"
-  },
-  {
-    "annotations": [],
     "name": "_reset_timer",
     "parameters": [
       [
@@ -895,27 +870,6 @@
     "return_type": "Void"
   },
   {
-    "annotations": [],
-    "name": "_sync_handler",
-    "parameters": [
-      [
-        "Dynamic",
-        "err"
-      ],
-      [
-        "Dynamic",
-        "result"
-      ],
-      [
-        "Dynamic",
-        "ctx"
-      ]
-    ],
-    "fullyQualified_name": "_sync_handler",
-    "docs": [],
-    "return_type": "Void"
-  },
-  {
     "annotations": [
       "@param bufnr (number) Buffer handle, or 0 for current.",
       "@param method (string) LSP method name",
@@ -1121,35 +1075,6 @@
     "fullyQualified_name": "lsp.get_log_path",
     "docs": [
       " Gets the path of the logfile used by the LSP client."
-    ],
-    "return_type": "Void"
-  },
-  {
-    "annotations": [
-      "@param bufnr number Buffer number",
-      "@param fn function Function to run on each client attached to buffer"
-    ],
-    "name": "for_each_buffer_client",
-    "parameters": [
-      [
-        "Int",
-        "bufnr"
-      ],
-      [
-        "Function",
-        "fn"
-      ]
-    ],
-    "fullyQualified_name": "lsp.for_each_buffer_client",
-    "docs": [
-      " Invokes a function for each LSP client attached to a buffer.",
-      "                   {bufnr}. The function takes the client, client ID, and",
-      "                   buffer number as arguments. Example:",
-      "             <pre>",
-      "               vim.lsp.for_each_buffer_client(0, function(client, client_id, bufnr)",
-      "                 print(vim.inspect(client))",
-      "               end)",
-      "             </pre>"
     ],
     "return_type": "Void"
   },
