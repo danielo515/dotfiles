@@ -50,7 +50,7 @@ abstract AutoCmdOpts(Table< String, Dynamic >) {
 }
 
 @:native("vim.api")
-// @:build(ApiGen.attachApi("api"))
+@:build(ApiGen.attachApi("api"))
 extern class Api {
   static function nvim_create_augroup(group:String, opts:GroupOpts):Group;
   static function nvim_create_autocmd(event:LuaArray< VimEvent >, opts:AutoCmdOpts):Int;

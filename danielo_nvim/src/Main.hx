@@ -45,8 +45,8 @@ class Main {
       (args) -> copy_messages_to_clipboard(args.args),
       ExactlyOne
     );
-    final keymaps = nvim.API.nvim_buf_get_keymap(CurrentBuffer, "n");
-    Vim.print(keymaps.map(x -> '${x.lhs} -> ${x.rhs} ${x.desc}'));
+    // final keymaps = vim.Api.nvim_buf_get_keymap(CurrentBuffer, "n");
+    // Vim.print(keymaps.map(x -> '${x.lhs} -> ${x.rhs} ${x.desc}'));
   }
 
   static function runGh(args):Null< lua.Table< Int, String > > {
