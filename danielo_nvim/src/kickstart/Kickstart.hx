@@ -135,12 +135,13 @@ function onAttach(x:Dynamic, bufnr:Buffer) {
     '[W]orkspace [L]ist Folders'
   ); // Create a command `:Format` local to the LSP buffer
 
-  vim.Api.nvim_buf_create_user_command(
-    bufnr,
-    'Format',
-    (_) -> LspBuf.format({}),
-    t({desc: 'Format current buffer with LSP'})
-  );
+  vim.Api.nvim_buf_create_user_command(bufnr, 'Format', (_) -> LspBuf.format({}), {
+    desc: 'Format current buffer with LSP',
+    force: true,
+    nargs: None,
+    bang: false,
+    range: No,
+  });
 }
 
 /**
