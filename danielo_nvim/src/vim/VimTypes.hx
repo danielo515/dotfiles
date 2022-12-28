@@ -4,7 +4,7 @@ import lua.Table;
 import haxe.extern.EitherType;
 import lua.NativeStringTools;
 
-abstract TabPage(Int) {}
+abstract Tabpage(Int) {}
 abstract Client(Int) {}
 abstract Group(Int) {}
 

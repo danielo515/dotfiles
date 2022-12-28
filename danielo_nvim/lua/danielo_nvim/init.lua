@@ -199,13 +199,19 @@ local Array = _hx_e()
 local Main = _hx_e()
 ___Main_Main_Fields_ = _hx_e()
 local Math = _hx_e()
+local Safety = _hx_e()
 local String = _hx_e()
 local Std = _hx_e()
 local Test = _hx_e()
+__haxe_Exception = _hx_e()
+__haxe_NativeStackTrace = _hx_e()
 __haxe_iterators_ArrayIterator = _hx_e()
 __haxe_iterators_ArrayKeyValueIterator = _hx_e()
 __lua_StringMap = _hx_e()
+__lua_Thread = _hx_e()
 __plenary_Job = _G.require("plenary.job")
+__safety_SafetyException = _hx_e()
+__safety_NullPointerException = _hx_e()
 __vim__Api_AutoCmdOpts_Impl_ = _hx_e()
 __vim_DanieloVim = _hx_e()
 __vim__Vim_Vim_Fields_ = _hx_e()
@@ -612,6 +618,57 @@ Math.min = function(a,b)
   end;
 end
 
+Safety.new = {}
+Safety["or"] = function(value,defaultValue) 
+  if (value == nil) then 
+    do return defaultValue end;
+  else
+    do return value end;
+  end;
+end
+Safety.orGet = function(value,getter) 
+  if (value == nil) then 
+    do return getter() end;
+  else
+    do return value end;
+  end;
+end
+Safety.sure = function(value) 
+  if (value == nil) then 
+    _G.error(__safety_NullPointerException.new("Null pointer in .sure() call"),0);
+  else
+    do return value end;
+  end;
+end
+Safety.unsafe = function(value) 
+  do return value end;
+end
+Safety.check = function(value,callback) 
+  if (value ~= nil) then 
+    do return callback(value) end;
+  else
+    do return false end;
+  end;
+end
+Safety.let = function(value,callback) 
+  if (value == nil) then 
+    do return nil end;
+  else
+    do return callback(value) end;
+  end;
+end
+Safety.run = function(value,callback) 
+  if (value ~= nil) then 
+    callback(value);
+  end;
+end
+Safety.apply = function(value,callback) 
+  if (value ~= nil) then 
+    callback(value);
+  end;
+  do return value end;
+end
+
 String.new = function(string) 
   local self = _hx_new(String.prototype)
   String.super(self,string)
@@ -810,6 +867,68 @@ Test["or"] = function(v,fallback)
   end;
 end
 
+__haxe_Exception.new = function(message,previous,native) 
+  local self = _hx_new(__haxe_Exception.prototype)
+  __haxe_Exception.super(self,message,previous,native)
+  return self
+end
+__haxe_Exception.super = function(self,message,previous,native) 
+  self.__skipStack = 0;
+  self.__exceptionMessage = message;
+  self.__previousException = previous;
+  if (native ~= nil) then 
+    self.__nativeException = native;
+    self.__nativeStack = __haxe_NativeStackTrace.exceptionStack();
+  else
+    self.__nativeException = self;
+    self.__nativeStack = __haxe_NativeStackTrace.callStack();
+    self.__skipStack = 1;
+  end;
+end
+__haxe_Exception.prototype = _hx_e();
+__haxe_Exception.prototype.toString = function(self) 
+  do return self:get_message() end
+end
+__haxe_Exception.prototype.get_message = function(self) 
+  do return self.__exceptionMessage end
+end
+
+__haxe_NativeStackTrace.new = {}
+__haxe_NativeStackTrace.saveStack = function(exception) 
+end
+__haxe_NativeStackTrace.callStack = function() 
+  local _g = debug.traceback();
+  if (_g == nil) then 
+    do return _hx_tab_array({}, 0) end;
+  else
+    local idx = 1;
+    local ret = _hx_tab_array({}, 0);
+    while (idx ~= nil) do 
+      local newidx = 0;
+      if (#"\n" > 0) then 
+        newidx = _G.string.find(_g, "\n", idx, true);
+      else
+        if (idx >= #_g) then 
+          newidx = nil;
+        else
+          newidx = idx + 1;
+        end;
+      end;
+      if (newidx ~= nil) then 
+        ret:push(_G.string.sub(_g, idx, newidx - 1));
+        idx = newidx + #"\n";
+      else
+        ret:push(_G.string.sub(_g, idx, #_g));
+        idx = nil;
+      end;
+    end;
+    do return ret:slice(3) end;
+  end;
+end
+__haxe_NativeStackTrace.exceptionStack = function() 
+  do return _hx_tab_array({}, 0) end;
+end
+
 __haxe_iterators_ArrayIterator.new = function(array) 
   local self = _hx_new(__haxe_iterators_ArrayIterator.prototype)
   __haxe_iterators_ArrayIterator.super(self,array)
@@ -868,6 +987,32 @@ end
 __lua_StringMap.prototype.exists = function(self,key) 
   do return self.h[key] ~= nil end
 end
+
+__lua_Thread.new = {}
+
+__safety_SafetyException.new = function(message,previous,native) 
+  local self = _hx_new(__safety_SafetyException.prototype)
+  __safety_SafetyException.super(self,message,previous,native)
+  return self
+end
+__safety_SafetyException.super = function(self,message,previous,native) 
+  __haxe_Exception.super(self,message,previous,native);
+end
+__safety_SafetyException.prototype = _hx_e();
+__safety_SafetyException.__super__ = __haxe_Exception
+setmetatable(__safety_SafetyException.prototype,{__index=__haxe_Exception.prototype})
+
+__safety_NullPointerException.new = function(message,previous,native) 
+  local self = _hx_new(__safety_NullPointerException.prototype)
+  __safety_NullPointerException.super(self,message,previous,native)
+  return self
+end
+__safety_NullPointerException.super = function(self,message,previous,native) 
+  __safety_SafetyException.super(self,message,previous,native);
+end
+__safety_NullPointerException.prototype = _hx_e();
+__safety_NullPointerException.__super__ = __safety_SafetyException
+setmetatable(__safety_NullPointerException.prototype,{__index=__safety_SafetyException.prototype})
 
 __vim__Api_AutoCmdOpts_Impl_.new = {}
 __vim__Api_AutoCmdOpts_Impl_._new = function(pattern,cb,group,description,once,nested) 

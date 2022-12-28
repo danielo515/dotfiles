@@ -1,10 +1,6 @@
 package vim;
 
-import haxe.extern.EitherType;
-import lua.StringMap;
-import haxe.Rest;
-
-using Test;
+using Safety;
 
 import vim.VimTypes;
 import haxe.Constraints.Function;
@@ -55,6 +51,18 @@ extern class Api {
   static function nvim_create_augroup(group:String, opts:GroupOpts):Group;
   static function nvim_create_autocmd(event:LuaArray< VimEvent >, opts:AutoCmdOpts):Int;
   static function nvim_create_user_command(
+    command_name:String,
+    command:LuaObj< CommandCallbackArgs > -> Void,
+    opts:TableWrapper< {
+      desc:String,
+      force:Bool,
+      ?nargs:Nargs,
+      ?bang:Bool,
+      ?range:CmdRange,
+    } >
+  ):Void;
+  static function nvim_buf_create_user_command(
+    bufnr:Buffer,
     command_name:String,
     command:LuaObj< CommandCallbackArgs > -> Void,
     opts:TableWrapper< {
