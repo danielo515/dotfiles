@@ -45,12 +45,22 @@ class Main {
       (args) -> copy_messages_to_clipboard(args.args),
       ExactlyOne
     );
+    command(
+      "GetPluginVersion",
+      "Gets the git version of a installed packer plugin",
+      (args) -> {
+        final version = packer.Packer.get_plugin_version(args.args);
+        Vim.print(version);
+      },
+      ExactlyOne
+    );
     // final keymaps = vim.Api.nvim_buf_get_keymap(CurrentBuffer, "n");
     // Vim.print(keymaps.map(x -> '${x.lhs} -> ${x.rhs} ${x.desc}'));
   }
 
   static function runGh(args):Null< lua.Table< Int, String > > {
-    if (vim.Fn.executable("gh") != 1) return null;
+    if (vim.Fn.executable("gh") != 1)
+      return null;
 
     final job = Job.make({
       command: "gh",

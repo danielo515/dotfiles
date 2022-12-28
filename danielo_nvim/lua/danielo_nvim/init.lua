@@ -209,6 +209,7 @@ __haxe_iterators_ArrayIterator = _hx_e()
 __haxe_iterators_ArrayKeyValueIterator = _hx_e()
 __lua_StringMap = _hx_e()
 __lua_Thread = _hx_e()
+__packer__Packer_Packer_Fields_ = _hx_e()
 __plenary_Job = _G.require("plenary.job")
 __safety_SafetyException = _hx_e()
 __safety_NullPointerException = _hx_e()
@@ -561,6 +562,9 @@ Main.main = function()
   vim.api.nvim_create_user_command("CopyMessagesToClipboard", function(args) 
     Main.copy_messages_to_clipboard(args.args);
   end, ({bang = false, desc = "Copy the n number of messages to clipboard", force = true, nargs = 1, range = true}));
+  vim.api.nvim_create_user_command("GetPluginVersion", function(args) 
+    vim.pretty_print(__packer__Packer_Packer_Fields_.get_plugin_version(args.args));
+  end, ({bang = false, desc = "Gets the git version of a installed packer plugin", force = true, nargs = 1, range = true}));
 end
 Main.runGh = function(args) 
   if (vim.fn.executable("gh") ~= 1) then 
@@ -989,6 +993,18 @@ __lua_StringMap.prototype.exists = function(self,key)
 end
 
 __lua_Thread.new = {}
+
+__packer__Packer_Packer_Fields_.new = {}
+__packer__Packer_Packer_Fields_.get_plugin_version = function(name) 
+  if (_G.packer_plugins ~= nil) then 
+    local args = ({command = "git", cwd = _G.packer_plugins[name].path, args = ({"rev-parse","--short","HEAD"}), on_stderr = function(args,return_val) 
+      vim.pretty_print("Job got stderr", args, return_val);
+    end});
+    do return __plenary_Job:new(args):sync()[1] end;
+  else
+    do return "unknown" end;
+  end;
+end
 
 __safety_SafetyException.new = function(message,previous,native) 
   local self = _hx_new(__safety_SafetyException.prototype)
