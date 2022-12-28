@@ -211,16 +211,16 @@ function main() {
   Fidget.setup();
   MasonLspConfig.setup_handlers(t([server_name -> {
     switch (server_name) {
-      case 'sumneko_lua': Lspconfig.sumneko_lua.setup(({
+      case 'sumneko_lua': Lspconfig.sumneko_lua.setup({
           capabilities: capabilities,
           on_attach: onAttach,
           settings: t({
             lua: t({
-              workspace: {checkThirdParty: false},
-              telemetry: {enable: false},
+              workspace: t({checkThirdParty: false}),
+              telemetry: t({enable: false}),
             })
           })
-        }));
+        });
       case _: Vim.print('Ignoring $server_name');
     }
   }]));

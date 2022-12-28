@@ -927,7 +927,7 @@ __kickstart__Kickstart_Kickstart_Fields_.onAttach = function(x,bufnr)
     vim.pretty_print(vim.lsp.buf.list_workspace_folders());
   end, "[W]orkspace [L]ist Folders");
   vim.api.nvim_buf_create_user_command(bufnr, "Format", function(_) 
-    vim.lsp.buf.format(_hx_e());
+    vim.lsp.buf.format();
   end, ({bang = false, desc = "Format current buffer with LSP", force = true, nargs = 0, range = false}));
 end
 __kickstart__Kickstart_Kickstart_Fields_.main = function() 
@@ -958,10 +958,14 @@ __kickstart__Kickstart_Kickstart_Fields_.main = function()
   __kickstart_Fidget.setup();
   __kickstart_MasonLspConfig.setup_handlers(({function(server_name) 
     if (server_name == "sumneko_lua") then 
-      local obj = _hx_o({__fields__={capabilities=true,on_attach=true,settings=true},capabilities=capabilities,on_attach=function(_,...) return __kickstart__Kickstart_Kickstart_Fields_.onAttach(...) end,settings=({lua = ({workspace = _hx_o({__fields__={checkThirdParty=true},checkThirdParty=false}), telemetry = _hx_o({__fields__={enable=true},enable=false})})})});
-      obj.__fields__ = nil;
-      _G.setmetatable(obj, nil);
-      __kickstart_Lspconfig.sumneko_lua.setup(obj);
+      local config_capabilities = capabilities;
+      local config_on_attach = __kickstart__Kickstart_Kickstart_Fields_.onAttach;
+      local config_settings = ({lua = ({workspace = ({checkThirdParty = false}), telemetry = ({enable = false})})});
+      __kickstart_Lspconfig.sumneko_lua.setup({
+      on_attach = config_on_attach,
+      settings = config_settings,
+      capabilities = config_capabilities,
+    });
     else
       vim.pretty_print(Std.string("Ignoring ") .. Std.string(server_name));
     end;
