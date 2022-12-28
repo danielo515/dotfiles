@@ -7,80 +7,12 @@ import haxe.Rest;
 using Test;
 
 import vim.VimTypes;
+import vim.Api;
 import haxe.Constraints.Function;
 import lua.Table;
 
 inline function comment() {
   untyped __lua__("---@diagnostic disable");
-}
-
-abstract GroupOpts(Table< String, Bool >) {
-  public inline function new(clear:Bool) {
-    this = Table.create(null, {clear: clear});
-  }
-
-  @:from
-  public inline static function fromObj(arg:{clear:Bool}) {
-    return new GroupOpts(arg.clear);
-  }
-}
-
-abstract Group(Int) {}
-
-abstract AutoCmdOpts(Table< String, Dynamic >) {
-  public inline function new(
-    pattern:String,
-    cb,
-    group:Group,
-    description:String,
-    once = false,
-    nested = false
-  ) {
-    this = Table.create(null, {
-      pattern: pattern,
-      callback: cb,
-      group: group,
-      desc: description,
-      once: once,
-      nested: nested,
-    });
-  }
-}
-
-typedef CommandCallbackArgs = {
-  final args:String;
-  final fargs:Table< String, String >;
-  final bang:Bool;
-  final line1:Int;
-  final line2:Int;
-  final count:Int;
-  final reg:String;
-  final mods:String;
-}
-
-typedef UserCommandOpts = TableWrapper< {
-  desc:String,
-  force:Bool,
-  ?nargs:Nargs,
-  ?bang:Bool,
-  // ?range:CmdRange,
-} >
-
-@:native("vim.api")
-extern class Api {
-  static function nvim_create_augroup(group:String, opts:GroupOpts):Group;
-  static function nvim_create_autocmd(event:LuaArray< VimEvent >, opts:AutoCmdOpts):Int;
-  static function nvim_create_user_command(
-    command_name:String,
-    command:LuaObj< CommandCallbackArgs > -> Void,
-    opts:TableWrapper< {
-      desc:String,
-      force:Bool,
-      ?nargs:Nargs,
-      ?bang:Bool,
-      ?range:CmdRange,
-    } >
-  ):Void;
 }
 
 @:native("vim.fs")

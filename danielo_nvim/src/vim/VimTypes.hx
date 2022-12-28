@@ -1,10 +1,23 @@
 package vim;
 
+import lua.Table;
 import haxe.extern.EitherType;
 import lua.NativeStringTools;
 
 abstract TabPage(Int) {}
 abstract Client(Int) {}
+abstract Group(Int) {}
+
+abstract GroupOpts(Table< String, Bool >) {
+  public inline function new(clear:Bool) {
+    this = Table.create(null, {clear: clear});
+  }
+
+  @:from
+  public inline static function fromObj(arg:{clear:Bool}) {
+    return new GroupOpts(arg.clear);
+  }
+}
 
 @:arrayAccess abstract LuaArray< T >(lua.Table< Int, T >) from lua.Table< Int, T > to lua.Table< Int, T > {
   // Can this be converted into a macro to avoid even calling fromArray ?
