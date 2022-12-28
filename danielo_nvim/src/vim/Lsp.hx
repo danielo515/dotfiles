@@ -9,4 +9,6 @@ extern class Lsp {}
 
 @:native("vim.lsp.buf")
 @:build(ApiGen.attachApi("lsp_buf"))
-extern class LspBuf {}
+extern class LspBuf {
+  public static function list_workspace_folders():LuaArray< String >;
+}
