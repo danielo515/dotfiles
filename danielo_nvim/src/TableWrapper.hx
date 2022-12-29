@@ -5,8 +5,9 @@ import haxe.macro.Expr;
 
 using haxe.macro.TypeTools;
 using haxe.macro.ExprTools;
-#end
 
+var uniqueCount = 1;
+#end
 // Class that transforms any Haxe object into a plain lua table
 // Thanks to @kLabz
 #if macro
@@ -104,9 +105,10 @@ static function objToTable(obj:Expr):Expr {
       var inputObj = {expr: EObjectDecl(inputFields), pos: ex.pos};
       var obj = {expr: EObjectDecl(objFields), pos: ex.pos};
 
+      final name = '_unwrap${uniqueCount++}';
       return macro @:mergeBlock {
         // Type checking; should be removed by dce
-        @:pos(ex.pos) var _:$complexType = TableWrapper.check($inputObj);
+        @:pos(ex.pos) final $name:$complexType = TableWrapper.check($inputObj);
 
         // Actual table creation
         (cast lua.Table.create(null, $obj) : $complexType);

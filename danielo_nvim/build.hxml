@@ -2,6 +2,7 @@ libs.hxml
 --macro nullSafety("vim", Strict)
 --macro nullSafety("plenary", Strict)
 --macro nullSafety("parser", Strict)
+# --macro nullSafety("kickstart", Strict)
 
 -D analyzer-module
 -D analyzer-optimize
@@ -17,7 +18,7 @@ libs.hxml
 
 
 -cp src
---dce std
+-dce full
 
 --each
 

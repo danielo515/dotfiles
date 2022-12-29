@@ -38,6 +38,7 @@ typedef W = TableWrapper< X >;
 extern function testMethod(x:W):Void;
 
 function doY() {
+  final x = "My caliente taza";
   testMethod({
     doX: 99,
     test: true,

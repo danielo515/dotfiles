@@ -9,12 +9,12 @@ import lua.Table.create as t;
 @:luaRequire('lualine')
 extern class Lualine {
   static function setup(config:TableWrapper< {
-    options:TableWrapper< {
+    options:{
       icons_enabled:Bool,
       theme:String,
       component_separators:String,
       section_separators:String,
-    } >
+    }
   } >):Void;
 }
 
@@ -23,18 +23,18 @@ extern class IndentBlankline {
   static function setup(config:lua.Table< String, Dynamic >):Void;
 }
 
-typedef SignDefinition = TableWrapper< {text:String} >
+// typedef SignDefinition = TableWrapper< {text:String} >
 
 @:luaRequire('gitsigns')
 extern class Gitsigns {
   static function setup(config:TableWrapper< {
-    signs:TableWrapper< {
+    signs:{
       add:{text:String},
       change:{text:String},
       delete:{text:String},
       topdelete:{text:String},
       changedelete:{text:String},
-    } >
+    }
   } >):Void;
 }
 
@@ -78,7 +78,7 @@ extern class Luasnip {
   static function jump(?direction:Int):Void;
 }
 
-inline function keymaps() {
+function keymaps() {
   Keymap.set(
     t([Normal, Visual]),
     '<Space>',
