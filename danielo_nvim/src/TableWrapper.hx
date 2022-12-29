@@ -9,7 +9,11 @@ using haxe.macro.ExprTools;
 
 // Class that transforms any Haxe object into a plain lua table
 // Thanks to @kLabz
-#if macro abstract TableWrapper< T:{} >(Dynamic) { #else abstract TableWrapper< T:{} >(lua.Table< String, Dynamic >) {#end
+#if macro
+abstract TableWrapper< T:{} >(Dynamic) {
+#else
+abstract TableWrapper< T:{} >(lua.Table< String, Dynamic >) {
+#end
 @:pure @:noCompletion extern public static function check< T:{} >(v:T):TableWrapper< T >;
 
 #if macro
