@@ -39,12 +39,10 @@ static function extractObjFields(objExpr) {
 }
 
 static function objToTable(obj:Expr):Expr {
-  trace("enter", obj.toString());
   return switch (obj.expr) {
     case EObjectDecl(fields):
       final objExpr:Expr = {
         expr: EObjectDecl([for (f in fields) {
-          trace(f.field, f.expr.toString());
           {
             field: f.field,
             expr: objToTable(f.expr)
@@ -53,8 +51,9 @@ static function objToTable(obj:Expr):Expr {
         pos: obj.pos
       };
       macro lua.Table.create(null, $objExpr);
+    case EArrayDecl(values):
+      macro lua.Table.create(${ExprTools.map(obj, objToTable)}, null);
     case _:
-      trace("default", obj.toString());
       ExprTools.map(obj, objToTable);
   }
 }
