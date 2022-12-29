@@ -978,7 +978,7 @@ end
 
 __kickstart__LspConfig_LspConfig_Fields_.new = {}
 __kickstart__LspConfig_LspConfig_Fields_.doY = function() 
-  __kickstart__LspConfig_LspConfig_Fields_.testMethod(({doX = 99, nest = ({a = 1.1}), test = true}));
+  __kickstart__LspConfig_LspConfig_Fields_.testMethod(({doX = 99, nest = ({a = ({renest = 99, b = ({c = ({meganest = 88})})})}), test = true}));
 end
 
 __lua_StringMap.new = function() 

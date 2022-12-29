@@ -4,6 +4,7 @@ import haxe.macro.Context;
 import haxe.macro.Expr;
 
 using haxe.macro.TypeTools;
+using haxe.macro.ExprTools;
 #end
 
 // Class that transforms any Haxe object into a plain lua table
@@ -34,6 +35,27 @@ static function extractObjFields(objExpr) {
 
     case _:
       throw "Must be called with an anonymous object";
+  }
+}
+
+static function objToTable(obj:Expr):Expr {
+  trace("enter", obj.toString());
+  return switch (obj.expr) {
+    case EObjectDecl(fields):
+      final objExpr:Expr = {
+        expr: EObjectDecl([for (f in fields) {
+          trace(f.field, f.expr.toString());
+          {
+            field: f.field,
+            expr: objToTable(f.expr)
+          }
+        }]),
+        pos: obj.pos
+      };
+      macro lua.Table.create(null, $objExpr);
+    case _:
+      trace("default", obj.toString());
+      ExprTools.map(obj, objToTable);
   }
 }
 #end
@@ -69,9 +91,9 @@ static function extractObjFields(objExpr) {
             {field: f.name, expr: macro(TableWrapper.fromExpr(${fieldExprs.get(f.name)}) : $ct)};
 
           case TAnonymous(_):
-            {field: f.name, expr: macro lua.Table.create(${fieldExprs.get(f.name)})};
+            // {field: f.name, expr: macro lua.Table.create(${fieldExprs.get(f.name)})};
+            {field: f.name, expr: objToTable(${fieldExprs.get(f.name)})};
           case _:
-            trace(f.name, fieldExprs.get(f.name), f.type);
             {field: f.name, expr: macro ${fieldExprs.get(f.name)}};
         }
       }];
@@ -88,7 +110,7 @@ static function extractObjFields(objExpr) {
       };
 
     case other:
-      trace(other);
+      trace(complexType);
       // trace(followTypesUp(other));
       throw "TableWrapper<T> only works with anonymous objects";
   }
