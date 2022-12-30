@@ -199,7 +199,6 @@ local Array = _hx_e()
 local Math = _hx_e()
 local String = _hx_e()
 local Std = _hx_e()
-___TableWrapper_TableWrapper_Impl_ = _hx_e()
 local Test = _hx_e()
 __haxe_iterators_ArrayIterator = _hx_e()
 __haxe_iterators_ArrayKeyValueIterator = _hx_e()
@@ -210,10 +209,11 @@ __kickstart_Comment = _G.require("Comment")
 __kickstart_Neodev = _G.require("neodev")
 __kickstart_Mason = _G.require("mason")
 __kickstart_Fidget = _G.require("fidget")
+__kickstart_Cmp_nvim_lsp = _G.require("cmp_nvim_lsp")
 __kickstart_MasonLspConfig = _G.require("mason-lspconfig")
 __kickstart__Kickstart_Kickstart_Fields_ = _hx_e()
 __kickstart_Lspconfig = _G.require("lspconfig")
-__kickstart_Capabilities = _hx_e()
+__kickstart__Untyped_Untyped_Fields_ = _hx_e()
 __lua_StringMap = _hx_e()
 __vim_DanieloVim = _hx_e()
 __vim__VimTypes_LuaArray_Impl_ = _hx_e()
@@ -740,8 +740,6 @@ Std.int = function(x)
   end;
 end
 
-___TableWrapper_TableWrapper_Impl_.new = {}
-
 Test.new = {}
 Test["or"] = function(v,fallback) 
   if (v ~= nil) then 
@@ -785,19 +783,12 @@ end
 
 __kickstart__Kickstart_Kickstart_Fields_.new = {}
 __kickstart__Kickstart_Kickstart_Fields_.keymaps = function() 
-  local tmp = ({"n","v"});
-  ___TableWrapper_TableWrapper_Impl_.check(_hx_o({__fields__={desc=true,silent=true,expr=true},desc="do nothing",silent=true,expr=false}));
-  vim.keymap.set(tmp, "<Space>", "<Nop>", ({desc = "do nothing", expr = false, silent = true}));
-  local tmp = ({"n"});
-  ___TableWrapper_TableWrapper_Impl_.check(_hx_o({__fields__={desc=true,silent=true,expr=true},desc="up when word-wrap",silent=true,expr=true}));
-  vim.keymap.set(tmp, "k", "v:count == 0 ? 'gk' : 'k'", ({desc = "up when word-wrap", expr = true, silent = true}));
-  local tmp = ({"n"});
-  ___TableWrapper_TableWrapper_Impl_.check(_hx_o({__fields__={desc=true,silent=true,expr=true},desc="down when word-wrap",silent=true,expr=true}));
-  vim.keymap.set(tmp, "j", "v:count == 0 ? 'gj' : 'j'", ({desc = "down when word-wrap", expr = true, silent = true}));
+  vim.keymap.set(({"n","v"}), "<Space>", "<Nop>", ({desc = "do nothing", expr = false, silent = true}));
+  vim.keymap.set(({"n"}), "k", "v:count == 0 ? 'gk' : 'k'", ({desc = "up when word-wrap", expr = true, silent = true}));
+  vim.keymap.set(({"n"}), "j", "v:count == 0 ? 'gj' : 'j'", ({desc = "down when word-wrap", expr = true, silent = true}));
 end
 __kickstart__Kickstart_Kickstart_Fields_.onAttach = function(x,bufnr) 
   local nmap = function(keys,func,desc) 
-    ___TableWrapper_TableWrapper_Impl_.check(_hx_o({__fields__={buffer=true,desc=true},buffer=bufnr,desc=Std.string("LSP: ") .. Std.string(desc)}));
     vim.keymap.set("n", keys, func, ({buffer = bufnr, desc = Std.string("LSP: ") .. Std.string(desc)}));
   end;
   nmap("<leader>rn", vim.lsp.buf.rename, "[R]e[n]ame");
@@ -813,8 +804,6 @@ __kickstart__Kickstart_Kickstart_Fields_.onAttach = function(x,bufnr)
   nmap("<leader>wl", function() 
     vim.pretty_print(vim.lsp.buf.list_workspace_folders());
   end, "[W]orkspace [L]ist Folders");
-  local bufnr = bufnr;
-  ___TableWrapper_TableWrapper_Impl_.check(_hx_o({__fields__={desc=true,force=true,nargs=true,bang=true,range=true},desc="Format current buffer with LSP",force=true,nargs=0,bang=false,range=false}));
   vim.api.nvim_buf_create_user_command(bufnr, "Format", function(_) 
     vim.lsp.buf.format();
   end, ({bang = false, desc = "Format current buffer with LSP", force = true, nargs = 0, range = false}));
@@ -823,18 +812,14 @@ __kickstart__Kickstart_Kickstart_Fields_.main = function()
   __vim_DanieloVim.autocmd("Kickstart", ({"BufWritePost"}), vim.fn.expand("$MYVIMRC"), "Reload the config", function() 
     vim.cmd("source <afile> | PackerCompile");
   end);
-  __vim_DanieloVim.autocmd("Kickstart-yank", __vim__VimTypes_LuaArray_Impl_.from(_hx_tab_array({[0]="TextYankPost"}, 1)), "*", "Highlight on yank", function() 
-    do return vim.highlight.on_yank() end;
-  end);
+  __vim_DanieloVim.autocmd("Kickstart-yank", __vim__VimTypes_LuaArray_Impl_.from(_hx_tab_array({[0]="TextYankPost"}, 1)), "*", "Highlight on yank", __kickstart__Untyped_Untyped_Fields_.higlightOnYank);
   vim.cmd("colorscheme onedark");
   __kickstart__Kickstart_Kickstart_Fields_.keymaps();
-  local _dce6 = ___TableWrapper_TableWrapper_Impl_.check(_hx_o({__fields__={options=true},options=_hx_o({__fields__={icons_enabled=true,theme=true,component_separators=true,section_separators=true},icons_enabled=true,theme="onedark",component_separators="|",section_separators=""})}));
   __kickstart_Lualine.setup(({options = ({icons_enabled = true, theme = "onedark", component_separators = "|", section_separators = ""})}));
   __kickstart_Comment.setup();
   __kickstart_IndentBlankline.setup(({char = "┊", show_trailing_blankline_indent = false}));
-  local _dce7 = ___TableWrapper_TableWrapper_Impl_.check(_hx_o({__fields__={signs=true},signs=_hx_o({__fields__={add=true,change=true,delete=true,topdelete=true,changedelete=true},add=_hx_o({__fields__={text=true},text="+"}),change=_hx_o({__fields__={text=true},text="~"}),delete=_hx_o({__fields__={text=true},text="_"}),topdelete=_hx_o({__fields__={text=true},text="‾"}),changedelete=_hx_o({__fields__={text=true},text="~"})})}));
   __kickstart_Gitsigns.setup(({signs = ({add = ({text = "+"}), change = ({text = "~"}), delete = ({text = "_"}), topdelete = ({text = "‾"}), changedelete = ({text = "~"})})}));
-  local capabilities = __kickstart_Capabilities.getCapabilities();
+  local capabilities = __kickstart_Cmp_nvim_lsp.default_capabilities(vim.lsp.protocol.make_client_capabilities());
   __kickstart_Neodev.setup();
   __kickstart_Mason.setup();
   __kickstart_Fidget.setup();
@@ -854,10 +839,9 @@ __kickstart__Kickstart_Kickstart_Fields_.main = function()
   end}));
 end
 
-__kickstart_Capabilities.new = {}
-__kickstart_Capabilities.getCapabilities = function() 
-  local capabilities = vim.lsp.protocol.make_client_capabilities();
-  do return require('cmp_nvim_lsp').default_capabilities(capabilities) end;
+__kickstart__Untyped_Untyped_Fields_.new = {}
+__kickstart__Untyped_Untyped_Fields_.higlightOnYank = function() 
+  do return vim.highlight.on_yank() end;
 end
 
 __lua_StringMap.new = function() 

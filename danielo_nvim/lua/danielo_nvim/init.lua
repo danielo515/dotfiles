@@ -201,7 +201,6 @@ ___Main_Main_Fields_ = _hx_e()
 local Math = _hx_e()
 local String = _hx_e()
 local Std = _hx_e()
-___TableWrapper_TableWrapper_Impl_ = _hx_e()
 local Test = _hx_e()
 __haxe_iterators_ArrayIterator = _hx_e()
 __haxe_iterators_ArrayKeyValueIterator = _hx_e()
@@ -527,7 +526,6 @@ end
 
 Main.new = {}
 Main.main = function() 
-  ___TableWrapper_TableWrapper_Impl_.check(_hx_o({__fields__={desc=true,force=true,nargs=true,bang=true,range=true},desc="Testing from haxe",force=true,nargs="*",bang=true,range="%"}));
   vim.api.nvim_create_user_command("HaxeCmd", function(args) 
     vim.pretty_print(args);
   end, ({bang = true, desc = "Testing from haxe", force = true, nargs = "*", range = "%"}));
@@ -536,7 +534,6 @@ Main.main = function()
     do return true end;
   end);
   local nargs = nil;
-  ___TableWrapper_TableWrapper_Impl_.check(_hx_o({__fields__={desc=true,force=true,nargs=true,bang=true,range=true},desc="Open the current file in github",force=true,nargs=nargs,bang=false,range=true}));
   vim.api.nvim_create_user_command("OpenInGh", function(args) 
     Main.openInGh((function() 
       local _hx_1
@@ -547,18 +544,13 @@ Main.main = function()
     end )());
   end, ({bang = false, desc = "Open the current file in github", force = true, nargs = nargs, range = true}));
   local nargs = nil;
-  ___TableWrapper_TableWrapper_Impl_.check(_hx_o({__fields__={desc=true,force=true,nargs=true,bang=true,range=true},desc="Copy current file github URL",force=true,nargs=nargs,bang=false,range=true}));
   vim.api.nvim_create_user_command("CopyGhUrl", Main.copyGhUrl, ({bang = false, desc = "Copy current file github URL", force = true, nargs = nargs, range = true}));
-  local nargs = 1;
-  ___TableWrapper_TableWrapper_Impl_.check(_hx_o({__fields__={desc=true,force=true,nargs=true,bang=true,range=true},desc="Copy the n number of messages to clipboard",force=true,nargs=nargs,bang=false,range=true}));
   vim.api.nvim_create_user_command("CopyMessagesToClipboard", function(args) 
     Main.copy_messages_to_clipboard(args.args);
-  end, ({bang = false, desc = "Copy the n number of messages to clipboard", force = true, nargs = nargs, range = true}));
-  local nargs = 1;
-  ___TableWrapper_TableWrapper_Impl_.check(_hx_o({__fields__={desc=true,force=true,nargs=true,bang=true,range=true},desc="Gets the git version of a installed packer plugin",force=true,nargs=nargs,bang=false,range=true}));
+  end, ({bang = false, desc = "Copy the n number of messages to clipboard", force = true, nargs = 1, range = true}));
   vim.api.nvim_create_user_command("GetPluginVersion", function(args) 
     vim.pretty_print(__packer__Packer_Packer_Fields_.get_plugin_version(args.args));
-  end, ({bang = false, desc = "Gets the git version of a installed packer plugin", force = true, nargs = nargs, range = true}));
+  end, ({bang = false, desc = "Gets the git version of a installed packer plugin", force = true, nargs = 1, range = true}));
 end
 Main.runGh = function(args) 
   if (vim.fn.executable("gh") ~= 1) then 
@@ -804,8 +796,6 @@ Std.int = function(x)
     do return _hx_bit_clamp(x) end;
   end;
 end
-
-___TableWrapper_TableWrapper_Impl_.new = {}
 
 Test.new = {}
 Test["or"] = function(v,fallback) 

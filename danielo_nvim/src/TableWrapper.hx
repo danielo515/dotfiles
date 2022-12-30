@@ -15,7 +15,7 @@ abstract TableWrapper< T:{} >(Dynamic) {
 #else
 abstract TableWrapper< T:{} >(lua.Table< String, Dynamic >) {
 #end
-@:noCompletion extern public static function check< T:{} >(v:T):TableWrapper< T >;
+@:pure @:noCompletion extern public static function check< T:{} >(v:T):TableWrapper< T >;
 
 #if macro
 public static function followTypesUp(arg:haxe.macro.Type) {

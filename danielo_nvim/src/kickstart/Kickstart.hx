@@ -63,6 +63,11 @@ extern class Cmp {
   static function setup():Void;
 }
 
+@:luaRequire('cmp_nvim_lsp')
+extern class Cmp_nvim_lsp {
+  static function default_capabilities(opts:Dynamic):Dynamic;
+}
+
 @:luaRequire('mason-lspconfig')
 extern class MasonLspConfig {
   static function setup(opts:TableWrapper< {ensure_installed:Array< String >} >):Void;
@@ -160,7 +165,7 @@ function main() {
     [TextYankPost],
     "*",
     "Highlight on yank",
-    () -> untyped __lua__("vim.highlight.on_yank()")
+    kickstart.Untyped.higlightOnYank
   );
   Vim.cmd("colorscheme onedark");
   keymaps();
@@ -204,7 +209,7 @@ function main() {
     },
   });
 
-  final capabilities = kickstart.Untyped.Capabilities.getCapabilities();
+  final capabilities = Cmp_nvim_lsp.default_capabilities(vim.Lsp.Protocol.make_client_capabilities());
 
   Neodev.setup();
   Mason.setup();
