@@ -58,11 +58,6 @@ extern class Fidget {
   static function setup():Void;
 }
 
-@:luaRequire('cmp')
-extern class Cmp {
-  static function setup():Void;
-}
-
 @:luaRequire('cmp_nvim_lsp')
 extern class Cmp_nvim_lsp {
   static function default_capabilities(opts:Dynamic):Dynamic;
@@ -214,6 +209,7 @@ function main() {
   Neodev.setup();
   Mason.setup();
   Fidget.setup();
+  kickstart.Cmp.configure();
   MasonLspConfig.setup_handlers(t([server_name -> {
     switch (server_name) {
       case 'sumneko_lua': Lspconfig.sumneko_lua.setup({
