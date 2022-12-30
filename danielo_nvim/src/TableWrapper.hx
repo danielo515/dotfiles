@@ -44,22 +44,29 @@ static function extractObjFields(objExpr) {
 }
 
 static function objToTable(obj:Expr):Expr {
-  return switch (obj.expr) {
-    case EObjectDecl(fields):
-      final objExpr:Expr = {
-        expr: EObjectDecl([for (f in fields) {
-          {
-            field: f.field,
-            expr: objToTable(f.expr)
-          }
-        }]),
-        pos: obj.pos
-      };
-      macro lua.Table.create(null, $objExpr);
-    case EArrayDecl(values):
-      macro lua.Table.create(${ExprTools.map(obj, objToTable)}, null);
-    case _:
-      ExprTools.map(obj, objToTable);
+  return try {
+    switch (obj.expr) {
+      case EObjectDecl(fields):
+        final objExpr:Expr = {
+          expr: EObjectDecl([for (f in fields) {
+            {
+              field: f.field,
+              expr: objToTable(f.expr)
+            }
+          }]),
+          pos: obj.pos
+        };
+        trace(obj.toString());
+        macro lua.Table.create(null, $objExpr);
+      case EArrayDecl(values):
+        macro lua.Table.create(${ExprTools.map(obj, objToTable)}, null);
+      case _:
+        ExprTools.map(obj, objToTable);
+    }
+  }
+  catch (e) {
+    trace("Failed here:", obj.toString());
+    obj;
   }
 }
 #end
@@ -76,6 +83,7 @@ static function objToTable(obj:Expr):Expr {
       final fieldExprs = x.fieldExprs;
 
       var objFields:Array< ObjectField > = [for (f in fields) {
+        final currentFieldExpression = fieldExprs.get(f.name);
         switch (f.type) {
           case _.toComplexType() => macro :Array< String > :{
             field:f.name,
@@ -95,10 +103,16 @@ static function objToTable(obj:Expr):Expr {
             {field: f.name, expr: macro(TableWrapper.fromExpr(${fieldExprs.get(f.name)}) : $ct)};
 
           case TAnonymous(_):
-            // {field: f.name, expr: macro lua.Table.create(${fieldExprs.get(f.name)})};
             {field: f.name, expr: objToTable(${fieldExprs.get(f.name)})};
+          // case TInst(_.get().name => "Array", [TAnonymous(_)]):
+          //   trace(currentFieldExpression.toString());
+          //   {
+          //     field: f.name,
+          //     expr: macro lua.Table.create(${ExprTools.map(currentFieldExpression, objToTable)})
+          //   }
+
           case _:
-            {field: f.name, expr: macro ${fieldExprs.get(f.name)}};
+            {field: f.name, expr: objToTable(${fieldExprs.get(f.name)})};
         }
       }];
 
