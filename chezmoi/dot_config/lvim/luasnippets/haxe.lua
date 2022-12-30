@@ -72,7 +72,7 @@ abstract {}<T>({}) {{
   ),
 
   s(
-    { trig = "lext", dscr = "lua extern class", regTrig = false },
+    { trig = "extl", dscr = "lua extern class", regTrig = false },
 
     fmt(
       [[ 
