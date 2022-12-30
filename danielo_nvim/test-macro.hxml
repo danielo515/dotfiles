@@ -3,9 +3,10 @@ libs.hxml
 -D lua-vanilla
 -D luajit
 
-kickstart.LspConfig
-
 -dce std
 -cp src
+-cp tools
+
+TestMacros.hx
 
 --lua lua/danielo_nvim/test.lua

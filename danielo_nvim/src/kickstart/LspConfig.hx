@@ -26,23 +26,3 @@ extern class LspConfigSetupFn {
 extern class Lspconfig {
   static final sumneko_lua:LspConfigSetupFn;
 }
-
-typedef X = {
-  doX:Int,
-  test:Bool,
-  nest:{a:{renest:Int, b:{c:{meganest:Int}}}},
-  nestArr:{x:Array< {y:String} >}
-};
-
-typedef W = TableWrapper< X >;
-extern function testMethod(x:W):Void;
-
-function doY() {
-  final x = "My caliente taza";
-  testMethod({
-    doX: 99,
-    test: true,
-    nestArr: {x: [{y: "inside array"}, {y: "second item"}]},
-    nest: {a: {renest: 99, b: {c: {meganest: 88}}}}
-  });
-}
