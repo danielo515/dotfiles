@@ -13,3 +13,8 @@ extern class LspBuf {
   public static function list_workspace_folders():LuaArray< String >;
   public static function format(?opts:TableWrapper< {timeout_ms:Int, bufnr:Buffer, filter:Dynamic -> Bool} >):LuaArray< String >;
 }
+
+@:native("vim.lsp.protocol")
+extern class Protocol {
+  static function make_client_capabilities():Dynamic;
+}

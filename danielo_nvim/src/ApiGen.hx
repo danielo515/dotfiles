@@ -118,7 +118,8 @@ function parseTypeFromStr(typeString:String) {
     }
   }
   catch (e) {
-    Context.warning('bad type string: `$typeString`', (macro null).pos);
+    // TODO;; enable this
+    // Context.warning('bad type string: `$typeString`', (macro null).pos);
     throw 'Unable to parse: $typeString';
   }
 }

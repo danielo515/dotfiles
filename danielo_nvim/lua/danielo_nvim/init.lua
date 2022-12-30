@@ -199,27 +199,16 @@ local Array = _hx_e()
 local Main = _hx_e()
 ___Main_Main_Fields_ = _hx_e()
 local Math = _hx_e()
-local Safety = _hx_e()
 local String = _hx_e()
 local Std = _hx_e()
 local Test = _hx_e()
-__haxe_Exception = _hx_e()
-__haxe_NativeStackTrace = _hx_e()
 __haxe_iterators_ArrayIterator = _hx_e()
 __haxe_iterators_ArrayKeyValueIterator = _hx_e()
 __lua_StringMap = _hx_e()
-__lua_Thread = _hx_e()
 __packer__Packer_Packer_Fields_ = _hx_e()
 __plenary_Job = _G.require("plenary.job")
-__safety_SafetyException = _hx_e()
-__safety_NullPointerException = _hx_e()
-__vim__Api_AutoCmdOpts_Impl_ = _hx_e()
 __vim_DanieloVim = _hx_e()
-__vim__Vim_Vim_Fields_ = _hx_e()
-__vim__VimTypes_GroupOpts_Impl_ = _hx_e()
 __vim__VimTypes_LuaArray_Impl_ = _hx_e()
-__vim__VimTypes_LuaObj_Impl_ = _hx_e()
-__vim__VimTypes_ExpandString_Impl_ = _hx_e()
 
 local _hx_bind, _hx_bit, _hx_staticToInstance, _hx_funcToField, _hx_maxn, _hx_print, _hx_apply_self, _hx_box_mr, _hx_bit_clamp, _hx_table, _hx_bit_raw
 local _hx_pcall_default = {};
@@ -536,9 +525,6 @@ Array.prototype.resize = function(self,len)
 end
 
 Main.new = {}
-Main.command = function(name,description,fn,nargs) 
-  vim.api.nvim_create_user_command(name, fn, ({bang = false, desc = description, force = true, nargs = nargs, range = true}));
-end
 Main.main = function() 
   vim.api.nvim_create_user_command("HaxeCmd", function(args) 
     vim.pretty_print(args);
@@ -620,57 +606,6 @@ Math.min = function(a,b)
   else
     do return _G.math.min(a, b) end;
   end;
-end
-
-Safety.new = {}
-Safety["or"] = function(value,defaultValue) 
-  if (value == nil) then 
-    do return defaultValue end;
-  else
-    do return value end;
-  end;
-end
-Safety.orGet = function(value,getter) 
-  if (value == nil) then 
-    do return getter() end;
-  else
-    do return value end;
-  end;
-end
-Safety.sure = function(value) 
-  if (value == nil) then 
-    _G.error(__safety_NullPointerException.new("Null pointer in .sure() call"),0);
-  else
-    do return value end;
-  end;
-end
-Safety.unsafe = function(value) 
-  do return value end;
-end
-Safety.check = function(value,callback) 
-  if (value ~= nil) then 
-    do return callback(value) end;
-  else
-    do return false end;
-  end;
-end
-Safety.let = function(value,callback) 
-  if (value == nil) then 
-    do return nil end;
-  else
-    do return callback(value) end;
-  end;
-end
-Safety.run = function(value,callback) 
-  if (value ~= nil) then 
-    callback(value);
-  end;
-end
-Safety.apply = function(value,callback) 
-  if (value ~= nil) then 
-    callback(value);
-  end;
-  do return value end;
 end
 
 String.new = function(string) 
@@ -871,68 +806,6 @@ Test["or"] = function(v,fallback)
   end;
 end
 
-__haxe_Exception.new = function(message,previous,native) 
-  local self = _hx_new(__haxe_Exception.prototype)
-  __haxe_Exception.super(self,message,previous,native)
-  return self
-end
-__haxe_Exception.super = function(self,message,previous,native) 
-  self.__skipStack = 0;
-  self.__exceptionMessage = message;
-  self.__previousException = previous;
-  if (native ~= nil) then 
-    self.__nativeException = native;
-    self.__nativeStack = __haxe_NativeStackTrace.exceptionStack();
-  else
-    self.__nativeException = self;
-    self.__nativeStack = __haxe_NativeStackTrace.callStack();
-    self.__skipStack = 1;
-  end;
-end
-__haxe_Exception.prototype = _hx_e();
-__haxe_Exception.prototype.toString = function(self) 
-  do return self:get_message() end
-end
-__haxe_Exception.prototype.get_message = function(self) 
-  do return self.__exceptionMessage end
-end
-
-__haxe_NativeStackTrace.new = {}
-__haxe_NativeStackTrace.saveStack = function(exception) 
-end
-__haxe_NativeStackTrace.callStack = function() 
-  local _g = debug.traceback();
-  if (_g == nil) then 
-    do return _hx_tab_array({}, 0) end;
-  else
-    local idx = 1;
-    local ret = _hx_tab_array({}, 0);
-    while (idx ~= nil) do 
-      local newidx = 0;
-      if (#"\n" > 0) then 
-        newidx = _G.string.find(_g, "\n", idx, true);
-      else
-        if (idx >= #_g) then 
-          newidx = nil;
-        else
-          newidx = idx + 1;
-        end;
-      end;
-      if (newidx ~= nil) then 
-        ret:push(_G.string.sub(_g, idx, newidx - 1));
-        idx = newidx + #"\n";
-      else
-        ret:push(_G.string.sub(_g, idx, #_g));
-        idx = nil;
-      end;
-    end;
-    do return ret:slice(3) end;
-  end;
-end
-__haxe_NativeStackTrace.exceptionStack = function() 
-  do return _hx_tab_array({}, 0) end;
-end
-
 __haxe_iterators_ArrayIterator.new = function(array) 
   local self = _hx_new(__haxe_iterators_ArrayIterator.prototype)
   __haxe_iterators_ArrayIterator.super(self,array)
@@ -988,11 +861,6 @@ __lua_StringMap.prototype.get = function(self,key)
   end;
   do return ret end
 end
-__lua_StringMap.prototype.exists = function(self,key) 
-  do return self.h[key] ~= nil end
-end
-
-__lua_Thread.new = {}
 
 __packer__Packer_Packer_Fields_.new = {}
 __packer__Packer_Packer_Fields_.get_plugin_version = function(name) 
@@ -1004,41 +872,6 @@ __packer__Packer_Packer_Fields_.get_plugin_version = function(name)
   else
     do return "unknown" end;
   end;
-end
-
-__safety_SafetyException.new = function(message,previous,native) 
-  local self = _hx_new(__safety_SafetyException.prototype)
-  __safety_SafetyException.super(self,message,previous,native)
-  return self
-end
-__safety_SafetyException.super = function(self,message,previous,native) 
-  __haxe_Exception.super(self,message,previous,native);
-end
-__safety_SafetyException.prototype = _hx_e();
-__safety_SafetyException.__super__ = __haxe_Exception
-setmetatable(__safety_SafetyException.prototype,{__index=__haxe_Exception.prototype})
-
-__safety_NullPointerException.new = function(message,previous,native) 
-  local self = _hx_new(__safety_NullPointerException.prototype)
-  __safety_NullPointerException.super(self,message,previous,native)
-  return self
-end
-__safety_NullPointerException.super = function(self,message,previous,native) 
-  __safety_SafetyException.super(self,message,previous,native);
-end
-__safety_NullPointerException.prototype = _hx_e();
-__safety_NullPointerException.__super__ = __safety_SafetyException
-setmetatable(__safety_NullPointerException.prototype,{__index=__safety_SafetyException.prototype})
-
-__vim__Api_AutoCmdOpts_Impl_.new = {}
-__vim__Api_AutoCmdOpts_Impl_._new = function(pattern,cb,group,description,once,nested) 
-  if (nested == nil) then 
-    nested = false;
-  end;
-  if (once == nil) then 
-    once = false;
-  end;
-  do return ({pattern = pattern, callback = cb, group = group, desc = description, once = once, nested = nested}) end;
 end
 
 __vim_DanieloVim.new = {}
@@ -1055,19 +888,6 @@ __vim_DanieloVim.autocmd = function(groupName,events,pattern,description,cb)
   vim.api.nvim_create_autocmd(events, ({pattern = pattern, callback = cb, group = group, desc = Test["or"](description, Std.string(Std.string(Std.string(Std.string("") .. Std.string(groupName)) .. Std.string(":[")) .. Std.string(pattern)) .. Std.string("]")), once = false, nested = false}));
 end
 
-__vim__Vim_Vim_Fields_.new = {}
-__vim__Vim_Vim_Fields_.comment = function() 
-  ---@diagnostic disable;
-end
-
-__vim__VimTypes_GroupOpts_Impl_.new = {}
-__vim__VimTypes_GroupOpts_Impl_._new = function(clear) 
-  do return ({clear = clear}) end;
-end
-__vim__VimTypes_GroupOpts_Impl_.fromObj = function(arg) 
-  do return ({clear = arg.clear}) end;
-end
-
 __vim__VimTypes_LuaArray_Impl_.new = {}
 __vim__VimTypes_LuaArray_Impl_.from = function(arr) 
   local ret = ({});
@@ -1079,33 +899,6 @@ __vim__VimTypes_LuaArray_Impl_.from = function(arr)
     ret[idx + 1] = arr[idx];
   end;
   do return ret end;
-end
-__vim__VimTypes_LuaArray_Impl_.map = function(this1,fn) 
-  do return vim.tbl_map(fn, this1) end;
-end
-
-__vim__VimTypes_LuaObj_Impl_.new = {}
-__vim__VimTypes_LuaObj_Impl_.fromType = function(obj) 
-  obj.__fields__ = nil;
-  _G.setmetatable(obj, nil);
-  do return obj end;
-end
-__vim__VimTypes_LuaObj_Impl_.to = function(this1) 
-  do return this1 end;
-end
-
-__vim__VimTypes_ExpandString_Impl_.new = {}
-__vim__VimTypes_ExpandString_Impl_._new = function(path) 
-  do return path end;
-end
-__vim__VimTypes_ExpandString_Impl_.from = function(ref) 
-  do return ref end;
-end
-__vim__VimTypes_ExpandString_Impl_.plus0 = function(this1,modifiers) 
-  do return _G.string.format("%s%s", this1, modifiers) end;
-end
-__vim__VimTypes_ExpandString_Impl_.plus = function(path,modifiers) 
-  do return _G.string.format("%s%s", path, modifiers) end;
 end
 if _hx_bit_raw then
     _hx_bit_clamp = function(v)

@@ -9,12 +9,12 @@ import lua.Table.create as t;
 @:luaRequire('lualine')
 extern class Lualine {
   static function setup(config:TableWrapper< {
-    options:TableWrapper< {
+    options:{
       icons_enabled:Bool,
       theme:String,
       component_separators:String,
       section_separators:String,
-    } >
+    }
   } >):Void;
 }
 
@@ -23,18 +23,18 @@ extern class IndentBlankline {
   static function setup(config:lua.Table< String, Dynamic >):Void;
 }
 
-typedef SignDefinition = TableWrapper< {text:String} >
+// typedef SignDefinition = TableWrapper< {text:String} >
 
 @:luaRequire('gitsigns')
 extern class Gitsigns {
   static function setup(config:TableWrapper< {
-    signs:TableWrapper< {
+    signs:{
       add:{text:String},
       change:{text:String},
       delete:{text:String},
       topdelete:{text:String},
       changedelete:{text:String},
-    } >
+    }
   } >):Void;
 }
 
@@ -58,9 +58,9 @@ extern class Fidget {
   static function setup():Void;
 }
 
-@:luaRequire('cmp')
-extern class Cmp {
-  static function setup():Void;
+@:luaRequire('cmp_nvim_lsp')
+extern class Cmp_nvim_lsp {
+  static function default_capabilities(opts:Dynamic):Dynamic;
 }
 
 @:luaRequire('mason-lspconfig')
@@ -78,7 +78,7 @@ extern class Luasnip {
   static function jump(?direction:Int):Void;
 }
 
-inline function keymaps() {
+function keymaps() {
   Keymap.set(
     t([Normal, Visual]),
     '<Space>',
@@ -160,7 +160,7 @@ function main() {
     [TextYankPost],
     "*",
     "Highlight on yank",
-    () -> untyped __lua__("vim.highlight.on_yank()")
+    kickstart.Untyped.higlightOnYank
   );
   Vim.cmd("colorscheme onedark");
   keymaps();
@@ -204,11 +204,12 @@ function main() {
     },
   });
 
-  final capabilities = untyped __lua__("vim.lsp.protocol.make_client_capabilities()");
+  final capabilities = Cmp_nvim_lsp.default_capabilities(vim.Lsp.Protocol.make_client_capabilities());
 
   Neodev.setup();
   Mason.setup();
   Fidget.setup();
+  kickstart.Cmp.configure();
   MasonLspConfig.setup_handlers(t([server_name -> {
     switch (server_name) {
       case 'sumneko_lua': Lspconfig.sumneko_lua.setup({

@@ -45,6 +45,7 @@ local snippets = {
       { i(1), i(2), i(0) }
     )
   ),
+  s({ trig = "unlua", dscr = "untyped lua block", regTrig = false }, fmt([[ untyped __lua__("{}");]], { i(0) })),
   s(
     { trig = "pustif", dscr = "static inline function", regTrig = false },
     fmt([[ public static inline function {}({}):{}<T> {{ {} }} ]], { i(1), i(2), i(3), i(0) })
@@ -71,7 +72,7 @@ abstract {}<T>({}) {{
   ),
 
   s(
-    { trig = "lext", dscr = "lua extern class", regTrig = false },
+    { trig = "extl", dscr = "lua extern class", regTrig = false },
 
     fmt(
       [[ 
