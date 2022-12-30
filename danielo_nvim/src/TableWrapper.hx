@@ -15,7 +15,7 @@ abstract TableWrapper< T:{} >(Dynamic) {
 #else
 abstract TableWrapper< T:{} >(lua.Table< String, Dynamic >) {
 #end
-@:pure @:noCompletion extern public static function check< T:{} >(v:T):TableWrapper< T >;
+@:noCompletion extern public static function check< T:{} >(v:T):TableWrapper< T >;
 
 #if macro
 public static function followTypesUp(arg:haxe.macro.Type) {
@@ -105,7 +105,7 @@ static function objToTable(obj:Expr):Expr {
       var inputObj = {expr: EObjectDecl(inputFields), pos: ex.pos};
       var obj = {expr: EObjectDecl(objFields), pos: ex.pos};
 
-      final name = '_unwrap${uniqueCount++}';
+      final name = '_dce${uniqueCount++}';
       return macro @:mergeBlock {
         // Type checking; should be removed by dce
         @:pos(ex.pos) final $name:$complexType = TableWrapper.check($inputObj);

@@ -204,7 +204,7 @@ function main() {
     },
   });
 
-  final capabilities = untyped __lua__("vim.lsp.protocol.make_client_capabilities()");
+  final capabilities = kickstart.Untyped.Capabilities.getCapabilities();
 
   Neodev.setup();
   Mason.setup();

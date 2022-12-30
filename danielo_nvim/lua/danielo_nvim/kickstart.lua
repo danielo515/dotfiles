@@ -213,6 +213,7 @@ __kickstart_Fidget = _G.require("fidget")
 __kickstart_MasonLspConfig = _G.require("mason-lspconfig")
 __kickstart__Kickstart_Kickstart_Fields_ = _hx_e()
 __kickstart_Lspconfig = _G.require("lspconfig")
+__kickstart_Capabilities = _hx_e()
 __lua_StringMap = _hx_e()
 __vim_DanieloVim = _hx_e()
 __vim__VimTypes_LuaArray_Impl_ = _hx_e()
@@ -827,13 +828,13 @@ __kickstart__Kickstart_Kickstart_Fields_.main = function()
   end);
   vim.cmd("colorscheme onedark");
   __kickstart__Kickstart_Kickstart_Fields_.keymaps();
-  local _unwrap6 = ___TableWrapper_TableWrapper_Impl_.check(_hx_o({__fields__={options=true},options=_hx_o({__fields__={icons_enabled=true,theme=true,component_separators=true,section_separators=true},icons_enabled=true,theme="onedark",component_separators="|",section_separators=""})}));
+  local _dce6 = ___TableWrapper_TableWrapper_Impl_.check(_hx_o({__fields__={options=true},options=_hx_o({__fields__={icons_enabled=true,theme=true,component_separators=true,section_separators=true},icons_enabled=true,theme="onedark",component_separators="|",section_separators=""})}));
   __kickstart_Lualine.setup(({options = ({icons_enabled = true, theme = "onedark", component_separators = "|", section_separators = ""})}));
   __kickstart_Comment.setup();
   __kickstart_IndentBlankline.setup(({char = "┊", show_trailing_blankline_indent = false}));
-  local _unwrap7 = ___TableWrapper_TableWrapper_Impl_.check(_hx_o({__fields__={signs=true},signs=_hx_o({__fields__={add=true,change=true,delete=true,topdelete=true,changedelete=true},add=_hx_o({__fields__={text=true},text="+"}),change=_hx_o({__fields__={text=true},text="~"}),delete=_hx_o({__fields__={text=true},text="_"}),topdelete=_hx_o({__fields__={text=true},text="‾"}),changedelete=_hx_o({__fields__={text=true},text="~"})})}));
+  local _dce7 = ___TableWrapper_TableWrapper_Impl_.check(_hx_o({__fields__={signs=true},signs=_hx_o({__fields__={add=true,change=true,delete=true,topdelete=true,changedelete=true},add=_hx_o({__fields__={text=true},text="+"}),change=_hx_o({__fields__={text=true},text="~"}),delete=_hx_o({__fields__={text=true},text="_"}),topdelete=_hx_o({__fields__={text=true},text="‾"}),changedelete=_hx_o({__fields__={text=true},text="~"})})}));
   __kickstart_Gitsigns.setup(({signs = ({add = ({text = "+"}), change = ({text = "~"}), delete = ({text = "_"}), topdelete = ({text = "‾"}), changedelete = ({text = "~"})})}));
-  local capabilities = vim.lsp.protocol.make_client_capabilities();
+  local capabilities = __kickstart_Capabilities.getCapabilities();
   __kickstart_Neodev.setup();
   __kickstart_Mason.setup();
   __kickstart_Fidget.setup();
@@ -851,6 +852,12 @@ __kickstart__Kickstart_Kickstart_Fields_.main = function()
       vim.pretty_print(Std.string("Ignoring ") .. Std.string(server_name));
     end;
   end}));
+end
+
+__kickstart_Capabilities.new = {}
+__kickstart_Capabilities.getCapabilities = function() 
+  local capabilities = vim.lsp.protocol.make_client_capabilities();
+  do return require('cmp_nvim_lsp').default_capabilities(capabilities) end;
 end
 
 __lua_StringMap.new = function() 
