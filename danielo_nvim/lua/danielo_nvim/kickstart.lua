@@ -202,6 +202,8 @@ local Std = _hx_e()
 local Test = _hx_e()
 __haxe_iterators_ArrayIterator = _hx_e()
 __haxe_iterators_ArrayKeyValueIterator = _hx_e()
+__kickstart_Cmp = _G.require("cmp")
+__kickstart__Cmp_Cmp_Fields_ = _hx_e()
 __kickstart_Lualine = _G.require("lualine")
 __kickstart_IndentBlankline = _G.require("indent_blankline")
 __kickstart_Gitsigns = _G.require("gitsigns")
@@ -211,6 +213,7 @@ __kickstart_Mason = _G.require("mason")
 __kickstart_Fidget = _G.require("fidget")
 __kickstart_Cmp_nvim_lsp = _G.require("cmp_nvim_lsp")
 __kickstart_MasonLspConfig = _G.require("mason-lspconfig")
+__kickstart_Luasnip = _G.require("luasnip")
 __kickstart__Kickstart_Kickstart_Fields_ = _hx_e()
 __kickstart_Lspconfig = _G.require("lspconfig")
 __kickstart__Untyped_Untyped_Fields_ = _hx_e()
@@ -781,6 +784,13 @@ __haxe_iterators_ArrayKeyValueIterator.super = function(self,array)
   self.array = array;
 end
 
+__kickstart__Cmp_Cmp_Fields_.new = {}
+__kickstart__Cmp_Cmp_Fields_.configure = function() 
+  __kickstart_Cmp.setup(({mapping = __kickstart_Cmp.mapping.preset.insert(({})), snippet = ({expand = function(args) 
+    __kickstart_Luasnip.lsp_expand(args.body);
+  end}), sources = ({({name = "luasnip"}),({name = "nvim_lsp"})})}));
+end
+
 __kickstart__Kickstart_Kickstart_Fields_.new = {}
 __kickstart__Kickstart_Kickstart_Fields_.keymaps = function() 
   vim.keymap.set(({"n","v"}), "<Space>", "<Nop>", ({desc = "do nothing", expr = false, silent = true}));
@@ -823,6 +833,7 @@ __kickstart__Kickstart_Kickstart_Fields_.main = function()
   __kickstart_Neodev.setup();
   __kickstart_Mason.setup();
   __kickstart_Fidget.setup();
+  __kickstart__Cmp_Cmp_Fields_.configure();
   __kickstart_MasonLspConfig.setup_handlers(({function(server_name) 
     if (server_name == "sumneko_lua") then 
       local config_capabilities = capabilities;

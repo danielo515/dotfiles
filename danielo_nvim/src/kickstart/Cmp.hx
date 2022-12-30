@@ -1,15 +1,13 @@
 package kickstart;
 
-import vim.VimTypes.LuaArray;
 import lua.Table;
-import lua.Table.create as t;
 
 typedef CmpConfig = TableWrapper< {
   snippet:{
     expand:Dynamic -> Void,
   },
   mapping:lua.Table< String, Dynamic >,
-  sources:LuaArray< {name:String} >
+  sources:Array< {name:String} >
 } >
 
 typedef Dict = lua.Table< String, Dynamic >;
@@ -22,7 +20,7 @@ extern class Preset {
 
 @:luaRequire('cmp')
 extern class Cmp {
-  static final mapping:Preset;
+  static final mapping:{preset:Preset};
   static function setup(config:CmpConfig):Void;
   inline function getMappings():Dict {
     return untyped __lua__("
@@ -59,10 +57,10 @@ extern class Cmp {
 }
 
 function configure() {
-  final sources:LuaArray< {name:String} > = t([{name: 'luasnip'}, {name: 'nvim_lsp'}], null);
+  final mapping = Cmp.mapping.preset.insert(lua.Table.create());
   Cmp.setup({
     snippet: {expand: (args:Dynamic) -> kickstart.Kickstart.Luasnip.lsp_expand(args.body)},
-    mapping: Cmp.mapping.insert(t({'x': () -> {}})),
-    sources: sources
+    mapping: mapping,
+    sources: [{name: 'luasnip'}, {name: 'nvim_lsp'}]
   });
 }
