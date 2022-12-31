@@ -1,13 +1,8 @@
 package vim;
 
 import haxe.extern.EitherType;
-import lua.StringMap;
 import haxe.Rest;
-
-using Test;
-
 import vim.VimTypes;
-import vim.Api;
 import haxe.Constraints.Function;
 import lua.Table;
 
@@ -58,30 +53,4 @@ extern class Vim {
   public static function tbl_map< T, B >(fn:T -> B, tbl:LuaArray< T >):LuaArray< B >;
   public static function cmd(command:String):Void;
   public static function notify(message:String, level:String):Void;
-}
-
-@:expose("vim")
-class DanieloVim {
-  public static final autogroups:StringMap< Group > = new StringMap();
-
-  static public function autocmd(
-    groupName:String,
-    events:LuaArray< VimEvent >,
-    pattern:String,
-    ?description:String,
-    cb:Function
-  ) {
-    var group:Group;
-    switch (autogroups.get(groupName)) {
-      case null:
-        group = Api.nvim_create_augroup(groupName, {clear: true});
-        autogroups.set(groupName, group);
-      case x:
-        group = x;
-    };
-    Api.nvim_create_autocmd(
-      events,
-      new AutoCmdOpts(pattern, cb, group, description.or('$groupName:[$pattern]'))
-    );
-  }
 }

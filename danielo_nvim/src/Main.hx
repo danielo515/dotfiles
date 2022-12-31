@@ -1,4 +1,4 @@
-import vim.Lsp;
+import vim.Vimx;
 import plenary.Job;
 import vim.Vim;
 import vim.VimTypes;
@@ -27,7 +27,7 @@ class Main {
       range: WholeFile,
     });
 
-    DanieloVim.autocmd('HaxeEvent', [BufWritePost], "*.hx", "Created from haxe", () -> {
+    Vimx.autocmd('HaxeEvent', [BufWritePost], "*.hx", "Created from haxe", () -> {
       var filename = Vim.expand(ExpandString.plus(CurentFile, FullPath));
       Vim.print('Hello from axe', filename);
       return true;
