@@ -56,7 +56,6 @@ static function objToTable(obj:Expr):Expr {
           }]),
           pos: obj.pos
         };
-        trace(obj.toString());
         macro lua.Table.create(null, $objExpr);
       case EArrayDecl(values):
         macro lua.Table.create(${ExprTools.map(obj, objToTable)}, null);

@@ -2,6 +2,7 @@ import vim.Vimx;
 import plenary.Job;
 import vim.Vim;
 import vim.VimTypes;
+import lua.Table.create as t;
 
 using lua.NativeStringTools;
 using Test;
@@ -18,8 +19,10 @@ class Main {
   }
 
   static function main() {
-    // vim.Ui.select(["a"], {prompt: "Pick one sexy option"}, (choice, _) -> Vim.print(choice));
-    vim.Api.nvim_create_user_command("HaxeCmd", (args) -> Vim.print(args), {
+    vim.Api.nvim_create_user_command("HaxeCmd", (args) -> {
+      Vim.print(args);
+      vim.Ui.select(t(["a"]), {prompt: "Pick one sexy option"}, (choice, _) -> Vim.print(choice));
+    }, {
       desc: "Testing from haxe",
       force: true,
       nargs: Any,

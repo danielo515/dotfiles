@@ -528,6 +528,9 @@ Main.new = {}
 Main.main = function() 
   vim.api.nvim_create_user_command("HaxeCmd", function(args) 
     vim.pretty_print(args);
+    vim.ui.select(({"a"}), ({prompt = "Pick one sexy option"}), function(choice,_) 
+      vim.pretty_print(choice);
+    end);
   end, ({bang = true, desc = "Testing from haxe", force = true, nargs = "*", range = "%"}));
   __vim_Vimx.autocmd("HaxeEvent", __vim__VimTypes_LuaArray_Impl_.from(_hx_tab_array({[0]="BufWritePost"}, 1)), "*.hx", "Created from haxe", function() 
     vim.pretty_print("Hello from axe", vim.fn.expand(_G.string.format("%s%s", "%", ":p")));
