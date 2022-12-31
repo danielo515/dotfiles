@@ -108,6 +108,7 @@ class Main {
         Vim.print("No URL");
       case _:
         Vim.print("lines", lines[1]);
+        Vimx.copyToClipboard(lines[1]);
     }
   }
 }

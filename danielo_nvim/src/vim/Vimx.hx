@@ -31,4 +31,13 @@ class Vimx {
       new AutoCmdOpts(pattern, cb, group, description.or('$groupName:[$pattern]'))
     );
   }
+
+  /**
+    Copies the given string to the system clipboard
+   */
+  public static function copyToClipboard(str:String) {
+    final cmd = 'let @* = "$str"';
+    Vim.cmd(cmd);
+    Vim.notify("Copied to clipboard", "info");
+  }
 }

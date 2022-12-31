@@ -923,6 +923,10 @@ __vim_Vimx.autocmd = function(groupName,events,pattern,description,cb)
     return _hx_1
   end )(), once = false, nested = false}));
 end
+__vim_Vimx.copyToClipboard = function(str) 
+  vim.cmd(Std.string(Std.string("let @* = \"") .. Std.string(str)) .. Std.string("\""));
+  vim.notify("Copied to clipboard", "info");
+end
 if _hx_bit_raw then
     _hx_bit_clamp = function(v)
     if v <= 2147483647 and v >= -2147483648 then
