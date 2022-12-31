@@ -203,7 +203,6 @@ local Test = _hx_e()
 __haxe_iterators_ArrayIterator = _hx_e()
 __haxe_iterators_ArrayKeyValueIterator = _hx_e()
 __kickstart_Cmp = _G.require("cmp")
-__kickstart__Cmp_Cmp_Fields_ = _hx_e()
 __kickstart_Lualine = _G.require("lualine")
 __kickstart_IndentBlankline = _G.require("indent_blankline")
 __kickstart_Gitsigns = _G.require("gitsigns")
@@ -784,13 +783,6 @@ __haxe_iterators_ArrayKeyValueIterator.super = function(self,array)
   self.array = array;
 end
 
-__kickstart__Cmp_Cmp_Fields_.new = {}
-__kickstart__Cmp_Cmp_Fields_.configure = function() 
-  __kickstart_Cmp.setup(({mapping = __kickstart_Cmp.mapping.preset.insert(({})), snippet = ({expand = function(args) 
-    __kickstart_Luasnip.lsp_expand(args.body);
-  end}), sources = ({({name = "luasnip"}),({name = "nvim_lsp"})})}));
-end
-
 __kickstart__Kickstart_Kickstart_Fields_.new = {}
 __kickstart__Kickstart_Kickstart_Fields_.keymaps = function() 
   vim.keymap.set(({"n","v"}), "<Space>", "<Nop>", ({desc = "do nothing", expr = false, silent = true}));
@@ -833,7 +825,37 @@ __kickstart__Kickstart_Kickstart_Fields_.main = function()
   __kickstart_Neodev.setup();
   __kickstart_Mason.setup();
   __kickstart_Fidget.setup();
-  __kickstart__Cmp_Cmp_Fields_.configure();
+  __kickstart_Cmp.setup(({mapping = __kickstart_Cmp.mapping.preset.insert(
+{
+    ['<C-d>'] = __kickstart_Cmp.mapping.scroll_docs(-4),
+    ['<C-f>'] = __kickstart_Cmp.mapping.scroll_docs(4),
+    ['<C-n>'] = __kickstart_Cmp.mapping(__kickstart_Cmp.mapping.complete(),{'i'}),
+    ['<CR>'] = __kickstart_Cmp.mapping.confirm {
+      behavior = __kickstart_Cmp.ConfirmBehavior.Replace,
+      select = true,
+    },
+    ['<Tab>'] = __kickstart_Cmp.mapping(function(fallback)
+      if __kickstart_Cmp.visible() then
+        __kickstart_Cmp.select_next_item()
+      elseif __kickstart_Luasnip.expand_or_jumpable() then
+        __kickstart_Luasnip.expand_or_jump()
+      else
+        fallback()
+      end
+    end, { 'i', 's' }),
+    ['<S-Tab>'] = __kickstart_Cmp.mapping(function(fallback)
+      if __kickstart_Cmp.visible() then
+        __kickstart_Cmp.select_prev_item()
+      elseif __kickstart_Luasnip.jumpable(-1) then
+        __kickstart_Luasnip.jump(-1)
+      else
+        fallback()
+      end
+    end, { 'i', 's' }),
+  }
+      ), snippet = ({expand = function(args) 
+    __kickstart_Luasnip.lsp_expand(args.body);
+  end}), sources = ({({name = "luasnip"}),({name = "nvim_lsp"})})}));
   __kickstart_MasonLspConfig.setup_handlers(({function(server_name) 
     if (server_name == "sumneko_lua") then 
       local config_capabilities = capabilities;
