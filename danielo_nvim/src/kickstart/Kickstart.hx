@@ -1,5 +1,6 @@
 package kickstart;
 
+import vim.Vimx;
 import kickstart.LspConfig;
 import vim.Lsp;
 import vim.Vim;
@@ -148,14 +149,14 @@ function onAttach(x:Dynamic, bufnr:Buffer) {
   Port to Haxe of https://github.com/nvim-lua/kickstart.nvim
  */
 function main() {
-  DanieloVim.autocmd(
+  Vimx.autocmd(
     "Kickstart",
     t([BufWritePost]),
     Fn.expand(MYVIMRC),
     "Reload the config",
     () -> Vim.cmd("source <afile> | PackerCompile")
   );
-  DanieloVim.autocmd(
+  Vimx.autocmd(
     "Kickstart-yank",
     [TextYankPost],
     "*",

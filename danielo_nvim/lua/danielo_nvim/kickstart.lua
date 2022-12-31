@@ -199,7 +199,6 @@ local Array = _hx_e()
 local Math = _hx_e()
 local String = _hx_e()
 local Std = _hx_e()
-local Test = _hx_e()
 __haxe_iterators_ArrayIterator = _hx_e()
 __haxe_iterators_ArrayKeyValueIterator = _hx_e()
 __kickstart_Cmp = _G.require("cmp")
@@ -217,8 +216,8 @@ __kickstart__Kickstart_Kickstart_Fields_ = _hx_e()
 __kickstart_Lspconfig = _G.require("lspconfig")
 __kickstart__Untyped_Untyped_Fields_ = _hx_e()
 __lua_StringMap = _hx_e()
-__vim_DanieloVim = _hx_e()
 __vim__VimTypes_LuaArray_Impl_ = _hx_e()
+__vim_Vimx = _hx_e()
 
 local _hx_bind, _hx_bit, _hx_staticToInstance, _hx_funcToField, _hx_maxn, _hx_print, _hx_apply_self, _hx_box_mr, _hx_bit_clamp, _hx_table, _hx_bit_raw
 local _hx_pcall_default = {};
@@ -742,15 +741,6 @@ Std.int = function(x)
   end;
 end
 
-Test.new = {}
-Test["or"] = function(v,fallback) 
-  if (v ~= nil) then 
-    do return v end;
-  else
-    do return fallback end;
-  end;
-end
-
 __haxe_iterators_ArrayIterator.new = function(array) 
   local self = _hx_new(__haxe_iterators_ArrayIterator.prototype)
   __haxe_iterators_ArrayIterator.super(self,array)
@@ -811,10 +801,10 @@ __kickstart__Kickstart_Kickstart_Fields_.onAttach = function(x,bufnr)
   end, ({bang = false, desc = "Format current buffer with LSP", force = true, nargs = 0, range = false}));
 end
 __kickstart__Kickstart_Kickstart_Fields_.main = function() 
-  __vim_DanieloVim.autocmd("Kickstart", ({"BufWritePost"}), vim.fn.expand("$MYVIMRC"), "Reload the config", function() 
+  __vim_Vimx.autocmd("Kickstart", ({"BufWritePost"}), vim.fn.expand("$MYVIMRC"), "Reload the config", function() 
     vim.cmd("source <afile> | PackerCompile");
   end);
-  __vim_DanieloVim.autocmd("Kickstart-yank", __vim__VimTypes_LuaArray_Impl_.from(_hx_tab_array({[0]="TextYankPost"}, 1)), "*", "Highlight on yank", __kickstart__Untyped_Untyped_Fields_.higlightOnYank);
+  __vim_Vimx.autocmd("Kickstart-yank", __vim__VimTypes_LuaArray_Impl_.from(_hx_tab_array({[0]="TextYankPost"}, 1)), "*", "Highlight on yank", __kickstart__Untyped_Untyped_Fields_.higlightOnYank);
   vim.cmd("colorscheme onedark");
   __kickstart__Kickstart_Kickstart_Fields_.keymaps();
   __kickstart_Lualine.setup(({options = ({icons_enabled = true, theme = "onedark", component_separators = "|", section_separators = ""})}));
@@ -901,20 +891,6 @@ __lua_StringMap.prototype.get = function(self,key)
   do return ret end
 end
 
-__vim_DanieloVim.new = {}
-_hx_exports["vim"] = __vim_DanieloVim
-__vim_DanieloVim.autocmd = function(groupName,events,pattern,description,cb) 
-  local group;
-  local _g = __vim_DanieloVim.autogroups:get(groupName);
-  if (_g == nil) then 
-    group = vim.api.nvim_create_augroup(groupName, ({clear = true}));
-    __vim_DanieloVim.autogroups:set(groupName, group);
-  else
-    group = _g;
-  end;
-  vim.api.nvim_create_autocmd(events, ({pattern = pattern, callback = cb, group = group, desc = Test["or"](description, Std.string(Std.string(Std.string(Std.string("") .. Std.string(groupName)) .. Std.string(":[")) .. Std.string(pattern)) .. Std.string("]")), once = false, nested = false}));
-end
-
 __vim__VimTypes_LuaArray_Impl_.new = {}
 __vim__VimTypes_LuaArray_Impl_.from = function(arr) 
   local ret = ({});
@@ -926,6 +902,26 @@ __vim__VimTypes_LuaArray_Impl_.from = function(arr)
     ret[idx + 1] = arr[idx];
   end;
   do return ret end;
+end
+
+__vim_Vimx.new = {}
+_hx_exports["vim"] = __vim_Vimx
+__vim_Vimx.autocmd = function(groupName,events,pattern,description,cb) 
+  local group;
+  local _g = __vim_Vimx.autogroups:get(groupName);
+  if (_g == nil) then 
+    group = vim.api.nvim_create_augroup(groupName, ({clear = true}));
+    __vim_Vimx.autogroups:set(groupName, group);
+  else
+    group = _g;
+  end;
+  vim.api.nvim_create_autocmd(events, ({pattern = pattern, callback = cb, group = group, desc = (function() 
+    local _hx_1
+    if (description == nil) then 
+    _hx_1 = Std.string(Std.string(Std.string(Std.string("") .. Std.string(groupName)) .. Std.string(":[")) .. Std.string(pattern)) .. Std.string("]"); else 
+    _hx_1 = description; end
+    return _hx_1
+  end )(), once = false, nested = false}));
 end
 if _hx_bit_raw then
     _hx_bit_clamp = function(v)
@@ -959,7 +955,7 @@ _hx_array_mt.__index = Array.prototype
 local _hx_static_init = function()
   __lua_StringMap.tnull = ({});
   
-  __vim_DanieloVim.autogroups = __lua_StringMap.new();
+  __vim_Vimx.autogroups = __lua_StringMap.new();
   
   
 end
