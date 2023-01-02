@@ -3,12 +3,13 @@ name: haxe-nvim
 on:
   push:
     branches: [ master ]
+    paths: ["danielo_nvim/**"]
 
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - name: creates output
         run:  "echo TODO: do any adjust"
       - name: Pushes to haxe-nvim repository
