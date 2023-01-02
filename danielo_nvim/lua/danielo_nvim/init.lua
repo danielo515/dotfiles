@@ -528,6 +528,7 @@ Main.new = {}
 Main.main = function() 
   vim.api.nvim_create_user_command("HaxeCmd", function(args) 
     vim.pretty_print(args);
+    vim.pretty_print(vim.spell.check("Hello bru! Hau are you?")[1][1]);
     vim.ui.select(({"a"}), ({prompt = "Pick one sexy option"}), function(choice,_) 
       vim.pretty_print(choice);
     end);
