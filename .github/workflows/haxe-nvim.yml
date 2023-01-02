@@ -11,13 +11,16 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - name: creates output
-        run:  "echo TODO: do any adjust"
+        run: | 
+          mkdir output
+          cp -r danielo_nvim/ output/
+          rm -rf output/lua
       - name: Pushes to haxe-nvim repository
         uses: cpina/github-action-push-to-another-repository@master
         env:
           API_TOKEN_GITHUB: ${{ secrets.GH_API_TOKEN }}
         with:
-          source-directory: 'danielo_nvim'
+          source-directory: 'output'
           destination-github-username: 'danielo515'
           destination-repository-name: 'haxe-nvim'
           user-email: rdanielo@gmail.com
