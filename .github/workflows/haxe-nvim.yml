@@ -3,7 +3,7 @@ name: haxe-nvim
 on:
   push:
     branches: [ master ]
-    paths: ["danielo_nvim/**"]
+    paths: ["danielo_nvim/**","haxe-nvim.yml"]
 
 jobs:
   build:
@@ -13,7 +13,7 @@ jobs:
       - name: creates output
         run: | 
           mkdir output
-          cp -r danielo_nvim/ output/
+          cp -r danielo_nvim/. output/
           rm -rf output/lua
       - name: Pushes to haxe-nvim repository
         uses: cpina/github-action-push-to-another-repository@master
