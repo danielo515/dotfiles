@@ -229,6 +229,20 @@ function main() {
             })
           })
         });
+      case 'jsonls': Lspconfig.jsonls.setup({
+          capabilities: capabilities,
+          on_attach: onAttach,
+          settings: t({
+            json: t({
+              schemas: t([{
+                description: "Haxe format schema",
+                fileMatch: t(["hxformat.json"]),
+                name: "hxformat.schema.json",
+                url: "https://raw.githubusercontent.com/vshaxe/vshaxe/master/schemas/hxformat.schema.json",
+              }])
+            })
+          })
+        });
       case _: Vim.print('Ignoring $server_name');
     }
   }]));

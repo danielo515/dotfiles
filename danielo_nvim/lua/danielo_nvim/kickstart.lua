@@ -851,7 +851,17 @@ __kickstart__Kickstart_Kickstart_Fields_.main = function()
     __kickstart_Luasnip.lsp_expand(args.body);
   end}), sources = ({({name = "luasnip"}),({name = "nvim_lsp"})})}));
   __kickstart_MasonLspConfig.setup_handlers(({function(server_name) 
-    if (server_name == "sumneko_lua") then 
+    local server_name1 = server_name;
+    if (server_name1) == "jsonls" then 
+      local config_capabilities = capabilities;
+      local config_on_attach = __kickstart__Kickstart_Kickstart_Fields_.onAttach;
+      local config_settings = ({json = ({schemas = ({_hx_o({__fields__={description=true,fileMatch=true,name=true,url=true},description="Haxe format schema",fileMatch=({"hxformat.json"}),name="hxformat.schema.json",url="https://raw.githubusercontent.com/vshaxe/vshaxe/master/schemas/hxformat.schema.json"})})})});
+      __kickstart_Lspconfig.jsonls.setup({
+      on_attach = config_on_attach,
+      settings = config_settings,
+      capabilities = config_capabilities,
+    });
+    elseif (server_name1) == "sumneko_lua" then 
       local config_capabilities = capabilities;
       local config_on_attach = __kickstart__Kickstart_Kickstart_Fields_.onAttach;
       local config_settings = ({lua = ({workspace = ({checkThirdParty = false}), telemetry = ({enable = false})})});
@@ -859,10 +869,8 @@ __kickstart__Kickstart_Kickstart_Fields_.main = function()
       on_attach = config_on_attach,
       settings = config_settings,
       capabilities = config_capabilities,
-    });
-    else
-      vim.pretty_print(Std.string("Ignoring ") .. Std.string(server_name));
-    end;
+    });else
+    vim.pretty_print(Std.string("Ignoring ") .. Std.string(server_name)); end;
   end}));
 end
 

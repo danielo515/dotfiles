@@ -582,7 +582,7 @@ Main.copyGhUrl = function(_)
   if (lines == nil) then 
     vim.pretty_print("No URL");
   else
-    vim.pretty_print("lines", lines[1]);
+    vim.pretty_print(lines[1]);
     __vim_Vimx.copyToClipboard(lines[1]);
   end;
 end

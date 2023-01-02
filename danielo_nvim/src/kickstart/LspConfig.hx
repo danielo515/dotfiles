@@ -25,4 +25,5 @@ extern class LspConfigSetupFn {
 @:luaRequire('lspconfig')
 extern class Lspconfig {
   static final sumneko_lua:LspConfigSetupFn;
+  static final jsonls:LspConfigSetupFn;
 }
