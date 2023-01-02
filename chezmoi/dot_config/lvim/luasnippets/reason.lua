@@ -108,6 +108,23 @@ local normal_ones = {
     { trig = "recoval", dscr = "use recoil value", regTrig = false },
     fmt("let {} = Recoil.useRecoilValue({});", { i(1), i(0) })
   ),
+  s(
+    { trig = "recosel", dscr = "use recoil selector", regTrig = false },
+    fmta(
+      [[ let <> =
+          Recoil.selectorFamily({
+            key: "<>.<>",
+            get: <> =>>
+              Fn(
+                ({get}) =>> {
+                  <>
+                },
+              ),
+          })
+    ]],
+      { i(1), partial(vim.fn.expand, "%:t:r"), rep(1), i(2), i(0) }
+    )
+  ),
   s({ trig = "mperr", dscr = "Map error of result", regTrig = false }, fmt("PromiseResult.mapError(~f={})", i(0))),
   s(
     { trig = "sm", dscr = "switch match", regTrig = false },
