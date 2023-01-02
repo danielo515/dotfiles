@@ -547,7 +547,15 @@ Main.main = function()
     end )());
   end, ({bang = false, desc = "Open the current file in github", force = true, nargs = nargs, range = true}));
   local nargs = nil;
-  vim.api.nvim_create_user_command("CopyGhUrl", Main.copyGhUrl, ({bang = false, desc = "Copy current file github URL", force = true, nargs = nargs, range = true}));
+  vim.api.nvim_create_user_command("CopyGhUrl", function(args) 
+    Main.copyGhUrl((function() 
+      local _hx_2
+      if (args.count > 0) then 
+      _hx_2 = Std.string(":") .. Std.string(args.count); else 
+      _hx_2 = ""; end
+      return _hx_2
+    end )());
+  end, ({bang = false, desc = "Copy current file github URL", force = true, nargs = nargs, range = true}));
   vim.api.nvim_create_user_command("CopyMessagesToClipboard", function(args) 
     Main.copy_messages_to_clipboard(args.args);
   end, ({bang = false, desc = "Copy the n number of messages to clipboard", force = true, nargs = 1, range = true}));
@@ -577,8 +585,8 @@ Main.copy_messages_to_clipboard = function(number)
   vim.cmd(_G.string.format("let @* = execute('%smessages')", Test["or"](number, "")));
   vim.notify(Std.string(Std.string("") .. Std.string(number)) .. Std.string(" :messages copied to the clipboard"), "info");
 end
-Main.copyGhUrl = function(_) 
-  local lines = Main.runGh(__vim__VimTypes_LuaArray_Impl_.from(_hx_tab_array({[0]="browse", vim.fn.expand("%"), "--no-browser", "--branch", Main.get_branch()[1]}, 5)));
+Main.copyGhUrl = function(line) 
+  local lines = Main.runGh(__vim__VimTypes_LuaArray_Impl_.from(_hx_tab_array({[0]="browse", Std.string(vim.fn.expand("%")) .. Std.string(line), "--no-browser", "--branch", Main.get_branch()[1]}, 5)));
   if (lines == nil) then 
     vim.pretty_print("No URL");
   else

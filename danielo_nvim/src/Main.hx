@@ -40,7 +40,11 @@ class Main {
       "Open the current file in github",
       args -> openInGh(args.count > 0 ? ':${args.count}' : "")
     );
-    command("CopyGhUrl", "Copy current file github URL", copyGhUrl);
+    command(
+      "CopyGhUrl",
+      "Copy current file github URL",
+      args -> copyGhUrl(args.count > 0 ? ':${args.count}' : "")
+    );
 
     command(
       "CopyMessagesToClipboard",
@@ -99,10 +103,10 @@ class Main {
     Vim.notify('$number :messages copied to the clipboard', "info");
   }
 
-  static function copyGhUrl(_) {
+  static function copyGhUrl(?line) {
     final currentFile = vim.Fn.expand(CurentFile);
     final curentBranch = get_branch();
-    var lines = runGh(["browse", currentFile, "--no-browser", "--branch", curentBranch[1]]);
+    var lines = runGh(["browse", currentFile + line, "--no-browser", "--branch", curentBranch[1]]);
     switch (lines) {
       case null:
         Vim.print("No URL");
