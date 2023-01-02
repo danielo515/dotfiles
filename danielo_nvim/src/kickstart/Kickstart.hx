@@ -164,6 +164,12 @@ function main() {
     kickstart.Untyped.higlightOnYank
   );
   Vim.cmd("colorscheme onedark");
+  // -- Vim options
+  Vim.o.hlsearch = false;
+  Vim.o.mouse = 'a';
+  Vim.o.breakindent = true;
+  Vim.o.undofile = true;
+
   keymaps();
   // -- Set lualine as statusline
   // -- See `:help lualine.txt`

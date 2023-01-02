@@ -11,6 +11,13 @@ using Safety;
 class Vimx {
   public static final autogroups:StringMap< Group > = new StringMap();
 
+  /**
+    Creates a new autocommand and associates it to the given group name.
+    If the group has not been registered before, it gets created and cached
+    so future commands with the same group name will re-use the same group.
+    Note that existing commands on the group created outside of this function
+    are not checked for existence.
+   */
   static public function autocmd(
     groupName:String,
     events:LuaArray< VimEvent >,

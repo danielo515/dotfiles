@@ -806,6 +806,10 @@ __kickstart__Kickstart_Kickstart_Fields_.main = function()
   end);
   __vim_Vimx.autocmd("Kickstart-yank", __vim__VimTypes_LuaArray_Impl_.from(_hx_tab_array({[0]="TextYankPost"}, 1)), "*", "Highlight on yank", __kickstart__Untyped_Untyped_Fields_.higlightOnYank);
   vim.cmd("colorscheme onedark");
+  vim.o.hlsearch = false;
+  vim.o.mouse = "a";
+  vim.o.breakindent = true;
+  vim.o.undofile = true;
   __kickstart__Kickstart_Kickstart_Fields_.keymaps();
   __kickstart_Lualine.setup(({options = ({icons_enabled = true, theme = "onedark", component_separators = "|", section_separators = ""})}));
   __kickstart_Comment.setup();
