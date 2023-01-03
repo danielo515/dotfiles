@@ -777,6 +777,8 @@ end
 
 __kickstart__Kickstart_Kickstart_Fields_.new = {}
 __kickstart__Kickstart_Kickstart_Fields_.keymaps = function() 
+  vim.g.mapleader = " ";
+  vim.g.maplocalleader = ",";
   vim.keymap.set(({"n","v"}), "<Space>", "<Nop>", ({desc = "do nothing", expr = false, silent = true}));
   vim.keymap.set(({"n"}), "k", "v:count == 0 ? 'gk' : 'k'", ({desc = "up when word-wrap", expr = true, silent = true}));
   vim.keymap.set(({"n"}), "j", "v:count == 0 ? 'gj' : 'j'", ({desc = "down when word-wrap", expr = true, silent = true}));
