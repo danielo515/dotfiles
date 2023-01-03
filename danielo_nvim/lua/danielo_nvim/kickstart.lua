@@ -212,10 +212,12 @@ __kickstart_Fidget = _G.require("fidget")
 __kickstart_Cmp_nvim_lsp = _G.require("cmp_nvim_lsp")
 __kickstart_MasonLspConfig = _G.require("mason-lspconfig")
 __kickstart_Luasnip = _G.require("luasnip")
+__kickstart_SchemaStore = _G.require("schemastore")
 __kickstart__Kickstart_Kickstart_Fields_ = _hx_e()
 __kickstart_Lspconfig = _G.require("lspconfig")
 __kickstart__Untyped_Untyped_Fields_ = _hx_e()
 __lua_StringMap = _hx_e()
+__vim__TableTools_TableTools_Fields_ = _hx_e()
 __vim__VimTypes_LuaArray_Impl_ = _hx_e()
 __vim_Vimx = _hx_e()
 
@@ -855,7 +857,7 @@ __kickstart__Kickstart_Kickstart_Fields_.main = function()
     if (server_name1) == "jsonls" then 
       local config_capabilities = capabilities;
       local config_on_attach = __kickstart__Kickstart_Kickstart_Fields_.onAttach;
-      local config_settings = ({json = ({schemas = ({_hx_o({__fields__={description=true,fileMatch=true,name=true,url=true},description="Haxe format schema",fileMatch=({"hxformat.json"}),name="hxformat.schema.json",url="https://raw.githubusercontent.com/vshaxe/vshaxe/master/schemas/hxformat.schema.json"})})})});
+      local config_settings = ({json = ({schemas = __vim__TableTools_TableTools_Fields_.concat(({_hx_o({__fields__={description=true,fileMatch=true,name=true,url=true},description="Haxe format schema",fileMatch=({"hxformat.json"}),name="hxformat.schema.json",url="https://raw.githubusercontent.com/vshaxe/vshaxe/master/schemas/hxformat.schema.json"})}), __kickstart_SchemaStore.json:schemas())})});
       __kickstart_Lspconfig.jsonls.setup({
       on_attach = config_on_attach,
       settings = config_settings,
@@ -901,6 +903,11 @@ __lua_StringMap.prototype.get = function(self,key)
     do return nil end;
   end;
   do return ret end
+end
+
+__vim__TableTools_TableTools_Fields_.new = {}
+__vim__TableTools_TableTools_Fields_.concat = function(tableA,tableB) 
+  do return vim.list_extend(vim.list_extend(({}), tableA), tableB) end;
 end
 
 __vim__VimTypes_LuaArray_Impl_.new = {}
