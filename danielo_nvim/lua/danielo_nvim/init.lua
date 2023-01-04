@@ -202,14 +202,12 @@ local Math = _hx_e()
 local String = _hx_e()
 local Std = _hx_e()
 local Test = _hx_e()
-__haxe_Log = _hx_e()
 __haxe_iterators_ArrayIterator = _hx_e()
 __haxe_iterators_ArrayKeyValueIterator = _hx_e()
 __lua_StringMap = _hx_e()
 __packer__Packer_Packer_Fields_ = _hx_e()
 __plenary_Job = _G.require("plenary.job")
 __vim__VimTypes_LuaArray_Impl_ = _hx_e()
-__vim__VimTypes_ArgComplete_Impl_ = _hx_e()
 __vim_Vimx = _hx_e()
 
 local _hx_bind, _hx_bit, _hx_staticToInstance, _hx_funcToField, _hx_maxn, _hx_print, _hx_apply_self, _hx_box_mr, _hx_bit_clamp, _hx_table, _hx_bit_raw
@@ -528,15 +526,13 @@ end
 
 Main.new = {}
 Main.main = function() 
-  __haxe_Log.trace("Automatic conversion", _hx_o({__fields__={fileName=true,lineNumber=true,className=true,methodName=true},fileName="src/vim/VimTypes.hx",lineNumber=141,className="vim._VimTypes.ArgComplete_Impl_",methodName="from"}));
-  __haxe_Log.trace(__vim__VimTypes_ArgComplete_Impl_._new(Std.string("custom:") .. Std.string("return ['a',b']")), _hx_o({__fields__={fileName=true,lineNumber=true,className=true,methodName=true},fileName="src/vim/Api.hx",lineNumber=77,className="vim.Api",methodName="create_user_command_completion"}));
   vim.api.nvim_create_user_command("HaxeCmd", function(args) 
     vim.pretty_print(args);
     vim.pretty_print(vim.spell.check("Hello bru! Hau are you?")[1][1]);
     vim.ui.select(({"a"}), ({prompt = "Pick one sexy option"}), function(choice,_) 
       vim.pretty_print(choice);
     end);
-  end, ({bang = nil, complete = nil, desc = "fuck it", force = true, nargs = nil, range = nil}));
+  end, ({bang = true, complete = Std.string("customlist,v:lua.") .. Std.string("require'packer'.plugin_complete"), desc = "Testing from haxe", force = true, nargs = 1, range = "%"}));
   __vim_Vimx.autocmd("HaxeEvent", __vim__VimTypes_LuaArray_Impl_.from(_hx_tab_array({[0]="BufWritePost"}, 1)), "*.hx", "Created from haxe", function() 
     vim.pretty_print("Hello from axe", vim.fn.expand(_G.string.format("%s%s", "%", ":p")));
     do return true end;
@@ -823,29 +819,6 @@ Test["or"] = function(v,fallback)
   end;
 end
 
-__haxe_Log.new = {}
-__haxe_Log.formatOutput = function(v,infos) 
-  local str = Std.string(v);
-  if (infos == nil) then 
-    do return str end;
-  end;
-  local pstr = Std.string(Std.string(infos.fileName) .. Std.string(":")) .. Std.string(infos.lineNumber);
-  if (infos.customParams ~= nil) then 
-    local _g = 0;
-    local _g1 = infos.customParams;
-    while (_g < _g1.length) do 
-      local v = _g1[_g];
-      _g = _g + 1;
-      str = Std.string(str) .. Std.string((Std.string(", ") .. Std.string(Std.string(v))));
-    end;
-  end;
-  do return Std.string(Std.string(pstr) .. Std.string(": ")) .. Std.string(str) end;
-end
-__haxe_Log.trace = function(v,infos) 
-  local str = __haxe_Log.formatOutput(v, infos);
-  _hx_print(str);
-end
-
 __haxe_iterators_ArrayIterator.new = function(array) 
   local self = _hx_new(__haxe_iterators_ArrayIterator.prototype)
   __haxe_iterators_ArrayIterator.super(self,array)
@@ -927,11 +900,6 @@ __vim__VimTypes_LuaArray_Impl_.from = function(arr)
   do return ret end;
 end
 
-__vim__VimTypes_ArgComplete_Impl_.new = {}
-__vim__VimTypes_ArgComplete_Impl_._new = function(arg) 
-  do return arg end;
-end
-
 __vim_Vimx.new = {}
 _hx_exports["vim"] = __vim_Vimx
 __vim_Vimx.autocmd = function(groupName,events,pattern,description,cb) 
@@ -991,8 +959,6 @@ local _hx_static_init = function()
   
   
 end
-
-_hx_print = print or (function() end)
 
 _hx_static_init();
 _G.xpcall(Main.main, _hx_error)
