@@ -196,7 +196,6 @@ local Enum = _hx_e();
 
 local _hx_exports = _hx_exports or {}
 local Array = _hx_e()
-local Main = _hx_e()
 ___Main_Main_Fields_ = _hx_e()
 local Math = _hx_e()
 local String = _hx_e()
@@ -524,8 +523,8 @@ Array.prototype.resize = function(self,len)
   end;
 end
 
-Main.new = {}
-Main.main = function() 
+___Main_Main_Fields_.new = {}
+___Main_Main_Fields_.main = function() 
   vim.api.nvim_create_user_command("HaxeCmd", function(args) 
     vim.pretty_print(args);
     vim.pretty_print(vim.spell.check("Hello bru! Hau are you?")[1][1]);
@@ -539,7 +538,7 @@ Main.main = function()
   end);
   local nargs = nil;
   vim.api.nvim_create_user_command("OpenInGh", function(args) 
-    Main.openInGh((function() 
+    ___Main_Main_Fields_.openInGh((function() 
       local _hx_1
       if (args.count > 0) then 
       _hx_1 = Std.string(":") .. Std.string(args.count); else 
@@ -549,7 +548,7 @@ Main.main = function()
   end, ({bang = false, complete = nil, desc = "Open the current file in github", force = true, nargs = nargs, range = true}));
   local nargs = nil;
   vim.api.nvim_create_user_command("CopyGhUrl", function(args) 
-    Main.copyGhUrl((function() 
+    ___Main_Main_Fields_.copyGhUrl((function() 
       local _hx_2
       if (args.count > 0) then 
       _hx_2 = Std.string(":") .. Std.string(args.count); else 
@@ -558,13 +557,13 @@ Main.main = function()
     end )());
   end, ({bang = false, complete = nil, desc = "Copy current file github URL", force = true, nargs = nargs, range = true}));
   vim.api.nvim_create_user_command("CopyMessagesToClipboard", function(args) 
-    Main.copy_messages_to_clipboard(args.args);
+    ___Main_Main_Fields_.copy_messages_to_clipboard(args.args);
   end, ({bang = false, complete = nil, desc = "Copy the n number of messages to clipboard", force = true, nargs = 1, range = true}));
   vim.api.nvim_create_user_command("GetPluginVersion", function(args) 
     vim.pretty_print(__packer__Packer_Packer_Fields_.get_plugin_version(args.args));
   end, ({bang = false, complete = nil, desc = "Gets the git version of a installed packer plugin", force = true, nargs = 1, range = true}));
 end
-Main.runGh = function(args) 
+___Main_Main_Fields_.runGh = function(args) 
   if (vim.fn.executable("gh") ~= 1) then 
     do return nil end;
   end;
@@ -573,21 +572,21 @@ Main.runGh = function(args)
   end});
   do return __plenary_Job:new(args):sync() end;
 end
-Main.openInGh = function(line) 
-  Main.runGh(__vim__VimTypes_LuaArray_Impl_.from(_hx_tab_array({[0]="browse", Std.string(vim.fn.expand("%")) .. Std.string(line), "--branch", Main.get_branch()[1]}, 4)));
+___Main_Main_Fields_.openInGh = function(line) 
+  ___Main_Main_Fields_.runGh(__vim__VimTypes_LuaArray_Impl_.from(_hx_tab_array({[0]="browse", Std.string(vim.fn.expand("%")) .. Std.string(line), "--branch", ___Main_Main_Fields_.get_branch()[1]}, 4)));
 end
-Main.get_branch = function() 
+___Main_Main_Fields_.get_branch = function() 
   local args = ({command = "git", args = ({"rev-parse","--abbrev-ref","HEAD"}), on_stderr = function(args,return_val) 
     vim.pretty_print("Something may have  failed", args, return_val);
   end});
   do return __plenary_Job:new(args):sync() end;
 end
-Main.copy_messages_to_clipboard = function(number) 
+___Main_Main_Fields_.copy_messages_to_clipboard = function(number) 
   vim.cmd(_G.string.format("let @* = execute('%smessages')", Test["or"](number, "")));
   vim.notify(Std.string(Std.string("") .. Std.string(number)) .. Std.string(" :messages copied to the clipboard"), "info");
 end
-Main.copyGhUrl = function(line) 
-  local lines = Main.runGh(__vim__VimTypes_LuaArray_Impl_.from(_hx_tab_array({[0]="browse", Std.string(vim.fn.expand("%")) .. Std.string(line), "--no-browser", "--branch", Main.get_branch()[1]}, 5)));
+___Main_Main_Fields_.copyGhUrl = function(line) 
+  local lines = ___Main_Main_Fields_.runGh(__vim__VimTypes_LuaArray_Impl_.from(_hx_tab_array({[0]="browse", Std.string(vim.fn.expand("%")) .. Std.string(line), "--no-browser", "--branch", ___Main_Main_Fields_.get_branch()[1]}, 5)));
   if (lines == nil) then 
     vim.pretty_print("No URL");
   else
@@ -595,8 +594,6 @@ Main.copyGhUrl = function(line)
     __vim_Vimx.copyToClipboard(lines[1]);
   end;
 end
-
-___Main_Main_Fields_.new = {}
 ___Main_Main_Fields_.setup = function() 
   vim.pretty_print("ran setup");
 end
@@ -961,5 +958,5 @@ local _hx_static_init = function()
 end
 
 _hx_static_init();
-_G.xpcall(Main.main, _hx_error)
+_G.xpcall(___Main_Main_Fields_.main, _hx_error)
 return _hx_exports
