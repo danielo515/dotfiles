@@ -110,6 +110,8 @@ static function objToTable(obj:Expr):Expr {
           //     expr: macro lua.Table.create(${ExprTools.map(currentFieldExpression, objToTable)})
           //   }
 
+          case TAbstract(_, _):
+            {field: f.name, expr: (fieldExprs.get(f.name))};
           case _:
             {field: f.name, expr: objToTable(fieldExprs.get(f.name))};
         }
