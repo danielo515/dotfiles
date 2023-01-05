@@ -5,6 +5,8 @@ import vim.VimTypes;
 import lua.Table.create as t;
 
 using lua.NativeStringTools;
+using lua.Table;
+using Lambda;
 using Test;
 
 inline function command(name, description, fn, ?nargs) {
@@ -69,6 +71,7 @@ function main() {
   );
   // final keymaps = vim.Api.nvim_buf_get_keymap(CurrentBuffer, "n");
   // Vim.print(keymaps.map(x -> '${x.lhs} -> ${x.rhs} ${x.desc}'));
+  vim.Keymap.set(Normal, "tl", nexTab, {desc: "Go to next tab", silent: true, expr: false});
 }
 
 function runGh(args):Null< lua.Table< Int, String > > {
@@ -107,6 +110,14 @@ function copy_messages_to_clipboard(number:String) {
   final cmd = "let @* = execute('%smessages')".format(number.or(""));
   Vim.cmd(cmd);
   Vim.notify('$number :messages copied to the clipboard', "info");
+}
+
+function nexTab() {
+  final pages = vim.Api.nvim_list_tabpages().toArray();
+  final currentTab = vim.Api.nvim_get_current_tabpage();
+  final tabIdx = pages.findIndex(id -> id == currentTab);
+  Vim.print("pages", pages, "tabIdx", tabIdx, "current", currentTab);
+  vim.Api.nvim_set_current_tabpage(pages[tabIdx + 1].or(pages[0]));
 }
 
 function copyGhUrl(?line) {

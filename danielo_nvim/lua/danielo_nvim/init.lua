@@ -196,6 +196,7 @@ local Enum = _hx_e();
 
 local _hx_exports = _hx_exports or {}
 local Array = _hx_e()
+local Lambda = _hx_e()
 ___Main_Main_Fields_ = _hx_e()
 local Math = _hx_e()
 local String = _hx_e()
@@ -203,6 +204,7 @@ local Std = _hx_e()
 local Test = _hx_e()
 __haxe_iterators_ArrayIterator = _hx_e()
 __haxe_iterators_ArrayKeyValueIterator = _hx_e()
+__lua_PairTools = _hx_e()
 __lua_StringMap = _hx_e()
 __packer__Packer_Packer_Fields_ = _hx_e()
 __plenary_Job = _G.require("plenary.job")
@@ -523,6 +525,19 @@ Array.prototype.resize = function(self,len)
   end;
 end
 
+Lambda.new = {}
+Lambda.findIndex = function(it,f) 
+  local i = 0;
+  local v = it:iterator();
+  while (v:hasNext()) do 
+    if (f(v:next())) then 
+      do return i end;
+    end;
+    i = i + 1;
+  end;
+  do return -1 end;
+end
+
 ___Main_Main_Fields_.new = {}
 ___Main_Main_Fields_.main = function() 
   vim.api.nvim_create_user_command("HaxeCmd", function(args) 
@@ -562,6 +577,7 @@ ___Main_Main_Fields_.main = function()
   vim.api.nvim_create_user_command("GetPluginVersion", function(args) 
     vim.pretty_print(__packer__Packer_Packer_Fields_.get_plugin_version(args.args));
   end, ({bang = false, complete = nil, desc = "Gets the git version of a installed packer plugin", force = true, nargs = 1, range = true}));
+  vim.keymap.set("n", "tl", ___Main_Main_Fields_.nexTab, ({desc = "Go to next tab", expr = false, silent = true}));
 end
 ___Main_Main_Fields_.runGh = function(args) 
   if (vim.fn.executable("gh") ~= 1) then 
@@ -584,6 +600,31 @@ end
 ___Main_Main_Fields_.copy_messages_to_clipboard = function(number) 
   vim.cmd(_G.string.format("let @* = execute('%smessages')", Test["or"](number, "")));
   vim.notify(Std.string(Std.string("") .. Std.string(number)) .. Std.string(" :messages copied to the clipboard"), "info");
+end
+___Main_Main_Fields_.nexTab = function() 
+  local length = nil;
+  local tab = __lua_PairTools.copy(vim.api.nvim_list_tabpages());
+  local length = length;
+  local pages;
+  if (length == nil) then 
+    length = _hx_table.maxn(tab);
+    if (length > 0) then 
+      local head = tab[1];
+      _G.table.remove(tab, 1);
+      tab[0] = head;
+      pages = _hx_tab_array(tab, length);
+    else
+      pages = _hx_tab_array({}, 0);
+    end;
+  else
+    pages = _hx_tab_array(tab, length);
+  end;
+  local currentTab = vim.api.nvim_get_current_tabpage();
+  local tabIdx = Lambda.findIndex(pages, function(id) 
+    do return id == currentTab end;
+  end);
+  vim.pretty_print("pages", pages, "tabIdx", tabIdx, "current", currentTab);
+  vim.api.nvim_set_current_tabpage(Test["or"](pages[tabIdx + 1], pages[0]));
 end
 ___Main_Main_Fields_.copyGhUrl = function(line) 
   local lines = ___Main_Main_Fields_.runGh(__vim__VimTypes_LuaArray_Impl_.from(_hx_tab_array({[0]="browse", Std.string(vim.fn.expand("%")) .. Std.string(line), "--no-browser", "--branch", ___Main_Main_Fields_.get_branch()[1]}, 5)));
@@ -848,6 +889,13 @@ __haxe_iterators_ArrayKeyValueIterator.super = function(self,array)
   self.array = array;
 end
 
+__lua_PairTools.new = {}
+__lua_PairTools.copy = function(table1) 
+  local ret = ({});
+  for k,v in _G.pairs(table1) do ret[k] = v end;
+  do return ret end;
+end
+
 __lua_StringMap.new = function() 
   local self = _hx_new(__lua_StringMap.prototype)
   __lua_StringMap.super(self)
@@ -956,6 +1004,19 @@ local _hx_static_init = function()
   
   
 end
+
+_hx_table = {}
+_hx_table.pack = _G.table.pack or function(...)
+    return {...}
+end
+_hx_table.unpack = _G.table.unpack or _G.unpack
+_hx_table.maxn = _G.table.maxn or function(t)
+  local maxn=0;
+  for i in pairs(t) do
+    maxn=type(i)=='number'and i>maxn and i or maxn
+  end
+  return maxn
+end;
 
 _hx_static_init();
 _G.xpcall(___Main_Main_Fields_.main, _hx_error)
