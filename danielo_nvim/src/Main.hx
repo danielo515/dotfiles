@@ -26,9 +26,11 @@ class Main {
         Vim.print(args);
         final spellRes = Spell.check("Hello bru! Hau are you?");
         Vim.print(spellRes[1].first());
-        vim.Ui.select(t(["a"]),
+        vim.Ui.select(
+          t(["a"]),
           {prompt: "Pick one sexy option"},
-          (choice, _) -> Vim.print(choice));
+          (choice, _) -> Vim.print(choice)
+        );
       },
       CustomLua("require'packer'.plugin_complete"),
       {
