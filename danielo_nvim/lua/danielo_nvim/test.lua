@@ -200,7 +200,6 @@ local String = _hx_e()
 local Std = _hx_e()
 ___TableWrapper_TableWrapper_Impl_ = _hx_e()
 ___TestMacros_TestMacros_Fields_ = _hx_e()
-__haxe_Log = _hx_e()
 __haxe_iterators_ArrayIterator = _hx_e()
 __haxe_iterators_ArrayKeyValueIterator = _hx_e()
 
@@ -748,39 +747,16 @@ ___TestMacros_TestMacros_Fields_.lotOfNesting = function()
   ___TestMacros_TestMacros_Fields_.testMethod(({arrWithObjs = ({({x = "inside array -> obj "}),({x = "second array -> obj "})}), doX = 99, nest = ({a = ({renest = 99, b = ({c = ({meganest = 88})})})}), objWithArr = ({x = ({({y = "obj -> array -> obj "}),({y = "second obj -> array -> obj "})})}), test = true}));
 end
 ___TestMacros_TestMacros_Fields_.objectWithLambdas = function() 
-  local _dce2 = ___TableWrapper_TableWrapper_Impl_.check(_hx_o({__fields__={lambda1=true,nestedLambda=true},lambda1=function(self) 
-    do return end;
+  local _dce2 = ___TableWrapper_TableWrapper_Impl_.check(_hx_o({__fields__={lambda1=true,nestedLambda=true},lambda1=function(self,name,age) 
+    _G.print(Std.string(Std.string(Std.string(Std.string("Hello ") .. Std.string(name)) .. Std.string(", good age ")) .. Std.string(age)));
   end,nestedLambda=_hx_o({__fields__={lambda2=true},lambda2=function(self,a,b) 
-    __haxe_Log.trace(a, _hx_o({__fields__={fileName=true,lineNumber=true,className=true,methodName=true,customParams=true},fileName="tools/TestMacros.hx",lineNumber=31,className="_TestMacros.TestMacros_Fields_",methodName="objectWithLambdas",customParams=_hx_tab_array({[0]=b}, 1)}));
+    do return a + b end;
   end})}));
-  ___TestMacros_TestMacros_Fields_.testlambdas(({lambda1 = function() 
-    do return end;
+  ___TestMacros_TestMacros_Fields_.testlambdas(({lambda1 = function(name,age) 
+    _G.print(Std.string(Std.string(Std.string(Std.string("Hello ") .. Std.string(name)) .. Std.string(", good age ")) .. Std.string(age)));
   end, nestedLambda = ({lambda2 = function(a,b) 
-    __haxe_Log.trace(a, _hx_o({__fields__={fileName=true,lineNumber=true,className=true,methodName=true,customParams=true},fileName="tools/TestMacros.hx",lineNumber=31,className="_TestMacros.TestMacros_Fields_",methodName="objectWithLambdas",customParams=_hx_tab_array({[0]=b}, 1)}));
+    do return a + b end;
   end})}));
-end
-
-__haxe_Log.new = {}
-__haxe_Log.formatOutput = function(v,infos) 
-  local str = Std.string(v);
-  if (infos == nil) then 
-    do return str end;
-  end;
-  local pstr = Std.string(Std.string(infos.fileName) .. Std.string(":")) .. Std.string(infos.lineNumber);
-  if (infos.customParams ~= nil) then 
-    local _g = 0;
-    local _g1 = infos.customParams;
-    while (_g < _g1.length) do 
-      local v = _g1[_g];
-      _g = _g + 1;
-      str = Std.string(str) .. Std.string((Std.string(", ") .. Std.string(Std.string(v))));
-    end;
-  end;
-  do return Std.string(Std.string(pstr) .. Std.string(": ")) .. Std.string(str) end;
-end
-__haxe_Log.trace = function(v,infos) 
-  local str = __haxe_Log.formatOutput(v, infos);
-  _hx_print(str);
 end
 
 __haxe_iterators_ArrayIterator.new = function(array) 
@@ -846,7 +822,5 @@ _hx_array_mt.__index = Array.prototype
 local _hx_static_init = function()
   
 end
-
-_hx_print = print or (function() end)
 
 _hx_static_init();
