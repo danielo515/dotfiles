@@ -32,7 +32,6 @@ vmap("p", '"_dP', "Paste without saving to clipboard")
 -- Tab bindings
 lvim.keys.normal_mode["tk"] = ":tabclose<cr>"
 lvim.keys.normal_mode["tn"] = ":tabnew<cr>"
-lvim.keys.normal_mode["tl"] = ":tabNext<cr>"
 lvim.keys.normal_mode["th"] = ":tabprev<cr>"
 lvim.builtin.terminal.open_mapping = "<c-t>"
 -- I'm handling this myself in a separate plugin
