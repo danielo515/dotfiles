@@ -196,7 +196,6 @@ local Enum = _hx_e();
 
 local _hx_exports = _hx_exports or {}
 local Array = _hx_e()
-local Lambda = _hx_e()
 ___Main_Main_Fields_ = _hx_e()
 local Math = _hx_e()
 local String = _hx_e()
@@ -204,10 +203,10 @@ local Std = _hx_e()
 local Test = _hx_e()
 __haxe_iterators_ArrayIterator = _hx_e()
 __haxe_iterators_ArrayKeyValueIterator = _hx_e()
-__lua_PairTools = _hx_e()
 __lua_StringMap = _hx_e()
 __packer__Packer_Packer_Fields_ = _hx_e()
 __plenary_Job = _G.require("plenary.job")
+__vim__TableTools_TableTools_Fields_ = _hx_e()
 __vim__VimTypes_LuaArray_Impl_ = _hx_e()
 __vim_Vimx = _hx_e()
 
@@ -525,19 +524,6 @@ Array.prototype.resize = function(self,len)
   end;
 end
 
-Lambda.new = {}
-Lambda.findIndex = function(it,f) 
-  local i = 0;
-  local v = it:iterator();
-  while (v:hasNext()) do 
-    if (f(v:next())) then 
-      do return i end;
-    end;
-    i = i + 1;
-  end;
-  do return -1 end;
-end
-
 ___Main_Main_Fields_.new = {}
 ___Main_Main_Fields_.main = function() 
   vim.api.nvim_create_user_command("HaxeCmd", function(args) 
@@ -602,29 +588,11 @@ ___Main_Main_Fields_.copy_messages_to_clipboard = function(number)
   vim.notify(Std.string(Std.string("") .. Std.string(number)) .. Std.string(" :messages copied to the clipboard"), "info");
 end
 ___Main_Main_Fields_.nexTab = function() 
-  local length = nil;
-  local tab = __lua_PairTools.copy(vim.api.nvim_list_tabpages());
-  local length = length;
-  local pages;
-  if (length == nil) then 
-    length = _hx_table.maxn(tab);
-    if (length > 0) then 
-      local head = tab[1];
-      _G.table.remove(tab, 1);
-      tab[0] = head;
-      pages = _hx_tab_array(tab, length);
-    else
-      pages = _hx_tab_array({}, 0);
-    end;
-  else
-    pages = _hx_tab_array(tab, length);
-  end;
+  local pages = vim.api.nvim_list_tabpages();
   local currentTab = vim.api.nvim_get_current_tabpage();
-  local tabIdx = Lambda.findIndex(pages, function(id) 
+  vim.api.nvim_set_current_tabpage(Test["or"](__vim__TableTools_TableTools_Fields_.findNext(pages, function(id) 
     do return id == currentTab end;
-  end);
-  vim.pretty_print("pages", pages, "tabIdx", tabIdx, "current", currentTab);
-  vim.api.nvim_set_current_tabpage(Test["or"](pages[tabIdx + 1], pages[0]));
+  end), pages[1]));
 end
 ___Main_Main_Fields_.copyGhUrl = function(line) 
   local lines = ___Main_Main_Fields_.runGh(__vim__VimTypes_LuaArray_Impl_.from(_hx_tab_array({[0]="browse", Std.string(vim.fn.expand("%")) .. Std.string(line), "--no-browser", "--branch", ___Main_Main_Fields_.get_branch()[1]}, 5)));
@@ -889,13 +857,6 @@ __haxe_iterators_ArrayKeyValueIterator.super = function(self,array)
   self.array = array;
 end
 
-__lua_PairTools.new = {}
-__lua_PairTools.copy = function(table1) 
-  local ret = ({});
-  for k,v in _G.pairs(table1) do ret[k] = v end;
-  do return ret end;
-end
-
 __lua_StringMap.new = function() 
   local self = _hx_new(__lua_StringMap.prototype)
   __lua_StringMap.super(self)
@@ -930,6 +891,31 @@ __packer__Packer_Packer_Fields_.get_plugin_version = function(name)
   else
     do return "unknown" end;
   end;
+end
+
+__vim__TableTools_TableTools_Fields_.new = {}
+__vim__TableTools_TableTools_Fields_.findNext = function(table,fn) 
+  local _hx_1_p_next, _hx_1_p_table, _hx_1_p_index = _G.ipairs(table);
+  local next = _hx_1_p_next;
+  local t = _hx_1_p_table;
+  local loop = nil;
+  loop = function(next,table,nextP) 
+    local _hx_continue_1 = false;
+    while (true) do repeat 
+      if (fn(nextP.value)) then 
+        do return _G.select(2, next(table, nextP.index)) end;
+      else
+        nextP = _hx_box_mr(_hx_table.pack(next(table, nextP.index)), {"index", "value"});
+        break;
+      end;until true
+      if _hx_continue_1 then 
+      _hx_continue_1 = false;
+      break;
+      end;
+      
+    end;
+  end;
+  do return loop(next, t, _hx_box_mr(_hx_table.pack(next(t, _hx_1_p_index)), {"index", "value"})) end;
 end
 
 __vim__VimTypes_LuaArray_Impl_.new = {}
@@ -1003,6 +989,14 @@ local _hx_static_init = function()
   __vim_Vimx.autogroups = __lua_StringMap.new();
   
   
+end
+
+_hx_box_mr = function(x,nt)
+    res = _hx_o({__fields__={}})
+    for i,v in ipairs(nt) do
+      res[v] = x[i]
+    end
+    return res
 end
 
 _hx_table = {}
