@@ -29,7 +29,7 @@ function D.require(path, on_success, on_fail)
     end
   else
     vim.notify("Failed to require library: " .. path, vim.log.levels.ERROR, { title = "Danielo" })
-    pcall(on_fail)
+    pcall(on_fail, lib)
   end
   return nil
 end
@@ -44,6 +44,8 @@ function D.pconf(path, ...)
   D.require(path, function(module)
     local setup_fn = module.config or module.setup
     return D.call(setup_fn, unpack(args))
+  end, function(err)
+    vim.pretty_print("error", err)
   end)
 end
 
