@@ -33,6 +33,7 @@ local plugins = {
   require "user.plugins.pomodoro-config",
   require "user.plugins.neogit-config",
   require "user.plugins.git-conflict-config",
+  require "user.plugins.search-replace",
   -- Awesome diff view
   require "user.diffview",
   require "user.plugins.cheat",
