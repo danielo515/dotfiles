@@ -16,6 +16,7 @@ local function check_binary(binary_name)
 end
 
 lvim.lsp.automatic_configuration.skipped_filetypes = { "reason", "rescript", "markdown" }
+table.insert(lvim.lsp.automatic_configuration.skipped_servers, "sumneko_lua")
 
 function M.config()
   --#region null-ls
@@ -26,6 +27,8 @@ function M.config()
   check_binary "stylua"
   check_binary "hadolint"
   check_binary "fixjson"
+
+  require "user.builtin.sumneko"
 
   -- Just use the default null-ls config by referencing the formatters by name
   local formatters = require "lvim.lsp.null-ls.formatters"
