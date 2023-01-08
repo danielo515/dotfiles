@@ -1,6 +1,6 @@
 package vim.types;
 
-typedef WOpts = {
+extern class WOpts {
   /* `'breakindentopt'`  `'briopt'`  string (default empty)
     // 			local to window
     // 	Settings for `'breakindent'` . It can consist of the following optional
@@ -23,23 +23,25 @@ typedef WOpts = {
     // 		list:-1	    Uses the length of a match with `'formatlistpat'` 
     // 			    for indentation.
     // 	The default value for min is 20, shift and list is 0.
-    Breakindentopt : String,
-    // `'colorcolumn'`  `'cc'` 	string	(default "")
-    // 			local to window
-    // 	`'colorcolumn'`  is a comma-separated list of screen columns that are
-    // 	highlighted with ColorColumn |hl-ColorColumn|.  Useful to align
-    // 	text.  Will make screen redrawing slower.
-    // 	The screen column can be an absolute number, or a number preceded with
-    // 	`'+'`  or `'-'` , which is added to or subtracted from `'textwidth'` . >
-    // 
-    // 		:set cc=+1  " highlight column after `'textwidth'` 
-    // 		:set cc=+1,+2,+3  " highlight three columns after `'textwidth'` 
-    // 		:hi ColorColumn ctermbg=lightgrey guibg=lightgrey
-    // <
-    // 	When `'textwidth'`  is zero then the items with `'-'`  and `'+'`  are not used.
-    // 	A maximum of 256 columns are highlighted.
    */
-  Colorcolumn:String,
+  @:native('Breakindentopt') var Breakindentopt:String;
+
+  // `'colorcolumn'`  `'cc'` 	string	(default "")
+  // 			local to window
+  // 	`'colorcolumn'`  is a comma-separated list of screen columns that are
+  // 	highlighted with ColorColumn |hl-ColorColumn|.  Useful to align
+  // 	text.  Will make screen redrawing slower.
+  // 	The screen column can be an absolute number, or a number preceded with
+  // 	`'+'`  or `'-'` , which is added to or subtracted from `'textwidth'` . >
+  //
+  // 		:set cc=+1  " highlight column after `'textwidth'`
+  // 		:set cc=+1,+2,+3  " highlight three columns after `'textwidth'`
+  // 		:hi ColorColumn ctermbg=lightgrey guibg=lightgrey
+  // <
+  // 	When `'textwidth'`  is zero then the items with `'-'`  and `'+'`  are not used.
+  // 	A maximum of 256 columns are highlighted.
+  @:native('colorcolumn') var Colorcolumn:String;
+
   // `'concealcursor'`  `'cocu'` 	string (default: "")
   // 			local to window
   // 	Sets the modes in which text in the cursor line can also be concealed.
@@ -57,7 +59,8 @@ typedef WOpts = {
   // 	you can see what you are doing.
   // 	Keep in mind that the cursor position is not always where it's
   // 	displayed.  E.g., when moving vertically it may change column.
-  Concealcursor:String,
+  @:native('concealcursor') var Concealcursor:String;
+
   // `'conceallevel'`  `'cole'` 	number (default 0)
   // 			local to window
   // 	Determine how text with the "conceal" syntax attribute |:syn-conceal|
@@ -78,17 +81,19 @@ typedef WOpts = {
   // 	Note: in the cursor line concealed text is not hidden, so that you can
   // 	edit and copy the text.  This can be changed with the `'concealcursor'`
   // 	option.
-  Conceallevel:Int,
+  @:native('conceallevel') var Conceallevel:Int;
+
   // `'cursorbind'`  `'crb'` 	boolean  (default off)
   // 			local to window
   // 	When this option is set, as the cursor in the current
   // 	window moves other cursorbound windows (windows that also have
   // 	this option set) move their cursors to the corresponding line and
   // 	column.  This option is useful for viewing the
-  // 	differences between two versions of a file (see `'diff'` ); in diff mode,
+  // 	differences between two versions of a file (see `'diff'` ); in diff mode;
   // 	inserted and deleted lines (though not characters within a line) are
   // 	taken into account.
-  Cursorbind:Bool,
+  @:native('cursorbind') var Cursorbind:Bool;
+
   // `'cursorcolumn'`  `'cuc'` 	boolean	(default off)
   // 			local to window
   // 	Highlight the screen column of the cursor with CursorColumn
@@ -99,14 +104,16 @@ typedef WOpts = {
   // 		au WinLeave * set nocursorline nocursorcolumn
   // 		au WinEnter * set cursorline cursorcolumn
   // <
-  Cursorcolumn:Bool,
+  @:native('cursorcolumn') var Cursorcolumn:Bool;
+
   // `'cursorline'`  `'cul'` 	boolean	(default off)
   // 			local to window
   // 	Highlight the text line of the cursor with CursorLine |hl-CursorLine|.
   // 	Useful to easily spot the cursor.  Will make screen redrawing slower.
   // 	When Visual mode is active the highlighting isn't used to make it
   // 	easier to see the selected text.
-  Cursorline:Bool,
+  @:native('cursorline') var Cursorline:Bool;
+
   // `'cursorlineopt'`  `'culopt'`  string (default: "number,line")
   // 			local to window
   // 	Comma-separated list of settings for how `'cursorline'`  is displayed.
@@ -122,12 +129,14 @@ typedef WOpts = {
   // 	"both"		Alias for the values "line,number".
   //
   // 	"line" and "screenline" cannot be used together.
-  Cursorlineopt:String,
+  @:native('cursorlineopt') var Cursorlineopt:String;
+
   // `'diff'` 			boolean	(default off)
   // 			local to window
   // 	Join the current window in the group of windows that shows differences
   // 	between files.  See |diff-mode|.
-  Diff:Bool,
+  @:native('diff') var Diff:Bool;
+
   // `'fillchars'`  `'fcs'` 	string	(default "")
   // 			global or local to window |global-local|
   // 	Characters to fill the statuslines, vertical separators and special
@@ -163,9 +172,9 @@ typedef WOpts = {
   // 	"verthoriz" are only used when `'laststatus'`  is 3, since only vertical
   // 	window separators are used otherwise.
   //
-  // 	If `'ambiwidth'`  is "double" then "horiz", "horizup", "horizdown",
+  // 	If `'ambiwidth'`  is "double" then "horiz", "horizup", "horizdown";
   // 	"vert", "vertleft", "vertright", "verthoriz", "foldsep" and "fold"
-  // 	default to single-byte alternatives.
+  // 	default to single-byte alternatives. var
   //
   // 	Example: >
   // 	    :set fillchars=stl:^,stlnc:=,vert:│,fold:·,diff:-
@@ -191,7 +200,8 @@ typedef WOpts = {
   // 	  fold		Folded			|hl-Folded|
   // 	  diff		DiffDelete		|hl-DiffDelete|
   // 	  eob		EndOfBuffer		|hl-EndOfBuffer|
-  Fillchars:String,
+  @:native('fillchars') var Fillchars:String;
+
   // `'foldcolumn'`  `'fdc'` 	string (default "0")
   // 			local to window
   // 	When and how to draw the foldcolumn. Valid values are:
@@ -201,7 +211,8 @@ typedef WOpts = {
   //             0:            to disable foldcolumn
   // 	    "[1-9]":      to display a fixed number of columns
   // 	See |folding|.
-  Foldcolumn:String,
+  @:native('foldcolumn') var Foldcolumn:String;
+
   // `'foldenable'`  `'fen'` 	boolean (default on)
   // 			local to window
   // 	When off, all folds are open.  This option can be used to quickly
@@ -211,7 +222,8 @@ typedef WOpts = {
   // 	`'foldenable'`  is off.
   // 	This option is set by commands that create a new fold or close a fold.
   // 	See |folding|.
-  Foldenable:Bool,
+  @:native('foldenable') var Foldenable:Bool;
+
   // `'foldexpr'`  `'fde'` 	string (default: "0")
   // 			local to window
   // 	The expression used for when `'foldmethod'`  is "expr".  It is evaluated
@@ -224,14 +236,16 @@ typedef WOpts = {
   //
   // 	It is not allowed to change text or jump to another window while
   // 	evaluating `'foldexpr'`  |textlock|.
-  Foldexpr:String,
+  @:native('foldexpr') var Foldexpr:String;
+
   // `'foldignore'`  `'fdi'` 	string (default: "#")
   // 			local to window
   // 	Used only when `'foldmethod'`  is "indent".  Lines starting with
   // 	characters in `'foldignore'`  will get their fold level from surrounding
   // 	lines.  White space is skipped before checking for this character.
   // 	The default "#" works well for C programs.  See |fold-indent|.
-  Foldignore:String,
+  @:native('foldignore') var Foldignore:String;
+
   // `'foldlevel'`  `'fdl'` 	number (default: 0)
   // 			local to window
   // 	Sets the fold level: Folds with a higher level will be closed.
@@ -239,14 +253,16 @@ typedef WOpts = {
   // 	close fewer folds.
   // 	This option is set by commands like |zm|, |zM| and |zR|.
   // 	See |fold-foldlevel|.
-  Foldlevel:Int,
+  @:native('foldlevel') var Foldlevel:Int;
+
   // `'foldmarker'`  `'fmr'` 	string (default: "{{{,}}}")
   // 			local to window
   // 	The start and end marker used when `'foldmethod'`  is "marker".  There
   // 	must be one comma, which separates the start and end marker.  The
   // 	marker is a literal string (a regular expression would be too slow).
   // 	See |fold-marker|.
-  Foldmarker:String,
+  @:native('foldmarker') var Foldmarker:String;
+
   // `'foldmethod'`  `'fdm'` 	string (default: "manual")
   // 			local to window
   // 	The kind of folding used for the current window.  Possible values:
@@ -256,7 +272,8 @@ typedef WOpts = {
   // 	|fold-marker|	marker	    Markers are used to specify folds.
   // 	|fold-syntax|	syntax	    Syntax highlighting items specify folds.
   // 	|fold-diff|	diff	    Fold text that is not changed.
-  Foldmethod:String,
+  @:native('foldmethod') var Foldmethod:String;
+
   // `'foldminlines'`  `'fml'` 	number (default: 1)
   // 			local to window
   // 	Sets the number of screen lines above which a fold can be displayed
@@ -266,13 +283,15 @@ typedef WOpts = {
   // 	Note that this only has an effect on what is displayed.  After using
   // 	"zc" to close a fold, which is displayed open because it's smaller
   // 	than `'foldminlines'` , a following "zc" may close a containing fold.
-  Foldminlines:Int,
+  @:native('foldminlines') var Foldminlines:Int;
+
   // `'foldnestmax'`  `'fdn'` 	number (default: 20)
   // 			local to window
   // 	Sets the maximum nesting of folds for the "indent" and "syntax"
   // 	methods.  This avoids that too many folds will be created.  Using more
   // 	than 20 doesn't work, because the internal limit is 20.
-  Foldnestmax:Int,
+  @:native('foldnestmax') var Foldnestmax:Int;
+
   // `'foldtext'`  `'fdt'` 	string (default: "foldtext()")
   // 			local to window
   // 	An expression which is used to specify the text displayed for a closed
@@ -284,19 +303,21 @@ typedef WOpts = {
   //
   // 	It is not allowed to change text or jump to another window while
   // 	evaluating `'foldtext'`  |textlock|.
-  Foldtext:String,
+  @:native('foldtext') var Foldtext:String;
+
   // `'linebreak'`  `'lbr'` 	boolean	(default off)
   // 			local to window
   // 	If on, Vim will wrap long lines at a character in `'breakat'`  rather
   // 	than at the last character that fits on the screen.  Unlike
-  // 	`'wrapmargin'`  and `'textwidth'` , this does not insert <EOL>s in the file,
+  // 	`'wrapmargin'`  and `'textwidth'` , this does not insert <EOL>s in the file;
   // 	it only affects the way the file is displayed, not its contents.
   // 	If `'breakindent'`  is set, line is visually indented. Then, the value
   // 	of `'showbreak'`  is used to put in front of wrapped lines. This option
   // 	is not used when the `'wrap'`  option is off.
   // 	Note that <Tab> characters after an <EOL> are mostly not displayed
   // 	with the right amount of white space.
-  Linebreak:Bool,
+  @:native('linebreak') var Linebreak:Bool;
+
   // `'list'` 			boolean	(default off)
   // 			local to window
   // 	List mode: By default, show tabs as ">", trailing spaces as "-", and
@@ -312,28 +333,29 @@ typedef WOpts = {
   // 	Note that list mode will also affect formatting (set with `'textwidth'`
   // 	or `'wrapmargin'` ) when `'cpoptions'`  includes `'L'` .  See `'listchars'`  for
   // 	changing the way tabs are displayed.
-  List:Bool,
+  @:native('list') var List:Bool;
+
   // `'listchars'`  `'lcs'` 	string	(default: "tab:> ,trail:-,nbsp:+")
   // 			global or local to window |global-local|
   // 	Strings to use in `'list'`  mode and for the |:list| command.  It is a
   // 	comma-separated list of string settings.
   //
   //
-  // 	  eol:c		Character to show at the end of each line.  When
+  // 	  @:native('eol') var eol:c		Character to show at the end of each line.  When
   // 			omitted, there is no extra character at the end of the
   // 			line.
   //
-  // 	  tab:xy[z]	Two or three characters to be used to show a tab.
+  // 	  @:native('tab') var tab:xy[z]	Two or three characters to be used to show a tab.
   // 			The third character is optional.
   //
-  // 	  tab:xy	The `'x'`  is always used, then `'y'`  as many times as will
+  // 	  @:native('tab') var tab:xy	The `'x'`  is always used, then `'y'`  as many times as will
   // 			fit.  Thus "tab:>-" displays:
   // 				>
   // 				>-
   // 				>//
   // 				etc.
   //
-  // 	  tab:xyz	The `'z'`  is always used, then `'x'`  is prepended, and
+  // 	  @:native('tab') var tab:xyz	The `'z'`  is always used, then `'x'`  is prepended, and
   // 			then `'y'`  is used as many times as will fit.  Thus
   // 			"tab:<->" displays:
   // 				>
@@ -344,25 +366,25 @@ typedef WOpts = {
   //
   // 			When "tab:" is omitted, a tab is shown as ^I.
   //
-  // 	  space:c	Character to show for a space.  When omitted, spaces
+  // 	  @:native('space') var space:c	Character to show for a space.  When omitted, spaces
   // 			are left blank.
   //
-  // 	  multispace:c...
+  // 	  @:native('multispace') var multispace:c...
   // 	 		One or more characters to use cyclically to show for
   // 	 		multiple consecutive spaces.  Overrides the "space"
   // 			setting, except for single spaces.  When omitted, the
-  // 			"space" setting is used.  For example,
+  // 			"space" setting is used.  For example;
   // 			`:set listchars=multispace://-+` shows ten consecutive
   // 			spaces as:
   // 				//-+//-+// ~
   //
-  // 	  lead:c	Character to show for leading spaces.  When omitted,
+  // 	  @:native('lead') var lead:c	Character to show for leading spaces.  When omitted;
   // 			leading spaces are blank.  Overrides the "space" and
   // 			"multispace" settings for leading spaces.  You can
   // 			combine it with "tab:", for example: >
   // 				:set listchars+=tab:>-,lead:.
   // <
-  // 	  leadmultispace:c...
+  // 	  @:native('leadmultispace') var leadmultispace:c...
   // 			Like the |lcs-multispace| value, but for leading
   // 			spaces only.  Also overrides |lcs-lead| for leading
   // 			multiple spaces.
@@ -372,22 +394,22 @@ typedef WOpts = {
   // 			Where "XXX" denotes the first non-blank characters in
   // 			the line.
   //
-  // 	  trail:c	Character to show for trailing spaces.  When omitted,
+  // 	  @:native('trail') var trail:c	Character to show for trailing spaces.  When omitted;
   // 			trailing spaces are blank.  Overrides the "space" and
   // 			"multispace" settings for trailing spaces.
   //
-  // 	  extends:c	Character to show in the last column, when `'wrap'`  is
+  // 	  @:native('extends') var extends:c	Character to show in the last column, when `'wrap'`  is
   // 			off and the line continues beyond the right of the
   // 			screen.
   //
-  // 	  precedes:c	Character to show in the first visible column of the
+  // 	  @:native('precedes') var precedes:c	Character to show in the first visible column of the
   // 			physical line, when there is text preceding the
   // 			character visible in the first column.
   //
-  // 	  conceal:c	Character to show in place of concealed text, when
+  // 	  @:native('conceal') var conceal:c	Character to show in place of concealed text, when
   // 			`'conceallevel'`  is set to 1.  A space when omitted.
   //
-  // 	  nbsp:c	Character to show for a non-breakable space character
+  // 	  @:native('nbsp') var nbsp:c	Character to show for a non-breakable space character
   // 			(0xA0 (160 decimal) and U+202F).  Left blank when
   // 			omitted.
   //
@@ -406,9 +428,10 @@ typedef WOpts = {
   // 	    :set lcs=tab:>-,eol:<,nbsp:%
   // 	    :set lcs=extends:>,precedes:<
   // <	|hl-NonText| highlighting will be used for "eol", "extends" and
-  // 	"precedes". |hl-Whitespace| for "nbsp", "space", "tab", "multispace",
+  // 	"precedes". |hl-Whitespace| for "nbsp", "space", "tab", "multispace";
   // 	"lead" and "trail".
-  Listchars:String,
+  @:native('listchars') var Listchars:String;
+
   // `'number'`  `'nu'` 		boolean	(default off)
   // 			local to window
   // 	Print the line number in front of each line.  When the `'n'`  option is
@@ -431,7 +454,8 @@ typedef WOpts = {
   // 	    |pear           |  2 pear       |  1 pear       |  1 pear
   // 	    |nobody         |  3 nobody     |  0 nobody     |3   nobody
   // 	    |there          |  4 there      |  1 there      |  1 there
-  Number:Bool,
+  @:native('number') var Number:Bool;
+
   // `'numberwidth'`  `'nuw'` 	number	(default: 4)
   // 			local to window
   // 	Minimal number of columns to use for the line number.  Only relevant
@@ -444,13 +468,15 @@ typedef WOpts = {
   // 	is set. Thus with the Vim default of 4 there is room for a line number
   // 	up to 999. When the buffer has 1000 lines five columns will be used.
   // 	The minimum value is 1, the maximum value is 20.
-  Numberwidth:Int,
+  @:native('numberwidth') var Numberwidth:Int;
+
   // `'previewwindow'`  `'pvw'` 	boolean (default off)
   // 			local to window
   // 	Identifies the preview window.  Only one window can have this option
   // 	set.  It's normally not set directly, but by using one of the commands
   // 	|:ptag|, |:pedit|, etc.
-  Previewwindow:Bool,
+  @:native('previewwindow') var Previewwindow:Bool;
+
   // `'relativenumber'`  `'rnu'` 	boolean	(default off)
   // 			local to window
   // 	Show the line number relative to the line with the cursor in front of
@@ -470,7 +496,8 @@ typedef WOpts = {
   // 	The number in front of the cursor line also depends on the value of
   // 	`'number'` , see |number_relativenumber| for all combinations of the two
   // 	options.
-  Relativenumber:Bool,
+  @:native('relativenumber') var Relativenumber:Bool;
+
   // `'rightleft'`  `'rl'` 	boolean	(default off)
   // 			local to window
   // 	When on, display orientation becomes right-to-left, i.e., characters
@@ -482,7 +509,8 @@ typedef WOpts = {
   // 	useful whenever you have a mixed text file with both right-to-left
   // 	and left-to-right strings so that both sets are displayed properly
   // 	in different windows).  Also see |rileft.txt|.
-  Rightleft:Bool,
+  @:native('rightleft') var Rightleft:Bool;
+
   // `'rightleftcmd'`  `'rlc'` 	string	(default "search")
   // 			local to window
   // 	Each word in this option enables the command line editing to work in
@@ -492,7 +520,8 @@ typedef WOpts = {
   //
   // 	This is useful for languages such as Hebrew, Arabic and Farsi.
   // 	The `'rightleft'`  option must be set for `'rightleftcmd'`  to take effect.
-  Rightleftcmd:String,
+  @:native('rightleftcmd') var Rightleftcmd:String;
+
   // `'scroll'`  `'scr'` 		number	(default: half the window height)
   // 			local to window
   // 	Number of lines to scroll with CTRL-U and CTRL-D commands.  Will be
@@ -502,7 +531,8 @@ typedef WOpts = {
   // 	If you give a count to the CTRL-U or CTRL-D command it will
   // 	be used as the new value for `'scroll'` .  Reset to half the window
   // 	height with ":set scroll=0".
-  Scroll:Int,
+  @:native('scroll') var Scroll:Int;
+
   // `'scrollbind'`  `'scb'` 	boolean  (default off)
   // 			local to window
   // 	See also |scroll-binding|.  When this option is set, the current
@@ -514,7 +544,8 @@ typedef WOpts = {
   // 	This option is mostly reset when splitting a window to edit another
   // 	file.  This means that ":split | edit file" results in two windows
   // 	with scroll-binding, but ":split file" does not.
-  Scrollbind:Bool,
+  @:native('scrollbind') var Scrollbind:Bool;
+
   // `'scrolloff'`  `'so'` 	number	(default 0)
   // 			global or local to window |global-local|
   // 	Minimal number of screen lines to keep above and below the cursor.
@@ -527,7 +558,8 @@ typedef WOpts = {
   // 		setlocal scrolloff<
   // 		setlocal scrolloff=-1
   // <	For scrolling horizontally see `'sidescrolloff'` .
-  Scrolloff:Int,
+  @:native('scrolloff') var Scrolloff:Int;
+
   // `'showbreak'`  `'sbr'` 	string	(default "")
   // 			global or local to window |global-local|
   // 	String to put at the start of lines that have been wrapped.  Useful
@@ -547,7 +579,8 @@ typedef WOpts = {
   // 	set and you want no value in the current window use NONE: >
   // 		:setlocal showbreak=NONE
   // <
-  Showbreak:String,
+  @:native('showbreak') var Showbreak:String;
+
   // `'sidescrolloff'`  `'siso'` 	number (default 0)
   // 			global or local to window |global-local|
   // 	The minimal number of screen columns to keep to the left and to the
@@ -570,37 +603,40 @@ typedef WOpts = {
   // 		 :set nowrap sidescroll=1 listchars=extends:>,precedes:<
   // 		 :set sidescrolloff=1
   // <
-  Sidescrolloff:Int,
+  @:native('sidescrolloff') var Sidescrolloff:Int;
+
   // `'signcolumn'`  `'scl'` 	string	(default "auto")
   // 			local to window
   // 	When and how to draw the signcolumn. Valid values are:
   // 	   "auto"   	only when there is a sign to display
   // 	   "auto:[1-9]" resize to accommodate multiple signs up to the
-  // 	                given number (maximum 9), e.g. "auto:4"
+  // 	                given number (maximum 9), e.g. "@:native('auto') var auto:4"
   // 	   "auto:[1-8]-[2-9]"
   // 	                resize to accommodate multiple signs up to the
   // 			given maximum number (maximum 9) while keeping
   // 			at least the given minimum (maximum 8) fixed
   // 			space. The minimum number should always be less
-  // 			than the maximum number, e.g. "auto:2-5"
+  // 			than the maximum number, e.g. "@:native('auto') var auto:2-5"
   // 	   "no"	    	never
   // 	   "yes"    	always
   // 	   "yes:[1-9]"  always, with fixed space for signs up to the given
-  // 	                number (maximum 9), e.g. "yes:3"
+  // 	                number (maximum 9), e.g. "@:native('yes') var yes:3"
   // 	   "number"	display signs in the `'number'`  column. If the number
   // 			column is not present, then behaves like "auto".
   //
   // 	Note regarding 'orphaned signs': with signcolumn numbers higher than
-  // 	1, deleting lines will also remove the associated signs automatically,
+  // 	1, deleting lines will also remove the associated signs automatically;
   // 	in contrast to the default Vim behavior of keeping and grouping them.
   // 	This is done in order for the signcolumn appearance not appear weird
   // 	during line deletion.
-  Signcolumn:String,
+  @:native('signcolumn') var Signcolumn:String;
+
   // `'spell'` 			boolean	(default off)
   // 			local to window
   // 	When on spell checking will be done.  See |spell|.
   // 	The languages are specified with `'spelllang'` .
-  Spell:Bool,
+  @:native('spell') var Spell:Bool;
+
   // `'statusline'`  `'stl'` 	string	(default empty)
   // 			global or local to window |global-local|
   // 	When non-empty, this option determines the content of the status line.
@@ -612,7 +648,7 @@ typedef WOpts = {
   // 	All fields except the {item} are optional.  A single percent sign can
   // 	be given as "%%".
   //
-  // 	When the option starts with "%!" then it is used as an expression,
+  // 	When the option starts with "%!" then it is used as an expression;
   // 	evaluated and the result is used as the option value.  Example: >
   // 		:set statusline=%!MyStatusLine()
   // <	The  variable will be set to the |window-ID| of the
@@ -664,7 +700,7 @@ typedef WOpts = {
   // 	y F   Type of file in the buffer, e.g., "[vim]".  See `'filetype'` .
   // 	Y F   Type of file in the buffer, e.g., ",VIM".  See `'filetype'` .
   // 	q S   "[Quickfix List]", "[Location List]" or empty.
-  // 	k S   Value of "b:keymap_name" or `'keymap'`  when |:lmap| mappings are
+  // 	k S   Value of "@:native('b') var b:keymap_name" or `'keymap'`  when |:lmap| mappings are
   // 	      being used: "<keymap>"
   // 	n N   Buffer number.
   // 	b N   Value of character under cursor.
@@ -713,7 +749,7 @@ typedef WOpts = {
   // 	@ N   Start of execute function label. Use %X or %T to
   // 	      end the label, e.g.: %10@SwitchBuffer@foo.c%X.  Clicking this
   // 	      label runs specified function: in the example when clicking once
-  // 	      using left mouse button on "foo.c" "SwitchBuffer(10, 1, `'l'` ,
+  // 	      using left mouse button on "foo.c" "SwitchBuffer(10, 1, `'l'` ;
   // 	      '    ')" expression will be run.  Function receives the
   // 	      following arguments in order:
   // 	      1. minwid field value or zero if no N was specified
@@ -764,8 +800,8 @@ typedef WOpts = {
   // 	While evaluating %{} the current buffer and current window will be set
   // 	temporarily to that of the window (and buffer) whose statusline is
   // 	currently being drawn.  The expression will evaluate in this context.
-  // 	The variable "g:actual_curbuf" is set to the `bufnr()` number of the
-  // 	real current buffer and "g:actual_curwin" to the |window-ID| of the
+  // 	The variable "@:native('g') var g:actual_curbuf" is set to the `bufnr()` number of the
+  // 	real current buffer and "@:native('g') var g:actual_curwin" to the |window-ID| of the
   // 	real current window.  These values are strings.
   //
   // 	The `'statusline'`  option will be evaluated in the |sandbox| if set from
@@ -796,17 +832,18 @@ typedef WOpts = {
   // 	  :set statusline=%<%f%=\ [%1%n%R%H]\ %-19(%3l,%02c%03V%)%O`'%02b'`
   // 	  :hi User1 term=inverse,bold cterm=inverse,bold ctermfg=red
   // <	Display a ,GZ flag if a compressed file is loaded >
-  // 	  :set statusline=...%r%{VarExists(`'b:gzflag'` ,'\ [GZ]')}%h...
+  // 	  :set statusline=...%r%{VarExists(`'@:native('b') var b:gzflag'` ,'\ [GZ]')}%h...
   // <	In the |:autocmd|'s: >
-  // 	  :let b:gzflag : Int,
+  // 	  :let @:native('b') var b:gzflag : Int;
   // <	And: >
-  // 	  :unlet b:gzflag
+  // 	  :unlet @:native('b') var b:gzflag
   // <	And define this function: >
   // 	  :function VarExists(var, val)
-  // 	  :    if exists(a:var) | return a:val | else | return `''`  | endif
+  // 	  :    if exists(@:native('a') var a:var) | return a:val | else | return `''`  | endif
   // 	  :endfunction
   // <
-  Statusline:String,
+  @:native('statusline') var Statusline:String;
+
   // `'virtualedit'`  `'ve'` 	string	(default "")
   // 			global or local to window |global-local|
   // 	A comma-separated list of these words:
@@ -817,7 +854,7 @@ typedef WOpts = {
   // 	    none	When used as the local value, do not allow virtual
   // 			editing even when the global value is set.  When used
   // 			as the global value, "none" is the same as "".
-  // 	    NONE	Alternative spelling of "none".
+  // 	    NONE	Alternative var spelling of "none".
   //
   // 	Virtual editing means that the cursor can be positioned where there is
   // 	no actual character.  This can be halfway into a tab or beyond the end
@@ -835,7 +872,8 @@ typedef WOpts = {
   // 	It doesn't make sense to combine "all" with "onemore", but you will
   // 	not get a warning for it.
   // 	When combined with other words, "none" is ignored.
-  Virtualedit:String,
+  @:native('virtualedit') var Virtualedit:String;
+
   // `'winbar'`  `'wbr'` 		string (default empty)
   // 			global or local to window |global-local|
   // 	When non-empty, this option enables the window bar and determines its
@@ -851,7 +889,8 @@ typedef WOpts = {
   // 	have a window bar.
   //
   // 	This option cannot be set in a modeline when `'modelineexpr'`  is off.
-  Winbar:String,
+  @:native('winbar') var Winbar:String;
+
   // `'winblend'`  `'winbl'` 		number	(default 0)
   // 			local to window
   // 	Enables pseudo-transparency for a floating window. Valid values are in
@@ -859,20 +898,23 @@ typedef WOpts = {
   // 	transparent background. Values between 0-30 are typically most useful.
   //
   // 	UI-dependent. Works best with RGB colors. `'termguicolors'`
-  Winblend:Int,
+  @:native('winblend') var Winblend:Int;
+
   // `'winfixheight'`  `'wfh'` 	boolean	(default off)
   // 			local to window
   // 	Keep the window height when windows are opened or closed and
   // 	`'equalalways'`  is set.  Also for |CTRL-W_=|.  Set by default for the
   // 	|preview-window| and |quickfix-window|.
   // 	The height may be changed anyway when running out of room.
-  Winfixheight:Bool,
+  @:native('winfixheight') var Winfixheight:Bool;
+
   // `'winfixwidth'`  `'wfw'` 	boolean	(default off)
   // 			local to window
   // 	Keep the window width when windows are opened or closed and
   // 	`'equalalways'`  is set.  Also for |CTRL-W_=|.
   // 	The width may be changed anyway when running out of room.
-  Winfixwidth:Bool,
+  @:native('winfixwidth') var Winfixwidth:Bool;
+
   // `'winhighlight'`  `'winhl'` 	string (default empty)
   // 			local to window
   // 	Window-local highlights.  Comma-delimited list of highlight
@@ -890,9 +932,10 @@ typedef WOpts = {
   // 	message area cannot be overridden.
   //
   // 	Example: show a different color for non-current windows: >
-  // 		set winhighlight=Normal:MyNormal,NormalNC:MyNormalNC
+  // 		set winhighlight=@:native('normal') var Normal:MyNormal,NormalNC:MyNormalNC
   // <
-  Winhighlight:String,
+  @:native('winhighlight') var Winhighlight:String;
+
   // `'wrap'` 			boolean	(default on)
   // 			local to window
   // 	This option changes how text is displayed.  It doesn't change the text
@@ -910,5 +953,5 @@ typedef WOpts = {
   // <	See `'sidescroll'` , `'listchars'`  and |wrap-off|.
   // 	This option can't be set from a |modeline| when the `'diff'`  option is
   // 	on.
-  Wrap:Bool,
+  @:native('wrap') var Wrap:Bool;
 }
