@@ -139,7 +139,8 @@ M.config = function()
       margin = 5,
     },
   }
-  return opts
+  lvim.builtin.alpha.mode = "custom"
+  lvim.builtin.alpha["custom"] = { config = opts }
 end
 
 return M

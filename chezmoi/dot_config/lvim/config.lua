@@ -1,13 +1,13 @@
 require "danielo.globals"
 local concat_lists = require("danielo").concat_lists
 -- Settings related to GUI clients like neovide
-require "settings.gui"
+D.pconf "settings.gui"
 -- generic LSP settings
 lvim.lsp.installer.setup.automatic_servers_installation = true
 -- Required for ocaml-lsp TODO: do not use hardcoded path
 vim.opt.rtp:append "/Users/danielo/.opam/default/share/ocp-indent/vim"
 -- Project
-lvim.builtin.project.patterns = { ".git", "package.json", "config.lua" }
+lvim.builtin.project.patterns = { ".git", "package.json"  }
 lvim.builtin.project.silent_chdir = false
 -- Packer fix
 local packer = require "packer"
@@ -38,9 +38,7 @@ lvim.builtin.autopairs.active = false
 lvim.builtin.bufferline.options.numbers = "buffer_id"
 -- Dashboard
 -- =========================================
-lvim.builtin.alpha.mode = "custom"
-local alpha_opts = require("user.dashboard").config()
-lvim.builtin.alpha["custom"] = { config = alpha_opts }
+D.pconf "user.dashboard"
 --#region Temporal test
 lvim.builtin.nvimtree.setup.update_cwd = false
 lvim.builtin.nvimtree.setup.update_focused_file.update_cwd = false
