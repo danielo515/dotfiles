@@ -22,7 +22,7 @@ function M.config()
     {
       "BufWritePost",
       chezmoi.get_chezmoi_dir() .. "/*",
-      "execute '!chezmoi apply -v --source-path %' | LvimReload ",
+      "execute '!chezmoi apply -v --refresh-externals=false --source-path %' | LvimReload ",
     },
     {
       "BufWritePost",
