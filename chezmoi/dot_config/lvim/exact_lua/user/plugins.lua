@@ -22,8 +22,6 @@ local plugins = {
   require "user.plugins.neogen-config",
   require "user.plugins.biscuits",
   -- require "user.plugins.lsp-lines",
-  -- require "user.bookmarks",
-  -- require "user.neozoom",
   -- require "user.plugins.incline", -- show file name in a floating window
   -- require "user.plugins.vgit",
   require "user.colorbuddy",

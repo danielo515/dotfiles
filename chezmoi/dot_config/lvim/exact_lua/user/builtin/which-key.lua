@@ -106,7 +106,7 @@ local whichConfig = {
 }
 
 --#region search-replace plugin binds
-local keymap = lvim.builtin.which_key
+local keymap = lvim.builtin.which_key.mappings
 keymap["r"] = { name = "SearchReplaceSingleBuffer" }
 
 keymap["r"]["s"] = { "<CMD>SearchReplaceSingleBufferSelections<CR>", "SearchReplaceSingleBuffer [s]election list" }
