@@ -31,6 +31,20 @@ return {
     )
   ),
   s(
+    { trig = "plug", dscr = "plugin module template" },
+    fmt( [[ 
+    return {{
+      '{}',
+      config = function()
+        require("{}").setup()
+        {}
+      end
+    }}
+      ]],
+      { i(1), l(l._1:gsub("%w+/",""),{1}), i(0) }
+    )
+  ),
+  s(
     { trig = "fmt", dscr = "fmt snippet to use with snip" },
     fmta(
       [[ fmt([[
