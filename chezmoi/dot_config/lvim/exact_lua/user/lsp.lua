@@ -28,8 +28,6 @@ function M.config()
   check_binary "hadolint"
   check_binary "fixjson"
 
-  require "user.builtin.sumneko"
-
   -- Just use the default null-ls config by referencing the formatters by name
   local formatters = require "lvim.lsp.null-ls.formatters"
   formatters.setup {
