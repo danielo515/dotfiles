@@ -1,13 +1,11 @@
 require "danielo.globals"
 local concat_lists = require("danielo").concat_lists
--- Settings related to GUI clients like neovide
-D.pconf "settings.gui"
 -- generic LSP settings
 lvim.lsp.installer.setup.automatic_servers_installation = true
 -- Required for ocaml-lsp TODO: do not use hardcoded path
 vim.opt.rtp:append "/Users/danielo/.opam/default/share/ocp-indent/vim"
 -- Project
-lvim.builtin.project.patterns = { ".git", "package.json"  }
+lvim.builtin.project.patterns = { ".git", "package.json" }
 lvim.builtin.project.silent_chdir = false
 -- Packer fix
 local packer = require "packer"
@@ -50,13 +48,13 @@ vim.o.timeoutlen = 500
 vim.o.wrap = true
 
 local options = {
-  foldmethod = "expr", -- folding, set to "expr" for treesitter based folding
-  foldexpr = "nvim_treesitter#foldexpr()", -- set to "nvim_treesitter#foldexpr()" for treesitter based folding
-  laststatus = 3,
+  -- foldmethod = "expr", -- folding, set to "expr" for treesitter based folding
+  -- foldexpr = "nvim_treesitter#foldexpr()", -- set to "nvim_treesitter#foldexpr()" for treesitter based folding
   foldnestmax = 3,
-  foldlevel = 4,
-  foldlevelstart = 2,
-  foldenable = false,
+  -- foldlevel = 4,
+  -- foldlevelstart = 2,
+  -- foldenable = false,
+  laststatus = 3,
 }
 
 for k, v in pairs(options) do
@@ -66,6 +64,8 @@ end
 vim.opt.cpoptions:append "y"
 vim.go.showmode = true
 
+-- Settings related to GUI clients like neovide
+D.pconf "settings.gui"
 D.pconf "user.builtin.luasnip"
 D.pconf "user.keymaps"
 D.pconf "user.builtin.which-key"
