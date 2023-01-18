@@ -14,6 +14,7 @@ return {
         },
         extensions = {
           zsh = "bash", -- used for zsh configuration files
+          sh = "bash",
           tf = "terraform",
           tfvars = "terraform",
           hcl = "hcl",
