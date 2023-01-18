@@ -5,6 +5,11 @@ local gps_ok, gps = pcall(require, "nvim-navic")
 local hide_in_width = function()
   return vim.fn.winwidth(0) > 80
 end
+local is_git_workspace = function()
+  local filepath = vim.fn.expand "%:p:h"
+  local gitdir = vim.fn.finddir(".git", filepath .. ";")
+  return gitdir and #gitdir > 0 and #gitdir < #filepath
+end
 
 if gps_ok then
   lvim.lsp.on_attach_callback = function(client, buf)
@@ -31,40 +36,20 @@ local nvim_gps = function()
   end
 end
 
-local windows = {
-  "windows",
-  show_filename_only = true, -- Shows shortened relative path when set to false.
-  show_modified_status = true, -- Shows indicator when the window is modified.
-
-  mode = 0, -- 0: Shows window name
-  -- 1: Shows window index
-  -- 2: Shows window name + window index
-
-  -- max_length = vim.o.columns * 2 / 3, -- Maximum width of windows component,
-  -- it can also be a function that returns
-  -- the value of `max_length` dynamically.
-  filetype_names = {
-    TelescopePrompt = "Telescope",
-    dashboard = "Dashboard",
-    packer = "Packer",
-    fzf = "FZF",
-    alpha = "Alpha",
-  }, -- Shows specific window name for that filetype ( { `filetype` = `window_name`, ... } )
-
-  disabled_buftypes = { "quickfix", "NvimTree" }, -- Hide a window if its buffer's type is disabled
-
-  windows_color = {
-    -- Same values as the general color option can be used here.
-    active = "lualine_{section}_normal", -- Color for active window.
-    inactive = "lualine_{section}_inactive", -- Color for inactive window.
-  },
-}
-
 lvim.builtin.lualine.options = {
   theme = "auto", -- lualine theme
+  icons_enabled = true,
   component_separators = { left = "", right = "" },
   section_separators = { left = "", right = "" },
-  disabled_filetypes = {}, -- Filetypes to disable lualine for.
+  disabled_filetypes = {
+    "dashboard",
+    "NvimTree",
+    "Outline",
+    "alpha",
+    "vista",
+    "vista_kind",
+    "TelescopePrompt",
+  }, -- Filetypes to disable lualine for.
   always_divide_middle = false, -- When set to true, left sections i.e. 'a','b' and 'c'
   -- can't take over the entire statusline even
   -- if neither of 'x', 'y' or 'z' are present.
@@ -91,13 +76,20 @@ lvim.builtin.lualine.sections.lualine_a = {
 }
 
 lvim.builtin.lualine.sections.lualine_b = {
-  components.branch, --[[ "windows" ]]
+  {
+    "b:gitsigns_head",
+    icon = " ",
+    cond = is_git_workspace,
+    color = { fg = "#7FB4CA" },
+    padding = 0,
+  },
 }
 lvim.builtin.lualine.sections.lualine_c = {
   components.diff,
   components.lsp,
   components.diagnostics,
   components.treesitter,
+  { "tabnine" },
   { nvim_gps, cond = hide_in_width },
 }
 lvim.builtin.lualine.sections.lualine_x = {
