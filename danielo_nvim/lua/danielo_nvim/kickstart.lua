@@ -952,6 +952,12 @@ end
 __vim_Vimx.linesInCurrentWindow = function() 
   do return vim.fn.line("$", 0) end;
 end
+__vim_Vimx.firstLineVisibleCurrentWindow = function() 
+  do return vim.fn.line("w0", 0) end;
+end
+__vim_Vimx.lastLineVisibleCurrentWindow = function() 
+  do return vim.fn.line("w$", 0) end;
+end
 if _hx_bit_raw then
     _hx_bit_clamp = function(v)
     if v <= 2147483647 and v >= -2147483648 then
