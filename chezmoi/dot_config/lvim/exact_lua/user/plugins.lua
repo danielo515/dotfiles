@@ -10,6 +10,7 @@ local plugins = {
   require("user.persistence").plugin,
   require("user.harpoon").plugin,
   require "user.plugins.sessions",
+  require "user.plugins.tabnine",
   -- require "user.plugins.ufo-config", -- better folding experience
   -- highlight nicely the search results
   require("user.hlslens").plugin,
