@@ -26,7 +26,7 @@ local plugins = {
   -- require "user.plugins.lsp-lines",
   -- require "user.plugins.incline", -- show file name in a floating window
   -- require "user.plugins.vgit",
-  require "user.colorbuddy",
+  require "user.plugins.colorbuddy",
   require "user.plugins.auto-hsl", -- Turn off hl highlight automatically
   require "user.plugins.primeagen-refactoring",
   require "user.plugins.vim-firestore",
