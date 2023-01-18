@@ -932,7 +932,7 @@ __vim__VimTypes_LuaArray_Impl_.from = function(arr)
 end
 
 __vim_Vimx.new = {}
-_hx_exports["vim"] = __vim_Vimx
+_hx_exports["vimx"] = __vim_Vimx
 __vim_Vimx.autocmd = function(groupName,events,pattern,description,cb) 
   local group;
   local _g = __vim_Vimx.autogroups:get(groupName);
@@ -953,6 +953,9 @@ end
 __vim_Vimx.copyToClipboard = function(str) 
   vim.cmd(Std.string(Std.string("let @* = \"") .. Std.string(str)) .. Std.string("\""));
   vim.notify("Copied to clipboard", "info");
+end
+__vim_Vimx.linesInCurrentWindow = function() 
+  do return vim.fn.line("$", 0) end;
 end
 if _hx_bit_raw then
     _hx_bit_clamp = function(v)
