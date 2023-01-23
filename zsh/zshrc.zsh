@@ -42,10 +42,11 @@ plugins=(
   git 
   npm 
   bower 
-  vi-mode 
+  vi-mode # vim bindings for the shell
   pj 
   zsh-navigation-tools
   zsh-autosuggestions
+  fzf-tab # use fzf for tab completion rather than builtin one
 )
 if exists "virtualenvwrapper"; then plugins+=virtualenvwrapper; fi
 if exists "autojump"; then plugins+=autojump; fi

@@ -36,6 +36,12 @@ url = 'https://github.com/zsh-users/zsh-completions/archive/{{ ( gitHubLatestRel
 type = "archive"
 stripComponents = 1
 exact = true
+#zsh plugin to use fzf for tab completion
+[".oh-my-zsh/custom/plugins/fzf-tab"]
+url = 'https://github.com/Aloxaf/fzf-tab/archive/refs/heads/master.zip'
+type = "archive"
+stripComponents = 1
+exact = true
 # Direnv loads env variables from local directories
 [".local/bin/direnv"]
 type = "file"
