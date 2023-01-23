@@ -12,6 +12,17 @@
 #         bind-key Tab capture-pane \; save-buffer /tmp/tmux-buffer \; delete-buffer \; split-window -Z "/path/to/fzf-speed"
 #         bind-key Tab capture-pane \; save-buffer /tmp/tmux-buffer \; delete-buffer \; split-window "/path/to/fzf-speed"
 
+# fzf arguments used in the script:
+# -e: allow multiple items by using the Tab key.
+# -i: case insensitive search
+# --delimiter _: sets the delimiter that fzf uses to split the input into columns to '_'.
+# --with-nth='2..': This option tells fzf to only show columns starting from the second one.
+# --prompt="fzf-speed: ": This option sets the prompt that is displayed at the bottom of the fzf window.
+# --info=default: This option sets the information to be displayed on the right side of the fzf window.
+# --layout=reverse: This option inverses the layout of the fzf window.
+# --tiebreak=index: This option sets the tiebreak order for sorting when multiple items have the same score.
+# | cut -d ' ' -f1: This command takes the output of fzf and cuts it using delimiter ' ', and select first field.
+
 DIR="${0%/*}"
 SELECTED="$(find "$DIR" -maxdepth 1 -type f -exec basename {} \; | sort | grep '^_' | sed 's@\.@ @g' | column -s ',' -t |  fzf -e -i --delimiter _ --with-nth='2..' --prompt="fzf-speed: " --info=default --layout=reverse --tiebreak=index | cut -d ' ' -f1)"
 eval "${DIR}/${SELECTED},*"
