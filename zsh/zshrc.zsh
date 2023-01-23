@@ -148,6 +148,8 @@ if [ -f ~/.fzf.zsh ]; then
     export FZF_DEFAULT_OPTS="--color 16,info:6,hl:13,hl+:13"
     export FZF_DEFAULT_COMMAND="rg --files-with-matches --no-messages -F ''"
     export FZF_CTRL_T_COMMAND="rg --files-with-matches --no-messages --hidden -F '' | grep -v .git/"
+    # fzf-tab opens in a nice popup
+    zstyle ':fzf-tab:*' fzf-command ftb-tmux-popup
 fi
 
 # -- asdf ---------------------------------------------------------------------
@@ -221,3 +223,5 @@ function p10k-on-pre-prompt() {
 
 # - Powerlevel10k load
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+
+
