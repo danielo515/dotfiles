@@ -1,0 +1,4 @@
+{{ if eq .chezmoi.os "darwin" -}}
+#!/bin/sh
+defaults write http://com.apple.Finder AppleShowAllFiles true
+{{ end -}}
