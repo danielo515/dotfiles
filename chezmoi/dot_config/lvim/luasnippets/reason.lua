@@ -221,7 +221,7 @@ local normal_ones = {
     ]],
       {
         i(1),
-        c(2, { t "Js.Array2", t "Array", t "Option", t "List" }),
+        c(2, { t "Array", t "Option", t "List" }),
         i(3),
         i(0),
       }
@@ -230,8 +230,8 @@ local normal_ones = {
   s(
     { trig = "jslog", dscr = "Javascript easier log", regTrig = false },
     fmt(
-      [[ //TODO: Remove this debug line
-          Js.log2("{}", {}{});
+      [[ 
+          Js.log2("{}", {}{}); //TODO: Remove this debug line
       ]],
       {
         rep(1),
