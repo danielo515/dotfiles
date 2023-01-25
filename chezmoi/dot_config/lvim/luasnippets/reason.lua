@@ -228,6 +228,10 @@ local normal_ones = {
     )
   ),
   s(
+    { trig = "ogetdef", dscr = "Option get with default", regTrig = false },
+    { t "Option.getWithDefault(", i(0), t ")" }
+  ),
+  s(
     { trig = "jslog", dscr = "Javascript easier log", regTrig = false },
     fmt(
       [[ 
