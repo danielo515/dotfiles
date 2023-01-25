@@ -1,6 +1,7 @@
 return {
   "codota/tabnine-nvim",
   requires = { "tzachar/cmp-tabnine", run = "./install.sh", requires = "hrsh7th/nvim-cmp" },
+  run = "./dl_binaries.sh",
   config = function()
     require("tabnine").setup {
       disable_auto_comment = true,
