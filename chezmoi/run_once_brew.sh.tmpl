@@ -1,5 +1,6 @@
 {{- if eq .chezmoi.os "darwin" -}}
 #!/bin/bash
+# hash: {{ include (joinPath .chezmoi.sourceDir "Brewfile")  | sha256sum }}
 # After chezmoi setups the machine, run the brew bundle installation
 brew bundle install --file {{ joinPath .chezmoi.sourceDir "Brewfile" }}
 {{ end }}
