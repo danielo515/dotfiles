@@ -1,182 +1,152 @@
--- Source https://github.com/LunarVim/LunarVim/blob/5095f45258cb4b9b06489ee367aec208df440c14/lua/lvim/core/octo.lua
-local M = {}
-
-M.defaults = {
-	picker = "telescope",
-	default_remote = { "upstream", "origin" },
-	reaction_viewer_hint_icon = "",
-	user_icon = " ",
-	comment_icon = " ",
-	outdated_icon = " ",
-	resolved_icon = " ",
-	timeline_marker = "",
-	timeline_indent = "2",
-	right_bubble_delimiter = "",
-	left_bubble_delimiter = "",
-	github_hostname = "",
-	snippet_context_lines = 4,
-	file_panel = {
-		size = 10,
-		use_icons = true,
-	},
-	mappings = {
-		issue = {
-			reload = "<C-r>",
-			open_in_browser = "<C-b>",
-			copy_url = "<C-y>",
-			next_comment = "]c",
-			prev_comment = "[c",
-		},
-		pull_request = {
-			reload = "<C-r>",
-			open_in_browser = "<C-b>",
-			copy_url = "<C-y>",
-			next_comment = "]c",
-			prev_comment = "[c",
-		},
-		review_thread = {
-			next_comment = "]c",
-			prev_comment = "[c",
-			select_next_entry = "]q",
-			select_prev_entry = "[q",
-			close_review_tab = "<C-c>",
-		},
-		repo = {},
-		submit_win = {
-			close_review_win = "<C-c>",
-			approve_review = "<C-a>",
-			comment_review = "<C-m>",
-			request_changes = "<C-r>",
-		},
-		review_diff = {
-			select_next_entry = "]q",
-			select_prev_entry = "[q",
-			next_thread = "]t",
-			prev_thread = "[t",
-			close_review_tab = "<C-c>",
-		},
-		file_panel = {
-			next_entry = "j",
-			prev_entry = "k",
-			select_entry = "<cr>",
-			refresh_files = "R",
-			select_next_entry = "]q",
-			select_prev_entry = "[q",
-			close_review_tab = "<C-c>",
-		},
-	},
+return {
+  "pwntester/octo.nvim",
+  requires = {
+    "nvim-lua/plenary.nvim",
+    "nvim-telescope/telescope.nvim",
+    "kyazdani42/nvim-web-devicons",
+  },
+  config = function()
+    require("octo").setup {
+      default_remote = { "upstream", "origin" }, -- order to try remotes
+      ssh_aliases = {}, -- SSH aliases. e.g. `ssh_aliases = {["github.com-work"] = "github.com"}`
+      reaction_viewer_hint_icon = "", -- marker for user reactions
+      user_icon = " ", -- user icon
+      timeline_marker = "", -- timeline marker
+      timeline_indent = "2", -- timeline indentation
+      right_bubble_delimiter = "", -- bubble delimiter
+      left_bubble_delimiter = "", -- bubble delimiter
+      github_hostname = "", -- GitHub Enterprise host
+      snippet_context_lines = 4, -- number or lines around commented lines
+      gh_env = {}, -- extra environment variables to pass on to GitHub CLI, can be a table or function returning a table
+      issues = {
+        order_by = { -- criteria to sort results of `Octo issue list`
+          field = "CREATED_AT", -- either COMMENTS, CREATED_AT or UPDATED_AT (https://docs.github.com/en/graphql/reference/enums#issueorderfield)
+          direction = "DESC", -- either DESC or ASC (https://docs.github.com/en/graphql/reference/enums#orderdirection)
+        },
+      },
+      pull_requests = {
+        order_by = { -- criteria to sort the results of `Octo pr list`
+          field = "CREATED_AT", -- either COMMENTS, CREATED_AT or UPDATED_AT (https://docs.github.com/en/graphql/reference/enums#issueorderfield)
+          direction = "DESC", -- either DESC or ASC (https://docs.github.com/en/graphql/reference/enums#orderdirection)
+        },
+        always_select_remote_on_create = "false", -- always give prompt to select base remote repo when creating PRs
+      },
+      file_panel = {
+        size = 10, -- changed files panel rows
+        use_icons = true, -- use web-devicons in file panel (if false, nvim-web-devicons does not need to be installed)
+      },
+      mappings = {
+        issue = {
+          close_issue = { lhs = "<space>ic", desc = "close issue" },
+          reopen_issue = { lhs = "<space>io", desc = "reopen issue" },
+          list_issues = { lhs = "<space>il", desc = "list open issues on same repo" },
+          reload = { lhs = "<C-r>", desc = "reload issue" },
+          open_in_browser = { lhs = "<C-b>", desc = "open issue in browser" },
+          copy_url = { lhs = "<C-y>", desc = "copy url to system clipboard" },
+          add_assignee = { lhs = "<space>aa", desc = "add assignee" },
+          remove_assignee = { lhs = "<space>ad", desc = "remove assignee" },
+          create_label = { lhs = "<space>lc", desc = "create label" },
+          add_label = { lhs = "<space>la", desc = "add label" },
+          remove_label = { lhs = "<space>ld", desc = "remove label" },
+          goto_issue = { lhs = "<space>gi", desc = "navigate to a local repo issue" },
+          add_comment = { lhs = "<space>ca", desc = "add comment" },
+          delete_comment = { lhs = "<space>cd", desc = "delete comment" },
+          next_comment = { lhs = "]c", desc = "go to next comment" },
+          prev_comment = { lhs = "[c", desc = "go to previous comment" },
+          react_hooray = { lhs = "<space>rp", desc = "add/remove 🎉 reaction" },
+          react_heart = { lhs = "<space>rh", desc = "add/remove ❤️ reaction" },
+          react_eyes = { lhs = "<space>re", desc = "add/remove 👀 reaction" },
+          react_thumbs_up = { lhs = "<space>r+", desc = "add/remove 👍 reaction" },
+          react_thumbs_down = { lhs = "<space>r-", desc = "add/remove 👎 reaction" },
+          react_rocket = { lhs = "<space>rr", desc = "add/remove 🚀 reaction" },
+          react_laugh = { lhs = "<space>rl", desc = "add/remove 😄 reaction" },
+          react_confused = { lhs = "<space>rc", desc = "add/remove 😕 reaction" },
+        },
+        pull_request = {
+          checkout_pr = { lhs = "<space>po", desc = "checkout PR" },
+          merge_pr = { lhs = "<space>pm", desc = "merge commit PR" },
+          squash_and_merge_pr = { lhs = "<space>psm", desc = "squash and merge PR" },
+          list_commits = { lhs = "<space>pc", desc = "list PR commits" },
+          list_changed_files = { lhs = "<space>pf", desc = "list PR changed files" },
+          show_pr_diff = { lhs = "<space>pd", desc = "show PR diff" },
+          add_reviewer = { lhs = "<space>va", desc = "add reviewer" },
+          remove_reviewer = { lhs = "<space>vd", desc = "remove reviewer request" },
+          close_issue = { lhs = "<space>ic", desc = "close PR" },
+          reopen_issue = { lhs = "<space>io", desc = "reopen PR" },
+          list_issues = { lhs = "<space>il", desc = "list open issues on same repo" },
+          reload = { lhs = "<C-r>", desc = "reload PR" },
+          open_in_browser = { lhs = "<C-b>", desc = "open PR in browser" },
+          copy_url = { lhs = "<C-y>", desc = "copy url to system clipboard" },
+          goto_file = { lhs = "gf", desc = "go to file" },
+          add_assignee = { lhs = "<space>aa", desc = "add assignee" },
+          remove_assignee = { lhs = "<space>ad", desc = "remove assignee" },
+          create_label = { lhs = "<space>lc", desc = "create label" },
+          add_label = { lhs = "<space>la", desc = "add label" },
+          remove_label = { lhs = "<space>ld", desc = "remove label" },
+          goto_issue = { lhs = "<space>gi", desc = "navigate to a local repo issue" },
+          add_comment = { lhs = "<space>ca", desc = "add comment" },
+          delete_comment = { lhs = "<space>cd", desc = "delete comment" },
+          next_comment = { lhs = "]c", desc = "go to next comment" },
+          prev_comment = { lhs = "[c", desc = "go to previous comment" },
+          react_hooray = { lhs = "<space>rp", desc = "add/remove 🎉 reaction" },
+          react_heart = { lhs = "<space>rh", desc = "add/remove ❤️ reaction" },
+          react_eyes = { lhs = "<space>re", desc = "add/remove 👀 reaction" },
+          react_thumbs_up = { lhs = "<space>r+", desc = "add/remove 👍 reaction" },
+          react_thumbs_down = { lhs = "<space>r-", desc = "add/remove 👎 reaction" },
+          react_rocket = { lhs = "<space>rr", desc = "add/remove 🚀 reaction" },
+          react_laugh = { lhs = "<space>rl", desc = "add/remove 😄 reaction" },
+          react_confused = { lhs = "<space>rc", desc = "add/remove 😕 reaction" },
+        },
+        review_thread = {
+          goto_issue = { lhs = "<space>gi", desc = "navigate to a local repo issue" },
+          add_comment = { lhs = "<space>ca", desc = "add comment" },
+          add_suggestion = { lhs = "<space>sa", desc = "add suggestion" },
+          delete_comment = { lhs = "<space>cd", desc = "delete comment" },
+          next_comment = { lhs = "]c", desc = "go to next comment" },
+          prev_comment = { lhs = "[c", desc = "go to previous comment" },
+          select_next_entry = { lhs = "]q", desc = "move to previous changed file" },
+          select_prev_entry = { lhs = "[q", desc = "move to next changed file" },
+          close_review_tab = { lhs = "<C-c>", desc = "close review tab" },
+          react_hooray = { lhs = "<space>rp", desc = "add/remove 🎉 reaction" },
+          react_heart = { lhs = "<space>rh", desc = "add/remove ❤️ reaction" },
+          react_eyes = { lhs = "<space>re", desc = "add/remove 👀 reaction" },
+          react_thumbs_up = { lhs = "<space>r+", desc = "add/remove 👍 reaction" },
+          react_thumbs_down = { lhs = "<space>r-", desc = "add/remove 👎 reaction" },
+          react_rocket = { lhs = "<space>rr", desc = "add/remove 🚀 reaction" },
+          react_laugh = { lhs = "<space>rl", desc = "add/remove 😄 reaction" },
+          react_confused = { lhs = "<space>rc", desc = "add/remove 😕 reaction" },
+        },
+        submit_win = {
+          approve_review = { lhs = "<C-a>", desc = "approve review" },
+          comment_review = { lhs = "<C-m>", desc = "comment review" },
+          request_changes = { lhs = "<C-r>", desc = "request changes review" },
+          close_review_tab = { lhs = "<C-c>", desc = "close review tab" },
+        },
+        review_diff = {
+          add_review_comment = { lhs = "<space>ca", desc = "add a new review comment" },
+          add_review_suggestion = { lhs = "<space>sa", desc = "add a new review suggestion" },
+          focus_files = { lhs = "<leader>e", desc = "move focus to changed file panel" },
+          toggle_files = { lhs = "<leader>b", desc = "hide/show changed files panel" },
+          next_thread = { lhs = "]t", desc = "move to next thread" },
+          prev_thread = { lhs = "[t", desc = "move to previous thread" },
+          select_next_entry = { lhs = "]q", desc = "move to previous changed file" },
+          select_prev_entry = { lhs = "[q", desc = "move to next changed file" },
+          close_review_tab = { lhs = "<C-c>", desc = "close review tab" },
+          toggle_viewed = { lhs = "<leader><space>", desc = "toggle viewer viewed state" },
+        },
+        file_panel = {
+          next_entry = { lhs = "j", desc = "move to next changed file" },
+          prev_entry = { lhs = "k", desc = "move to previous changed file" },
+          select_entry = { lhs = "<cr>", desc = "show selected changed file diffs" },
+          refresh_files = { lhs = "R", desc = "refresh changed files panel" },
+          focus_files = { lhs = "<leader>e", desc = "move focus to changed file panel" },
+          toggle_files = { lhs = "<leader>b", desc = "hide/show changed files panel" },
+          select_next_entry = { lhs = "]q", desc = "move to previous changed file" },
+          select_prev_entry = { lhs = "[q", desc = "move to next changed file" },
+          close_review_tab = { lhs = "<C-c>", desc = "close review tab" },
+          toggle_viewed = { lhs = "<leader><space>", desc = "toggle viewer viewed state" },
+        },
+      },
+    }
+  end,
 }
-
-M._config = M.defaults
-
-function M.get_config()
-	return M._config
-end
-
-function M.config()
-	lvim.builtin.octo = {
-		active = false,
-		on_config_done = nil,
-		opts = M.defaults,
-	}
-end
-
-function M.setup(user_config)
-	require("octo.completion")
-	require("octo.folds")
-	_G.octo_repo_issues = {}
-	_G.octo_buffers = {}
-	require("octo.signs").setup()
-	user_config = user_config or {}
-	M._config = require("octo.utils").tbl_deep_clone(M.defaults)
-	require("octo.utils").tbl_soft_extend(M._config, user_config)
-
-	M._config.file_panel = vim.tbl_deep_extend("force", M.defaults.file_panel, user_config.file_panel or {})
-
-	lvim.builtin.which_key.mappings["G"] = {
-		name = "Github",
-		g = { "<cmd>lua require'octo.mappings'.on_keypress('goto_issue')<cr>", "Go to issue" },
-		i = {
-			name = "Issues",
-			c = { "<cmd>Octo issue close<cr>", "Close" },
-			l = { "<cmd>Octo issue list<cr>", "List" },
-			o = { "<cmd>Octo issue reopen<cr>", "Reopen" },
-			a = {
-				name = "Assignee",
-				a = { "<cmd>Octo assignee add<cr>", "Add assignee" },
-				d = { "<cmd>Octo assignee remove<cr>", "Remove assignee" },
-			},
-			b = {
-				name = "Label",
-				a = { "<cmd>Octo label add<cr>", "Add label" },
-				d = { "<cmd>Octo label remove<cr>", "Remove label" },
-				c = { "<cmd>Octo label create<cr>", "Create label" },
-			},
-		},
-		p = {
-			name = "Pull Requests",
-			l = { "<cmd>Octo pr list<cr>", "List" },
-			o = { "<cmd>Octo pr checkout<cr>", "Checkout" },
-			M = { "<cmd>Octo pr merge<cr>", "Merge" },
-			c = { "<cmd>Octo pr commits<cr>", "Commits" },
-			f = { "<cmd>Octo pr changes<cr>", "Changed files" },
-			d = { "<cmd>Octo pr diff<cr>", "Diff" },
-			r = {
-				name = "Review",
-				s = { "<cmd>Octo review start<cr>", "Start" },
-				f = { "<cmd>Octo review submit<cr>", "Submit" },
-				c = { "<cmd>Octo review close<cr>", "Close" },
-				d = { "<cmd>Octo review discard<cr>", "Discard" },
-				u = { "<cmd>Octo review resume<cr>", "Resume" },
-				m = { "<cmd>Octo review comments<cr>", "Comments" },
-				a = { "<cmd>lua require'octo.mappings'.on_keypress('add_review_comment')<cr>", "Add review comment" },
-				e = { "<cmd>lua require'octo.mappings'.on_keypress('focus_files')<cr>", "Focus files" },
-				b = { "<cmd>lua require'octo.mappings'.on_keypress('toggle_files')<cr>", "Toggle files" },
-				v = { "<cmd>lua require'octo.mappings'.on_keypress('toggle_viewed')<cr>", "Toggle viewed" },
-			},
-			v = {
-				name = "Reviewers",
-				a = { "<cmd>lua require'octo.mappings'.on_keypress('add_reviewer')<cr>", "Add" },
-				d = { "<cmd>lua require'octo.mappings'.on_keypress('remove_reviewer')<cr>", "Remove" },
-			},
-			a = {
-				name = "Assignee",
-				a = { "<cmd>Octo assignee add<cr>", "Add assignee" },
-				d = { "<cmd>Octo assignee remove<cr>", "Remove assignee" },
-			},
-			b = {
-				name = "Label",
-				a = { "<cmd>Octo label add<cr>", "Add label" },
-				d = { "<cmd>Octo label remove<cr>", "Remove label" },
-				c = { "<cmd>Octo label create<cr>", "Create label" },
-			},
-		},
-		c = {
-			name = "Comments",
-			a = { "<cmd>Octo comment add<cr>", "Add comment" },
-			d = { "<cmd>Octo comment remove<cr>", "Remove comment" },
-		},
-		r = {
-			name = "Reactions",
-			p = { "<cmd>Octo reaction hooray<cr>", "Hooray" },
-			h = { "<cmd>Octo reaction heart<cr>", "Heart" },
-			e = { "<cmd>Octo reaction eyes<cr>", "Eyes" },
-			u = { "<cmd>Octo reaction thumbs_up<cr>", "Thumbs up" },
-			d = { "<cmd>Octo reaction thumbs_down<cr>", "Thumbs down" },
-			r = { "<cmd>Octo reaction rocket<cr>", "Rocket" },
-			l = { "<cmd>Octo reaction laugh<cr>", "Laugh" },
-			c = { "<cmd>Octo reaction confused<cr>", "Confused" },
-		},
-	}
-
-	-- If the user provides key bindings: use only the user bindings.
-	if user_config.mappings then
-		M._config.mappings.issue = (user_config.mappings.issue or M._config.mappings.issue)
-		M._config.mappings.pull_request = (user_config.mappings.pull_request or M._config.mappings.pull_request)
-		M._config.mappings.review_thread = (user_config.mappings.review_thread or M._config.mappings.review_thread)
-		M._config.mappings.review = (user_config.mappings.review or M._config.mappings.review)
-		M._config.mappings.file_panel = (user_config.mappings.file_panel or M._config.mappings.file_panel)
-	end
-end
-
-return M
