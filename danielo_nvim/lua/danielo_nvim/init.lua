@@ -564,6 +564,7 @@ ___Main_Main_Fields_.main = function()
     vim.pretty_print(__packer__Packer_Packer_Fields_.get_plugin_version(args.args));
   end, ({bang = false, complete = nil, desc = "Gets the git version of a installed packer plugin", force = true, nargs = 1, range = true}));
   vim.keymap.set("n", "tl", ___Main_Main_Fields_.nexTab, ({desc = "Go to next tab", expr = false, silent = true}));
+  vim.o.inccommand = "split";
 end
 ___Main_Main_Fields_.runGh = function(args) 
   if (vim.fn.executable("gh") ~= 1) then 

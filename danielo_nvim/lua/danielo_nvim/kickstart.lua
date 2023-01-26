@@ -815,6 +815,7 @@ __kickstart__Kickstart_Kickstart_Fields_.main = function()
   vim.o.breakindent = true;
   vim.o.undofile = true;
   vim.wo.number = true;
+  vim.o.inccommand = "split";
   __kickstart__Kickstart_Kickstart_Fields_.keymaps();
   __kickstart_Lualine.setup(({options = ({icons_enabled = true, theme = "onedark", component_separators = "|", section_separators = ""})}));
   __kickstart_Comment.setup();
