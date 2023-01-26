@@ -115,6 +115,20 @@ keymap["r"]["w"] = { "<CMD>SearchReplaceSingleBufferCWord<CR>", "[w]ord" }
 keymap["r"]["W"] = { "<CMD>SearchReplaceSingleBufferCWORD<CR>", "[W]ORD" }
 keymap["r"]["e"] = { "<CMD>SearchReplaceSingleBufferCExpr<CR>", "[e]xpr" }
 keymap["r"]["f"] = { "<CMD>SearchReplaceSingleBufferCFile<CR>", "[f]ile" }
+keymap["r"]["n"] = {
+  function()
+    local util = require "search-replace.util"
+    vim.cmd(
+      ':call feedkeys(":%s/\\\\v'
+        .. "\\\\_.{-}"
+        .. util.double_escape(vim.fn.expand "<cword>")
+        .. "//g"
+        .. string.rep("\\<Left>", 2)
+        .. '")'
+    )
+  end,
+  "[n]ewline until word",
+}
 
 keymap["r"]["b"] = { name = "SearchReplaceMultiBuffer" }
 
