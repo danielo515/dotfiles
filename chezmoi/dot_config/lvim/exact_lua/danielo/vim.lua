@@ -43,4 +43,11 @@ function M.autocmd(events, group, opts)
   vim.api.nvim_create_autocmd(events, fun.assign({ group = real_group }, opts))
 end
 
+function M.send_keys(text)
+  -- escape any key references in the text
+  local escaped_text = vim.api.nvim_replace_termcodes(text, false, true, true)
+  -- send the escaped text to nvim
+  vim.api.nvim_feedkeys(escaped_text, "n", true)
+end
+
 return M

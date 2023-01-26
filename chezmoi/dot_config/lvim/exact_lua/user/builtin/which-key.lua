@@ -118,6 +118,7 @@ keymap["r"]["f"] = { "<CMD>SearchReplaceSingleBufferCFile<CR>", "[f]ile" }
 keymap["r"]["n"] = {
   function()
     local util = require "search-replace.util"
+    -- use vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes(":%s/\\",true,false,true),"m",true)
     vim.cmd(
       ':call feedkeys(":%s/\\\\v'
         .. "\\\\_.{-}"
