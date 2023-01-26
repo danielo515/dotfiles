@@ -245,11 +245,18 @@ local normal_ones = {
     )
   ),
   s(
-    { trig = "fn", dscr = "Create a function easily", regTrig = false },
+    { trig = "fun", dscr = "Create a named function easily", regTrig = false },
     fmt([[ let {} = ({}) => {} ]], {
       i(1),
       i(2),
       c(3, { i(0), { t "{ ", t "}" } }),
+    })
+  ),
+  s(
+    { trig = "fn", dscr = "Create a function easily", regTrig = false },
+    fmt([[ ({}) => {{ {} }} ]], {
+      i(1),
+      i(0),
     })
   ),
   s(
