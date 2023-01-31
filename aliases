@@ -1,13 +1,7 @@
-alias gohome='cd ~/'
-alias homestate='(gohome && git status)'
-alias refresh='source ~/.bashrc'
 alias reload='source ~/.bashrc'
 alias please='__executeLastCommandAsSuperUser'
 alias dotvim='(cd ~/.dotfiles && vim nvim/init.vim)'
 alias zvim='(cd ~/.dotfiles && vim zsh/zshrc)'
-alias vimalias='vim ~/.dotfiles/aliases'
-alias vialias='vimalias'
-alias aliassource='source ~/.dotfiles/aliases'
 # ---- Docker aliases
 alias drun='docker run -it --rm -e NPM_TOKEN=${NPM_TOKEN}'
 alias drunvol='docker run -it --rm -v $PWD:/home -e NPM_TOKEN=${NPM_TOKEN}'
@@ -105,7 +99,6 @@ create_component (){
     " > $1.styled.js
     cd -
 }
-alias pentodir='cd ~/mega/trabajo/GIT/pento/Pento'
 # ---- QMK
 checkout-danielo-ergodox(){
     read -r DANIELO_BRANCH
@@ -113,5 +106,16 @@ checkout-danielo-ergodox(){
     git checkout $DANIELO_BRANCH  quantum/process_keycode/process_leader.c
     git checkout $DANIELO_BRANCH keyboards/ergodox_ez/keymaps/danielo515
 }
-alias spacevim=vim -u ~/.space-vim/init.vim
-alias spacevim='vim -u ~/.space-vim/init.vim'
+
+check_command() {
+   local command=$1
+   if command -v "$command" &> /dev/null; then
+       return 0
+   else
+       return 1
+   fi
+}
+# --- Better UNIX commands ---------- 
+if [[ $(check_command exa) ]]; then
+alias ls='exa'
+fi
