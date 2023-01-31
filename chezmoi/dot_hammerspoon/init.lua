@@ -18,8 +18,7 @@ end
 local feather_filter = wf.new(false):setAppFilter(chrome_app_name, { allowTitles = featherWindowTitle })
 feather_filter:subscribe(hs.window.filter.windowFocused, locateFeather, true)
 
-local function osa()
-	local tabName = "whatsapp"
+local function osa(tabName)
 	local script = [[
   tell application "Google Chrome" to activate
   tell application "Google Chrome"
@@ -37,13 +36,15 @@ local function osa()
   end tell
 ]]
 
-	local success, windowID, errors = hs.osascript.applescript(string.format(script, tabName))
+	return function()
+		local success, windowID, errors = hs.osascript.applescript(string.format(script, tabName))
 
-	print(success, windowID, type(windowID), hs.inspect(errors))
-	if success == false then
-		hs.alert.show("Tab with name '" .. tabName .. "' not found.")
-	else
-		hs.alert.show("Tab '" .. tabName .. "' found and brought to front.")
+		print(success, windowID, type(windowID), hs.inspect(errors))
+		if success == false then
+			hs.alert.show("Tab with name '" .. tabName .. "' not found.")
+		else
+			hs.alert.show("Tab '" .. tabName .. "' found and brought to front.")
+		end
 	end
 end
 
@@ -54,6 +55,7 @@ end)
 hs.hotkey.bind(hyper, "2", function()
 	hs.application.launchOrFocus("Kitty")
 end)
-hs.hotkey.bind(hyper, "w", osa)
+hs.hotkey.bind(hyper, "w", osa("whatsapp"))
+hs.hotkey.bind(hyper, "i", osa("inbox"))
 
 hs.alert.show("Config loaded", { text = "red" })
