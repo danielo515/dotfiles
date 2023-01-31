@@ -18,26 +18,6 @@ end
 local feather_filter = wf.new(false):setAppFilter(chrome_app_name, { allowTitles = featherWindowTitle })
 feather_filter:subscribe(hs.window.filter.windowFocused, locateFeather, true)
 
-local function findWhatsapp()
-	local chrome = hs.application.find("Google Chrome")
-	local tabName = "whatsapp"
-	local chromeWindows = hs.window.filter.new(chrome:name()):setCurrentSpace(nil):getWindows()
-	hs.printf("Found: %s chrome windows for chrome name: %s", #chromeWindows, chrome:name())
-	print(chromeWindows)
-
-	for _, window in ipairs(chromeWindows) do
-		local tabs = hs.tabs.tabWindows(window)
-		print(tabs)
-		local title = window:title()
-		hs.printf("tab: %s", title)
-		if string.match(title, tabName) then
-			window:focus()
-			return
-		end
-	end
-	hs.alert.show("Could not find the window")
-end
-
 local function osa()
 	local tabName = "whatsapp"
 	local script = [[
