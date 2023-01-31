@@ -64,7 +64,13 @@ vim.keymap.set(
 
 imap("<C-N>", "<cmd>lua require'cmp'.complete()<cr>", "trigger autocomplete in insert mode")
 imap("<M-s>", function()
-  require("telescope").extensions.luasnip.luasnip(require("telescope.themes").get_dropdown {})
+  require("telescope").extensions.luasnip.luasnip(require("telescope.themes").get_cursor {
+    previewer = false,
+    layout_config = {
+      prompt_position = "top",
+      height = 0.2,
+    },
+  })
 end, "luasnip telescope")
 
 local bind = require("user.util").bind
