@@ -118,7 +118,6 @@ keymap["r"]["f"] = { "<CMD>SearchReplaceSingleBufferCFile<CR>", "[f]ile" }
 keymap["r"]["n"] = {
   function()
     local util = require "search-replace.util"
-    -- use vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes(":%s/\\",true,false,true),"m",true)
     vim.cmd(
       ':call feedkeys(":%s/\\\\v'
         .. "\\\\_.{-}"
@@ -129,6 +128,12 @@ keymap["r"]["n"] = {
     )
   end,
   "[n]ewline until word",
+}
+keymap["r"]["p"] = {
+  function()
+    D.vim.send_keys(":%s/\\v([^\\)]+)/\\1/g" .. string.rep("<Left>", 15))
+  end,
+  "capture [p]arens",
 }
 
 keymap["r"]["b"] = { name = "SearchReplaceMultiBuffer" }
