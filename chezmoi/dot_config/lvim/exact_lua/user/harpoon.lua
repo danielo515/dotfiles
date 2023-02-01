@@ -1,6 +1,4 @@
 local M = {}
-lvim.keys.normal_mode["tu"] = "<cmd>lua require('harpoon.term').gotoTerminal(1)<CR>"
-lvim.keys.normal_mode["te"] = "<cmd>lua require('harpoon.term').gotoTerminal(2)<CR>"
 lvim.keys.normal_mode["cu"] = "<cmd>lua require('harpoon.term').sendCommand(1, 1)<CR>"
 lvim.keys.normal_mode["ce"] = "<cmd>lua require('harpoon.term').sendCommand(1, 2)<CR>"
 lvim.keys.normal_mode["<M-Space>"] = "<cmd>lua require('harpoon.cmd-ui').toggle_quick_menu()<CR>"
@@ -12,6 +10,38 @@ M.plugin = {
   after = { "telescope.nvim", "which-key.nvim" },
   config = function()
     require("telescope").load_extension "harpoon"
+
+    require("harpoon").setup {
+      global_settings = {
+        -- sets the marks upon calling `toggle` on the ui, instead of require `:w`.
+        save_on_toggle = false,
+
+        -- saves the harpoon file upon every change. disabling is unrecommended.
+        save_on_change = true,
+
+        -- sets harpoon to run the command immediately as it's passed to the terminal when calling `sendCommand`.
+        enter_on_sendcmd = false,
+
+        -- closes any tmux windows harpoon that harpoon creates when you close Neovim.
+        tmux_autoclose_windows = false,
+
+        -- filetypes that you want to prevent from adding to the harpoon list menu.
+        excluded_filetypes = { "harpoon" },
+
+        -- set marks specific to each git branch inside git repository
+        mark_branch = true,
+      },
+      projects = {
+        -- Yes $HOME works
+        ["$HOME/tella/tella/"] = {
+          term = {
+            cmds = {
+              "yarn dev:reason",
+            },
+          },
+        },
+      },
+    }
 
     local whk_status, whk = pcall(require, "which-key")
     if not whk_status then
