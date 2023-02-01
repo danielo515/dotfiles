@@ -29,12 +29,6 @@ ZSH="$HOME/.oh-my-zsh"
 # -- Theme ---------------------------------------------------------------------
 export NVIM_TUI_ENABLE_TRUE_COLOR=1
 ZSH_THEME="powerlevel10k/powerlevel10k"
-# SPACESHIP_PROMPT_ADD_NEWLINE="true"
-# SPACESHIP_CHAR_SUFFIX=(" ")
-# SPACESHIP_CHAR_COLOR_SUCCESS="yellow"
-# SPACESHIP_PROMPT_DEFAULT_PREFIX="$USER"
-# SPACESHIP_PROMPT_FIRST_PREFIX_SHOW="true"
-# SPACESHIP_USER_SHOW="true"
 
 # -- ZSH Plugins ---------------------------------------------------------------
 plugins=(
