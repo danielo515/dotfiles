@@ -9,7 +9,7 @@ local plugins = {
   { "kdheepak/lazygit.nvim" },
   { "nvim-telescope/telescope-packer.nvim" },
   "nvim-telescope/telescope-live-grep-args.nvim",
-  "LinArcX/telescope-env.nvim",
+  "LinArcX/telescope-env.nvim", -- :Telescope env
   "nvim-telescope/telescope-symbols.nvim",
 }
 
@@ -95,6 +95,14 @@ lvim.builtin.telescope.on_config_done = function(tele)
         },
       },
       live_grep = {
+        mappings = {
+          i = vim.tbl_extend("keep", {
+            ["<c-f>"] = actions.to_fuzzy_refine,
+          }, file_mappings.i),
+          n = file_mappings.n,
+        },
+      },
+      grep_string = {
         mappings = {
           i = vim.tbl_extend("keep", {
             ["<c-f>"] = actions.to_fuzzy_refine,

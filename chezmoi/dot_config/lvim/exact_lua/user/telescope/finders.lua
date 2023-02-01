@@ -37,6 +37,11 @@ function M.expand(text)
   end
 end
 
+local function path_and_text_entry_maker(entry)
+  vim.pretty_print(entry)
+  return entry
+end
+
 -- utility function for the <C-f> find key
 function M.grep_files(opts)
   opts = opts or {}
@@ -47,6 +52,8 @@ function M.grep_files(opts)
     prompt_prefix = ">> ",
     prompt_title = "~ Grep " .. cwd .. " ~",
     search_dirs = { cwd },
+    -- entry_maker = path_and_text_entry_maker,
+    path_display = { "truncate" },
   }
 
   opts = vim.tbl_deep_extend("force", theme_opts, opts)
