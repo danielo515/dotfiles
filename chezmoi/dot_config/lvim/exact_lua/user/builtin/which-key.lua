@@ -1,5 +1,5 @@
 function Yank_file_name()
-  local path = vim.fn.expand "%"
+  local path = vim.fn.expand "%:."
   vim.fn.setreg("*", path)
   vim.notify(path .. " yanked to keyboard")
 end
