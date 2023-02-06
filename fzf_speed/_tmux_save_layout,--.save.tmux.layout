@@ -1,0 +1,4 @@
+#!/usr/bin/env sh
+# Copies the current tmux layout to the clipboard
+layout=$( tmux display-message -p "#{window_layout}" )
+echo $layout | pbcopy
