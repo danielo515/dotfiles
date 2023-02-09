@@ -228,6 +228,18 @@ local normal_ones = {
     )
   ),
   s(
+    { trig = "mapdef", dscr = "Option map with default", regTrig = false },
+    fmt(
+      [[ {} -> Option.mapWithDefault(({}) => {{ {} }})
+    ]],
+      {
+        i(1),
+        i(2),
+        i(0),
+      }
+    )
+  ),
+  s(
     { trig = "ogetdef", dscr = "Option get with default", regTrig = false },
     { t "Option.getWithDefault(", i(0), t ")" }
   ),
