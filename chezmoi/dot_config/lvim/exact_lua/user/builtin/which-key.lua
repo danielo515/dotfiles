@@ -135,6 +135,12 @@ keymap["r"]["p"] = {
   end,
   "capture [p]arens",
 }
+keymap["r"]["r"] = {
+  function()
+    D.vim.send_keys(":%s/\\v\\i+/\\0/g" .. string.rep("<Left>", 4))
+  end,
+  "[r]epeat word",
+}
 
 keymap["r"]["b"] = { name = "SearchReplaceMultiBuffer" }
 
