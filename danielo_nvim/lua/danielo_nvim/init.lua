@@ -596,7 +596,7 @@ ___Main_Main_Fields_.nexTab = function()
   end), pages[1]));
 end
 ___Main_Main_Fields_.copyGhUrl = function(line) 
-  local lines = ___Main_Main_Fields_.runGh(__vim__VimTypes_LuaArray_Impl_.from(_hx_tab_array({[0]="browse", Std.string(vim.fn.expand("%")) .. Std.string(line), "--no-browser", "--branch", ___Main_Main_Fields_.get_branch()[1]}, 5)));
+  local lines = ___Main_Main_Fields_.runGh(__vim__VimTypes_LuaArray_Impl_.from(_hx_tab_array({[0]="browse", Std.string(vim.fn.expand(_G.string.format("%s%s", "%", ":."))) .. Std.string(line), "--no-browser", "--branch", ___Main_Main_Fields_.get_branch()[1]}, 5)));
   if (lines == nil) then 
     vim.pretty_print("No URL");
   else
