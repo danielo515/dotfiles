@@ -10,7 +10,6 @@ local plugins = {
   require("user.persistence").plugin,
   require("user.harpoon").plugin,
   require "user.plugins.sessions",
-  require "user.plugins.tabnine",
   -- require "user.plugins.ufo-config", -- better folding experience
   -- highlight nicely the search results
   require("user.hlslens").plugin,
@@ -32,10 +31,12 @@ local plugins = {
   require "user.plugins.primeagen-refactoring",
   require "user.plugins.vim-firestore",
   require "user.plugins.dial-config",
-  require "user.plugins.pomodoro-config",
+  -- require "user.plugins.pomodoro-config",
   require "user.plugins.neogit-config",
   require "user.plugins.git-conflict-config",
   require "user.plugins.search-replace",
+  require "user.plugins.copilot-config",
+  -- require "user.plugins.tabnine",
   -- Awesome diff view
   require "user.diffview",
   require "user.plugins.cheat",
