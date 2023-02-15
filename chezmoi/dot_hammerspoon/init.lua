@@ -25,7 +25,7 @@ feather_filter:subscribe(hs.window.filter.windowFocused, locateFeather, true)
 -- Slack listener
 wf.new(false):setAppFilter("Slack", {}):subscribe(hs.window.filter.windowFocused, function(window)
 	local layout = {
-		{ nil, window, primaryScreen, hs.geometry.rect(0.3, 0, 0.45, 1), nil, nil },
+		{ nil, window, primaryScreen, hs.geometry.rect(0.3, 0, 0.45, 0.95), nil, nil },
 	}
 	hs.layout.apply(layout)
 end, true)

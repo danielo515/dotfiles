@@ -31,6 +31,7 @@ local plugins = {
   require "user.plugins.primeagen-refactoring",
   require "user.plugins.vim-firestore",
   require "user.plugins.dial-config",
+  require "user.plugins.fzf-config",
   -- require "user.plugins.pomodoro-config",
   require "user.plugins.neogit-config",
   require "user.plugins.git-conflict-config",
