@@ -57,6 +57,17 @@ function D.req_current()
   return D.call(lvim.require_clean, current_file)
 end
 
+---gives you useful elements to use for auto completion
+-- about the current context
+---@return string[]
+function D.get_context_suggestions()
+  local currentWord = vim.fn.expand "<cword>"
+  local currentFileName = vim.fn.expand "%:t:r"
+  local currentFile = vim.fn.expand "%:t"
+  local currentPath = vim.fn.expand "%"
+  return { currentWord, currentFileName, currentFile, currentPath }
+end
+
 -- Yes, a function that does nothing, deal with it
 D.noop = function() end
 -- Shortcut
