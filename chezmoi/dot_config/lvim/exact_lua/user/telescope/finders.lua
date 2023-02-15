@@ -57,10 +57,7 @@ function M.grep_files(opts)
   }
 
   opts = vim.tbl_deep_extend("force", theme_opts, opts)
-  local currentWord = vim.fn.expand "<cword>"
-  local currentFileName = vim.fn.expand "%:t:r"
-  local currentFile = vim.fn.expand "%:t"
-  local currentPath = vim.fn.expand "%"
+  local context_completion = D.get_context_suggestions()
   vim.ui.input({
     --This has several limitations. We need to pass a single argument because trying to provide several
     -- is going to make the string become invalid.
@@ -68,12 +65,7 @@ function M.grep_files(opts)
     completion = string.format(
       "custom,v:lua.require'user.telescope.finders'.expand('%s')",
       --custom can have several options, but they must be newline separated
-      table.concat({
-        currentWord,
-        currentFile,
-        currentFileName,
-        currentPath,
-      }, "\\n")
+      table.concat(context_completion, "\\n")
     ),
   }, function(text)
     if not text or text == "" then
