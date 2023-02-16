@@ -4,7 +4,7 @@ local imap = require("user.util.keymap").imap
 -- This two were remmoved by LVIM from the defaults, too bad
 lvim.keys.normal_mode["<S-l>"] = ":BufferLineCycleNext<CR>"
 lvim.keys.normal_mode["<S-h>"] = ":BufferLineCyclePrev<CR>"
-lvim.keys.normal_mode["<C-F>"] = "<cmd>lua require('user.telescope').grep_files()<cr>"
+lvim.keys.normal_mode["<C-F>"] = "<cmd>lua require('user.find').fzf_find()<cr>"
 lvim.keys.normal_mode["<S-X>"] = "<cmd>BufferKill<cr>"
 lvim.keys.normal_mode["kj"] = false
 lvim.keys.normal_mode["jk"] = false
