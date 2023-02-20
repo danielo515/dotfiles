@@ -73,5 +73,6 @@ if is_bootstrap then
 	print("==================================")
 	return
 end
+vim.filetype.add({ extension = { hx = "haxe" } })
 -- Require our real configuration that is built using Haxe
 require("kickstart")
