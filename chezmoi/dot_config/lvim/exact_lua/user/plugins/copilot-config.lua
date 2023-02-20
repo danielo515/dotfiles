@@ -24,12 +24,12 @@ return {
         auto_trigger = true,
         debounce = 75,
         keymap = {
-          accept = "<S-Tab>",
+          accept = "<c-e>",
           accept_word = false,
           accept_line = false,
           next = "<M-b>",
           prev = "<M-v>",
-          dismiss = "<C-e>",
+          dismiss = "<C-c>",
         },
       },
       filetypes = {
