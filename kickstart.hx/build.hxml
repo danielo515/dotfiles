@@ -23,4 +23,4 @@ libs.hxml
 --each
 
 --main kickstart.Kickstart
---lua lua/kickstart/init.lua
+--lua out/lua/kickstart/init.lua
