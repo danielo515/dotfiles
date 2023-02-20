@@ -1,0 +1,27 @@
+name: kickstart.hx
+
+on:
+  push:
+    branches: [ master ]
+    paths: ["kickstart.hx/**","kickstart-hx.yml"]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: creates output
+        run: | 
+          mkdir output
+          cp -r danielo_nvim/. output
+          rm -rf output/lua output/src/parser
+      - name: Pushes to kickstart.hx repository
+        uses: cpina/github-action-push-to-another-repository@master
+        env:
+          API_TOKEN_GITHUB: ${{ secrets.GH_API_TOKEN }}
+        with:
+          source-directory: 'output'
+          destination-github-username: 'danielo515'
+          destination-repository-name: 'kickstart.hx'
+          user-email: rdanielo@gmail.com
+          target-branch: master
