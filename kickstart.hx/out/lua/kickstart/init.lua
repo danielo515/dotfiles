@@ -858,7 +858,16 @@ __kickstart__Kickstart_Kickstart_Fields_.main = function()
   end}), sources = ({({name = "luasnip"}),({name = "nvim_lsp"})})}));
   __kickstart_MasonLspConfig.setup_handlers(({function(server_name) 
     local server_name1 = server_name;
-    if (server_name1) == "jsonls" then 
+    if (server_name1) == "haxe_language_server" then 
+      local config_capabilities = capabilities;
+      local config_on_attach = __kickstart__Kickstart_Kickstart_Fields_.onAttach;
+      local config_settings = ({});
+      __kickstart_Lspconfig.haxe_language_server.setup({
+      on_attach = config_on_attach,
+      settings = config_settings,
+      capabilities = config_capabilities,
+    });
+    elseif (server_name1) == "jsonls" then 
       local config_capabilities = capabilities;
       local config_on_attach = __kickstart__Kickstart_Kickstart_Fields_.onAttach;
       local config_settings = ({json = ({schemas = __vim__TableTools_TableTools_Fields_.concat(({_hx_o({__fields__={description=true,fileMatch=true,name=true,url=true},description="Haxe format schema",fileMatch=({"hxformat.json"}),name="hxformat.schema.json",url="https://raw.githubusercontent.com/vshaxe/vshaxe/master/schemas/hxformat.schema.json"})}), __kickstart_SchemaStore.json:schemas())})});
