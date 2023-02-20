@@ -22,5 +22,5 @@ libs.hxml
 
 --each
 
---main Main
---lua lua/danielo_nvim/init.lua
+--main kickstart.Kickstart
+--lua lua/kickstart/init.lua
