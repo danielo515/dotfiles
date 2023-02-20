@@ -82,6 +82,7 @@ nmap("<M-Tab>", ":b#<cr>", "Alternate file", true)
 nmap(",h", ":Gitsigns next_hunk<cr>", "Next git hunk")
 nmap(",c", ":cNext!<cr>", "Next item in quickfix")
 nmap(",s", ":s/\\v", "Search/replace local line", false)
+vmap(",s", ":s/\\v", "Search/replace local line", false)
 
 -- An awesome method to jump to windows
 local picker = require "window-picker"
