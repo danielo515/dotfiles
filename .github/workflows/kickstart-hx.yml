@@ -13,8 +13,7 @@ jobs:
       - name: creates output
         run: | 
           mkdir output
-          cp -r danielo_nvim/. output
-          rm -rf output/lua output/src/parser
+          cp -r kickstart.hx/. output
       - name: Pushes to kickstart.hx repository
         uses: cpina/github-action-push-to-another-repository@master
         env:
