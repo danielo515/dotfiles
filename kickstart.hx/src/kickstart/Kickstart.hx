@@ -207,6 +207,7 @@ function main() {
 	Neodev.setup();
 	Mason.setup();
 	Fidget.setup();
+
 	kickstart.Cmp.configure();
 	MasonLspConfig.setup_handlers(t([
 		server_name -> {

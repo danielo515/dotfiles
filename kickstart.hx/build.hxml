@@ -24,3 +24,9 @@ libs.hxml
 
 --main kickstart.Kickstart
 --lua out/lua/kickstart/init.lua
+
+--next
+
+plugins.Setup
+
+--lua out/lua/plugins.lua

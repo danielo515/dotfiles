@@ -55,6 +55,12 @@ require("packer").startup(function(use)
 	use("lukas-reineke/indent-blankline.nvim") -- Add indentation guides even on blank lines
 	use("numToStr/Comment.nvim") -- "gc" to comment visual regions/lines
 	use("tpope/vim-sleuth") -- Detect tabstop and shiftwidth automatically
+	use({
+		"zbirenbaum/copilot.lua",
+		cmd = "Copilot",
+		event = "InsertEnter",
+		config = require("plugins").setup_copilot,
+	})
 
 	if is_bootstrap then
 		require("packer").sync()
@@ -73,6 +79,7 @@ if is_bootstrap then
 	print("==================================")
 	return
 end
+
 vim.filetype.add({ extension = { hx = "haxe" } })
 -- Require our real configuration that is built using Haxe
 require("kickstart")
