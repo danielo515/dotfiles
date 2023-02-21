@@ -3,6 +3,7 @@ libs.hxml
 --macro nullSafety("plenary", Strict)
 --macro nullSafety("parser", Strict)
 --macro nullSafety("kickstart", Strict)
+--macro nullSafety("plugins", Strict)
 
 -D analyzer-module
 -D analyzer-optimize

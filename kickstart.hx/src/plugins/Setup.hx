@@ -1,7 +1,5 @@
 package plugins;
 
-import lua.Lua;
-
 function require<T>(name:String):T {
 	final library = lua.Lua.require(name);
 	return library;
