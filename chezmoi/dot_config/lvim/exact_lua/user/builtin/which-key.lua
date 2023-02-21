@@ -135,9 +135,24 @@ keymap["r"]["p"] = {
   end,
   "capture [p]arens",
 }
+
+keymap["r"]["t"] = {
+  function()
+    D.vim.send_keys(":%s/\vtrue|false/ Bool/g" .. string.rep("<Left>", 5))
+  end,
+  "[t]rue false to Bool",
+}
+
+keymap["r"]["i"] = {
+  function()
+    D.vim.send_keys(':%s/\v"[^"]*"/ String/g' .. string.rep("<Left>", 5))
+  end,
+  "literal str[i]ng to type",
+}
+
 keymap["r"]["r"] = {
   function()
-    D.vim.send_keys(":%s/\\v\\i+/\\0/g" .. string.rep("<Left>", 4))
+    D.vim.send_keys(":s/\\v\\i+/\\0/g" .. string.rep("<Left>", 4))
   end,
   "[r]epeat word",
 }
