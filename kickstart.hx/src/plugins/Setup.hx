@@ -1,5 +1,7 @@
 package plugins;
 
+import vim.plugin.types.VimPlugin;
+
 function require<T>(name:String):T {
 	final library = lua.Lua.require(name);
 	return library;
@@ -7,8 +9,8 @@ function require<T>(name:String):T {
 
 @:expose('setup_copilot') @:keep
 function setup_copilot() {
-	final copilot:Copilot = require('copilot');
-	copilot.setup({
+	final x:Plugin<Copilot> = "copilot";
+	x.call(copilot -> copilot.setup({
 		panel: {
 			enabled: true,
 			auto_refresh: true,
@@ -48,5 +50,5 @@ function setup_copilot() {
 			cvs: false,
 		},
 		copilot_node_command: "node"
-	});
+	}));
 }

@@ -758,11 +758,11 @@ __haxe_iterators_ArrayKeyValueIterator.super = function(self,array)
 end
 
 __plugins__Setup_Setup_Fields_.new = {}
-__plugins__Setup_Setup_Fields_.require = function(name) 
-  do return _G.require(name) end;
-end
 __plugins__Setup_Setup_Fields_.setup_copilot = function() 
-  __plugins__Setup_Setup_Fields_.require("copilot").setup(({copilot_node_command = "node", filetypes = ({yaml = false, markdown = false, help = false, gitcommit = false, gitrebase = false, hgcommit = false, svn = false, cvs = false}), panel = ({enabled = true, auto_refresh = true, keymap = ({jump_prev = "[[", jump_next = "]]", accept = "<CR>", refresh = "gr", open = "<M-CR>"}), layout = ({position = "bottom", ratio = 0.4})}), suggestion = ({enabled = true, auto_trigger = true, debounce = 75, keymap = ({accept = "<c-e>", accept_word = false, accept_line = false, next = "<M-b>", prev = "<M-v>", dismiss = "<C-c>"})})}));
+  local x = _G.select(2, _G.pcall(_G.require, "copilot"));
+  if (x ~= nil) then 
+    x.setup(({copilot_node_command = "node", filetypes = ({yaml = false, markdown = false, help = false, gitcommit = false, gitrebase = false, hgcommit = false, svn = false, cvs = false}), panel = ({enabled = true, auto_refresh = true, keymap = ({jump_prev = "[[", jump_next = "]]", accept = "<CR>", refresh = "gr", open = "<M-CR>"}), layout = ({position = "bottom", ratio = 0.4})}), suggestion = ({enabled = true, auto_trigger = true, debounce = 75, keymap = ({accept = "<c-e>", accept_word = false, accept_line = false, next = "<M-b>", prev = "<M-v>", dismiss = "<C-c>"})})}));
+  end;
 end
 _hx_exports["setup_copilot"] = __plugins__Setup_Setup_Fields_.setup_copilot
 if _hx_bit_raw then
