@@ -2,14 +2,10 @@ package vim.plugin.types;
 
 import lua.Lua;
 
-abstract Plugin< T >(Option< T >) {
+abstract Plugin< T >(Null< T >) {
   inline function new(pluginName:String) {
     final requireResult = Lua.pcall(Lua.require, pluginName);
-    if (requireResult.status) {
-      this = cast Some(requireResult.value);
-    } else {
-      this = cast None;
-    }
+    this = requireResult.value;
   }
 
   @:from
@@ -17,20 +13,12 @@ abstract Plugin< T >(Option< T >) {
     return new Plugin(pluginName);
   }
 
-  public inline function map< R >(f:T -> R):Option< R > {
-    return switch (this) {
-      case Some(value):
-        Some(f(value));
-      case None: None;
-    }
+  public inline function map< R >(f:T -> R):Null< R > {
+    return if (this == null) null else f(this);
   }
 
   public inline function call(f:T -> Void):Void {
-    switch (this) {
-      case Some(lib):
-        f(lib);
-      case None:
-        None;
-    }
+    if (this != null)
+      f(this);
   }
 }
