@@ -1,6 +1,7 @@
 return {
   "ggandor/leap-spooky.nvim",
   requires = "ggandor/leap.nvim",
+  commit = "0bb68f0",
   config = function()
     require("leap-spooky").setup {
       affixes = {
