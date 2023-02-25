@@ -1,4 +1,5 @@
 local vmap = require("user.util.keymap").vmap
+local nmap = require("user.util.keymap").nmap
 local imap = require("user.util.keymap").imap
 
 -- This two were remmoved by LVIM from the defaults, too bad
@@ -16,8 +17,9 @@ lvim.keys.normal_mode["<F2>"] = "<cmd>lua vim.lsp.buf.rename()<cr>"
 lvim.keys.normal_mode["<M-cr>"] = "<cmd>lua vim.lsp.buf.code_action()<cr>"
 vmap("<M-cr>", "<cmd>lua vim.lsp.buf.range_code_action()<cr>", "Range code action")
 -- File
-lvim.keys.normal_mode["<M-F>"] =
-  '<cmd>lua require("telescope").extensions.file_browser.file_browser { cwd = vim.fn.expand "%:p:h:", grouped = true, depth= false, hidden = true }<CR>'
+nmap("<M-f>", function()
+  require("fzf-lua").files()
+end, "FZF find files")
 lvim.keys.normal_mode["<Tab>"] = "<cmd>lua require('user.telescope').buffers()<cr>"
 lvim.keys.normal_mode["<S-Tab>"] = ":Neotree float reveal<cr>"
 -- Other
