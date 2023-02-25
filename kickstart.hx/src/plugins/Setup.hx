@@ -2,11 +2,6 @@ package plugins;
 
 import vim.plugin.types.VimPlugin;
 
-function require<T>(name:String):T {
-	final library = lua.Lua.require(name);
-	return library;
-}
-
 @:expose('setup_copilot') @:keep
 function setup_copilot() {
 	final x:Plugin<Copilot> = "copilot";
