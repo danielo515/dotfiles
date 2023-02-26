@@ -7,6 +7,7 @@ vim.opt.rtp:append "/Users/danielo/.opam/default/share/ocp-indent/vim"
 -- Project
 lvim.builtin.project.patterns = { ".git", "package.json" }
 lvim.builtin.project.silent_chdir = false
+lvim.builtin.project.manual_mode = true
 -- Packer fix
 local packer = require "packer"
 
