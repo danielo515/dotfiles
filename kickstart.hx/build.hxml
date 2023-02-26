@@ -31,3 +31,9 @@ libs.hxml
 plugins.Setup
 
 --lua out/lua/plugins.lua
+
+--next
+
+--main kickstart.Pure
+
+--lua out/lua/pure/init.lua
