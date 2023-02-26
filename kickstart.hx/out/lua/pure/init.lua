@@ -216,6 +216,7 @@ local Array = _hx_e()
 local Math = _hx_e()
 local String = _hx_e()
 local Std = _hx_e()
+__haxe_Log = _hx_e()
 __haxe_iterators_ArrayIterator = _hx_e()
 __haxe_iterators_ArrayKeyValueIterator = _hx_e()
 __kickstart__Pure_Pure_Fields_ = _hx_e()
@@ -861,6 +862,33 @@ Std.int = function(x)
 	end
 end
 
+__haxe_Log.new = {}
+__haxe_Log.formatOutput = function(v, infos)
+	local str = Std.string(v)
+	if infos == nil then
+		do
+			return str
+		end
+	end
+	local pstr = Std.string(Std.string(infos.fileName) .. Std.string(":")) .. Std.string(infos.lineNumber)
+	if infos.customParams ~= nil then
+		local _g = 0
+		local _g1 = infos.customParams
+		while _g < _g1.length do
+			local v = _g1[_g]
+			_g = _g + 1
+			str = Std.string(str) .. Std.string((Std.string(", ") .. Std.string(Std.string(v))))
+		end
+	end
+	do
+		return Std.string(Std.string(pstr) .. Std.string(": ")) .. Std.string(str)
+	end
+end
+__haxe_Log.trace = function(v, infos)
+	local str = __haxe_Log.formatOutput(v, infos)
+	_hx_print(str)
+end
+
 __haxe_iterators_ArrayIterator.new = function(array)
 	local self = _hx_new(__haxe_iterators_ArrayIterator.prototype)
 	__haxe_iterators_ArrayIterator.super(self, array)
@@ -907,18 +935,38 @@ __kickstart__Pure_Pure_Fields_.main = function()
 	local is_bootstrap = __plugins__Packer_Packer_Fields_.ensureInstalled()
 	local packer = _G.require("packer")
 	vim.pretty_print("Plugins", plugins)
+	__haxe_Log.trace(
+		_G.packer_plugins,
+		_hx_o({
+			__fields__ = { fileName = true, lineNumber = true, className = true, methodName = true },
+			fileName = "src/plugins/Packer.hx",
+			lineNumber = 58,
+			className = "plugins.Packer",
+			methodName = "init",
+		})
+	)
 	packer.startup(function(use)
 		local _g = 0
 		while _g < plugins.length do
 			local plugin = plugins[_g]
 			_g = _g + 1
-			print(plugin)
 			use(plugin)
 		end
 	end)
+	__haxe_Log.trace(
+		_G.packer_plugins,
+		_hx_o({
+			__fields__ = { fileName = true, lineNumber = true, className = true, methodName = true },
+			fileName = "src/plugins/Packer.hx",
+			lineNumber = 64,
+			className = "plugins.Packer",
+			methodName = "init",
+		})
+	)
 	if is_bootstrap then
 		packer.sync()
 	end
+	vim.pretty_print("global plugins", packer_plugins)
 end
 
 __plugins__Packer_Packer_Fields_.new = {}
@@ -973,6 +1021,8 @@ end
 _hx_array_mt.__index = Array.prototype
 
 local _hx_static_init = function() end
+
+_hx_print = print or function() end
 
 _hx_static_init()
 _G.xpcall(__kickstart__Pure_Pure_Fields_.main, _hx_error)
