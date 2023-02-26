@@ -11,6 +11,10 @@ using haxe.macro.ComplexTypeTools;
 var uniqueCount = 1;
 #end
 
+/**
+  Generates a new array that does not contain duplicate values,
+  giving preference to the leftmos elements.
+ */
 function uniqueValues< T >(array:Array< T >, indexer:(T) -> String) {
   final index = new haxe.ds.StringMap< Bool >();
   return [for (val in array) {
@@ -135,7 +139,10 @@ static function objToTable(obj:Expr):Expr {
         }
       }];
 
-      final inputObj = {expr: EObjectDecl(inputFields), pos: ex.pos};
+      // We merge the generated fields, which may include fields that are not present in the code
+      // (in case of optional fields, for example)
+      // with the real fields so the type checking is accurate and does not allow extra fields that
+      // will be silently ignored otherwise
       final obj = {
         expr: EObjectDecl(uniqueValues(inputFields.concat(generatedFields), f -> f.field)),
         pos: ex.pos
@@ -143,7 +150,6 @@ static function objToTable(obj:Expr):Expr {
 
       // trace("\n=========\n", complexType.toString());
       // trace("fields", inputFields);
-      // trace("inputObj", inputObj.toString());
       // trace("ex", ex);
       // trace("fieldExprs", fieldExprs);
       // trace("obj", obj);
