@@ -5,6 +5,7 @@ import haxe.macro.Expr;
 
 using haxe.macro.TypeTools;
 using haxe.macro.ExprTools;
+using haxe.macro.ComplexTypeTools;
 
 var uniqueCount = 1;
 #end
@@ -85,6 +86,10 @@ static function objToTable(obj:Expr):Expr {
 
       var objFields:Array< ObjectField > = [for (f in fields) {
         final currentFieldExpression = fieldExprs.get(f.name);
+
+        if (currentFieldExpression == null) {
+          continue;
+        }
         switch (f.type) {
           case _.toComplexType() => macro :Array< String > :{
             field:f.name,
@@ -104,13 +109,7 @@ static function objToTable(obj:Expr):Expr {
             {field: f.name, expr: macro(TableWrapper.fromExpr(${fieldExprs.get(f.name)}) : $ct)};
 
           case TAnonymous(_):
-            {field: f.name, expr: objToTable(fieldExprs.get(f.name))};
-          // case TInst(_.get().name => "Array", [TAnonymous(_)]):
-          //   trace(currentFieldExpression.toString());
-          //   {
-          //     field: f.name,
-          //     expr: macro lua.Table.create(${ExprTools.map(currentFieldExpression, objToTable)})
-          //   }
+            {field: f.name, expr: objToTable(currentFieldExpression)};
 
           case TAbstract(_, _) | TFun(_, _):
             {field: f.name, expr: (fieldExprs.get(f.name))};
@@ -121,6 +120,13 @@ static function objToTable(obj:Expr):Expr {
 
       var inputObj = {expr: EObjectDecl(inputFields), pos: ex.pos};
       var obj = {expr: EObjectDecl(objFields), pos: ex.pos};
+
+      // trace("\n=========\n", complexType.toString());
+      // trace("fields", inputFields);
+      // trace("inputObj", inputObj.toString());
+      // trace("ex", ex);
+      // trace("fieldExprs", fieldExprs);
+      // trace("obj", obj);
 
       final name = '_dce${uniqueCount++}';
       return macro @:mergeBlock {
