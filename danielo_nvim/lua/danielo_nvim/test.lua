@@ -194,21 +194,14 @@ local Bool = _hx_e();
 local Class = _hx_e();
 local Enum = _hx_e();
 
-local _hx_exports = _hx_exports or {}
 local Array = _hx_e()
-___Main_Main_Fields_ = _hx_e()
 local Math = _hx_e()
 local String = _hx_e()
 local Std = _hx_e()
-local Test = _hx_e()
+___TableWrapper_TableWrapper_Impl_ = _hx_e()
 __haxe_iterators_ArrayIterator = _hx_e()
 __haxe_iterators_ArrayKeyValueIterator = _hx_e()
-__lua_StringMap = _hx_e()
-__packer__Packer_Packer_Fields_ = _hx_e()
-__plenary_Job = _G.require("plenary.job")
-__vim__TableTools_TableTools_Fields_ = _hx_e()
-__vim__VimTypes_LuaArray_Impl_ = _hx_e()
-__vim_Vimx = _hx_e()
+__tools_test__Optionals_Optionals_Fields_ = _hx_e()
 
 local _hx_bind, _hx_bit, _hx_staticToInstance, _hx_funcToField, _hx_maxn, _hx_print, _hx_apply_self, _hx_box_mr, _hx_bit_clamp, _hx_table, _hx_bit_raw
 local _hx_pcall_default = {};
@@ -226,25 +219,29 @@ Array.prototype = _hx_e();
 Array.prototype.concat = function(self,a) 
   local _g = _hx_tab_array({}, 0);
   local _g1 = 0;
-  while (_g1 < self.length) do 
-    local i = self[_g1];
+  local _g2 = self;
+  while (_g1 < _g2.length) do 
+    local i = _g2[_g1];
     _g1 = _g1 + 1;
     _g:push(i);
   end;
-  local _g1 = 0;
-  while (_g1 < a.length) do 
-    local i = a[_g1];
-    _g1 = _g1 + 1;
-    _g:push(i);
+  local ret = _g;
+  local _g = 0;
+  while (_g < a.length) do 
+    local i = a[_g];
+    _g = _g + 1;
+    ret:push(i);
   end;
-  do return _g end
+  do return ret end
 end
 Array.prototype.join = function(self,sep) 
   local tbl = ({});
   local _g_current = 0;
-  while (_g_current < self.length) do 
+  local _g_array = self;
+  while (_g_current < _g_array.length) do 
     _g_current = _g_current + 1;
-    _G.table.insert(tbl, Std.string(self[_g_current - 1]));
+    local i = _g_array[_g_current - 1];
+    _G.table.insert(tbl, Std.string(i));
   end;
   do return _G.table.concat(tbl, sep) end
 end
@@ -307,7 +304,8 @@ Array.prototype.slice = function(self,pos,_end)
   local _g1 = _end;
   while (_g < _g1) do 
     _g = _g + 1;
-    ret:push(self[_g - 1]);
+    local i = _g - 1;
+    ret:push(self[i]);
   end;
   do return ret end
 end
@@ -358,7 +356,8 @@ Array.prototype.splice = function(self,pos,len)
     local i = _g - 1;
     self[i] = self[i + len];
   end;
-  self.length = self.length - len;
+  local tmp = self;
+  tmp.length = tmp.length - len;
   do return ret end
 end
 Array.prototype.toString = function(self) 
@@ -371,7 +370,8 @@ end
 Array.prototype.unshift = function(self,x) 
   local len = self.length;
   local _g = 0;
-  while (_g < len) do 
+  local _g1 = len;
+  while (_g < _g1) do 
     _g = _g + 1;
     local i = _g - 1;
     self[len - i] = self[(len - i) - 1];
@@ -421,7 +421,8 @@ Array.prototype.contains = function(self,x)
   local _g1 = self.length;
   while (_g < _g1) do 
     _g = _g + 1;
-    if (self[_g - 1] == x) then 
+    local i = _g - 1;
+    if (self[i] == x) then 
       do return true end;
     end;
   end;
@@ -440,7 +441,8 @@ Array.prototype.indexOf = function(self,x,fromIndex)
     end;
   end;
   local _g = fromIndex;
-  while (_g < _end) do 
+  local _g1 = _end;
+  while (_g < _g1) do 
     _g = _g + 1;
     local i = _g - 1;
     if (x == self[i]) then 
@@ -473,8 +475,9 @@ end
 Array.prototype.copy = function(self) 
   local _g = _hx_tab_array({}, 0);
   local _g1 = 0;
-  while (_g1 < self.length) do 
-    local i = self[_g1];
+  local _g2 = self;
+  while (_g1 < _g2.length) do 
+    local i = _g2[_g1];
     _g1 = _g1 + 1;
     _g:push(i);
   end;
@@ -483,8 +486,9 @@ end
 Array.prototype.map = function(self,f) 
   local _g = _hx_tab_array({}, 0);
   local _g1 = 0;
-  while (_g1 < self.length) do 
-    local i = self[_g1];
+  local _g2 = self;
+  while (_g1 < _g2.length) do 
+    local i = _g2[_g1];
     _g1 = _g1 + 1;
     _g:push(f(i));
   end;
@@ -493,8 +497,9 @@ end
 Array.prototype.filter = function(self,f) 
   local _g = _hx_tab_array({}, 0);
   local _g1 = 0;
-  while (_g1 < self.length) do 
-    local i = self[_g1];
+  local _g2 = self;
+  while (_g1 < _g2.length) do 
+    local i = _g2[_g1];
     _g1 = _g1 + 1;
     if (f(i)) then 
       _g:push(i);
@@ -517,97 +522,13 @@ Array.prototype.resize = function(self,len)
       local _g1 = self.length;
       while (_g < _g1) do 
         _g = _g + 1;
-        self[_g - 1] = nil;
+        local i = _g - 1;
+        self[i] = nil;
       end;
       self.length = len;
     end;
   end;
 end
-
-___Main_Main_Fields_.new = {}
-___Main_Main_Fields_.main = function() 
-  vim.api.nvim_create_user_command("HaxeCmd", function(args) 
-    vim.pretty_print(args);
-    vim.pretty_print(vim.spell.check("Hello bru! Hau are you?")[1][1]);
-    vim.ui.select(({"a"}), ({prompt = "Pick one sexy option"}), function(choice,_) 
-      vim.pretty_print(choice);
-    end);
-  end, ({desc = "Testing from haxe", force = true, complete = Std.string("customlist,v:lua.") .. Std.string("require'packer'.plugin_complete"), nargs = 1, bang = true, range = "%"}));
-  __vim_Vimx.autocmd("HaxeEvent", __vim__VimTypes_LuaArray_Impl_.from(_hx_tab_array({[0]="BufWritePost"}, 1)), "*.hx", "Created from haxe", function() 
-    vim.pretty_print("Hello from axe", vim.fn.expand(_G.string.format("%s%s", "%", ":p")));
-    do return true end;
-  end);
-  local nargs = nil;
-  vim.api.nvim_create_user_command("OpenInGh", function(args) 
-    ___Main_Main_Fields_.openInGh((function() 
-      local _hx_1
-      if (args.count > 0) then 
-      _hx_1 = Std.string(":") .. Std.string(args.count); else 
-      _hx_1 = ""; end
-      return _hx_1
-    end )());
-  end, ({desc = "Open the current file in github", force = true, nargs = nargs, complete = nil, bang = false, range = true}));
-  local nargs = nil;
-  vim.api.nvim_create_user_command("CopyGhUrl", function(args) 
-    ___Main_Main_Fields_.copyGhUrl((function() 
-      local _hx_2
-      if (args.count > 0) then 
-      _hx_2 = Std.string(":") .. Std.string(args.count); else 
-      _hx_2 = ""; end
-      return _hx_2
-    end )());
-  end, ({desc = "Copy current file github URL", force = true, nargs = nargs, complete = nil, bang = false, range = true}));
-  vim.api.nvim_create_user_command("CopyMessagesToClipboard", function(args) 
-    ___Main_Main_Fields_.copy_messages_to_clipboard(args.args);
-  end, ({desc = "Copy the n number of messages to clipboard", force = true, nargs = 1, complete = nil, bang = false, range = true}));
-  vim.api.nvim_create_user_command("GetPluginVersion", function(args) 
-    vim.pretty_print(__packer__Packer_Packer_Fields_.get_plugin_version(args.args));
-  end, ({desc = "Gets the git version of a installed packer plugin", force = true, nargs = 1, complete = nil, bang = false, range = true}));
-  vim.keymap.set("n", "tl", ___Main_Main_Fields_.nexTab, ({desc = "Go to next tab", silent = true, expr = false}));
-  vim.o.inccommand = "split";
-end
-___Main_Main_Fields_.runGh = function(args) 
-  if (vim.fn.executable("gh") ~= 1) then 
-    do return nil end;
-  end;
-  local args = ({command = "gh", args = args, on_stderr = function(args,return_val) 
-    vim.pretty_print("Job got stderr", args, return_val);
-  end});
-  do return __plenary_Job:new(args):sync() end;
-end
-___Main_Main_Fields_.openInGh = function(line) 
-  ___Main_Main_Fields_.runGh(__vim__VimTypes_LuaArray_Impl_.from(_hx_tab_array({[0]="browse", Std.string(vim.fn.expand("%")) .. Std.string(line), "--branch", ___Main_Main_Fields_.get_branch()[1]}, 4)));
-end
-___Main_Main_Fields_.get_branch = function() 
-  local args = ({command = "git", args = ({"rev-parse","--abbrev-ref","HEAD"}), on_stderr = function(args,return_val) 
-    vim.pretty_print("Something may have  failed", args, return_val);
-  end});
-  do return __plenary_Job:new(args):sync() end;
-end
-___Main_Main_Fields_.copy_messages_to_clipboard = function(number) 
-  vim.cmd(_G.string.format("let @* = execute('%smessages')", Test["or"](number, "")));
-  vim.notify(Std.string(Std.string("") .. Std.string(number)) .. Std.string(" :messages copied to the clipboard"), "info");
-end
-___Main_Main_Fields_.nexTab = function() 
-  local pages = vim.api.nvim_list_tabpages();
-  local currentTab = vim.api.nvim_get_current_tabpage();
-  vim.api.nvim_set_current_tabpage(Test["or"](__vim__TableTools_TableTools_Fields_.findNext(pages, function(id) 
-    do return id == currentTab end;
-  end), pages[1]));
-end
-___Main_Main_Fields_.copyGhUrl = function(line) 
-  local lines = ___Main_Main_Fields_.runGh(__vim__VimTypes_LuaArray_Impl_.from(_hx_tab_array({[0]="browse", Std.string(vim.fn.expand(_G.string.format("%s%s", "%", ":."))) .. Std.string(line), "--no-browser", "--branch", ___Main_Main_Fields_.get_branch()[1]}, 5)));
-  if (lines == nil) then 
-    vim.pretty_print("No URL");
-  else
-    vim.pretty_print(lines[1]);
-    __vim_Vimx.copyToClipboard(lines[1]);
-  end;
-end
-___Main_Main_Fields_.setup = function() 
-  vim.pretty_print("ran setup");
-end
-_hx_exports["setup"] = ___Main_Main_Fields_.setup
 
 Math.new = {}
 Math.isNaN = function(f) 
@@ -754,7 +675,8 @@ String.prototype.split = function(self,delimiter)
       end;
     end;
     if (newidx ~= nil) then 
-      ret:push(_G.string.sub(self, idx, newidx - 1));
+      local match = _G.string.sub(self, idx, newidx - 1);
+      ret:push(match);
       idx = newidx + #delimiter;
     else
       ret:push(_G.string.sub(self, idx, #self));
@@ -817,14 +739,7 @@ Std.int = function(x)
   end;
 end
 
-Test.new = {}
-Test["or"] = function(v,fallback) 
-  if (v ~= nil) then 
-    do return v end;
-  else
-    do return fallback end;
-  end;
-end
+___TableWrapper_TableWrapper_Impl_.new = {}
 
 __haxe_iterators_ArrayIterator.new = function(array) 
   local self = _hx_new(__haxe_iterators_ArrayIterator.prototype)
@@ -858,111 +773,9 @@ __haxe_iterators_ArrayKeyValueIterator.super = function(self,array)
   self.array = array;
 end
 
-__lua_StringMap.new = function() 
-  local self = _hx_new(__lua_StringMap.prototype)
-  __lua_StringMap.super(self)
-  return self
-end
-__lua_StringMap.super = function(self) 
-  self.h = ({});
-end
-__lua_StringMap.prototype = _hx_e();
-__lua_StringMap.prototype.set = function(self,key,value) 
-  if (value == nil) then 
-    self.h[key] = __lua_StringMap.tnull;
-  else
-    self.h[key] = value;
-  end;
-end
-__lua_StringMap.prototype.get = function(self,key) 
-  local ret = self.h[key];
-  if (ret == __lua_StringMap.tnull) then 
-    do return nil end;
-  end;
-  do return ret end
-end
-
-__packer__Packer_Packer_Fields_.new = {}
-__packer__Packer_Packer_Fields_.get_plugin_version = function(name) 
-  if (_G.packer_plugins ~= nil) then 
-    local args = ({command = "git", cwd = _G.packer_plugins[name].path, args = ({"rev-parse","--short","HEAD"}), on_stderr = function(args,return_val) 
-      vim.pretty_print("Job got stderr", args, return_val);
-    end});
-    do return __plenary_Job:new(args):sync()[1] end;
-  else
-    do return "unknown" end;
-  end;
-end
-
-__vim__TableTools_TableTools_Fields_.new = {}
-__vim__TableTools_TableTools_Fields_.findNext = function(table,fn) 
-  local _hx_1_p_next, _hx_1_p_table, _hx_1_p_index = _G.ipairs(table);
-  local next = _hx_1_p_next;
-  local t = _hx_1_p_table;
-  local loop = nil;
-  loop = function(next,table,nextP) 
-    local _hx_continue_1 = false;
-    while (true) do repeat 
-      if (fn(nextP.value)) then 
-        do return _G.select(2, next(table, nextP.index)) end;
-      else
-        nextP = _hx_box_mr(_hx_table.pack(next(table, nextP.index)), {"index", "value"});
-        break;
-      end;until true
-      if _hx_continue_1 then 
-      _hx_continue_1 = false;
-      break;
-      end;
-      
-    end;
-  end;
-  do return loop(next, t, _hx_box_mr(_hx_table.pack(next(t, _hx_1_p_index)), {"index", "value"})) end;
-end
-
-__vim__VimTypes_LuaArray_Impl_.new = {}
-__vim__VimTypes_LuaArray_Impl_.from = function(arr) 
-  local ret = ({});
-  local _g = 0;
-  local _g1 = arr.length;
-  while (_g < _g1) do 
-    _g = _g + 1;
-    local idx = _g - 1;
-    ret[idx + 1] = arr[idx];
-  end;
-  do return ret end;
-end
-
-__vim_Vimx.new = {}
-_hx_exports["vimx"] = __vim_Vimx
-__vim_Vimx.autocmd = function(groupName,events,pattern,description,cb) 
-  local group;
-  local _g = __vim_Vimx.autogroups:get(groupName);
-  if (_g == nil) then 
-    group = vim.api.nvim_create_augroup(groupName, ({clear = true}));
-    __vim_Vimx.autogroups:set(groupName, group);
-  else
-    group = _g;
-  end;
-  vim.api.nvim_create_autocmd(events, ({pattern = pattern, callback = cb, group = group, desc = (function() 
-    local _hx_1
-    if (description == nil) then 
-    _hx_1 = Std.string(Std.string(Std.string(Std.string("") .. Std.string(groupName)) .. Std.string(":[")) .. Std.string(pattern)) .. Std.string("]"); else 
-    _hx_1 = description; end
-    return _hx_1
-  end )(), once = false, nested = false}));
-end
-__vim_Vimx.copyToClipboard = function(str) 
-  vim.cmd(Std.string(Std.string("let @* = \"") .. Std.string(str)) .. Std.string("\""));
-  vim.notify("Copied to clipboard", "info");
-end
-__vim_Vimx.linesInCurrentWindow = function() 
-  do return vim.fn.line("$", 0) end;
-end
-__vim_Vimx.firstLineVisibleCurrentWindow = function() 
-  do return vim.fn.line("w0", 0) end;
-end
-__vim_Vimx.lastLineVisibleCurrentWindow = function() 
-  do return vim.fn.line("w$", 0) end;
+__tools_test__Optionals_Optionals_Fields_.new = {}
+__tools_test__Optionals_Optionals_Fields_.test = function(x) 
+  do return x end;
 end
 if _hx_bit_raw then
     _hx_bit_clamp = function(v)
@@ -994,34 +807,43 @@ end;
 _hx_array_mt.__index = Array.prototype
 
 local _hx_static_init = function()
-  __lua_StringMap.tnull = ({});
+  __tools_test__Optionals_Optionals_Fields_.a = (function() 
+    local _hx_1
+    
+    local _dce1 = ___TableWrapper_TableWrapper_Impl_.check(_hx_o({__fields__={optionalField=true,test=true},optionalField=nil,test=true}));
+    
+    _hx_1 = __tools_test__Optionals_Optionals_Fields_.test(({optionalField = nil, test = true}));
+    return _hx_1
+  end )();
   
-  __vim_Vimx.autogroups = __lua_StringMap.new();
+  __tools_test__Optionals_Optionals_Fields_.b = (function() 
+    local _hx_2
+    
+    local _dce2 = ___TableWrapper_TableWrapper_Impl_.check(_hx_o({__fields__={optionalField=true,test=true},optionalField=true,test=true}));
+    
+    _hx_2 = __tools_test__Optionals_Optionals_Fields_.test(({optionalField = true, test = true}));
+    return _hx_2
+  end )();
+  
+  __tools_test__Optionals_Optionals_Fields_.c = (function() 
+    local _hx_3
+    
+    local _dce3 = ___TableWrapper_TableWrapper_Impl_.check(_hx_o({__fields__={optionalField=true,test=true},optionalField=nil,test=true}));
+    
+    _hx_3 = __tools_test__Optionals_Optionals_Fields_.test(({optionalField = nil, test = true}));
+    return _hx_3
+  end )();
+  
+  __tools_test__Optionals_Optionals_Fields_.e = (function() 
+    local _hx_4
+    
+    local _dce4 = ___TableWrapper_TableWrapper_Impl_.check(_hx_o({__fields__={optionalField=true,test=true},optionalField=nil,test=true}));
+    
+    _hx_4 = __tools_test__Optionals_Optionals_Fields_.test(({optionalField = nil, test = true}));
+    return _hx_4
+  end )();
   
   
 end
-
-_hx_box_mr = function(x,nt)
-    res = _hx_o({__fields__={}})
-    for i,v in ipairs(nt) do
-      res[v] = x[i]
-    end
-    return res
-end
-
-_hx_table = {}
-_hx_table.pack = _G.table.pack or function(...)
-    return {...}
-end
-_hx_table.unpack = _G.table.unpack or _G.unpack
-_hx_table.maxn = _G.table.maxn or function(t)
-  local maxn=0;
-  for i in pairs(t) do
-    maxn=type(i)=='number'and i>maxn and i or maxn
-  end
-  return maxn
-end;
 
 _hx_static_init();
-_G.xpcall(___Main_Main_Fields_.main, _hx_error)
-return _hx_exports
