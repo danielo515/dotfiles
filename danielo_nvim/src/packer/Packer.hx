@@ -58,7 +58,7 @@ typedef PluginSpec = {
   final ?commit:String;
   final ?lock:Bool;
   final ?run:String;
-  final ?requires:String;
+  final ?requires:LuaArray< String >;
   final ?rocks:String;
   final ?config:Void -> Void;
   final ?setup:String;
@@ -124,11 +124,60 @@ abstract Plugin(PluginSpec) {
   @:from
   public static inline function from(spec:PluginSpec):Plugin {
     return untyped __lua__(
-      "{ {0}, cmd = {1}, event = {2}, config = {3} }",
+      "{ 
+        {0}, 
+        disable={1},
+        as={2},
+        installer={3},
+        updater={4},
+        after={5},
+        rtp={6},
+        opt={7},
+        bufread={8},
+        branch={9},
+        tag={10},
+        commit={11},
+        lock={12},
+        run={13},
+        requires={14},
+        rocks={15},
+        config={16},
+        setup={17},
+        cmd={18},
+        ft={19},
+        keys={20},
+        event={21},
+        fn={22},
+        cond={23},
+        module={24},
+        module_pattern={25}
+      }",
       spec.name,
+      spec.disable,
+      spec.as,
+      spec.installer,
+      spec.updater,
+      spec.after,
+      spec.rtp,
+      spec.opt,
+      spec.bufread,
+      spec.branch,
+      spec.tag,
+      spec.commit,
+      spec.lock,
+      spec.run,
+      spec.requires,
+      spec.rocks,
+      spec.config,
+      spec.setup,
       spec.cmd,
+      spec.ft,
+      spec.keys,
       spec.event,
-      spec.config
+      spec.fn,
+      spec.cond,
+      spec.module,
+      spec.module_pattern
     );
   };
 }
