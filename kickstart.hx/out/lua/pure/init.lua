@@ -760,9 +760,92 @@ end
 __kickstart__Pure_Pure_Fields_.new = {}
 __kickstart__Pure_Pure_Fields_.main = function() 
   local spec = _hx_o({__fields__={name=true},name="wbthomason/packer.nvim"});
-  local plugins = { spec.name, cmd = spec.cmd, event = spec.event, config = spec.config }
+  local plugins = { 
+        spec.name, 
+        disable=spec.disable,
+        as=spec.as,
+        installer=spec.installer,
+        updater=spec.updater,
+        after=spec.after,
+        rtp=spec.rtp,
+        opt=spec.opt,
+        bufread=spec.bufread,
+        branch=spec.branch,
+        tag=spec.tag,
+        commit=spec.commit,
+        lock=spec.lock,
+        run=spec.run,
+        requires=spec.requires,
+        rocks=spec.rocks,
+        config=spec.config,
+        setup=spec.setup,
+        cmd=spec.cmd,
+        ft=spec.ft,
+        keys=spec.keys,
+        event=spec.event,
+        fn=spec.fn,
+        cond=spec.cond,
+        module=spec.module,
+        module_pattern=spec.module_pattern
+      }
   local spec = _hx_o({__fields__={name=true},name="kylechui/nvim-surround"});
-  local plugins = _hx_tab_array({[0]=plugins, { spec.name, cmd = spec.cmd, event = spec.event, config = spec.config }}, 2);
+  local plugins1 = { 
+        spec.name, 
+        disable=spec.disable,
+        as=spec.as,
+        installer=spec.installer,
+        updater=spec.updater,
+        after=spec.after,
+        rtp=spec.rtp,
+        opt=spec.opt,
+        bufread=spec.bufread,
+        branch=spec.branch,
+        tag=spec.tag,
+        commit=spec.commit,
+        lock=spec.lock,
+        run=spec.run,
+        requires=spec.requires,
+        rocks=spec.rocks,
+        config=spec.config,
+        setup=spec.setup,
+        cmd=spec.cmd,
+        ft=spec.ft,
+        keys=spec.keys,
+        event=spec.event,
+        fn=spec.fn,
+        cond=spec.cond,
+        module=spec.module,
+        module_pattern=spec.module_pattern
+      }
+  local spec = _hx_o({__fields__={name=true,requires=true},name="neovim/nvim-lspconfig",requires=({"williamboman/mason.nvim","williamboman/mason-lspconfig.nvim","j-hui/fidget.nvim","folke/neodev.nvim"})});
+  local plugins = _hx_tab_array({[0]=plugins, plugins1, { 
+        spec.name, 
+        disable=spec.disable,
+        as=spec.as,
+        installer=spec.installer,
+        updater=spec.updater,
+        after=spec.after,
+        rtp=spec.rtp,
+        opt=spec.opt,
+        bufread=spec.bufread,
+        branch=spec.branch,
+        tag=spec.tag,
+        commit=spec.commit,
+        lock=spec.lock,
+        run=spec.run,
+        requires=spec.requires,
+        rocks=spec.rocks,
+        config=spec.config,
+        setup=spec.setup,
+        cmd=spec.cmd,
+        ft=spec.ft,
+        keys=spec.keys,
+        event=spec.event,
+        fn=spec.fn,
+        cond=spec.cond,
+        module=spec.module,
+        module_pattern=spec.module_pattern
+      }}, 3);
   local is_bootstrap = __packer__Packer_Packer_Fields_.ensureInstalled();
   local packer = _G.require("packer");
   packer.startup(function(use) 
