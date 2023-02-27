@@ -1,5 +1,6 @@
 package packer;
 
+import vim.VimTypes.LuaArray;
 import vim.Vim;
 import lua.Table.create as t;
 import plenary.Job;
@@ -42,7 +43,7 @@ import plenary.Job;
   }
  */
 // PluginSpec translated to haxe
-typedef PluginSpec = TableWrapper< {
+typedef PluginSpec = {
   final name:String;
   final ?disable:Bool;
   final ?as:String;
@@ -59,17 +60,17 @@ typedef PluginSpec = TableWrapper< {
   final ?run:String;
   final ?requires:String;
   final ?rocks:String;
-  final ?config:String;
+  final ?config:Void -> Void;
   final ?setup:String;
   final ?cmd:String;
   final ?ft:String;
   final ?keys:String;
-  final ?event:String;
+  final ?event:LuaArray< String >;
   final ?fn:String;
   final ?cond:String;
   final ?module:String;
   final ?module_pattern:String;
-} >
+}
 
 inline extern function packer_plugins():Null< lua.Table< String, {loaded:Bool, path:String, url:String} > >
   return untyped __lua__("_G.packer_plugins");
