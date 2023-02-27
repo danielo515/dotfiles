@@ -1178,6 +1178,35 @@ __kickstart__Pure_Pure_Fields_.main = function()
   if (is_bootstrap) then 
     packer.sync();
   end;
+  if (is_bootstrap) then 
+    vim.pretty_print("==================================");
+    vim.pretty_print("    Plugins are being installed");
+    vim.pretty_print("    Wait until Packer completes,");
+    vim.pretty_print("       then restart nvim");
+    vim.pretty_print("==================================");
+    do return end;
+  end;
+  __kickstart__Pure_Pure_Fields_.setupPlugins();
+  vim.cmd("colorscheme onedark");
+  vim.o.hlsearch = false;
+  vim.o.mouse = "a";
+  vim.o.breakindent = true;
+  vim.o.undofile = true;
+  vim.wo.number = true;
+  vim.o.inccommand = "split";
+end
+__kickstart__Pure_Pure_Fields_.setupPlugins = function() 
+  local _hx_1_module_status, _hx_1_module_value = _G.pcall(_G.require, "lualine");
+  local lualine = (function() 
+    local _hx_2
+    if (_hx_1_module_status) then 
+    _hx_2 = _hx_1_module_value; else 
+    _hx_2 = nil; end
+    return _hx_2
+  end )();
+  if (lualine ~= nil) then 
+    lualine.setup(({options = _hx_o({__fields__={icons_enabled=true,theme=true,component_separators=true,section_separators=true},icons_enabled=true,theme="onedark",component_separators="|",section_separators=""})}));
+  end;
 end
 
 __packer__Packer_Packer_Fields_.new = {}

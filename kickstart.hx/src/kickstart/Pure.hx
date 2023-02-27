@@ -2,6 +2,7 @@ package kickstart;
 
 import lua.Table.create as t;
 import packer.Packer;
+import vim.Vim;
 
 function main() {
   final plugins:Array< Plugin > = [
@@ -57,4 +58,32 @@ function main() {
   //     hx = "haxe"
   //   }
   // })
+  setupPlugins();
+  vimOptions();
+}
+
+inline function vimOptions() {
+  Vim.cmd("colorscheme onedark");
+  // -- Vim options
+  Vim.o.hlsearch = false;
+  Vim.o.mouse = 'a';
+  Vim.o.breakindent = true;
+  Vim.o.undofile = true;
+  Vim.wo.Number = true;
+  // show the effects of a search / replace in a live preview window
+  Vim.o.inccommand = "split";
+}
+
+function setupPlugins() {
+  final lualine = plugins.Lualine.require();
+  if (lualine != null) {
+    lualine.setup({
+      options: {
+        icons_enabled: true,
+        theme: 'onedark',
+        component_separators: '|',
+        section_separators: '',
+      },
+    });
+  }
 }
