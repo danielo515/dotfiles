@@ -107,7 +107,7 @@ static function objToTable(obj:Expr):Expr {
       var generatedFields:Array< ObjectField > = [for (f in fields) {
         final currentFieldExpression = fieldExprs.get(f.name).or(macro $v{null});
 
-        trace("currentFieldExpression", currentFieldExpression);
+        // trace("currentFieldExpression", currentFieldExpression);
         if (currentFieldExpression == null) {
           continue;
         }
@@ -165,7 +165,6 @@ static function objToTable(obj:Expr):Expr {
 
     case other:
       trace(complexType);
-      // trace(followTypesUp(other));
       throw "TableWrapper<T> only works with anonymous objects";
   }
 }
