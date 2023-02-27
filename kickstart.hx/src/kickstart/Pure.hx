@@ -42,5 +42,19 @@ function main() {
     {name: "numToStr/Comment.nvim"}, // "gc" to comment visual regions/lines
     {name: "tpope/vim-sleuth"}, // Detect tabstop and shiftwidth automatically
   ];
-  Packer.init(plugins);
+  final is_bootstrap = Packer.init(plugins);
+  if (is_bootstrap) {
+    vim.Vim.print("==================================");
+    vim.Vim.print("    Plugins are being installed");
+    vim.Vim.print("    Wait until Packer completes,");
+    vim.Vim.print("       then restart nvim");
+    vim.Vim.print("==================================");
+    return;
+  }
+
+  // vim.Filetype.add({
+  //   extension = {
+  //     hx = "haxe"
+  //   }
+  // })
 }

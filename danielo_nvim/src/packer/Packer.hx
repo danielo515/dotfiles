@@ -188,7 +188,11 @@ extern class Packer {
   @:luaDotMethod
   function sync():Void;
 
-  inline static function init(plugins:Array< Plugin >):Void {
+  /**
+    Does the packer initlization and returns true if packer was not installed and the installation was performed.
+    Takes an array of plugin specs to install.
+   */
+  inline static function init(plugins:Array< Plugin >):Bool {
     final is_bootstrap = ensureInstalled();
     final packer:Packer = lua.Lua.require("packer");
     packer.startup((use) -> {
@@ -199,5 +203,6 @@ extern class Packer {
     if (is_bootstrap) {
       packer.sync();
     }
+    return is_bootstrap;
   }
 }
