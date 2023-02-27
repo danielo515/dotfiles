@@ -41,24 +41,44 @@ import plenary.Job;
                                -- requiring a string which matches one of these patterns, the plugin will be loaded.
   }
  */
-// PackerSpec translated to haxe
-function doit(spec:TableWrapper< {
-  name:String,
-  ?superUnique:Bool,
-  ?disable:Bool,
-} >) {
-  return spec;
-};
-
-@keep final danielotest = doit({
-  name: "myusername/example",
-  superUnique: true,
-  disable: null,
-});
+// PluginSpec translated to haxe
+typedef PluginSpec = TableWrapper< {
+  final name:String;
+  final ?disable:Bool;
+  final ?as:String;
+  final ?installer:Void -> Void;
+  final ?updater:Void -> Void;
+  final ?after:String;
+  final ?rtp:String;
+  final ?opt:Bool;
+  final ?bufread:Bool;
+  final ?branch:String;
+  final ?tag:String;
+  final ?commit:String;
+  final ?lock:Bool;
+  final ?run:String;
+  final ?requires:String;
+  final ?rocks:String;
+  final ?config:String;
+  final ?setup:String;
+  final ?cmd:String;
+  final ?ft:String;
+  final ?keys:String;
+  final ?event:String;
+  final ?fn:String;
+  final ?cond:String;
+  final ?module:String;
+  final ?module_pattern:String;
+} >
 
 inline extern function packer_plugins():Null< lua.Table< String, {loaded:Bool, path:String, url:String} > >
   return untyped __lua__("_G.packer_plugins");
 
+/**
+  Returns the git commit hash of the plugin.
+  It only looks for plugins that are part of the packer plugin list.
+  If the list is not available, it returns "unknown".
+ */
 function get_plugin_version(name:String):String {
   return if (packer_plugins() != null) {
     final path = packer_plugins()[cast name].path;
@@ -73,5 +93,61 @@ function get_plugin_version(name:String):String {
     job.sync()[1];
   } else {
     "unknown";
+  }
+}
+
+/**
+  Checks if packer is installed and installs it if not.
+  Returns true if packer was not installed and the installation was performed.
+  You should use this information to decide if you need to run sync()
+ */
+function ensureInstalled():Bool {
+  final install_path = Fn.stdpath("data") + "/site/pack/packer/start/packer.nvim";
+  return if (vim.Fn.empty(vim.Fn.glob(install_path, null)) > 0) {
+    vim.Fn.system(t([
+      "git",
+      "clone",
+      "--depth",
+      "1",
+      "https://github.com/wbthomason/packer.nvim",
+      install_path
+    ]), null);
+    Vim.cmd("packadd packer.nvim");
+    return true;
+  } else {
+    return false;
+  };
+}
+
+abstract Plugin(PluginSpec) {
+  @:from
+  public static inline function from(spec:PluginSpec):Plugin {
+    return untyped __lua__(
+      "{ {0}, cmd = {1}, event = {2}, config = {3} }",
+      spec.name,
+      spec.cmd,
+      spec.event,
+      spec.config
+    );
+  };
+}
+
+extern class Packer {
+  @:luaDotMethod
+  function startup(use:(Plugin -> Void) -> Void):Void;
+  @:luaDotMethod
+  function sync():Void;
+
+  inline static function init(plugins:Array< Plugin >):Void {
+    final is_bootstrap = ensureInstalled();
+    final packer:Packer = lua.Lua.require("packer");
+    packer.startup((use) -> {
+      for (plugin in plugins) {
+        use(plugin);
+      }
+    });
+    if (is_bootstrap) {
+      packer.sync();
+    }
   }
 }
