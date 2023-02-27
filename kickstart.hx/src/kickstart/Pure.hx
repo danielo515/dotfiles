@@ -1,7 +1,7 @@
 package kickstart;
 
-import plugins.Packer;
 import lua.Table.create as t;
+import packer.Packer;
 
 function main() {
   final plugins:Array< Plugin > = [

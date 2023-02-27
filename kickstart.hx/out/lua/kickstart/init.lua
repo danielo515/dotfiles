@@ -779,9 +779,9 @@ __kickstart__Kickstart_Kickstart_Fields_.new = {}
 __kickstart__Kickstart_Kickstart_Fields_.keymaps = function() 
   vim.g.mapleader = " ";
   vim.g.maplocalleader = ",";
-  vim.keymap.set(({"n","v"}), "<Space>", "<Nop>", ({desc = "do nothing", expr = false, silent = true}));
-  vim.keymap.set(({"n"}), "k", "v:count == 0 ? 'gk' : 'k'", ({desc = "up when word-wrap", expr = true, silent = true}));
-  vim.keymap.set(({"n"}), "j", "v:count == 0 ? 'gj' : 'j'", ({desc = "down when word-wrap", expr = true, silent = true}));
+  vim.keymap.set(({"n","v"}), "<Space>", "<Nop>", ({desc = "do nothing", silent = true, expr = false}));
+  vim.keymap.set(({"n"}), "k", "v:count == 0 ? 'gk' : 'k'", ({desc = "up when word-wrap", silent = true, expr = true}));
+  vim.keymap.set(({"n"}), "j", "v:count == 0 ? 'gj' : 'j'", ({desc = "down when word-wrap", silent = true, expr = true}));
 end
 __kickstart__Kickstart_Kickstart_Fields_.onAttach = function(x,bufnr) 
   local nmap = function(keys,func,desc) 
@@ -802,7 +802,7 @@ __kickstart__Kickstart_Kickstart_Fields_.onAttach = function(x,bufnr)
   end, "[W]orkspace [L]ist Folders");
   vim.api.nvim_buf_create_user_command(bufnr, "Format", function(_) 
     vim.lsp.buf.format();
-  end, ({bang = false, desc = "Format current buffer with LSP", force = true, nargs = 0, range = false}));
+  end, ({desc = "Format current buffer with LSP", force = true, nargs = 0, bang = false, range = false}));
 end
 __kickstart__Kickstart_Kickstart_Fields_.main = function() 
   __vim_Vimx.autocmd("Kickstart", ({"BufWritePost"}), vim.fn.expand("$MYVIMRC"), "Reload the config", function() 
@@ -817,15 +817,15 @@ __kickstart__Kickstart_Kickstart_Fields_.main = function()
   vim.wo.number = true;
   vim.o.inccommand = "split";
   __kickstart__Kickstart_Kickstart_Fields_.keymaps();
-  __kickstart_Lualine.setup(({options = ({icons_enabled = true, theme = "onedark", component_separators = "|", section_separators = ""})}));
+  __kickstart_Lualine.setup(({options = _hx_o({__fields__={icons_enabled=true,theme=true,component_separators=true,section_separators=true},icons_enabled=true,theme="onedark",component_separators="|",section_separators=""})}));
   __kickstart_Comment.setup();
   __kickstart_IndentBlankline.setup(({char = "┊", show_trailing_blankline_indent = false}));
-  __kickstart_Gitsigns.setup(({signs = ({add = ({text = "+"}), change = ({text = "~"}), delete = ({text = "_"}), topdelete = ({text = "‾"}), changedelete = ({text = "~"})})}));
+  __kickstart_Gitsigns.setup(({signs = _hx_o({__fields__={add=true,change=true,delete=true,topdelete=true,changedelete=true},add=_hx_o({__fields__={text=true},text="+"}),change=_hx_o({__fields__={text=true},text="~"}),delete=_hx_o({__fields__={text=true},text="_"}),topdelete=_hx_o({__fields__={text=true},text="‾"}),changedelete=_hx_o({__fields__={text=true},text="~"})})}));
   local capabilities = __kickstart_Cmp_nvim_lsp.default_capabilities(vim.lsp.protocol.make_client_capabilities());
   __kickstart_Neodev.setup();
   __kickstart_Mason.setup();
   __kickstart_Fidget.setup();
-  __kickstart_Cmp.setup(({mapping = __kickstart_Cmp.mapping.preset.insert(
+  local mapping = __kickstart_Cmp.mapping.preset.insert(
 {
     ['<C-d>'] = __kickstart_Cmp.mapping.scroll_docs(-4),
     ['<C-f>'] = __kickstart_Cmp.mapping.scroll_docs(4),
@@ -853,9 +853,10 @@ __kickstart__Kickstart_Kickstart_Fields_.main = function()
       end
     end, { 'i', 's' }),
   }
-      ), snippet = ({expand = function(args) 
+      );
+  __kickstart_Cmp.setup(({snippet = _hx_o({__fields__={expand=true},expand=function(self,args) 
     __kickstart_Luasnip.lsp_expand(args.body);
-  end}), sources = ({({name = "luasnip"}),({name = "nvim_lsp"})})}));
+  end}), mapping = mapping, sources = _hx_tab_array({[0]=_hx_o({__fields__={name=true},name="luasnip"}), _hx_o({__fields__={name=true},name="nvim_lsp"})}, 2)}));
   __kickstart_MasonLspConfig.setup_handlers(({function(server_name) 
     local server_name1 = server_name;
     if (server_name1) == "haxe_language_server" then 
