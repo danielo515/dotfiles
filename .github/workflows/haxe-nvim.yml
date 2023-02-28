@@ -21,6 +21,7 @@ jobs:
           token: ${{ secrets.github_token }}
           version: 0.16.0 
       - name: Build haxe tests
+        working-directory: ./danielo_nvim
         run: |
           haxe -version
           haxelib install --always libs.hxml
