@@ -14,7 +14,7 @@ jobs:
         uses: krdlab/setup-haxe@v1
         with:
           haxe-version: 4.2.5
-      - uses: danielo515/stylua-action@v1
+      - uses: danielo515/stylua-action@v1.0.0
         name: Setup stylua so we can run it on build
         with:
           token: ${{ secrets.github_token }}
