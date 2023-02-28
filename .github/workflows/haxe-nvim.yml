@@ -2,6 +2,7 @@ name: haxe-nvim
 
 on:
   workflow_dispatch:
+  pull_request:
   push:
     branches: [ master ]
     paths: ["danielo_nvim/**","haxe-nvim.yml"]
@@ -38,11 +39,15 @@ jobs:
           echo "Changed files: ${{ steps.changedfiles.outputs.changed_files }}"
           exit 1
       - name: creates output
+        # Run only on main branch
+        if: github.ref == 'refs/heads/master'
         run: | 
           mkdir output
           cp -r danielo_nvim/. output
           rm -rf output/lua output/src/parser
       - name: Pushes to haxe-nvim repository
+        # Run only on main branch
+        if: github.ref == 'refs/heads/master'
         uses: cpina/github-action-push-to-another-repository@master
         env:
           API_TOKEN_GITHUB: ${{ secrets.GH_API_TOKEN }}
