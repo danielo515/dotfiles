@@ -3,6 +3,7 @@ env:
   GITHUB_USERNAME: "${{ github.actor }}"
 on:
   push:
+    paths: ["chezmoi/**"]
     branches:
       - master
 
