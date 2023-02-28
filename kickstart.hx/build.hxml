@@ -16,6 +16,7 @@ libs.hxml
 
 -D lua-vanilla
 -D luajit
+-D dump=prettty
 
 
 -cp src
