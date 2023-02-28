@@ -6,7 +6,12 @@ libs.hxml
 -dce std
 -cp src
 -cp tools
+-cp test
 
-TestMacros.hx
+--each
 
---lua lua/danielo_nvim/test.lua
+test.TestMacros
+
+--lua lua/test/TestMacros.lua
+
+--cmd stylua lua/test/

@@ -10,6 +10,31 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
+      - name: Setup haxe
+        uses: krdlab/setup-haxe@v1
+        with:
+          haxe-version: 4.2.5
+      - uses: johnnymorganz/stylua-action@v2
+        name: Setup stylua so we can run it on build
+        with:
+          token: ${{ secrets.github_token }}
+          version: 0.16.0 
+      - name: Build haxe tests
+        run: |
+          haxe -version
+          haxelib install --always libs.hxml
+          haxe test-macro.hxml
+      - name: Ensure lua code output doesn't change
+        uses: tj-actions/verify-changed-files@v13
+        id: changedfiles
+        with:
+          files: |
+            danielo_nvim/lua/
+      - name: Fail if there are changed files (should not be the case)
+        if: steps.changedfiles.outputs.files_changed == 'true'
+        run: |
+          echo "Changed files: ${{ steps.changedfiles.outputs.changed_files }}"
+          exit 1
       - name: creates output
         run: | 
           mkdir output

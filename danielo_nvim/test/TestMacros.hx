@@ -1,6 +1,8 @@
+package test;
+
 import TableWrapper;
 
-typedef X = {
+typedef WithNesting = {
   doX:Int,
   test:Bool,
   nest:{a:{renest:Int, b:{c:{meganest:Int}}}},
@@ -14,7 +16,7 @@ typedef WithLambdas = TableWrapper< {
 } >
 
 extern function log(arg:Dynamic):Void;
-typedef W = TableWrapper< X >;
+typedef W = TableWrapper< WithNesting >;
 extern function testMethod(x:W):Void;
 extern function testlambdas(x:WithLambdas):Void;
 
