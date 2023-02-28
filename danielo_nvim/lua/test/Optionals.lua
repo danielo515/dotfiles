@@ -220,7 +220,7 @@ ___TableWrapper_TableWrapper_Impl_ = _hx_e()
 ___TableWrapper_TableWrapper_Fields_ = _hx_e()
 __haxe_iterators_ArrayIterator = _hx_e()
 __haxe_iterators_ArrayKeyValueIterator = _hx_e()
-__test__TestMacros_TestMacros_Fields_ = _hx_e()
+__test__Optionals_Optionals_Fields_ = _hx_e()
 
 local _hx_bind, _hx_bit, _hx_staticToInstance, _hx_funcToField, _hx_maxn, _hx_print, _hx_apply_self, _hx_box_mr, _hx_bit_clamp, _hx_table, _hx_bit_raw
 local _hx_pcall_default = {}
@@ -941,77 +941,11 @@ __haxe_iterators_ArrayKeyValueIterator.super = function(self, array)
 	self.array = array
 end
 
-__test__TestMacros_TestMacros_Fields_.new = {}
-__test__TestMacros_TestMacros_Fields_.lotOfNesting = function()
-	local _dce1 = ___TableWrapper_TableWrapper_Impl_.check(_hx_o({
-		__fields__ = { doX = true, test = true, objWithArr = true, nest = true, arrWithObjs = true },
-		doX = 99,
-		test = true,
-		objWithArr = _hx_o({
-			__fields__ = { x = true },
-			x = _hx_tab_array({
-				[0] = _hx_o({ __fields__ = { y = true }, y = "obj -> array -> obj " }),
-				_hx_o({ __fields__ = { y = true }, y = "second obj -> array -> obj " }),
-			}, 2),
-		}),
-		nest = _hx_o({
-			__fields__ = { a = true },
-			a = _hx_o({
-				__fields__ = { renest = true, b = true },
-				renest = 99,
-				b = _hx_o({ __fields__ = { c = true }, c = _hx_o({ __fields__ = { meganest = true }, meganest = 88 }) }),
-			}),
-		}),
-		arrWithObjs = _hx_tab_array({
-			[0] = _hx_o({ __fields__ = { x = true }, x = "inside array -> obj " }),
-			_hx_o({ __fields__ = { x = true }, x = "second array -> obj " }),
-		}, 2),
-	}))
-	__test__TestMacros_TestMacros_Fields_.testMethod({
-		arrWithObjs = { { x = "inside array -> obj " }, { x = "second array -> obj " } },
-		doX = 99,
-		nest = { a = { renest = 99, b = { c = { meganest = 88 } } } },
-		objWithArr = { x = { { y = "obj -> array -> obj " }, { y = "second obj -> array -> obj " } } },
-		test = true,
-	})
-end
-__test__TestMacros_TestMacros_Fields_.objectWithLambdas = function()
-	local _dce2 = ___TableWrapper_TableWrapper_Impl_.check(_hx_o({
-		__fields__ = { lambda1 = true, nestedLambda = true },
-		lambda1 = function(self, name, age)
-			_G.print(
-				Std.string(
-					Std.string(Std.string(Std.string("Hello ") .. Std.string(name)) .. Std.string(", good age "))
-						.. Std.string(age)
-				)
-			)
-		end,
-		nestedLambda = _hx_o({
-			__fields__ = { lambda2 = true },
-			lambda2 = function(self, a, b)
-				do
-					return a + b
-				end
-			end,
-		}),
-	}))
-	__test__TestMacros_TestMacros_Fields_.testlambdas({
-		lambda1 = function(name, age)
-			_G.print(
-				Std.string(
-					Std.string(Std.string(Std.string("Hello ") .. Std.string(name)) .. Std.string(", good age "))
-						.. Std.string(age)
-				)
-			)
-		end,
-		nestedLambda = {
-			lambda2 = function(a, b)
-				do
-					return a + b
-				end
-			end,
-		},
-	})
+__test__Optionals_Optionals_Fields_.new = {}
+__test__Optionals_Optionals_Fields_.test = function(x)
+	do
+		return x
+	end
 end
 if _hx_bit_raw then
 	_hx_bit_clamp = function(v)
@@ -1046,6 +980,39 @@ end
 
 _hx_array_mt.__index = Array.prototype
 
-local _hx_static_init = function() end
+local _hx_static_init = function()
+	__test__Optionals_Optionals_Fields_.b = (function()
+		local _hx_1
+
+		local _dce1 = ___TableWrapper_TableWrapper_Impl_.check(
+			_hx_o({ __fields__ = { test = true, optionalField = true }, test = true, optionalField = true })
+		)
+
+		_hx_1 = __test__Optionals_Optionals_Fields_.test({ optionalField = true, test = true })
+		return _hx_1
+	end)()
+
+	__test__Optionals_Optionals_Fields_.c = (function()
+		local _hx_2
+
+		local _dce2 = ___TableWrapper_TableWrapper_Impl_.check(
+			_hx_o({ __fields__ = { test = true, optionalField = true }, test = true, optionalField = nil })
+		)
+
+		_hx_2 = __test__Optionals_Optionals_Fields_.test({ optionalField = nil, test = true })
+		return _hx_2
+	end)()
+
+	__test__Optionals_Optionals_Fields_.a = (function()
+		local _hx_3
+
+		local _dce3 = ___TableWrapper_TableWrapper_Impl_.check(
+			_hx_o({ __fields__ = { test = true, optionalField = true }, test = true, optionalField = nil })
+		)
+
+		_hx_3 = __test__Optionals_Optionals_Fields_.test({ optionalField = nil, test = true })
+		return _hx_3
+	end)()
+end
 
 _hx_static_init()

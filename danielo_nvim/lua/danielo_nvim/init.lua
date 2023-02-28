@@ -532,7 +532,7 @@ ___Main_Main_Fields_.main = function()
     vim.ui.select(({"a"}), ({prompt = "Pick one sexy option"}), function(choice,_) 
       vim.pretty_print(choice);
     end);
-  end, ({desc = "Testing from haxe", force = true, complete = Std.string("customlist,v:lua.") .. Std.string("require'packer'.plugin_complete"), nargs = 1, bang = true, range = "%"}));
+  end, ({bang = true, complete = Std.string("customlist,v:lua.") .. Std.string("require'packer'.plugin_complete"), desc = "Testing from haxe", force = true, nargs = 1, range = "%"}));
   __vim_Vimx.autocmd("HaxeEvent", __vim__VimTypes_LuaArray_Impl_.from(_hx_tab_array({[0]="BufWritePost"}, 1)), "*.hx", "Created from haxe", function() 
     vim.pretty_print("Hello from axe", vim.fn.expand(_G.string.format("%s%s", "%", ":p")));
     do return true end;
@@ -546,7 +546,7 @@ ___Main_Main_Fields_.main = function()
       _hx_1 = ""; end
       return _hx_1
     end )());
-  end, ({desc = "Open the current file in github", force = true, nargs = nargs, complete = nil, bang = false, range = true}));
+  end, ({bang = false, complete = nil, desc = "Open the current file in github", force = true, nargs = nargs, range = true}));
   local nargs = nil;
   vim.api.nvim_create_user_command("CopyGhUrl", function(args) 
     ___Main_Main_Fields_.copyGhUrl((function() 
@@ -556,14 +556,14 @@ ___Main_Main_Fields_.main = function()
       _hx_2 = ""; end
       return _hx_2
     end )());
-  end, ({desc = "Copy current file github URL", force = true, nargs = nargs, complete = nil, bang = false, range = true}));
+  end, ({bang = false, complete = nil, desc = "Copy current file github URL", force = true, nargs = nargs, range = true}));
   vim.api.nvim_create_user_command("CopyMessagesToClipboard", function(args) 
     ___Main_Main_Fields_.copy_messages_to_clipboard(args.args);
-  end, ({desc = "Copy the n number of messages to clipboard", force = true, nargs = 1, complete = nil, bang = false, range = true}));
+  end, ({bang = false, complete = nil, desc = "Copy the n number of messages to clipboard", force = true, nargs = 1, range = true}));
   vim.api.nvim_create_user_command("GetPluginVersion", function(args) 
     vim.pretty_print(__packer__Packer_Packer_Fields_.get_plugin_version(args.args));
-  end, ({desc = "Gets the git version of a installed packer plugin", force = true, nargs = 1, complete = nil, bang = false, range = true}));
-  vim.keymap.set("n", "tl", ___Main_Main_Fields_.nexTab, ({desc = "Go to next tab", silent = true, expr = false}));
+  end, ({bang = false, complete = nil, desc = "Gets the git version of a installed packer plugin", force = true, nargs = 1, range = true}));
+  vim.keymap.set("n", "tl", ___Main_Main_Fields_.nexTab, ({desc = "Go to next tab", expr = false, silent = true}));
   vim.o.inccommand = "split";
 end
 ___Main_Main_Fields_.runGh = function(args) 

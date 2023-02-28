@@ -143,7 +143,9 @@ static function objToTable(obj:Expr):Expr {
       // (in case of optional fields, for example)
       // with the real fields so the type checking is accurate and does not allow extra fields that
       // will be silently ignored otherwise
-      final obj = {
+      final obj = {expr: EObjectDecl(generatedFields), pos: ex.pos};
+
+      final inputObj = {
         expr: EObjectDecl(uniqueValues(inputFields.concat(generatedFields), f -> f.field)),
         pos: ex.pos
       };
@@ -157,7 +159,7 @@ static function objToTable(obj:Expr):Expr {
       final name = '_dce${uniqueCount++}';
       return macro @:mergeBlock {
         // Type checking; should be removed by dce
-        @:pos(ex.pos) final $name:$complexType = TableWrapper.check($obj);
+        @:pos(ex.pos) final $name:$complexType = TableWrapper.check($inputObj);
 
         // Actual table creation
         (cast lua.Table.create(null, $obj) : $complexType);
