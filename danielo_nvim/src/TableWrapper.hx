@@ -50,7 +50,7 @@ public static function followTypesUp(arg:haxe.macro.Type) {
   }
 }
 
-static function extractObjFields(objExpr) {
+public static function extractObjFields(objExpr) {
   return switch Context.getTypedExpr(Context.typeExpr(objExpr)).expr {
     case EObjectDecl(inputFields):
       var inputFields = inputFields.copy();
@@ -167,6 +167,7 @@ static function objToTable(obj:Expr):Expr {
 
     case other:
       trace(complexType);
+      // trace(followTypesUp(other));
       throw "TableWrapper<T> only works with anonymous objects";
   }
 }

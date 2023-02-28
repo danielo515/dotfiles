@@ -2,8 +2,8 @@ test-base.hxml
 --each
 
 test.TestMacros
+test.RawTable
 --lua lua/test/TestMacros.lua
-
 # Ensure it's formatted for better diffs
 --cmd stylua lua/test/TestMacros.lua
 
