@@ -31,7 +31,7 @@ jobs:
         id: changedfiles
         with:
           files: |
-            danielo_nvim/lua/
+            danielo_nvim
       - name: Fail if there are changed files (should not be the case)
         if: steps.changedfiles.outputs.files_changed == 'true'
         run: |
