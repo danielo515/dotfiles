@@ -1205,7 +1205,7 @@ __kickstart__Pure_Pure_Fields_.setupPlugins = function()
     return _hx_2
   end )();
   if (lualine ~= nil) then 
-    lualine.setup(({options = _hx_o({__fields__={icons_enabled=true,theme=true,component_separators=true,section_separators=true},icons_enabled=true,theme="onedark",component_separators="|",section_separators=""})}));
+    lualine.setup(({options = ({icons_enabled = true, theme = "onedark", component_separators = "|", section_separators = ""})}));
   end;
 end
 
