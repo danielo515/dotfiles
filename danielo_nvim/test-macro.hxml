@@ -14,4 +14,5 @@ test.TestMacros
 
 --lua lua/test/TestMacros.lua
 
+# Ensure it's formatted for better diffs
 --cmd stylua lua/test/
