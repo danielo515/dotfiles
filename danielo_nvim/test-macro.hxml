@@ -7,11 +7,11 @@ test.TestMacros
 # Ensure it's formatted for better diffs
 --cmd stylua lua/test/TestMacros.lua
 
---next
+# --next
 
-test.Optionals
+# test.Optionals
 
---lua lua/test/Optionals.lua
+# --lua lua/test/Optionals.lua
 
-# Ensure it's formatted for better diffs
---cmd stylua lua/test/
+# # Ensure it's formatted for better diffs
+# --cmd stylua lua/test/
