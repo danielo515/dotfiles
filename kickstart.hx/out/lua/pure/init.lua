@@ -1215,6 +1215,7 @@ __kickstart__Pure_Pure_Fields_.main = function()
     vim.pretty_print("==================================");
     do return end;
   end;
+  __kickstart__Pure_Pure_Fields_.keymaps();
   __kickstart__Pure_Pure_Fields_.setupPlugins();
   vim.cmd("colorscheme onedark");
   vim.o.hlsearch = false;
@@ -1245,8 +1246,17 @@ __kickstart__Pure_Pure_Fields_.setupPlugins = function()
   end;
   local wk = this1;
   if (wk ~= nil) then 
+    vim.o.timeout = true;
+    vim.o.timeoutlen = 300;
     wk.setup(({disable = nil, hidden = nil, icons = nil, ignore_missing = nil, key_labels = nil, layout = nil, motions = nil, operators = nil, plugins = ({marks = true, registers = true, spelling = ({enabled = true, suggestions = 20}), presets = ({operators = true, motions = true, text_objects = true, windows = true, nav = true, z = true, g = true})}), popup_mappings = nil, show_help = nil, show_keys = nil, triggers = nil, triggers_blacklist = nil, triggers_nowait = nil, window = nil}));
   end;
+end
+__kickstart__Pure_Pure_Fields_.keymaps = function() 
+  vim.g.mapleader = " ";
+  vim.g.maplocalleader = ",";
+  vim.keymap.set(({"n"}), "k", "v:count == 0 ? 'gk' : 'k'", ({desc = "up when word-wrap", expr = true, silent = true}));
+  vim.keymap.set(({"n"}), "j", "v:count == 0 ? 'gj' : 'j'", ({desc = "down when word-wrap", expr = true, silent = true}));
+  vim.keymap.set(({"n"}), "<leader>w", ":wa", ({desc = "Write all files", expr = true, silent = true}));
 end
 
 __packer__Packer_Packer_Fields_.new = {}

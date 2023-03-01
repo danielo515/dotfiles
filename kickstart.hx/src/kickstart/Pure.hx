@@ -5,6 +5,7 @@ import plugins.WhichKey;
 import lua.Table.create as t;
 import packer.Packer;
 import vim.Vim;
+import vim.VimTypes;
 
 function main() {
   final plugins:Array< Plugin > = [
@@ -61,6 +62,7 @@ function main() {
   //     hx = "haxe"
   //   }
   // })
+  keymaps();
   setupPlugins();
   vimOptions();
 }
@@ -75,8 +77,6 @@ inline function vimOptions() {
   Vim.wo.Number = true;
   // show the effects of a search / replace in a live preview window
   Vim.o.inccommand = "split";
-  Vim.g.mapleader = "space";
-  Vim.g.maplocalleader = ",";
 }
 
 function setupPlugins() {
@@ -93,6 +93,8 @@ function setupPlugins() {
   }
   final wk:VimPlugin< WhichKey > = "which-key";
   wk.call(wk -> {
+    Vim.o.timeout = true;
+    Vim.o.timeoutlen = 300;
     wk.setup({
       plugins: {
         marks: true,
@@ -113,4 +115,27 @@ function setupPlugins() {
       },
     });
   });
+}
+
+function keymaps() {
+  Vim.g.mapleader = " ";
+  Vim.g.maplocalleader = ",";
+  Keymap.set(
+    t([Normal]),
+    'k',
+    "v:count == 0 ? 'gk' : 'k'",
+    {desc: 'up when word-wrap', silent: true, expr: true}
+  );
+  Keymap.set(
+    t([Normal]),
+    'j',
+    "v:count == 0 ? 'gj' : 'j'",
+    {desc: 'down when word-wrap', silent: true, expr: true}
+  );
+  Keymap.set(
+    t([Normal]),
+    '<leader>w',
+    ":wa",
+    {desc: 'Write all files', silent: true, expr: true}
+  );
 }
