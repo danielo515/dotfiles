@@ -2,7 +2,7 @@ package plugins;
 
 import vim.VimTypes;
 
-function _require< T >(name):Null< T > {
+@:native('safeRequire') function _require< T >(name):Null< T > {
   final module = lua.Lua.pcall(lua.Lua.require, name);
   return if (module.status) {
     module.value;
@@ -90,7 +90,7 @@ extern class JsonSchemas {
 }
 
 extern class SchemaStore {
-  @:luaDotMethod final json:JsonSchemas;
+  final json:JsonSchemas;
   inline static function require():Null< SchemaStore > {
     final module:Null< SchemaStore > = _require('schemastore');
     return module;

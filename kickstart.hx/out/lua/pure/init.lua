@@ -207,6 +207,7 @@ __kickstart__Untyped_Untyped_Fields_ = _hx_e()
 __lua_StringMap = _hx_e()
 __packer__Packer_Packer_Fields_ = _hx_e()
 __plugins__Plugins_Plugins_Fields_ = _hx_e()
+__vim__TableTools_TableTools_Fields_ = _hx_e()
 __vim__VimTypes_LuaArray_Impl_ = _hx_e()
 __vim_Vimx = _hx_e()
 
@@ -1239,29 +1240,50 @@ __kickstart__Pure_Pure_Fields_.autoCommands = function()
   end);
   __vim_Vimx.autocmd("Kickstart-yank", __vim__VimTypes_LuaArray_Impl_.from(_hx_tab_array({[0]="TextYankPost"}, 1)), "*", "Highlight on yank", __kickstart__Untyped_Untyped_Fields_.higlightOnYank);
 end
+__kickstart__Pure_Pure_Fields_.onAttach = function(x,bufnr) 
+  local nmap = function(keys,func,desc) 
+    vim.keymap.set("n", keys, func, ({buffer = bufnr, desc = Std.string("LSP: ") .. Std.string(desc)}));
+  end;
+  nmap("<leader>rn", vim.lsp.buf.rename, "[R]e[n]ame");
+  nmap("<leader>ca", vim.lsp.buf.code_action, "[C]ode [A]ction");
+  nmap("gd", vim.lsp.buf.definition, "[G]oto [D]efinition");
+  nmap("gI", vim.lsp.buf.implementation, "[G]oto [I]mplementation");
+  nmap("<leader>D", vim.lsp.buf.type_definition, "Type [D]efinition");
+  nmap("K", vim.lsp.buf.hover, "Hover Documentation");
+  nmap("<C-k>", vim.lsp.buf.signature_help, "Signature Documentation");
+  nmap("gD", vim.lsp.buf.declaration, "[G]oto [D]eclaration");
+  nmap("<leader>wa", vim.lsp.buf.add_workspace_folder, "[W]orkspace [A]dd Folder");
+  nmap("<leader>wr", vim.lsp.buf.remove_workspace_folder, "[W]orkspace [R]emove Folder");
+  nmap("<leader>wl", function() 
+    vim.pretty_print(vim.lsp.buf.list_workspace_folders());
+  end, "[W]orkspace [L]ist Folders");
+  vim.api.nvim_buf_create_user_command(bufnr, "Format", function(_) 
+    vim.lsp.buf.format();
+  end, ({bang = false, desc = "Format current buffer with LSP", force = true, nargs = 0, range = false}));
+end
 __kickstart__Pure_Pure_Fields_.setupPlugins = function() 
-  local _v_ = __plugins__Plugins_Plugins_Fields_._require("Comment");
+  local _v_ = __plugins__Plugins_Plugins_Fields_.safeRequire("Comment");
   if (_v_ ~= nil) then 
     _v_.setup();
   end;
-  local _v_ = __plugins__Plugins_Plugins_Fields_._require("indent_blankline");
+  local _v_ = __plugins__Plugins_Plugins_Fields_.safeRequire("indent_blankline");
   if (_v_ ~= nil) then 
     _v_.setup(({char = "┊", show_trailing_blankline_indent = false}));
   end;
-  local _v_ = __plugins__Plugins_Plugins_Fields_._require("neodev");
+  local _v_ = __plugins__Plugins_Plugins_Fields_.safeRequire("neodev");
   if (_v_ ~= nil) then 
     _v_.setup();
   end;
-  local _v_ = __plugins__Plugins_Plugins_Fields_._require("mason");
+  local _v_ = __plugins__Plugins_Plugins_Fields_.safeRequire("mason");
   if (_v_ ~= nil) then 
     _v_.setup();
   end;
-  local _v_ = __plugins__Plugins_Plugins_Fields_._require("fidget");
+  local _v_ = __plugins__Plugins_Plugins_Fields_.safeRequire("fidget");
   if (_v_ ~= nil) then 
     _v_.setup();
   end;
   local mapping = __kickstart_Cmp.mapping.preset;
-  local ls = __plugins__Plugins_Plugins_Fields_._require("luasnip");
+  local ls = __plugins__Plugins_Plugins_Fields_.safeRequire("luasnip");
   local mapping = mapping.insert(
 {
     ['<C-d>'] = __kickstart_Cmp.mapping.scroll_docs(-4),
@@ -1291,33 +1313,36 @@ __kickstart__Pure_Pure_Fields_.setupPlugins = function()
     end, { 'i', 's' }),
   }
       );
-  local ls = __plugins__Plugins_Plugins_Fields_._require("luasnip");
+  local ls = __plugins__Plugins_Plugins_Fields_.safeRequire("luasnip");
   __kickstart_Cmp.setup(({mapping = mapping, snippet = ({expand = function(args) 
     local _v_ = ls;
     if (_v_ ~= nil) then 
       _v_.lsp_expand(args.body);
     end;
   end}), sources = ({({name = "luasnip"}),({name = "nvim_lsp"})})}));
-  local _v_ = __plugins__Plugins_Plugins_Fields_._require("cmp_nvim_lsp");
-  if (_v_ == nil) then 
-  else
-    _v_.default_capabilities(vim.lsp.protocol.make_client_capabilities());
-  end;
-  local _hx_1_module_status, _hx_1_module_value = _G.pcall(_G.require, "lualine");
+  local _v_ = __plugins__Plugins_Plugins_Fields_.safeRequire("cmp_nvim_lsp");
+  local capabilities = (function() 
+    local _hx_1
+    if (_v_ == nil) then 
+    _hx_1 = nil; else 
+    _hx_1 = _v_.default_capabilities(vim.lsp.protocol.make_client_capabilities()); end
+    return _hx_1
+  end )();
+  local _hx_2_module_status, _hx_2_module_value = _G.pcall(_G.require, "lualine");
   local lualine = (function() 
-    local _hx_2
-    if (_hx_1_module_status) then 
-    _hx_2 = _hx_1_module_value; else 
-    _hx_2 = nil; end
-    return _hx_2
+    local _hx_3
+    if (_hx_2_module_status) then 
+    _hx_3 = _hx_2_module_value; else 
+    _hx_3 = nil; end
+    return _hx_3
   end )();
   if (lualine ~= nil) then 
     lualine.setup(({options = ({icons_enabled = true, theme = "onedark", component_separators = "|", section_separators = ""})}));
   end;
   local this1;
-  local _hx_3_requireResult_status, _hx_3_requireResult_value = _G.pcall(_G.require, "which-key");
-  if (_hx_3_requireResult_status) then 
-    this1 = _hx_3_requireResult_value;
+  local _hx_4_requireResult_status, _hx_4_requireResult_value = _G.pcall(_G.require, "which-key");
+  if (_hx_4_requireResult_status) then 
+    this1 = _hx_4_requireResult_value;
   else
     this1 = nil;
   end;
@@ -1328,15 +1353,78 @@ __kickstart__Pure_Pure_Fields_.setupPlugins = function()
     wk.setup(({disable = nil, hidden = nil, icons = nil, ignore_missing = nil, key_labels = nil, layout = nil, motions = nil, operators = nil, plugins = ({marks = true, registers = true, spelling = ({enabled = true, suggestions = 20}), presets = ({operators = true, motions = true, text_objects = true, windows = true, nav = true, z = true, g = true})}), popup_mappings = nil, show_help = nil, show_keys = nil, triggers = nil, triggers_blacklist = nil, triggers_nowait = nil, window = nil}));
   end;
   local this1;
-  local _hx_4_requireResult_status, _hx_4_requireResult_value = _G.pcall(_G.require, "gitsigns");
-  if (_hx_4_requireResult_status) then 
-    this1 = _hx_4_requireResult_value;
+  local _hx_5_requireResult_status, _hx_5_requireResult_value = _G.pcall(_G.require, "gitsigns");
+  if (_hx_5_requireResult_status) then 
+    this1 = _hx_5_requireResult_value;
   else
     this1 = nil;
   end;
   local gs = this1;
   if (gs ~= nil) then 
     gs.setup(({signs = ({add = ({text = "+"}), change = ({text = "~"}), delete = ({text = "_"}), topdelete = ({text = "‾"}), changedelete = ({text = "~"})})}));
+  end;
+  local this1;
+  local _hx_6_requireResult_status, _hx_6_requireResult_value = _G.pcall(_G.require, "lspconfig");
+  if (_hx_6_requireResult_status) then 
+    this1 = _hx_6_requireResult_value;
+  else
+    this1 = nil;
+  end;
+  local lspconfig = this1;
+  if (lspconfig ~= nil) then 
+    local lspconfig = lspconfig;
+    local mason = __plugins__Plugins_Plugins_Fields_.safeRequire("mason-lspconfig");
+    if (mason ~= nil) then 
+      mason.setup_handlers(({function(server_name) 
+        local server_name1 = server_name;
+        if (server_name1) == "haxe_language_server" then 
+          local _this = lspconfig.haxe_language_server;
+          local config = _hx_o({__fields__={capabilities=true,on_attach=true,settings=true},capabilities=capabilities,on_attach=function(_,...) return __kickstart__Pure_Pure_Fields_.onAttach(...) end,settings=({})});
+          _this.setup({
+      on_attach = config.on_attach,
+      settings = config.settings,
+      capabilities = config.capabilities,
+    });
+        elseif (server_name1) == "jsonls" then 
+          local _v_ = __plugins__Plugins_Plugins_Fields_.safeRequire("schemastore");
+          local _v_ = (function() 
+            local _hx_7
+            if (_v_ == nil) then 
+            _hx_7 = nil; else 
+            _hx_7 = _v_.json; end
+            return _hx_7
+          end )();
+          local schemas = (function() 
+            local _hx_8
+            if (_v_ == nil) then 
+            _hx_8 = nil; else 
+            _hx_8 = _v_:schemas(); end
+            return _hx_8
+          end )();
+          local _this = lspconfig.jsonls;
+          local config = _hx_o({__fields__={capabilities=true,on_attach=true,settings=true},capabilities=capabilities,on_attach=function(_,...) return __kickstart__Pure_Pure_Fields_.onAttach(...) end,settings=({json = ({schemas = __vim__TableTools_TableTools_Fields_.concat(({_hx_o({__fields__={description=true,fileMatch=true,name=true,url=true},description="Haxe format schema",fileMatch=({"hxformat.json"}),name="hxformat.schema.json",url="https://raw.githubusercontent.com/vshaxe/vshaxe/master/schemas/hxformat.schema.json"})}), (function() 
+            local _hx_9
+            if (schemas ~= nil) then 
+            _hx_9 = schemas; else 
+            _hx_9 = ({}); end
+            return _hx_9
+          end )())})})});
+          _this.setup({
+      on_attach = config.on_attach,
+      settings = config.settings,
+      capabilities = config.capabilities,
+    });
+        elseif (server_name1) == "sumneko_lua" then 
+          local _this = lspconfig.sumneko_lua;
+          local config = _hx_o({__fields__={capabilities=true,on_attach=true,settings=true},capabilities=capabilities,on_attach=function(_,...) return __kickstart__Pure_Pure_Fields_.onAttach(...) end,settings=({lua = ({workspace = ({checkThirdParty = false}), telemetry = ({enable = false})})})});
+          _this.setup({
+      on_attach = config.on_attach,
+      settings = config.settings,
+      capabilities = config.capabilities,
+    });else
+        vim.pretty_print(Std.string("Ignoring ") .. Std.string(server_name)); end;
+      end}));
+    end;
   end;
 end
 __kickstart__Pure_Pure_Fields_.keymaps = function() 
@@ -1389,13 +1477,18 @@ __packer__Packer_Packer_Fields_.ensureInstalled = function()
 end
 
 __plugins__Plugins_Plugins_Fields_.new = {}
-__plugins__Plugins_Plugins_Fields_._require = function(name) 
+__plugins__Plugins_Plugins_Fields_.safeRequire = function(name) 
   local _hx_1_module_status, _hx_1_module_value = _G.pcall(_G.require, name);
   if (_hx_1_module_status) then 
     do return _hx_1_module_value end;
   else
     do return nil end;
   end;
+end
+
+__vim__TableTools_TableTools_Fields_.new = {}
+__vim__TableTools_TableTools_Fields_.concat = function(tableA,tableB) 
+  do return vim.list_extend(vim.list_extend(({}), tableA), tableB) end;
 end
 
 __vim__VimTypes_LuaArray_Impl_.new = {}
