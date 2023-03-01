@@ -817,7 +817,7 @@ __kickstart__Pure_Pure_Fields_.main = function()
         module=spec.module,
         module_pattern=spec.module_pattern
       }
-  local spec = _hx_o({__fields__={name=true,requires=true},name="neovim/nvim-lspconfig",requires=({"williamboman/mason.nvim","williamboman/mason-lspconfig.nvim","j-hui/fidget.nvim","folke/neodev.nvim"})});
+  local spec = _hx_o({__fields__={name=true},name="folke/which-key.nvim"});
   local plugins2 = { 
         spec.name, 
         disable=spec.disable,
@@ -846,7 +846,7 @@ __kickstart__Pure_Pure_Fields_.main = function()
         module=spec.module,
         module_pattern=spec.module_pattern
       }
-  local spec = _hx_o({__fields__={name=true,requires=true},name="hrsh7th/nvim-cmp",requires=({"hrsh7th/cmp-nvim-lsp","L3MON4D3/LuaSnip","saadparwaiz1/cmp_luasnip"})});
+  local spec = _hx_o({__fields__={name=true,requires=true},name="neovim/nvim-lspconfig",requires=({"williamboman/mason.nvim","williamboman/mason-lspconfig.nvim","j-hui/fidget.nvim","folke/neodev.nvim"})});
   local plugins3 = { 
         spec.name, 
         disable=spec.disable,
@@ -875,7 +875,7 @@ __kickstart__Pure_Pure_Fields_.main = function()
         module=spec.module,
         module_pattern=spec.module_pattern
       }
-  local spec = _hx_o({__fields__={name=true,run=true},name="nvim-treesitter/nvim-treesitter",run="pcall(require(\"nvim-treesitter.install\").update({ with_sync = true }))"});
+  local spec = _hx_o({__fields__={name=true,requires=true},name="hrsh7th/nvim-cmp",requires=({"hrsh7th/cmp-nvim-lsp","L3MON4D3/LuaSnip","saadparwaiz1/cmp_luasnip"})});
   local plugins4 = { 
         spec.name, 
         disable=spec.disable,
@@ -904,7 +904,7 @@ __kickstart__Pure_Pure_Fields_.main = function()
         module=spec.module,
         module_pattern=spec.module_pattern
       }
-  local spec = _hx_o({__fields__={name=true},name="b0o/schemastore.nvim"});
+  local spec = _hx_o({__fields__={name=true,run=true},name="nvim-treesitter/nvim-treesitter",run="pcall(require(\"nvim-treesitter.install\").update({ with_sync = true }))"});
   local plugins5 = { 
         spec.name, 
         disable=spec.disable,
@@ -933,7 +933,7 @@ __kickstart__Pure_Pure_Fields_.main = function()
         module=spec.module,
         module_pattern=spec.module_pattern
       }
-  local spec = _hx_o({__fields__={name=true},name="tpope/vim-fugitive"});
+  local spec = _hx_o({__fields__={name=true},name="b0o/schemastore.nvim"});
   local plugins6 = { 
         spec.name, 
         disable=spec.disable,
@@ -962,7 +962,7 @@ __kickstart__Pure_Pure_Fields_.main = function()
         module=spec.module,
         module_pattern=spec.module_pattern
       }
-  local spec = _hx_o({__fields__={name=true},name="tpope/vim-rhubarb"});
+  local spec = _hx_o({__fields__={name=true},name="tpope/vim-fugitive"});
   local plugins7 = { 
         spec.name, 
         disable=spec.disable,
@@ -991,7 +991,7 @@ __kickstart__Pure_Pure_Fields_.main = function()
         module=spec.module,
         module_pattern=spec.module_pattern
       }
-  local spec = _hx_o({__fields__={name=true},name="lewis6991/gitsigns.nvim"});
+  local spec = _hx_o({__fields__={name=true},name="tpope/vim-rhubarb"});
   local plugins8 = { 
         spec.name, 
         disable=spec.disable,
@@ -1020,7 +1020,7 @@ __kickstart__Pure_Pure_Fields_.main = function()
         module=spec.module,
         module_pattern=spec.module_pattern
       }
-  local spec = _hx_o({__fields__={name=true},name="navarasu/onedark.nvim"});
+  local spec = _hx_o({__fields__={name=true},name="lewis6991/gitsigns.nvim"});
   local plugins9 = { 
         spec.name, 
         disable=spec.disable,
@@ -1049,7 +1049,7 @@ __kickstart__Pure_Pure_Fields_.main = function()
         module=spec.module,
         module_pattern=spec.module_pattern
       }
-  local spec = _hx_o({__fields__={name=true},name="nvim-lualine/lualine.nvim"});
+  local spec = _hx_o({__fields__={name=true},name="navarasu/onedark.nvim"});
   local plugins10 = { 
         spec.name, 
         disable=spec.disable,
@@ -1078,7 +1078,7 @@ __kickstart__Pure_Pure_Fields_.main = function()
         module=spec.module,
         module_pattern=spec.module_pattern
       }
-  local spec = _hx_o({__fields__={name=true},name="lukas-reineke/indent-blankline.nvim"});
+  local spec = _hx_o({__fields__={name=true},name="nvim-lualine/lualine.nvim"});
   local plugins11 = { 
         spec.name, 
         disable=spec.disable,
@@ -1107,7 +1107,7 @@ __kickstart__Pure_Pure_Fields_.main = function()
         module=spec.module,
         module_pattern=spec.module_pattern
       }
-  local spec = _hx_o({__fields__={name=true},name="numToStr/Comment.nvim"});
+  local spec = _hx_o({__fields__={name=true},name="lukas-reineke/indent-blankline.nvim"});
   local plugins12 = { 
         spec.name, 
         disable=spec.disable,
@@ -1136,8 +1136,8 @@ __kickstart__Pure_Pure_Fields_.main = function()
         module=spec.module,
         module_pattern=spec.module_pattern
       }
-  local spec = _hx_o({__fields__={name=true},name="tpope/vim-sleuth"});
-  local plugins = _hx_tab_array({[0]=plugins, plugins1, plugins2, plugins3, plugins4, plugins5, plugins6, plugins7, plugins8, plugins9, plugins10, plugins11, plugins12, { 
+  local spec = _hx_o({__fields__={name=true},name="numToStr/Comment.nvim"});
+  local plugins13 = { 
         spec.name, 
         disable=spec.disable,
         as=spec.as,
@@ -1164,7 +1164,36 @@ __kickstart__Pure_Pure_Fields_.main = function()
         cond=spec.cond,
         module=spec.module,
         module_pattern=spec.module_pattern
-      }}, 14);
+      }
+  local spec = _hx_o({__fields__={name=true},name="tpope/vim-sleuth"});
+  local plugins = _hx_tab_array({[0]=plugins, plugins1, plugins2, plugins3, plugins4, plugins5, plugins6, plugins7, plugins8, plugins9, plugins10, plugins11, plugins12, plugins13, { 
+        spec.name, 
+        disable=spec.disable,
+        as=spec.as,
+        installer=spec.installer,
+        updater=spec.updater,
+        after=spec.after,
+        rtp=spec.rtp,
+        opt=spec.opt,
+        bufread=spec.bufread,
+        branch=spec.branch,
+        tag=spec.tag,
+        commit=spec.commit,
+        lock=spec.lock,
+        run=spec.run,
+        requires=spec.requires,
+        rocks=spec.rocks,
+        config=spec.config,
+        setup=spec.setup,
+        cmd=spec.cmd,
+        ft=spec.ft,
+        keys=spec.keys,
+        event=spec.event,
+        fn=spec.fn,
+        cond=spec.cond,
+        module=spec.module,
+        module_pattern=spec.module_pattern
+      }}, 15);
   local is_bootstrap = __packer__Packer_Packer_Fields_.ensureInstalled();
   local packer = _G.require("packer");
   packer.startup(function(use) 
@@ -1206,6 +1235,17 @@ __kickstart__Pure_Pure_Fields_.setupPlugins = function()
   end )();
   if (lualine ~= nil) then 
     lualine.setup(({options = ({icons_enabled = true, theme = "onedark", component_separators = "|", section_separators = ""})}));
+  end;
+  local this1;
+  local _hx_3_requireResult_status, _hx_3_requireResult_value = _G.pcall(_G.require, "which-key");
+  if (_hx_3_requireResult_status) then 
+    this1 = _hx_3_requireResult_value;
+  else
+    this1 = nil;
+  end;
+  local wk = this1;
+  if (wk ~= nil) then 
+    wk.setup(({disable = nil, hidden = nil, icons = nil, ignore_missing = nil, key_labels = nil, layout = nil, motions = nil, operators = nil, plugins = ({marks = true, registers = true, spelling = ({enabled = true, suggestions = 20}), presets = ({operators = true, motions = true, text_objects = true, windows = true, nav = true, z = true, g = true})}), popup_mappings = nil, show_help = nil, show_keys = nil, triggers = nil, triggers_blacklist = nil, triggers_nowait = nil, window = nil}));
   end;
 end
 

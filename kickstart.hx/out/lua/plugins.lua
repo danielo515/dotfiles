@@ -759,7 +759,14 @@ end
 
 __plugins__Setup_Setup_Fields_.new = {}
 __plugins__Setup_Setup_Fields_.setup_copilot = function() 
-  local x = _G.select(2, _G.pcall(_G.require, "copilot"));
+  local this1;
+  local _hx_1_requireResult_status, _hx_1_requireResult_value = _G.pcall(_G.require, "copilot");
+  if (_hx_1_requireResult_status) then 
+    this1 = _hx_1_requireResult_value;
+  else
+    this1 = nil;
+  end;
+  local x = this1;
   if (x ~= nil) then 
     x.setup(({copilot_node_command = "node", filetypes = ({yaml = false, markdown = false, help = false, gitcommit = false, gitrebase = false, hgcommit = false, svn = false, cvs = false}), panel = ({enabled = true, auto_refresh = true, keymap = ({jump_prev = "[[", jump_next = "]]", accept = "<CR>", refresh = "gr", open = "<M-CR>"}), layout = ({position = "bottom", ratio = 0.4})}), suggestion = ({enabled = true, auto_trigger = true, debounce = 75, keymap = ({accept = "<c-e>", accept_word = false, accept_line = false, next = "<M-b>", prev = "<M-v>", dismiss = "<C-c>"})})}));
   end;

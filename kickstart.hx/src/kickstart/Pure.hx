@@ -1,5 +1,7 @@
 package kickstart;
 
+import vim.plugin.types.VimPlugin;
+import plugins.WhichKey;
 import lua.Table.create as t;
 import packer.Packer;
 import vim.Vim;
@@ -8,6 +10,7 @@ function main() {
   final plugins:Array< Plugin > = [
     {name: "wbthomason/packer.nvim"},
     {name: "kylechui/nvim-surround"},
+    {name: "folke/which-key.nvim"},
     { // LSP Configuration & Plugins
       name: "neovim/nvim-lspconfig",
       requires: t([
@@ -72,6 +75,8 @@ inline function vimOptions() {
   Vim.wo.Number = true;
   // show the effects of a search / replace in a live preview window
   Vim.o.inccommand = "split";
+  Vim.g.mapleader = "space";
+  Vim.g.maplocalleader = ",";
 }
 
 function setupPlugins() {
@@ -86,4 +91,26 @@ function setupPlugins() {
       },
     });
   }
+  final wk:VimPlugin< WhichKey > = "which-key";
+  wk.call(wk -> {
+    wk.setup({
+      plugins: {
+        marks: true,
+        registers: true,
+        spelling: {
+          enabled: true,
+          suggestions: 20,
+        },
+        presets: {
+          operators: true,
+          motions: true,
+          text_objects: true,
+          windows: true,
+          nav: true,
+          z: true,
+          g: true,
+        },
+      },
+    });
+  });
 }
