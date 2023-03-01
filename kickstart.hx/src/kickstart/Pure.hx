@@ -1,5 +1,10 @@
 package kickstart;
 
+import plugins.Plugins.Fidget;
+import plugins.Plugins.Mason;
+import plugins.Plugins.Neodev;
+import plugins.Plugins.Comment;
+import plugins.Plugins.IndentBlankline;
 import plugins.Gitsigns;
 import vim.Vimx;
 import vim.plugin.types.VimPlugin;
@@ -100,6 +105,14 @@ inline function vimOptions() {
 }
 
 function setupPlugins() {
+  Comment.require()!.setup();
+  IndentBlankline.require()!.setup(t({
+    char: '┊',
+    show_trailing_blankline_indent: false,
+  }));
+  Neodev.require()!.setup();
+  Mason.require()!.setup();
+  Fidget.require()!.setup();
   final lualine = plugins.Lualine.require();
   if (lualine != null) {
     // -- Set lualine as statusline

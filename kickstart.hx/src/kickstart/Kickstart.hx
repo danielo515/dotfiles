@@ -8,77 +8,6 @@ import vim.Vim;
 import vim.VimTypes;
 import lua.Table.create as t;
 
-@:luaRequire('lualine')
-extern class Lualine {
-  static function setup(config:TableWrapper< {
-    options:{
-      icons_enabled:Bool,
-      theme:String,
-      component_separators:String,
-      section_separators:String,
-    }
-  } >):Void;
-}
-
-@:luaRequire('indent_blankline')
-extern class IndentBlankline {
-  static function setup(config:lua.Table< String, Dynamic >):Void;
-}
-
-@:luaRequire('Comment')
-extern class Comment {
-  static function setup():Void;
-}
-
-@:luaRequire('neodev')
-extern class Neodev {
-  static function setup():Void;
-}
-
-@:luaRequire('mason')
-extern class Mason {
-  static function setup():Void;
-}
-
-@:luaRequire('fidget')
-extern class Fidget {
-  static function setup():Void;
-}
-
-@:luaRequire('cmp_nvim_lsp')
-extern class Cmp_nvim_lsp {
-  static function default_capabilities(opts:Dynamic):Dynamic;
-}
-
-@:luaRequire('mason-lspconfig')
-extern class MasonLspConfig {
-  static function setup(opts:TableWrapper< {ensure_installed:Array< String >} >):Void;
-  static function setup_handlers(handlers:LuaArray< (name:String) -> Void >):Void;
-}
-
-@:luaRequire('luasnip')
-extern class Luasnip {
-  static function lsp_expand(args:Dynamic):Void;
-  static function expand_or_jumpable():Bool;
-  static function expand_or_jump():Void;
-  static function jumpable(?direction:Int):Bool;
-  static function jump(?direction:Int):Void;
-}
-
-extern class JsonSchemas {
-  public function schemas():LuaArray< {
-    url:String,
-    name:String,
-    fileMatch:LuaArray< String >,
-    description:String
-  } >;
-}
-
-@:luaRequire('schemastore')
-extern class SchemaStore {
-  static final json:JsonSchemas;
-}
-
 // LSP settings.
 //  This function gets run when an LSP connects to a particular buffer.
 function onAttach(x:Dynamic, bufnr:Buffer) {
@@ -128,20 +57,9 @@ function onAttach(x:Dynamic, bufnr:Buffer) {
   Port to Haxe of https://github.com/nvim-lua/kickstart.nvim
  */
 function main() {
-  Comment.setup();
-  // -- See `:help indent_blankline.txt`
-  IndentBlankline.setup(t({
-    char: '┊',
-    show_trailing_blankline_indent: false,
-  }));
-
   final capabilities = Cmp_nvim_lsp.default_capabilities(
     vim.Lsp.Protocol.make_client_capabilities()
   );
-
-  Neodev.setup();
-  Mason.setup();
-  Fidget.setup();
 
   kickstart.Cmp.configure();
   MasonLspConfig.setup_handlers(t([server_name -> {

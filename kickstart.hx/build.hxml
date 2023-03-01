@@ -2,6 +2,7 @@ libs.hxml
 --macro nullSafety("vim", Strict)
 --macro nullSafety("plenary", Strict)
 --macro nullSafety("parser", Strict)
+--macro Safety.safeNavigation("kickstart")
 --macro nullSafety("kickstart", Strict)
 --macro nullSafety("plugins", Strict)
 
@@ -23,11 +24,6 @@ libs.hxml
 -dce full
 
 --each
-
---main kickstart.Kickstart
---lua out/lua/kickstart/init.lua
-
---next
 
 plugins.Setup
 

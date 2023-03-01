@@ -205,6 +205,7 @@ __kickstart__Pure_Pure_Fields_ = _hx_e()
 __kickstart__Untyped_Untyped_Fields_ = _hx_e()
 __lua_StringMap = _hx_e()
 __packer__Packer_Packer_Fields_ = _hx_e()
+__plugins__Plugins_Plugins_Fields_ = _hx_e()
 __vim__VimTypes_LuaArray_Impl_ = _hx_e()
 __vim_Vimx = _hx_e()
 
@@ -1238,6 +1239,26 @@ __kickstart__Pure_Pure_Fields_.autoCommands = function()
   __vim_Vimx.autocmd("Kickstart-yank", __vim__VimTypes_LuaArray_Impl_.from(_hx_tab_array({[0]="TextYankPost"}, 1)), "*", "Highlight on yank", __kickstart__Untyped_Untyped_Fields_.higlightOnYank);
 end
 __kickstart__Pure_Pure_Fields_.setupPlugins = function() 
+  local module = __plugins__Plugins_Plugins_Fields_._require("Comment");
+  if (module ~= nil) then 
+    module.setup();
+  end;
+  local module = __plugins__Plugins_Plugins_Fields_._require("indent_blankline");
+  if (module ~= nil) then 
+    module.setup(({char = "┊", show_trailing_blankline_indent = false}));
+  end;
+  local module = __plugins__Plugins_Plugins_Fields_._require("neodev");
+  if (module ~= nil) then 
+    module.setup();
+  end;
+  local module = __plugins__Plugins_Plugins_Fields_._require("mason");
+  if (module ~= nil) then 
+    module.setup();
+  end;
+  local module = __plugins__Plugins_Plugins_Fields_._require("fidget");
+  if (module ~= nil) then 
+    module.setup();
+  end;
   local _hx_1_module_status, _hx_1_module_value = _G.pcall(_G.require, "lualine");
   local lualine = (function() 
     local _hx_2
@@ -1320,6 +1341,16 @@ __packer__Packer_Packer_Fields_.ensureInstalled = function()
     do return true end;
   else
     do return false end;
+  end;
+end
+
+__plugins__Plugins_Plugins_Fields_.new = {}
+__plugins__Plugins_Plugins_Fields_._require = function(name) 
+  local _hx_1_module_status, _hx_1_module_value = _G.pcall(_G.require, name);
+  if (_hx_1_module_status) then 
+    do return _hx_1_module_value end;
+  else
+    do return nil end;
   end;
 end
 
