@@ -7,7 +7,7 @@ extern class LspConfigSetupFn {
   inline function setup(config:{
     on_attach:(client:Dynamic, bufnr:Buffer) -> Void,
     settings:lua.Table< String, Dynamic >,
-    capabilities:Dynamic
+    ?capabilities:Dynamic
   }):Void {
     untyped __lua__(
       "{0}.setup({
@@ -24,7 +24,7 @@ extern class LspConfigSetupFn {
 }
 
 extern class Lspconfig {
-  final sumneko_lua:LspConfigSetupFn;
+  final lua_ls:LspConfigSetupFn;
   final haxe_language_server:LspConfigSetupFn;
   final jsonls:LspConfigSetupFn;
 

@@ -848,11 +848,11 @@ __kickstart__Kickstart_Kickstart_Fields_.main = function()
       settings = config_settings,
       capabilities = config_capabilities,
     });
-    elseif (server_name1) == "sumneko_lua" then 
+    elseif (server_name1) == "lua_ls" then 
       local config_capabilities = capabilities;
       local config_on_attach = __kickstart__Kickstart_Kickstart_Fields_.onAttach;
       local config_settings = ({lua = ({workspace = ({checkThirdParty = false}), telemetry = ({enable = false})})});
-      __kickstart_Lspconfig.sumneko_lua.setup({
+      __kickstart_Lspconfig.lua_ls.setup({
       on_attach = config_on_attach,
       settings = config_settings,
       capabilities = config_capabilities,

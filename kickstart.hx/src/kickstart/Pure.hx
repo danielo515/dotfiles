@@ -114,7 +114,7 @@ inline function vimOptions() {
 
 // LSP settings.
 //  This function gets run when an LSP connects to a particular buffer.
-function onAttach(x:Dynamic, bufnr:Buffer) {
+function onAttach(x:Dynamic, bufnr:Buffer):Void {
   function nmap(keys, func, desc) {
     Keymap.setBuf(Normal, keys, func, {buffer: bufnr, desc: 'LSP: $desc'});
   }
@@ -235,46 +235,49 @@ function setupPlugins() {
   final lspconfig:VimPlugin< Lspconfig > = "lspconfig";
   lspconfig.call(lspconfig -> {
     final mason = MasonLspConfig.require();
-    if (mason != null) {
-      mason.setup_handlers(t([(server_name:String) -> {
-        switch (server_name) {
-          case 'sumneko_lua': lspconfig.sumneko_lua.setup({
-              capabilities: capabilities,
-              on_attach: onAttach,
-              settings: t({
-                lua: t({
-                  workspace: t({checkThirdParty: false}),
-                  telemetry: t({enable: false}),
-                })
+    if (capabilities == null)
+      return;
+    if (mason == null)
+      return;
+    mason.setup_handlers(t([(server_name:String) -> {
+      switch (server_name) {
+        case 'lua_ls': lspconfig.lua_ls.setup({
+            capabilities: capabilities,
+            on_attach: onAttach,
+            settings: t({
+              lua: t({
+                workspace: t({checkThirdParty: false}),
+                telemetry: t({enable: false}),
               })
-            });
-          case 'haxe_language_server': lspconfig.haxe_language_server.setup({
-              capabilities: capabilities,
-              on_attach: onAttach,
-              settings: t({})
-            });
-          case 'jsonls':
-            final schemas = SchemaStore.require()!.json!.schemas();
-            lspconfig.jsonls.setup({
-              capabilities: capabilities,
-              on_attach: onAttach,
-              settings: t({
-                json: t({
-                  schemas: t([
-                    {
-                      description: "Haxe format schema",
-                      fileMatch: t(["hxformat.json"]),
-                      name: "hxformat.schema.json",
-                      url: "https://raw.githubusercontent.com/vshaxe/vshaxe/master/schemas/hxformat.schema.json",
-                    }
-                  ]).concat(schemas != null ? schemas : (t([])))
-                })
+            })
+          });
+        case 'haxe_language_server': lspconfig.haxe_language_server.setup({
+            capabilities: capabilities,
+            on_attach: onAttach,
+            settings: t({})
+          });
+        case 'jsonls':
+          final jsonSchemas = SchemaStore.require()!.json!.schemas();
+          var schemas = t([{
+            description: "Haxe format schema",
+            fileMatch: t(["hxformat.json"]),
+            name: "hxformat.schema.json",
+            url: "https://raw.githubusercontent.com/vshaxe/vshaxe/master/schemas/hxformat.schema.json",
+          }]);
+          if (jsonSchemas != null)
+            schemas = schemas.concat(jsonSchemas);
+          lspconfig.jsonls.setup({
+            capabilities: capabilities,
+            on_attach: onAttach,
+            settings: t({
+              json: t({
+                schemas: schemas,
               })
-            });
-          case _: Vim.print('Ignoring $server_name');
-        }
-      }]));
-    }
+            })
+          });
+        case _: Vim.print('Ignoring $server_name');
+      }
+    }]));
   });
 }
 

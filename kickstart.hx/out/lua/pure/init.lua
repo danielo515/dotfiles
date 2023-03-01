@@ -1374,56 +1374,62 @@ __kickstart__Pure_Pure_Fields_.setupPlugins = function()
   if (lspconfig ~= nil) then 
     local lspconfig = lspconfig;
     local mason = __plugins__Plugins_Plugins_Fields_.safeRequire("mason-lspconfig");
-    if (mason ~= nil) then 
-      mason.setup_handlers(({function(server_name) 
-        local server_name1 = server_name;
-        if (server_name1) == "haxe_language_server" then 
-          local _this = lspconfig.haxe_language_server;
-          local config = _hx_o({__fields__={capabilities=true,on_attach=true,settings=true},capabilities=capabilities,on_attach=function(_,...) return __kickstart__Pure_Pure_Fields_.onAttach(...) end,settings=({})});
-          _this.setup({
-      on_attach = config.on_attach,
-      settings = config.settings,
-      capabilities = config.capabilities,
+    if (capabilities ~= nil) then 
+      if (mason ~= nil) then 
+        mason.setup_handlers(({function(server_name) 
+          local server_name1 = server_name;
+          if (server_name1) == "haxe_language_server" then 
+            local _this = lspconfig.haxe_language_server;
+            local config_capabilities = capabilities;
+            local config_on_attach = __kickstart__Pure_Pure_Fields_.onAttach;
+            local config_settings = ({});
+            _this.setup({
+      on_attach = config_on_attach,
+      settings = config_settings,
+      capabilities = config_capabilities,
     });
-        elseif (server_name1) == "jsonls" then 
-          local _v_ = __plugins__Plugins_Plugins_Fields_.safeRequire("schemastore");
-          local _v_ = (function() 
-            local _hx_7
-            if (_v_ == nil) then 
-            _hx_7 = nil; else 
-            _hx_7 = _v_.json; end
-            return _hx_7
-          end )();
-          local schemas = (function() 
-            local _hx_8
-            if (_v_ == nil) then 
-            _hx_8 = nil; else 
-            _hx_8 = _v_:schemas(); end
-            return _hx_8
-          end )();
-          local _this = lspconfig.jsonls;
-          local config = _hx_o({__fields__={capabilities=true,on_attach=true,settings=true},capabilities=capabilities,on_attach=function(_,...) return __kickstart__Pure_Pure_Fields_.onAttach(...) end,settings=({json = ({schemas = __vim__TableTools_TableTools_Fields_.concat(({_hx_o({__fields__={description=true,fileMatch=true,name=true,url=true},description="Haxe format schema",fileMatch=({"hxformat.json"}),name="hxformat.schema.json",url="https://raw.githubusercontent.com/vshaxe/vshaxe/master/schemas/hxformat.schema.json"})}), (function() 
-            local _hx_9
-            if (schemas ~= nil) then 
-            _hx_9 = schemas; else 
-            _hx_9 = ({}); end
-            return _hx_9
-          end )())})})});
-          _this.setup({
-      on_attach = config.on_attach,
-      settings = config.settings,
-      capabilities = config.capabilities,
+          elseif (server_name1) == "jsonls" then 
+            local _v_ = __plugins__Plugins_Plugins_Fields_.safeRequire("schemastore");
+            local _v_ = (function() 
+              local _hx_7
+              if (_v_ == nil) then 
+              _hx_7 = nil; else 
+              _hx_7 = _v_.json; end
+              return _hx_7
+            end )();
+            local jsonSchemas = (function() 
+              local _hx_8
+              if (_v_ == nil) then 
+              _hx_8 = nil; else 
+              _hx_8 = _v_:schemas(); end
+              return _hx_8
+            end )();
+            local schemas = ({_hx_o({__fields__={description=true,fileMatch=true,name=true,url=true},description="Haxe format schema",fileMatch=({"hxformat.json"}),name="hxformat.schema.json",url="https://raw.githubusercontent.com/vshaxe/vshaxe/master/schemas/hxformat.schema.json"})});
+            if (jsonSchemas ~= nil) then 
+              schemas = __vim__TableTools_TableTools_Fields_.concat(schemas, jsonSchemas);
+            end;
+            local _this = lspconfig.jsonls;
+            local config_capabilities = capabilities;
+            local config_on_attach = __kickstart__Pure_Pure_Fields_.onAttach;
+            local config_settings = ({json = ({schemas = schemas})});
+            _this.setup({
+      on_attach = config_on_attach,
+      settings = config_settings,
+      capabilities = config_capabilities,
     });
-        elseif (server_name1) == "sumneko_lua" then 
-          local _this = lspconfig.sumneko_lua;
-          local config = _hx_o({__fields__={capabilities=true,on_attach=true,settings=true},capabilities=capabilities,on_attach=function(_,...) return __kickstart__Pure_Pure_Fields_.onAttach(...) end,settings=({lua = ({workspace = ({checkThirdParty = false}), telemetry = ({enable = false})})})});
-          _this.setup({
-      on_attach = config.on_attach,
-      settings = config.settings,
-      capabilities = config.capabilities,
+          elseif (server_name1) == "lua_ls" then 
+            local _this = lspconfig.lua_ls;
+            local config_capabilities = capabilities;
+            local config_on_attach = __kickstart__Pure_Pure_Fields_.onAttach;
+            local config_settings = ({lua = ({workspace = ({checkThirdParty = false}), telemetry = ({enable = false})})});
+            _this.setup({
+      on_attach = config_on_attach,
+      settings = config_settings,
+      capabilities = config_capabilities,
     });else
-        vim.pretty_print(Std.string("Ignoring ") .. Std.string(server_name)); end;
-      end}));
+          vim.pretty_print(Std.string("Ignoring ") .. Std.string(server_name)); end;
+        end}));
+      end;
     end;
   end;
 end
