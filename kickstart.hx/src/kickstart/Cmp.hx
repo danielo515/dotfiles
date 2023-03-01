@@ -1,6 +1,6 @@
 package kickstart;
 
-import kickstart.Kickstart.Luasnip;
+import plugins.Plugins.Luasnip;
 import lua.Table;
 
 typedef Dict = lua.Table< String, Dynamic >;
@@ -24,6 +24,7 @@ extern class Cmp {
   static final mapping:{preset:Preset};
   static function setup(config:CmpConfig):Void;
   static inline function getMappings():Dict {
+    final ls = Luasnip.require();
     return untyped __lua__(
       "
 {
@@ -55,13 +56,14 @@ extern class Cmp {
   }
       ",
       Cmp,
-      Luasnip
+      ls
     );
   }
   static public inline function configure():Void {
     final mapping = Cmp.mapping.preset.insert(getMappings());
+    final ls = Luasnip.require();
     Cmp.setup({
-      snippet: {expand: (args:Dynamic) -> kickstart.Kickstart.Luasnip.lsp_expand(args.body)},
+      snippet: {expand: (args:Dynamic) -> ls!.lsp_expand(args.body)},
       mapping: mapping,
       sources: [{name: 'luasnip'}, {name: 'nvim_lsp'}]
     });

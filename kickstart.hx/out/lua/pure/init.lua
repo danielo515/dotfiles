@@ -201,6 +201,7 @@ local String = _hx_e()
 local Std = _hx_e()
 __haxe_iterators_ArrayIterator = _hx_e()
 __haxe_iterators_ArrayKeyValueIterator = _hx_e()
+__kickstart_Cmp = _G.require("cmp")
 __kickstart__Pure_Pure_Fields_ = _hx_e()
 __kickstart__Untyped_Untyped_Fields_ = _hx_e()
 __lua_StringMap = _hx_e()
@@ -1239,25 +1240,68 @@ __kickstart__Pure_Pure_Fields_.autoCommands = function()
   __vim_Vimx.autocmd("Kickstart-yank", __vim__VimTypes_LuaArray_Impl_.from(_hx_tab_array({[0]="TextYankPost"}, 1)), "*", "Highlight on yank", __kickstart__Untyped_Untyped_Fields_.higlightOnYank);
 end
 __kickstart__Pure_Pure_Fields_.setupPlugins = function() 
-  local module = __plugins__Plugins_Plugins_Fields_._require("Comment");
-  if (module ~= nil) then 
-    module.setup();
+  local _v_ = __plugins__Plugins_Plugins_Fields_._require("Comment");
+  if (_v_ ~= nil) then 
+    _v_.setup();
   end;
-  local module = __plugins__Plugins_Plugins_Fields_._require("indent_blankline");
-  if (module ~= nil) then 
-    module.setup(({char = "┊", show_trailing_blankline_indent = false}));
+  local _v_ = __plugins__Plugins_Plugins_Fields_._require("indent_blankline");
+  if (_v_ ~= nil) then 
+    _v_.setup(({char = "┊", show_trailing_blankline_indent = false}));
   end;
-  local module = __plugins__Plugins_Plugins_Fields_._require("neodev");
-  if (module ~= nil) then 
-    module.setup();
+  local _v_ = __plugins__Plugins_Plugins_Fields_._require("neodev");
+  if (_v_ ~= nil) then 
+    _v_.setup();
   end;
-  local module = __plugins__Plugins_Plugins_Fields_._require("mason");
-  if (module ~= nil) then 
-    module.setup();
+  local _v_ = __plugins__Plugins_Plugins_Fields_._require("mason");
+  if (_v_ ~= nil) then 
+    _v_.setup();
   end;
-  local module = __plugins__Plugins_Plugins_Fields_._require("fidget");
-  if (module ~= nil) then 
-    module.setup();
+  local _v_ = __plugins__Plugins_Plugins_Fields_._require("fidget");
+  if (_v_ ~= nil) then 
+    _v_.setup();
+  end;
+  local mapping = __kickstart_Cmp.mapping.preset;
+  local ls = __plugins__Plugins_Plugins_Fields_._require("luasnip");
+  local mapping = mapping.insert(
+{
+    ['<C-d>'] = __kickstart_Cmp.mapping.scroll_docs(-4),
+    ['<C-f>'] = __kickstart_Cmp.mapping.scroll_docs(4),
+    ['<C-n>'] = __kickstart_Cmp.mapping(__kickstart_Cmp.mapping.complete(),{'i'}),
+    ['<CR>'] = __kickstart_Cmp.mapping.confirm {
+      behavior = __kickstart_Cmp.ConfirmBehavior.Replace,
+      select = true,
+    },
+    ['<Tab>'] = __kickstart_Cmp.mapping(function(fallback)
+      if __kickstart_Cmp.visible() then
+        __kickstart_Cmp.select_next_item()
+      elseif ls.expand_or_jumpable() then
+        ls.expand_or_jump()
+      else
+        fallback()
+      end
+    end, { 'i', 's' }),
+    ['<S-Tab>'] = __kickstart_Cmp.mapping(function(fallback)
+      if __kickstart_Cmp.visible() then
+        __kickstart_Cmp.select_prev_item()
+      elseif ls.jumpable(-1) then
+        ls.jump(-1)
+      else
+        fallback()
+      end
+    end, { 'i', 's' }),
+  }
+      );
+  local ls = __plugins__Plugins_Plugins_Fields_._require("luasnip");
+  __kickstart_Cmp.setup(({mapping = mapping, snippet = ({expand = function(args) 
+    local _v_ = ls;
+    if (_v_ ~= nil) then 
+      _v_.lsp_expand(args.body);
+    end;
+  end}), sources = ({({name = "luasnip"}),({name = "nvim_lsp"})})}));
+  local _v_ = __plugins__Plugins_Plugins_Fields_._require("cmp_nvim_lsp");
+  if (_v_ == nil) then 
+  else
+    _v_.default_capabilities(vim.lsp.protocol.make_client_capabilities());
   end;
   local _hx_1_module_status, _hx_1_module_value = _G.pcall(_G.require, "lualine");
   local lualine = (function() 

@@ -1,5 +1,7 @@
 package kickstart;
 
+import plugins.Plugins.Cmp_nvim_lsp;
+import vim.Lsp;
 import plugins.Plugins.Fidget;
 import plugins.Plugins.Mason;
 import plugins.Plugins.Neodev;
@@ -104,6 +106,51 @@ inline function vimOptions() {
   Vim.o.inccommand = "split";
 }
 
+// LSP settings.
+//  This function gets run when an LSP connects to a particular buffer.
+function onAttach(x:Dynamic, bufnr:Buffer) {
+  function nmap(keys, func, desc) {
+    Keymap.setBuf(Normal, keys, func, {buffer: bufnr, desc: 'LSP: $desc'});
+  }
+  nmap('<leader>rn', LspBuf.rename, '[R]e[n]ame');
+  nmap('<leader>ca', LspBuf.code_action, '[C]ode [A]ction');
+
+  nmap('gd', LspBuf.definition, '[G]oto [D]efinition');
+  // nmap('gr', require('telescope.builtin').lsp_references, '[G]oto [R]eferences');
+  nmap('gI', LspBuf.implementation, '[G]oto [I]mplementation');
+  nmap('<leader>D', LspBuf.type_definition, 'Type [D]efinition');
+  // nmap(
+  //   '<leader>ds',
+  //   require('telescope.builtin').lsp_document_symbols,
+  //   '[D]ocument [S]ymbols'
+  // );
+  // nmap(
+  //   '<leader>ws',
+  //   require('telescope.builtin').lsp_dynamic_workspace_symbols,
+  //   '[W]orkspace [S]ymbols'
+  // ); // See `:help K` for why this keymap
+
+  nmap('K', LspBuf.hover, 'Hover Documentation');
+  nmap('<C-k>', LspBuf.signature_help, 'Signature Documentation'); // Lesser used LSP functionality
+
+  nmap('gD', LspBuf.declaration, '[G]oto [D]eclaration');
+  nmap('<leader>wa', LspBuf.add_workspace_folder, '[W]orkspace [A]dd Folder');
+  nmap('<leader>wr', LspBuf.remove_workspace_folder, '[W]orkspace [R]emove Folder');
+  nmap(
+    '<leader>wl',
+    () -> Vim.print(LspBuf.list_workspace_folders()),
+    '[W]orkspace [L]ist Folders'
+  ); // Create a command `:Format` local to the LSP buffer
+
+  vim.Api.nvim_buf_create_user_command(bufnr, 'Format', (_) -> LspBuf.format(), {
+    desc: 'Format current buffer with LSP',
+    force: true,
+    nargs: None,
+    bang: false,
+    range: No,
+  });
+}
+
 function setupPlugins() {
   Comment.require()!.setup();
   IndentBlankline.require()!.setup(t({
@@ -113,6 +160,12 @@ function setupPlugins() {
   Neodev.require()!.setup();
   Mason.require()!.setup();
   Fidget.require()!.setup();
+  Cmp.configure();
+
+  final capabilities = Cmp_nvim_lsp.require()!.default_capabilities(
+    vim.Lsp.Protocol.make_client_capabilities()
+  );
+
   final lualine = plugins.Lualine.require();
   if (lualine != null) {
     // -- Set lualine as statusline
