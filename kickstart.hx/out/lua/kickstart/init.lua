@@ -202,7 +202,6 @@ __haxe_iterators_ArrayIterator = _hx_e()
 __haxe_iterators_ArrayKeyValueIterator = _hx_e()
 __kickstart_Cmp = _G.require("cmp")
 __kickstart_IndentBlankline = _G.require("indent_blankline")
-__kickstart_Gitsigns = _G.require("gitsigns")
 __kickstart_Comment = _G.require("Comment")
 __kickstart_Neodev = _G.require("neodev")
 __kickstart_Mason = _G.require("mason")
@@ -794,7 +793,6 @@ end
 __kickstart__Kickstart_Kickstart_Fields_.main = function() 
   __kickstart_Comment.setup();
   __kickstart_IndentBlankline.setup(({char = "┊", show_trailing_blankline_indent = false}));
-  __kickstart_Gitsigns.setup(({signs = ({add = ({text = "+"}), change = ({text = "~"}), delete = ({text = "_"}), topdelete = ({text = "‾"}), changedelete = ({text = "~"})})}));
   local capabilities = __kickstart_Cmp_nvim_lsp.default_capabilities(vim.lsp.protocol.make_client_capabilities());
   __kickstart_Neodev.setup();
   __kickstart_Mason.setup();

@@ -1,5 +1,6 @@
 package kickstart;
 
+import plugins.Gitsigns;
 import vim.Vimx;
 import vim.plugin.types.VimPlugin;
 import plugins.WhichKey;
@@ -132,6 +133,28 @@ function setupPlugins() {
           nav: true,
           z: true,
           g: true,
+        },
+      },
+    });
+  });
+  final gs:VimPlugin< Gitsigns > = "gitsigns";
+  gs.call(gs -> {
+    gs.setup({
+      signs: {
+        add: {
+          text: '+'
+        },
+        change: {
+          text: '~'
+        },
+        delete: {
+          text: '_'
+        },
+        topdelete: {
+          text: '‾'
+        },
+        changedelete: {
+          text: '~'
         },
       },
     });

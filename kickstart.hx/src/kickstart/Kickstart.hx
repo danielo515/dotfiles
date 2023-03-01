@@ -25,21 +25,6 @@ extern class IndentBlankline {
   static function setup(config:lua.Table< String, Dynamic >):Void;
 }
 
-// typedef SignDefinition = TableWrapper< {text:String} >
-
-@:luaRequire('gitsigns')
-extern class Gitsigns {
-  static function setup(config:TableWrapper< {
-    signs:{
-      add:{text:String},
-      change:{text:String},
-      delete:{text:String},
-      topdelete:{text:String},
-      changedelete:{text:String},
-    }
-  } >):Void;
-}
-
 @:luaRequire('Comment')
 extern class Comment {
   static function setup():Void;
@@ -149,27 +134,6 @@ function main() {
     char: '┊',
     show_trailing_blankline_indent: false,
   }));
-
-  // -- See `:help gitsigns.txt`
-  Gitsigns.setup({
-    signs: {
-      add: {
-        text: '+'
-      },
-      change: {
-        text: '~'
-      },
-      delete: {
-        text: '_'
-      },
-      topdelete: {
-        text: '‾'
-      },
-      changedelete: {
-        text: '~'
-      },
-    },
-  });
 
   final capabilities = Cmp_nvim_lsp.default_capabilities(
     vim.Lsp.Protocol.make_client_capabilities()

@@ -1262,6 +1262,17 @@ __kickstart__Pure_Pure_Fields_.setupPlugins = function()
     vim.o.timeoutlen = 300;
     wk.setup(({disable = nil, hidden = nil, icons = nil, ignore_missing = nil, key_labels = nil, layout = nil, motions = nil, operators = nil, plugins = ({marks = true, registers = true, spelling = ({enabled = true, suggestions = 20}), presets = ({operators = true, motions = true, text_objects = true, windows = true, nav = true, z = true, g = true})}), popup_mappings = nil, show_help = nil, show_keys = nil, triggers = nil, triggers_blacklist = nil, triggers_nowait = nil, window = nil}));
   end;
+  local this1;
+  local _hx_4_requireResult_status, _hx_4_requireResult_value = _G.pcall(_G.require, "gitsigns");
+  if (_hx_4_requireResult_status) then 
+    this1 = _hx_4_requireResult_value;
+  else
+    this1 = nil;
+  end;
+  local gs = this1;
+  if (gs ~= nil) then 
+    gs.setup(({signs = ({add = ({text = "+"}), change = ({text = "~"}), delete = ({text = "_"}), topdelete = ({text = "‾"}), changedelete = ({text = "~"})})}));
+  end;
 end
 __kickstart__Pure_Pure_Fields_.keymaps = function() 
   vim.g.mapleader = " ";
