@@ -1,5 +1,6 @@
 package kickstart;
 
+import vim.Vimx;
 import vim.plugin.types.VimPlugin;
 import plugins.WhichKey;
 import lua.Table.create as t;
@@ -65,6 +66,24 @@ function main() {
   keymaps();
   setupPlugins();
   vimOptions();
+  autoCommands();
+}
+
+function autoCommands() {
+  Vimx.autocmd(
+    "Kickstart",
+    t([BufWritePost]),
+    Fn.expand(MYVIMRC),
+    "Reload the config",
+    () -> Vim.cmd("source <afile> | PackerCompile")
+  );
+  Vimx.autocmd(
+    "Kickstart-yank",
+    [TextYankPost],
+    "*",
+    "Highlight on yank",
+    kickstart.Untyped.higlightOnYank
+  );
 }
 
 inline function vimOptions() {
@@ -82,6 +101,8 @@ inline function vimOptions() {
 function setupPlugins() {
   final lualine = plugins.Lualine.require();
   if (lualine != null) {
+    // -- Set lualine as statusline
+    // -- See `:help lualine.txt`
     lualine.setup({
       options: {
         icons_enabled: true,

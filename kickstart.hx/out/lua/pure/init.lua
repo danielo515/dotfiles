@@ -194,6 +194,7 @@ local Bool = _hx_e();
 local Class = _hx_e();
 local Enum = _hx_e();
 
+local _hx_exports = _hx_exports or {}
 local Array = _hx_e()
 local Math = _hx_e()
 local String = _hx_e()
@@ -201,7 +202,11 @@ local Std = _hx_e()
 __haxe_iterators_ArrayIterator = _hx_e()
 __haxe_iterators_ArrayKeyValueIterator = _hx_e()
 __kickstart__Pure_Pure_Fields_ = _hx_e()
+__kickstart__Untyped_Untyped_Fields_ = _hx_e()
+__lua_StringMap = _hx_e()
 __packer__Packer_Packer_Fields_ = _hx_e()
+__vim__VimTypes_LuaArray_Impl_ = _hx_e()
+__vim_Vimx = _hx_e()
 
 local _hx_bind, _hx_bit, _hx_staticToInstance, _hx_funcToField, _hx_maxn, _hx_print, _hx_apply_self, _hx_box_mr, _hx_bit_clamp, _hx_table, _hx_bit_raw
 local _hx_pcall_default = {};
@@ -1224,6 +1229,13 @@ __kickstart__Pure_Pure_Fields_.main = function()
   vim.o.undofile = true;
   vim.wo.number = true;
   vim.o.inccommand = "split";
+  __kickstart__Pure_Pure_Fields_.autoCommands();
+end
+__kickstart__Pure_Pure_Fields_.autoCommands = function() 
+  __vim_Vimx.autocmd("Kickstart", ({"BufWritePost"}), vim.fn.expand("$MYVIMRC"), "Reload the config", function() 
+    vim.cmd("source <afile> | PackerCompile");
+  end);
+  __vim_Vimx.autocmd("Kickstart-yank", __vim__VimTypes_LuaArray_Impl_.from(_hx_tab_array({[0]="TextYankPost"}, 1)), "*", "Highlight on yank", __kickstart__Untyped_Untyped_Fields_.higlightOnYank);
 end
 __kickstart__Pure_Pure_Fields_.setupPlugins = function() 
   local _hx_1_module_status, _hx_1_module_value = _G.pcall(_G.require, "lualine");
@@ -1259,6 +1271,35 @@ __kickstart__Pure_Pure_Fields_.keymaps = function()
   vim.keymap.set(({"n"}), "<leader>w", "<Cmd>wa<CR>", ({desc = "Write all files", expr = nil, silent = true}));
 end
 
+__kickstart__Untyped_Untyped_Fields_.new = {}
+__kickstart__Untyped_Untyped_Fields_.higlightOnYank = function() 
+  do return vim.highlight.on_yank() end;
+end
+
+__lua_StringMap.new = function() 
+  local self = _hx_new(__lua_StringMap.prototype)
+  __lua_StringMap.super(self)
+  return self
+end
+__lua_StringMap.super = function(self) 
+  self.h = ({});
+end
+__lua_StringMap.prototype = _hx_e();
+__lua_StringMap.prototype.set = function(self,key,value) 
+  if (value == nil) then 
+    self.h[key] = __lua_StringMap.tnull;
+  else
+    self.h[key] = value;
+  end;
+end
+__lua_StringMap.prototype.get = function(self,key) 
+  local ret = self.h[key];
+  if (ret == __lua_StringMap.tnull) then 
+    do return nil end;
+  end;
+  do return ret end
+end
+
 __packer__Packer_Packer_Fields_.new = {}
 __packer__Packer_Packer_Fields_.ensureInstalled = function() 
   local install_path = Std.string(vim.fn.stdpath("data")) .. Std.string("/site/pack/packer/start/packer.nvim");
@@ -1269,6 +1310,52 @@ __packer__Packer_Packer_Fields_.ensureInstalled = function()
   else
     do return false end;
   end;
+end
+
+__vim__VimTypes_LuaArray_Impl_.new = {}
+__vim__VimTypes_LuaArray_Impl_.from = function(arr) 
+  local ret = ({});
+  local _g = 0;
+  local _g1 = arr.length;
+  while (_g < _g1) do 
+    _g = _g + 1;
+    local idx = _g - 1;
+    ret[idx + 1] = arr[idx];
+  end;
+  do return ret end;
+end
+
+__vim_Vimx.new = {}
+_hx_exports["vimx"] = __vim_Vimx
+__vim_Vimx.autocmd = function(groupName,events,pattern,description,cb) 
+  local group;
+  local _g = __vim_Vimx.autogroups:get(groupName);
+  if (_g == nil) then 
+    group = vim.api.nvim_create_augroup(groupName, ({clear = true}));
+    __vim_Vimx.autogroups:set(groupName, group);
+  else
+    group = _g;
+  end;
+  vim.api.nvim_create_autocmd(events, ({pattern = pattern, callback = cb, group = group, desc = (function() 
+    local _hx_1
+    if (description == nil) then 
+    _hx_1 = Std.string(Std.string(Std.string(Std.string("") .. Std.string(groupName)) .. Std.string(":[")) .. Std.string(pattern)) .. Std.string("]"); else 
+    _hx_1 = description; end
+    return _hx_1
+  end )(), once = false, nested = false}));
+end
+__vim_Vimx.copyToClipboard = function(str) 
+  vim.cmd(Std.string(Std.string("let @* = \"") .. Std.string(str)) .. Std.string("\""));
+  vim.notify("Copied to clipboard", "info");
+end
+__vim_Vimx.linesInCurrentWindow = function() 
+  do return vim.fn.line("$", 0) end;
+end
+__vim_Vimx.firstLineVisibleCurrentWindow = function() 
+  do return vim.fn.line("w0", 0) end;
+end
+__vim_Vimx.lastLineVisibleCurrentWindow = function() 
+  do return vim.fn.line("w$", 0) end;
 end
 if _hx_bit_raw then
     _hx_bit_clamp = function(v)
@@ -1300,8 +1387,13 @@ end;
 _hx_array_mt.__index = Array.prototype
 
 local _hx_static_init = function()
+  __lua_StringMap.tnull = ({});
+  
+  __vim_Vimx.autogroups = __lua_StringMap.new();
+  
   
 end
 
 _hx_static_init();
 _G.xpcall(__kickstart__Pure_Pure_Fields_.main, _hx_error)
+return _hx_exports

@@ -194,7 +194,6 @@ local Bool = _hx_e();
 local Class = _hx_e();
 local Enum = _hx_e();
 
-local _hx_exports = _hx_exports or {}
 local Array = _hx_e()
 local Math = _hx_e()
 local String = _hx_e()
@@ -202,7 +201,6 @@ local Std = _hx_e()
 __haxe_iterators_ArrayIterator = _hx_e()
 __haxe_iterators_ArrayKeyValueIterator = _hx_e()
 __kickstart_Cmp = _G.require("cmp")
-__kickstart_Lualine = _G.require("lualine")
 __kickstart_IndentBlankline = _G.require("indent_blankline")
 __kickstart_Gitsigns = _G.require("gitsigns")
 __kickstart_Comment = _G.require("Comment")
@@ -215,11 +213,7 @@ __kickstart_Luasnip = _G.require("luasnip")
 __kickstart_SchemaStore = _G.require("schemastore")
 __kickstart__Kickstart_Kickstart_Fields_ = _hx_e()
 __kickstart_Lspconfig = _G.require("lspconfig")
-__kickstart__Untyped_Untyped_Fields_ = _hx_e()
-__lua_StringMap = _hx_e()
 __vim__TableTools_TableTools_Fields_ = _hx_e()
-__vim__VimTypes_LuaArray_Impl_ = _hx_e()
-__vim_Vimx = _hx_e()
 
 local _hx_bind, _hx_bit, _hx_staticToInstance, _hx_funcToField, _hx_maxn, _hx_print, _hx_apply_self, _hx_box_mr, _hx_bit_clamp, _hx_table, _hx_bit_raw
 local _hx_pcall_default = {};
@@ -776,13 +770,6 @@ __haxe_iterators_ArrayKeyValueIterator.super = function(self,array)
 end
 
 __kickstart__Kickstart_Kickstart_Fields_.new = {}
-__kickstart__Kickstart_Kickstart_Fields_.keymaps = function() 
-  vim.g.mapleader = " ";
-  vim.g.maplocalleader = ",";
-  vim.keymap.set(({"n","v"}), "<Space>", "<Nop>", ({desc = "do nothing", expr = false, silent = true}));
-  vim.keymap.set(({"n"}), "k", "v:count == 0 ? 'gk' : 'k'", ({desc = "up when word-wrap", expr = true, silent = true}));
-  vim.keymap.set(({"n"}), "j", "v:count == 0 ? 'gj' : 'j'", ({desc = "down when word-wrap", expr = true, silent = true}));
-end
 __kickstart__Kickstart_Kickstart_Fields_.onAttach = function(x,bufnr) 
   local nmap = function(keys,func,desc) 
     vim.keymap.set("n", keys, func, ({buffer = bufnr, desc = Std.string("LSP: ") .. Std.string(desc)}));
@@ -805,19 +792,6 @@ __kickstart__Kickstart_Kickstart_Fields_.onAttach = function(x,bufnr)
   end, ({bang = false, desc = "Format current buffer with LSP", force = true, nargs = 0, range = false}));
 end
 __kickstart__Kickstart_Kickstart_Fields_.main = function() 
-  __vim_Vimx.autocmd("Kickstart", ({"BufWritePost"}), vim.fn.expand("$MYVIMRC"), "Reload the config", function() 
-    vim.cmd("source <afile> | PackerCompile");
-  end);
-  __vim_Vimx.autocmd("Kickstart-yank", __vim__VimTypes_LuaArray_Impl_.from(_hx_tab_array({[0]="TextYankPost"}, 1)), "*", "Highlight on yank", __kickstart__Untyped_Untyped_Fields_.higlightOnYank);
-  vim.cmd("colorscheme onedark");
-  vim.o.hlsearch = false;
-  vim.o.mouse = "a";
-  vim.o.breakindent = true;
-  vim.o.undofile = true;
-  vim.wo.number = true;
-  vim.o.inccommand = "split";
-  __kickstart__Kickstart_Kickstart_Fields_.keymaps();
-  __kickstart_Lualine.setup(({options = ({icons_enabled = true, theme = "onedark", component_separators = "|", section_separators = ""})}));
   __kickstart_Comment.setup();
   __kickstart_IndentBlankline.setup(({char = "┊", show_trailing_blankline_indent = false}));
   __kickstart_Gitsigns.setup(({signs = ({add = ({text = "+"}), change = ({text = "~"}), delete = ({text = "_"}), topdelete = ({text = "‾"}), changedelete = ({text = "~"})})}));
@@ -889,84 +863,9 @@ __kickstart__Kickstart_Kickstart_Fields_.main = function()
   end}));
 end
 
-__kickstart__Untyped_Untyped_Fields_.new = {}
-__kickstart__Untyped_Untyped_Fields_.higlightOnYank = function() 
-  do return vim.highlight.on_yank() end;
-end
-
-__lua_StringMap.new = function() 
-  local self = _hx_new(__lua_StringMap.prototype)
-  __lua_StringMap.super(self)
-  return self
-end
-__lua_StringMap.super = function(self) 
-  self.h = ({});
-end
-__lua_StringMap.prototype = _hx_e();
-__lua_StringMap.prototype.set = function(self,key,value) 
-  if (value == nil) then 
-    self.h[key] = __lua_StringMap.tnull;
-  else
-    self.h[key] = value;
-  end;
-end
-__lua_StringMap.prototype.get = function(self,key) 
-  local ret = self.h[key];
-  if (ret == __lua_StringMap.tnull) then 
-    do return nil end;
-  end;
-  do return ret end
-end
-
 __vim__TableTools_TableTools_Fields_.new = {}
 __vim__TableTools_TableTools_Fields_.concat = function(tableA,tableB) 
   do return vim.list_extend(vim.list_extend(({}), tableA), tableB) end;
-end
-
-__vim__VimTypes_LuaArray_Impl_.new = {}
-__vim__VimTypes_LuaArray_Impl_.from = function(arr) 
-  local ret = ({});
-  local _g = 0;
-  local _g1 = arr.length;
-  while (_g < _g1) do 
-    _g = _g + 1;
-    local idx = _g - 1;
-    ret[idx + 1] = arr[idx];
-  end;
-  do return ret end;
-end
-
-__vim_Vimx.new = {}
-_hx_exports["vimx"] = __vim_Vimx
-__vim_Vimx.autocmd = function(groupName,events,pattern,description,cb) 
-  local group;
-  local _g = __vim_Vimx.autogroups:get(groupName);
-  if (_g == nil) then 
-    group = vim.api.nvim_create_augroup(groupName, ({clear = true}));
-    __vim_Vimx.autogroups:set(groupName, group);
-  else
-    group = _g;
-  end;
-  vim.api.nvim_create_autocmd(events, ({pattern = pattern, callback = cb, group = group, desc = (function() 
-    local _hx_1
-    if (description == nil) then 
-    _hx_1 = Std.string(Std.string(Std.string(Std.string("") .. Std.string(groupName)) .. Std.string(":[")) .. Std.string(pattern)) .. Std.string("]"); else 
-    _hx_1 = description; end
-    return _hx_1
-  end )(), once = false, nested = false}));
-end
-__vim_Vimx.copyToClipboard = function(str) 
-  vim.cmd(Std.string(Std.string("let @* = \"") .. Std.string(str)) .. Std.string("\""));
-  vim.notify("Copied to clipboard", "info");
-end
-__vim_Vimx.linesInCurrentWindow = function() 
-  do return vim.fn.line("$", 0) end;
-end
-__vim_Vimx.firstLineVisibleCurrentWindow = function() 
-  do return vim.fn.line("w0", 0) end;
-end
-__vim_Vimx.lastLineVisibleCurrentWindow = function() 
-  do return vim.fn.line("w$", 0) end;
 end
 if _hx_bit_raw then
     _hx_bit_clamp = function(v)
@@ -998,13 +897,8 @@ end;
 _hx_array_mt.__index = Array.prototype
 
 local _hx_static_init = function()
-  __lua_StringMap.tnull = ({});
-  
-  __vim_Vimx.autogroups = __lua_StringMap.new();
-  
   
 end
 
 _hx_static_init();
 _G.xpcall(__kickstart__Kickstart_Kickstart_Fields_.main, _hx_error)
-return _hx_exports
