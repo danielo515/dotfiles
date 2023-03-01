@@ -1256,7 +1256,7 @@ __kickstart__Pure_Pure_Fields_.keymaps = function()
   vim.g.maplocalleader = ",";
   vim.keymap.set(({"n"}), "k", "v:count == 0 ? 'gk' : 'k'", ({desc = "up when word-wrap", expr = true, silent = true}));
   vim.keymap.set(({"n"}), "j", "v:count == 0 ? 'gj' : 'j'", ({desc = "down when word-wrap", expr = true, silent = true}));
-  vim.keymap.set(({"n"}), "<leader>w", ":wa", ({desc = "Write all files", expr = true, silent = true}));
+  vim.keymap.set(({"n"}), "<leader>w", "<Cmd>wa<CR>", ({desc = "Write all files", expr = nil, silent = true}));
 end
 
 __packer__Packer_Packer_Fields_.new = {}

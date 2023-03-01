@@ -135,7 +135,7 @@ function keymaps() {
   Keymap.set(
     t([Normal]),
     '<leader>w',
-    ":wa",
-    {desc: 'Write all files', silent: true, expr: true}
+    "<Cmd>wa<CR>",
+    {desc: 'Write all files', silent: true}
   );
 }
