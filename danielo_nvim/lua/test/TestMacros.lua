@@ -1238,7 +1238,7 @@ setmetatable(__safety_NullPointerException.prototype, { __index = __safety_Safet
 
 __test__RawTable_RawTable_Fields_.new = {}
 __test__RawTable_RawTable_Fields_.main = function()
-	local x = { name = "rabo", cmd = "Rabo" }
+	local x = { name = "rabo", culo = true, cmd = "Rabo" }
 	__haxe_Log.trace(
 		x,
 		_hx_o({

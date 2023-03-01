@@ -44,6 +44,7 @@ import plenary.Job;
  */
 // PluginSpec translated to haxe
 typedef PluginSpec = {
+  @idx(1)
   final name:String;
   final ?disable:Bool;
   final ?as:String;
