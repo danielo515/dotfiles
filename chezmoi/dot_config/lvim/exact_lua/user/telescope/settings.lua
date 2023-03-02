@@ -23,7 +23,7 @@ local new_maker = function(filepath, bufnr, opts)
     if not stat then
       return
     end
-    if stat.size > 10000 then
+    if stat.size > 100000 then
       return
     else
       previewers.buffer_previewer_maker(filepath, bufnr, opts)
