@@ -316,4 +316,32 @@ function keymaps() {
     "<Cmd>wa<CR>",
     {desc: 'Write all files', silent: true}
   );
+  final fzf = FzfLua.require();
+  if (fzf != null) {
+    Keymap.set(
+      t([Normal]),
+      '<leader>ff',
+      "<Cmd>lua require('fzf-lua').files()<CR>",
+      {desc: 'Find files', silent: true}
+    );
+    Keymap.set(
+      t([Normal]),
+      '<leader>fg',
+      "<Cmd>lua require('fzf-lua').grep()<CR>",
+      {desc: 'Grep files', silent: true}
+    );
+    Keymap.set(
+      t([Normal]),
+      '<leader>fb',
+      "<Cmd>lua require('fzf-lua').buffers()<CR>",
+      {desc: 'Find buffers', silent: true}
+    );
+    Keymap.set(
+      t([Normal]),
+      '<leader>fh',
+      "<Cmd>lua require('fzf-lua').help_tags()<CR>",
+      {desc: 'Find help tags', silent: true}
+    );
+  }
 }
+

@@ -1499,6 +1499,12 @@ __kickstart__Kickstart_Kickstart_Fields_.keymaps = function()
   vim.keymap.set(({"n"}), "k", "v:count == 0 ? 'gk' : 'k'", ({desc = "up when word-wrap", expr = true, silent = true}));
   vim.keymap.set(({"n"}), "j", "v:count == 0 ? 'gj' : 'j'", ({desc = "down when word-wrap", expr = true, silent = true}));
   vim.keymap.set(({"n"}), "<leader>w", "<Cmd>wa<CR>", ({desc = "Write all files", expr = nil, silent = true}));
+  if (__plugins__Plugins_Plugins_Fields_.safeRequire("fzf-lua") ~= nil) then 
+    vim.keymap.set(({"n"}), "<leader>ff", "<Cmd>lua require('fzf-lua').files()<CR>", ({desc = "Find files", expr = nil, silent = true}));
+    vim.keymap.set(({"n"}), "<leader>fg", "<Cmd>lua require('fzf-lua').grep()<CR>", ({desc = "Grep files", expr = nil, silent = true}));
+    vim.keymap.set(({"n"}), "<leader>fb", "<Cmd>lua require('fzf-lua').buffers()<CR>", ({desc = "Find buffers", expr = nil, silent = true}));
+    vim.keymap.set(({"n"}), "<leader>fh", "<Cmd>lua require('fzf-lua').help_tags()<CR>", ({desc = "Find help tags", expr = nil, silent = true}));
+  end;
 end
 
 __kickstart__Untyped_Untyped_Fields_.new = {}
