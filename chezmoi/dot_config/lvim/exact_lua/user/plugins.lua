@@ -184,6 +184,7 @@ local plugins = {
   -- call any "make" program and populate location list with it
   {
     "neomake/neomake",
+    cmd = "Neomake",
     setup = function()
       vim.g.neomake_open_list = 2 -- open the list automatically:
     end,
