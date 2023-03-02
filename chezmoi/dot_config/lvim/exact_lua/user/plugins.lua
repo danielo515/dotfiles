@@ -1,4 +1,5 @@
 local chezmoi = require "user.util.chezmoi"
+-- Look at the bottom
 local plugins = {
   -- themes
   -- "folke/tokyonight.nvim", -- builtin in lunarvim
@@ -231,4 +232,9 @@ local plugins = {
     end,
   },
 }
-return plugins
+local concat_lists = require("danielo").concat_lists
+local treesitter = require "user.treesitter"
+treesitter.config()
+local inject_sha = require("user.util.plugins").inject_snapshot_commit
+local snapshot_path = join_paths(get_config_dir(), "snapshots", "default.json")
+return inject_sha(concat_lists(plugins, unpack(treesitter.plugins), require "user.telescope.settings"), snapshot_path)

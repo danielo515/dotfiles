@@ -1,5 +1,4 @@
 require "danielo.globals"
-local concat_lists = require("danielo").concat_lists
 -- generic LSP settings
 lvim.lsp.installer.setup.automatic_servers_installation = true
 -- Required for ocaml-lsp TODO: do not use hardcoded path
@@ -89,12 +88,8 @@ D.pconf "user.indent-blankline"
 D.pconf "user.filetype"
 -- require("user.lualine").config()
 require("luasnip.loaders.from_snipmate").lazy_load()
-local treesitter = require "user.treesitter"
-treesitter.config()
 local plugins = require "user.plugins"
-local inject_sha = require("user.util.plugins").inject_snapshot_commit
-local snapshot_path = join_paths(get_config_dir(), "snapshots", "default.json")
-lvim.plugins = inject_sha(concat_lists(plugins, treesitter.plugins, require "user.telescope.settings"), snapshot_path)
+lvim.plugins = plugins
 D.pconf "user.autocommands"
 -- I call this after because it appends to the existing Danielo autocmd group
 D.pconf "user.auto-resize-window"
