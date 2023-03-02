@@ -12,7 +12,7 @@ local open_lets = {
       local contains_lets_binding = current_line_content:match "let%.(%w+)"
 
       local first_line = context.content[1]
-
+      -- checks that lets is not open already but we have a lets binding in current line
       if first_line ~= letsOpen and contains_lets_binding then
         return {
           {
