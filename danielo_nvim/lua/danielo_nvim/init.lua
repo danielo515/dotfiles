@@ -209,6 +209,7 @@ __plenary_Job = _G.require("plenary.job")
 __vim__TableTools_TableTools_Fields_ = _hx_e()
 __vim__VimTypes_LuaArray_Impl_ = _hx_e()
 __vim_Vimx = _hx_e()
+__vim__Vimx_Vimx_Fields_ = _hx_e()
 
 local _hx_bind, _hx_bit, _hx_staticToInstance, _hx_funcToField, _hx_maxn, _hx_print, _hx_apply_self, _hx_box_mr, _hx_bit_clamp, _hx_table, _hx_bit_raw
 local _hx_pcall_default = {};
@@ -964,6 +965,11 @@ end
 __vim_Vimx.lastLineVisibleCurrentWindow = function() 
   do return vim.fn.line("w$", 0) end;
 end
+__vim_Vimx.join_paths = function(paths) 
+  do return paths:join(__vim__Vimx_Vimx_Fields_.pathSeparator) end;
+end
+
+__vim__Vimx_Vimx_Fields_.new = {}
 if _hx_bit_raw then
     _hx_bit_clamp = function(v)
     if v <= 2147483647 and v >= -2147483648 then
@@ -997,6 +1003,14 @@ local _hx_static_init = function()
   __lua_StringMap.tnull = ({});
   
   __vim_Vimx.autogroups = __lua_StringMap.new();
+  
+  __vim__Vimx_Vimx_Fields_.pathSeparator = (function() 
+    local _hx_1
+    if (vim.loop.os_uname().sysname == "Windows") then 
+    _hx_1 = "\\"; else 
+    _hx_1 = "/"; end
+    return _hx_1
+  end )();
   
   
 end

@@ -275,3 +275,35 @@ typedef VimGOpts = {
   /* Local leader key to use */
   var maplocalleader:String;
 }
+
+abstract Vector3< A, B, C >(lua.Table< Int, Dynamic >) {
+  inline public function first():A {
+    return this[1];
+  }
+
+  inline public function second():B {
+    return this[2];
+  }
+
+  inline public function last():C {
+    return this[3];
+  }
+}
+
+abstract Vector4< A, B, C, D >(lua.Table< Int, Dynamic >) {
+  inline public function first():A {
+    return this[1];
+  }
+
+  inline public function second():B {
+    return this[2];
+  }
+
+  inline public function third():C {
+    return this[3];
+  }
+
+  inline public function last():D {
+    return this[4];
+  }
+}

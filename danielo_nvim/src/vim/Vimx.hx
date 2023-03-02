@@ -1,12 +1,15 @@
 package vim;
 
 import vim.Vim.Fn;
+import vim.Vim.Loop;
 import vim.Api;
 import lua.StringMap;
 import vim.VimTypes;
 import haxe.Constraints.Function;
 
 using Safety;
+
+final pathSeparator = Loop.os_uname().sysname == 'Windows' ? '\\' : '/';
 
 @:expose("vimx")
 class Vimx {
@@ -71,4 +74,13 @@ class Vimx {
   public static inline function lastLineVisibleCurrentWindow():Int {
     return Fn.line('w$', CurrentWindow);
   };
+
+  /**
+    Given a list of paths as strings, joins them using the
+    path separator.
+    This is supposed to be used from Haxe code
+   */
+  public static function join_paths(paths:Array< String >):String {
+    return paths.join(pathSeparator);
+  }
 }
