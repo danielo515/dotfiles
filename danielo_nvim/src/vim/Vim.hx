@@ -85,11 +85,11 @@ abstract Vector4< A, B, C, D >(lua.Table< Int, Dynamic >) {
   }
 
   inline public function third():C {
-    return this[2];
+    return this[3];
   }
 
   inline public function last():D {
-    return this[3];
+    return this[4];
   }
 }
 

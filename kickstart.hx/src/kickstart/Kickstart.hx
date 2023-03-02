@@ -62,6 +62,12 @@ function main() {
     {name: "lukas-reineke/indent-blankline.nvim"}, // Add indentation guides even on blank lines
     {name: "numToStr/Comment.nvim"}, // "gc" to comment visual regions/lines
     {name: "tpope/vim-sleuth"}, // Detect tabstop and shiftwidth automatically
+    {
+      name: "zbirenbaum/copilot.lua",
+      cmd: "Copilot",
+      event: ["InsertEnter"]
+    }
+
   ];
   final is_bootstrap = Packer.init(plugins);
   if (is_bootstrap) {

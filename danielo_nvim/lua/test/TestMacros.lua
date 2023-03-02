@@ -234,6 +234,7 @@ __safety_NullPointerException = _hx_e()
 __test__RawTable_RawTable_Fields_ = _hx_e()
 __test__TestMacros_TestMacros_Fields_ = _hx_e()
 __vim__Vim_Vector3_Impl_ = _hx_e()
+__vim__Vim_Vector4_Impl_ = _hx_e()
 __vim__Vim_Vim_Fields_ = _hx_e()
 __vim__VimTypes_GroupOpts_Impl_ = _hx_e()
 __vim__VimTypes_LuaArray_Impl_ = _hx_e()
@@ -1338,6 +1339,28 @@ end
 __vim__Vim_Vector3_Impl_.last = function(this1)
 	do
 		return this1[3]
+	end
+end
+
+__vim__Vim_Vector4_Impl_.new = {}
+__vim__Vim_Vector4_Impl_.first = function(this1)
+	do
+		return this1[1]
+	end
+end
+__vim__Vim_Vector4_Impl_.second = function(this1)
+	do
+		return this1[2]
+	end
+end
+__vim__Vim_Vector4_Impl_.third = function(this1)
+	do
+		return this1[3]
+	end
+end
+__vim__Vim_Vector4_Impl_.last = function(this1)
+	do
+		return this1[4]
 	end
 end
 
