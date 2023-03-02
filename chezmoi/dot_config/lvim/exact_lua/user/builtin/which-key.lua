@@ -159,6 +159,34 @@ keymap["r"]["r"] = {
   "[r]epeat word",
 }
 
+vim.api.nvim_create_autocmd("Filetype", {
+  pattern = "haxe",
+  callback = function()
+    require("which-key").register({
+      name = "haxe",
+      o = {
+        function()
+          D.vim.send_keys(":s/\\v(\\i+)\\s*\\=/\\1:/g" .. string.rep("<Left>", 4))
+        end,
+        "haxe from lua [o]bject",
+      },
+      b = {
+        function()
+          D.vim.send_keys(":s/\\v(true|false)/Bool/g" .. string.rep("<Left>", 4))
+        end,
+        "haxe from lua [b]oolean type",
+      },
+    }, {
+      mode = "n",
+      prefix = "<leader>rh",
+      buffer = 0,
+      silent = false,
+      noremap = true,
+      nowait = false,
+    })
+  end,
+})
+
 keymap["r"]["b"] = { name = "SearchReplaceMultiBuffer" }
 
 keymap["r"]["b"]["s"] = { "<CMD>SearchReplaceMultiBufferSelections<CR>", "SearchReplaceMultiBuffer [s]election list" }
