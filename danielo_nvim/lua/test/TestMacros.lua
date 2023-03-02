@@ -214,12 +214,34 @@ local Enum = _hx_e()
 
 local Array = _hx_e()
 local Math = _hx_e()
+local Safety = _hx_e()
 local String = _hx_e()
 local Std = _hx_e()
 ___TableWrapper_TableWrapper_Impl_ = _hx_e()
+___TableWrapper_TableWrapper_Fields_ = _hx_e()
+__haxe_Exception = _hx_e()
+__haxe_Log = _hx_e()
+__haxe_NativeStackTrace = _hx_e()
 __haxe_iterators_ArrayIterator = _hx_e()
 __haxe_iterators_ArrayKeyValueIterator = _hx_e()
+__lua_Thread = _hx_e()
+__packer__Macro_Macro_Fields_ = _hx_e()
+__packer__Packer_Plugin_Impl_ = _hx_e()
+__packer__Packer_Packer_Fields_ = _hx_e()
+__plenary_Job = _G.require("plenary.job")
+__safety_SafetyException = _hx_e()
+__safety_NullPointerException = _hx_e()
+__test__RawTable_RawTable_Fields_ = _hx_e()
 __test__TestMacros_TestMacros_Fields_ = _hx_e()
+__vim__Vim_Vector3_Impl_ = _hx_e()
+__vim__Vim_Vector4_Impl_ = _hx_e()
+__vim__Vim_Vim_Fields_ = _hx_e()
+__vim__VimTypes_GroupOpts_Impl_ = _hx_e()
+__vim__VimTypes_LuaArray_Impl_ = _hx_e()
+__vim__VimTypes_LuaObj_Impl_ = _hx_e()
+__vim__VimTypes_ExpandString_Impl_ = _hx_e()
+__vim_types_ArgCompleteEnum = _hx_e()
+__vim_types__ArgComplete_ArgComplete_Impl_ = _hx_e()
 
 local _hx_bind, _hx_bit, _hx_staticToInstance, _hx_funcToField, _hx_maxn, _hx_print, _hx_apply_self, _hx_box_mr, _hx_bit_clamp, _hx_table, _hx_bit_raw
 local _hx_pcall_default = {}
@@ -629,6 +651,79 @@ Math.min = function(a, b)
 	end
 end
 
+Safety.new = {}
+Safety["or"] = function(value, defaultValue)
+	if value == nil then
+		do
+			return defaultValue
+		end
+	else
+		do
+			return value
+		end
+	end
+end
+Safety.orGet = function(value, getter)
+	if value == nil then
+		do
+			return getter()
+		end
+	else
+		do
+			return value
+		end
+	end
+end
+Safety.sure = function(value)
+	if value == nil then
+		_G.error(__safety_NullPointerException.new("Null pointer in .sure() call"), 0)
+	else
+		do
+			return value
+		end
+	end
+end
+Safety.unsafe = function(value)
+	do
+		return value
+	end
+end
+Safety.check = function(value, callback)
+	if value ~= nil then
+		do
+			return callback(value)
+		end
+	else
+		do
+			return false
+		end
+	end
+end
+Safety.let = function(value, callback)
+	if value == nil then
+		do
+			return nil
+		end
+	else
+		do
+			return callback(value)
+		end
+	end
+end
+Safety.run = function(value, callback)
+	if value ~= nil then
+		callback(value)
+	end
+end
+Safety.apply = function(value, callback)
+	if value ~= nil then
+		callback(value)
+	end
+	do
+		return value
+	end
+end
+
 String.new = function(string)
 	local self = _hx_new(String.prototype)
 	String.super(self, string)
@@ -877,6 +972,133 @@ end
 
 ___TableWrapper_TableWrapper_Impl_.new = {}
 
+___TableWrapper_TableWrapper_Fields_.new = {}
+___TableWrapper_TableWrapper_Fields_.uniqueValues = function(array, indexer)
+	local index_h = {}
+	local _g = _hx_tab_array({}, 0)
+	local _g1 = 0
+	local _hx_continue_1 = false
+	while _g1 < array.length do
+		repeat
+			local val = array[_g1]
+			_g1 = _g1 + 1
+			local key = indexer(val)
+			if index_h[key] ~= nil then
+				break
+			end
+			index_h[key] = true
+			_g:push(val)
+		until true
+		if _hx_continue_1 then
+			_hx_continue_1 = false
+			break
+		end
+	end
+	do
+		return _g
+	end
+end
+
+__haxe_Exception.new = function(message, previous, native)
+	local self = _hx_new(__haxe_Exception.prototype)
+	__haxe_Exception.super(self, message, previous, native)
+	return self
+end
+__haxe_Exception.super = function(self, message, previous, native)
+	self.__skipStack = 0
+	self.__exceptionMessage = message
+	self.__previousException = previous
+	if native ~= nil then
+		self.__nativeException = native
+		self.__nativeStack = __haxe_NativeStackTrace.exceptionStack()
+	else
+		self.__nativeException = self
+		self.__nativeStack = __haxe_NativeStackTrace.callStack()
+		self.__skipStack = 1
+	end
+end
+__haxe_Exception.prototype = _hx_e()
+__haxe_Exception.prototype.toString = function(self)
+	do
+		return self:get_message()
+	end
+end
+__haxe_Exception.prototype.get_message = function(self)
+	do
+		return self.__exceptionMessage
+	end
+end
+
+__haxe_Log.new = {}
+__haxe_Log.formatOutput = function(v, infos)
+	local str = Std.string(v)
+	if infos == nil then
+		do
+			return str
+		end
+	end
+	local pstr = Std.string(Std.string(infos.fileName) .. Std.string(":")) .. Std.string(infos.lineNumber)
+	if infos.customParams ~= nil then
+		local _g = 0
+		local _g1 = infos.customParams
+		while _g < _g1.length do
+			local v = _g1[_g]
+			_g = _g + 1
+			str = Std.string(str) .. Std.string((Std.string(", ") .. Std.string(Std.string(v))))
+		end
+	end
+	do
+		return Std.string(Std.string(pstr) .. Std.string(": ")) .. Std.string(str)
+	end
+end
+__haxe_Log.trace = function(v, infos)
+	local str = __haxe_Log.formatOutput(v, infos)
+	_hx_print(str)
+end
+
+__haxe_NativeStackTrace.new = {}
+__haxe_NativeStackTrace.saveStack = function(exception) end
+__haxe_NativeStackTrace.callStack = function()
+	local _g = debug.traceback()
+	if _g == nil then
+		do
+			return _hx_tab_array({}, 0)
+		end
+	else
+		local s = _g
+		local idx = 1
+		local ret = _hx_tab_array({}, 0)
+		while idx ~= nil do
+			local newidx = 0
+			if #"\n" > 0 then
+				newidx = _G.string.find(s, "\n", idx, true)
+			else
+				if idx >= #s then
+					newidx = nil
+				else
+					newidx = idx + 1
+				end
+			end
+			if newidx ~= nil then
+				local match = _G.string.sub(s, idx, newidx - 1)
+				ret:push(match)
+				idx = newidx + #"\n"
+			else
+				ret:push(_G.string.sub(s, idx, #s))
+				idx = nil
+			end
+		end
+		do
+			return ret:slice(3)
+		end
+	end
+end
+__haxe_NativeStackTrace.exceptionStack = function()
+	do
+		return _hx_tab_array({}, 0)
+	end
+end
+
 __haxe_iterators_ArrayIterator.new = function(array)
 	local self = _hx_new(__haxe_iterators_ArrayIterator.prototype)
 	__haxe_iterators_ArrayIterator.super(self, array)
@@ -913,49 +1135,156 @@ __haxe_iterators_ArrayKeyValueIterator.super = function(self, array)
 	self.array = array
 end
 
-__test__TestMacros_TestMacros_Fields_.new = {}
-__test__TestMacros_TestMacros_Fields_.lotOfNesting = function()
-	local _dce1 = ___TableWrapper_TableWrapper_Impl_.check(
+__lua_Thread.new = {}
+
+__packer__Macro_Macro_Fields_.new = {}
+
+__packer__Packer_Plugin_Impl_.new = {}
+__packer__Packer_Plugin_Impl_.from = function(spec)
+	do
+		return {
+			spec.name,
+			disable = spec.disable,
+			as = spec.as,
+			installer = spec.installer,
+			updater = spec.updater,
+			after = spec.after,
+			rtp = spec.rtp,
+			opt = spec.opt,
+			bufread = spec.bufread,
+			branch = spec.branch,
+			tag = spec.tag,
+			commit = spec.commit,
+			lock = spec.lock,
+			run = spec.run,
+			requires = spec.requires,
+			rocks = spec.rocks,
+			config = spec.config,
+			setup = spec.setup,
+			cmd = spec.cmd,
+			ft = spec.ft,
+			keys = spec.keys,
+			event = spec.event,
+			fn = spec.fn,
+			cond = spec.cond,
+			module = spec.module,
+			module_pattern = spec.module_pattern,
+		}
+	end
+end
+
+__packer__Packer_Packer_Fields_.new = {}
+__packer__Packer_Packer_Fields_.get_plugin_version = function(name)
+	if _G.packer_plugins ~= nil then
+		local path = _G.packer_plugins[name].path
+		local args = {
+			command = "git",
+			cwd = path,
+			args = { "rev-parse", "--short", "HEAD" },
+			on_stderr = function(args, return_val)
+				vim.pretty_print("Job got stderr", args, return_val)
+			end,
+		}
+		local job = __plenary_Job:new(args)
+		do
+			return job:sync()[1]
+		end
+	else
+		do
+			return "unknown"
+		end
+	end
+end
+__packer__Packer_Packer_Fields_.ensureInstalled = function()
+	local install_path = Std.string(vim.fn.stdpath("data")) .. Std.string("/site/pack/packer/start/packer.nvim")
+	if vim.fn.empty(vim.fn.glob(install_path, nil)) > 0 then
+		vim.fn.system(
+			{ "git", "clone", "--depth", "1", "https://github.com/wbthomason/packer.nvim", install_path },
+			nil
+		)
+		vim.cmd("packadd packer.nvim")
+		do
+			return true
+		end
+	else
+		do
+			return false
+		end
+	end
+end
+
+__safety_SafetyException.new = function(message, previous, native)
+	local self = _hx_new(__safety_SafetyException.prototype)
+	__safety_SafetyException.super(self, message, previous, native)
+	return self
+end
+__safety_SafetyException.super = function(self, message, previous, native)
+	__haxe_Exception.super(self, message, previous, native)
+end
+__safety_SafetyException.prototype = _hx_e()
+__safety_SafetyException.__super__ = __haxe_Exception
+setmetatable(__safety_SafetyException.prototype, { __index = __haxe_Exception.prototype })
+
+__safety_NullPointerException.new = function(message, previous, native)
+	local self = _hx_new(__safety_NullPointerException.prototype)
+	__safety_NullPointerException.super(self, message, previous, native)
+	return self
+end
+__safety_NullPointerException.super = function(self, message, previous, native)
+	__safety_SafetyException.super(self, message, previous, native)
+end
+__safety_NullPointerException.prototype = _hx_e()
+__safety_NullPointerException.__super__ = __safety_SafetyException
+setmetatable(__safety_NullPointerException.prototype, { __index = __safety_SafetyException.prototype })
+
+__test__RawTable_RawTable_Fields_.new = {}
+__test__RawTable_RawTable_Fields_.main = function()
+	local x = { name = "rabo", culo = true, cmd = "Rabo" }
+	__haxe_Log.trace(
+		x,
 		_hx_o({
-			__fields__ = { doX = true, test = true, objWithArr = true, nest = true, arrWithObjs = true },
-			doX = 99,
-			test = true,
-			objWithArr = _hx_o({
-				__fields__ = { x = true },
-				x = _hx_tab_array(
-					{
-						[0] = _hx_o({ __fields__ = { y = true }, y = "obj -> array -> obj " }),
-						_hx_o({ __fields__ = { y = true }, y = "second obj -> array -> obj " }),
-					},
-					2
-				),
-			}),
-			nest = _hx_o({
-				__fields__ = { a = true },
-				a = _hx_o({
-					__fields__ = { renest = true, b = true },
-					renest = 99,
-					b = _hx_o({ __fields__ = { c = true }, c = _hx_o({ __fields__ = { meganest = true }, meganest = 88 }) }),
-				}),
-			}),
-			arrWithObjs = _hx_tab_array(
-				{
-					[0] = _hx_o({ __fields__ = { x = true }, x = "inside array -> obj " }),
-					_hx_o({ __fields__ = { x = true }, x = "second array -> obj " }),
-				},
-				2
-			),
+			__fields__ = { fileName = true, lineNumber = true, className = true, methodName = true },
+			fileName = "test/RawTable.hx",
+			lineNumber = 8,
+			className = "test._RawTable.RawTable_Fields_",
+			methodName = "main",
 		})
 	)
-	__test__TestMacros_TestMacros_Fields_.testMethod(
-		{
-			arrWithObjs = { { x = "inside array -> obj " }, { x = "second array -> obj " } },
-			doX = 99,
-			nest = { a = { renest = 99, b = { c = { meganest = 88 } } } },
-			objWithArr = { x = { { y = "obj -> array -> obj " }, { y = "second obj -> array -> obj " } } },
-			test = true,
-		}
-	)
+end
+
+__test__TestMacros_TestMacros_Fields_.new = {}
+__test__TestMacros_TestMacros_Fields_.lotOfNesting = function()
+	local _dce1 = ___TableWrapper_TableWrapper_Impl_.check(_hx_o({
+		__fields__ = { doX = true, test = true, objWithArr = true, nest = true, arrWithObjs = true },
+		doX = 99,
+		test = true,
+		objWithArr = _hx_o({
+			__fields__ = { x = true },
+			x = _hx_tab_array({
+				[0] = _hx_o({ __fields__ = { y = true }, y = "obj -> array -> obj " }),
+				_hx_o({ __fields__ = { y = true }, y = "second obj -> array -> obj " }),
+			}, 2),
+		}),
+		nest = _hx_o({
+			__fields__ = { a = true },
+			a = _hx_o({
+				__fields__ = { renest = true, b = true },
+				renest = 99,
+				b = _hx_o({ __fields__ = { c = true }, c = _hx_o({ __fields__ = { meganest = true }, meganest = 88 }) }),
+			}),
+		}),
+		arrWithObjs = _hx_tab_array({
+			[0] = _hx_o({ __fields__ = { x = true }, x = "inside array -> obj " }),
+			_hx_o({ __fields__ = { x = true }, x = "second array -> obj " }),
+		}, 2),
+	}))
+	__test__TestMacros_TestMacros_Fields_.testMethod({
+		arrWithObjs = { { x = "inside array -> obj " }, { x = "second array -> obj " } },
+		doX = 99,
+		nest = { a = { renest = 99, b = { c = { meganest = 88 } } } },
+		objWithArr = { x = { { y = "obj -> array -> obj " }, { y = "second obj -> array -> obj " } } },
+		test = true,
+	})
 end
 __test__TestMacros_TestMacros_Fields_.objectWithLambdas = function()
 	local _dce2 = ___TableWrapper_TableWrapper_Impl_.check(_hx_o({
@@ -995,6 +1324,402 @@ __test__TestMacros_TestMacros_Fields_.objectWithLambdas = function()
 		},
 	})
 end
+
+__vim__Vim_Vector3_Impl_.new = {}
+__vim__Vim_Vector3_Impl_.first = function(this1)
+	do
+		return this1[1]
+	end
+end
+__vim__Vim_Vector3_Impl_.second = function(this1)
+	do
+		return this1[2]
+	end
+end
+__vim__Vim_Vector3_Impl_.last = function(this1)
+	do
+		return this1[3]
+	end
+end
+
+__vim__Vim_Vector4_Impl_.new = {}
+__vim__Vim_Vector4_Impl_.first = function(this1)
+	do
+		return this1[1]
+	end
+end
+__vim__Vim_Vector4_Impl_.second = function(this1)
+	do
+		return this1[2]
+	end
+end
+__vim__Vim_Vector4_Impl_.third = function(this1)
+	do
+		return this1[3]
+	end
+end
+__vim__Vim_Vector4_Impl_.last = function(this1)
+	do
+		return this1[4]
+	end
+end
+
+__vim__Vim_Vim_Fields_.new = {}
+__vim__Vim_Vim_Fields_.comment = function()
+	---@diagnostic disable;
+end
+
+__vim__VimTypes_GroupOpts_Impl_.new = {}
+__vim__VimTypes_GroupOpts_Impl_._new = function(clear)
+	local this1 = { clear = clear }
+	do
+		return this1
+	end
+end
+__vim__VimTypes_GroupOpts_Impl_.fromObj = function(arg)
+	local this1 = { clear = arg.clear }
+	do
+		return this1
+	end
+end
+
+__vim__VimTypes_LuaArray_Impl_.new = {}
+__vim__VimTypes_LuaArray_Impl_.from = function(arr)
+	local ret = {}
+	local _g = 0
+	local _g1 = arr.length
+	while _g < _g1 do
+		_g = _g + 1
+		local idx = _g - 1
+		ret[idx + 1] = arr[idx]
+	end
+	do
+		return ret
+	end
+end
+__vim__VimTypes_LuaArray_Impl_.map = function(this1, fn)
+	do
+		return vim.tbl_map(fn, this1)
+	end
+end
+
+__vim__VimTypes_LuaObj_Impl_.new = {}
+__vim__VimTypes_LuaObj_Impl_.fromType = function(obj)
+	obj.__fields__ = nil
+	_G.setmetatable(obj, nil)
+	do
+		return obj
+	end
+end
+__vim__VimTypes_LuaObj_Impl_.to = function(this1)
+	do
+		return this1
+	end
+end
+
+__vim__VimTypes_ExpandString_Impl_.new = {}
+__vim__VimTypes_ExpandString_Impl_._new = function(path)
+	local this1 = path
+	do
+		return this1
+	end
+end
+__vim__VimTypes_ExpandString_Impl_.from = function(ref)
+	local this1 = ref
+	do
+		return this1
+	end
+end
+__vim__VimTypes_ExpandString_Impl_.plus0 = function(this1, modifiers)
+	do
+		return _G.string.format("%s%s", this1, modifiers)
+	end
+end
+__vim__VimTypes_ExpandString_Impl_.plus = function(path, modifiers)
+	do
+		return _G.string.format("%s%s", path, modifiers)
+	end
+end
+
+__vim_types_ArgCompleteEnum.Custom = function(vimFn)
+	local _x = _hx_tab_array({ [0] = "Custom", 0, vimFn, __enum__ = __vim_types_ArgCompleteEnum }, 3)
+	return _x
+end
+__vim_types_ArgCompleteEnum.CustomLua = function(luaRef)
+	local _x = _hx_tab_array({ [0] = "CustomLua", 1, luaRef, __enum__ = __vim_types_ArgCompleteEnum }, 3)
+	return _x
+end
+__vim_types_ArgCompleteEnum.ArgList = _hx_tab_array({ [0] = "ArgList", 2, __enum__ = __vim_types_ArgCompleteEnum }, 2)
+
+__vim_types_ArgCompleteEnum.Augroup = _hx_tab_array({ [0] = "Augroup", 3, __enum__ = __vim_types_ArgCompleteEnum }, 2)
+
+__vim_types_ArgCompleteEnum.Buffer = _hx_tab_array({ [0] = "Buffer", 4, __enum__ = __vim_types_ArgCompleteEnum }, 2)
+
+__vim_types_ArgCompleteEnum.Behave = _hx_tab_array({ [0] = "Behave", 5, __enum__ = __vim_types_ArgCompleteEnum }, 2)
+
+__vim_types_ArgCompleteEnum.Color = _hx_tab_array({ [0] = "Color", 6, __enum__ = __vim_types_ArgCompleteEnum }, 2)
+
+__vim_types_ArgCompleteEnum.Command = _hx_tab_array({ [0] = "Command", 7, __enum__ = __vim_types_ArgCompleteEnum }, 2)
+
+__vim_types_ArgCompleteEnum.Compiler = _hx_tab_array({ [0] = "Compiler", 8, __enum__ = __vim_types_ArgCompleteEnum }, 2)
+
+__vim_types_ArgCompleteEnum.Dir = _hx_tab_array({ [0] = "Dir", 9, __enum__ = __vim_types_ArgCompleteEnum }, 2)
+
+__vim_types_ArgCompleteEnum.Environment =
+	_hx_tab_array({ [0] = "Environment", 10, __enum__ = __vim_types_ArgCompleteEnum }, 2)
+
+__vim_types_ArgCompleteEnum.Event = _hx_tab_array({ [0] = "Event", 11, __enum__ = __vim_types_ArgCompleteEnum }, 2)
+
+__vim_types_ArgCompleteEnum.Expression =
+	_hx_tab_array({ [0] = "Expression", 12, __enum__ = __vim_types_ArgCompleteEnum }, 2)
+
+__vim_types_ArgCompleteEnum.File = _hx_tab_array({ [0] = "File", 13, __enum__ = __vim_types_ArgCompleteEnum }, 2)
+
+__vim_types_ArgCompleteEnum.File_in_path =
+	_hx_tab_array({ [0] = "File_in_path", 14, __enum__ = __vim_types_ArgCompleteEnum }, 2)
+
+__vim_types_ArgCompleteEnum.Filetype =
+	_hx_tab_array({ [0] = "Filetype", 15, __enum__ = __vim_types_ArgCompleteEnum }, 2)
+
+__vim_types_ArgCompleteEnum.Function =
+	_hx_tab_array({ [0] = "Function", 16, __enum__ = __vim_types_ArgCompleteEnum }, 2)
+
+__vim_types_ArgCompleteEnum.Help = _hx_tab_array({ [0] = "Help", 17, __enum__ = __vim_types_ArgCompleteEnum }, 2)
+
+__vim_types_ArgCompleteEnum.Highlight =
+	_hx_tab_array({ [0] = "Highlight", 18, __enum__ = __vim_types_ArgCompleteEnum }, 2)
+
+__vim_types_ArgCompleteEnum.History = _hx_tab_array({ [0] = "History", 19, __enum__ = __vim_types_ArgCompleteEnum }, 2)
+
+__vim_types_ArgCompleteEnum.Locale = _hx_tab_array({ [0] = "Locale", 20, __enum__ = __vim_types_ArgCompleteEnum }, 2)
+
+__vim_types_ArgCompleteEnum.Lua = _hx_tab_array({ [0] = "Lua", 21, __enum__ = __vim_types_ArgCompleteEnum }, 2)
+
+__vim_types_ArgCompleteEnum.Mapclear =
+	_hx_tab_array({ [0] = "Mapclear", 22, __enum__ = __vim_types_ArgCompleteEnum }, 2)
+
+__vim_types_ArgCompleteEnum.Mapping = _hx_tab_array({ [0] = "Mapping", 23, __enum__ = __vim_types_ArgCompleteEnum }, 2)
+
+__vim_types_ArgCompleteEnum.Menu = _hx_tab_array({ [0] = "Menu", 24, __enum__ = __vim_types_ArgCompleteEnum }, 2)
+
+__vim_types_ArgCompleteEnum.Messages =
+	_hx_tab_array({ [0] = "Messages", 25, __enum__ = __vim_types_ArgCompleteEnum }, 2)
+
+__vim_types_ArgCompleteEnum.Option = _hx_tab_array({ [0] = "Option", 26, __enum__ = __vim_types_ArgCompleteEnum }, 2)
+
+__vim_types_ArgCompleteEnum.Packadd = _hx_tab_array({ [0] = "Packadd", 27, __enum__ = __vim_types_ArgCompleteEnum }, 2)
+
+__vim_types_ArgCompleteEnum.Shellcmd =
+	_hx_tab_array({ [0] = "Shellcmd", 28, __enum__ = __vim_types_ArgCompleteEnum }, 2)
+
+__vim_types_ArgCompleteEnum.Sign = _hx_tab_array({ [0] = "Sign", 29, __enum__ = __vim_types_ArgCompleteEnum }, 2)
+
+__vim_types_ArgCompleteEnum.Syntax = _hx_tab_array({ [0] = "Syntax", 30, __enum__ = __vim_types_ArgCompleteEnum }, 2)
+
+__vim_types_ArgCompleteEnum.Syntime = _hx_tab_array({ [0] = "Syntime", 31, __enum__ = __vim_types_ArgCompleteEnum }, 2)
+
+__vim_types_ArgCompleteEnum.Tag = _hx_tab_array({ [0] = "Tag", 32, __enum__ = __vim_types_ArgCompleteEnum }, 2)
+
+__vim_types_ArgCompleteEnum.Tag_listfiles =
+	_hx_tab_array({ [0] = "Tag_listfiles", 33, __enum__ = __vim_types_ArgCompleteEnum }, 2)
+
+__vim_types_ArgCompleteEnum.User = _hx_tab_array({ [0] = "User", 34, __enum__ = __vim_types_ArgCompleteEnum }, 2)
+
+__vim_types_ArgCompleteEnum.Var = _hx_tab_array({ [0] = "Var", 35, __enum__ = __vim_types_ArgCompleteEnum }, 2)
+
+__vim_types__ArgComplete_ArgComplete_Impl_.new = {}
+__vim_types__ArgComplete_ArgComplete_Impl_._new = function(arg)
+	local this1 = arg
+	do
+		return this1
+	end
+end
+__vim_types__ArgComplete_ArgComplete_Impl_.from = function(enumValue)
+	local tmp = enumValue[1]
+	if tmp == 0 then
+		local ref = enumValue[2]
+		local this1 = Std.string("custom,") .. Std.string(ref)
+		do
+			return this1
+		end
+	elseif tmp == 1 then
+		local ref = enumValue[2]
+		local this1 = Std.string("customlist,v:lua.") .. Std.string(ref)
+		do
+			return this1
+		end
+	elseif tmp == 2 then
+		local this1 = "arglist"
+		do
+			return this1
+		end
+	elseif tmp == 3 then
+		local this1 = "augroup"
+		do
+			return this1
+		end
+	elseif tmp == 4 then
+		local this1 = "buffer"
+		do
+			return this1
+		end
+	elseif tmp == 5 then
+		local this1 = "behave"
+		do
+			return this1
+		end
+	elseif tmp == 6 then
+		local this1 = "color"
+		do
+			return this1
+		end
+	elseif tmp == 7 then
+		local this1 = "command"
+		do
+			return this1
+		end
+	elseif tmp == 8 then
+		local this1 = "compiler"
+		do
+			return this1
+		end
+	elseif tmp == 9 then
+		local this1 = "dir"
+		do
+			return this1
+		end
+	elseif tmp == 10 then
+		local this1 = "environment"
+		do
+			return this1
+		end
+	elseif tmp == 11 then
+		local this1 = "event"
+		do
+			return this1
+		end
+	elseif tmp == 12 then
+		local this1 = "expression"
+		do
+			return this1
+		end
+	elseif tmp == 13 then
+		local this1 = "file"
+		do
+			return this1
+		end
+	elseif tmp == 14 then
+		local this1 = "file_in_path"
+		do
+			return this1
+		end
+	elseif tmp == 15 then
+		local this1 = "filetype"
+		do
+			return this1
+		end
+	elseif tmp == 16 then
+		local this1 = "function"
+		do
+			return this1
+		end
+	elseif tmp == 17 then
+		local this1 = "help"
+		do
+			return this1
+		end
+	elseif tmp == 18 then
+		local this1 = "highlight"
+		do
+			return this1
+		end
+	elseif tmp == 19 then
+		local this1 = "history"
+		do
+			return this1
+		end
+	elseif tmp == 20 then
+		local this1 = "locale"
+		do
+			return this1
+		end
+	elseif tmp == 21 then
+		local this1 = "lua"
+		do
+			return this1
+		end
+	elseif tmp == 22 then
+		local this1 = "mapclear"
+		do
+			return this1
+		end
+	elseif tmp == 23 then
+		local this1 = "mapping"
+		do
+			return this1
+		end
+	elseif tmp == 24 then
+		local this1 = "menu"
+		do
+			return this1
+		end
+	elseif tmp == 25 then
+		local this1 = "messages"
+		do
+			return this1
+		end
+	elseif tmp == 26 then
+		local this1 = "option"
+		do
+			return this1
+		end
+	elseif tmp == 27 then
+		local this1 = "packadd"
+		do
+			return this1
+		end
+	elseif tmp == 28 then
+		local this1 = "shellcmd"
+		do
+			return this1
+		end
+	elseif tmp == 29 then
+		local this1 = "sign"
+		do
+			return this1
+		end
+	elseif tmp == 30 then
+		local this1 = "syntax"
+		do
+			return this1
+		end
+	elseif tmp == 31 then
+		local this1 = "syntime"
+		do
+			return this1
+		end
+	elseif tmp == 32 then
+		local this1 = "tag"
+		do
+			return this1
+		end
+	elseif tmp == 33 then
+		local this1 = "tag_listfiles"
+		do
+			return this1
+		end
+	elseif tmp == 34 then
+		local this1 = "user"
+		do
+			return this1
+		end
+	elseif tmp == 35 then
+		local this1 = "var"
+		do
+			return this1
+		end
+	end
+end
 if _hx_bit_raw then
 	_hx_bit_clamp = function(v)
 		if v <= 2147483647 and v >= -2147483648 then
@@ -1029,5 +1754,7 @@ end
 _hx_array_mt.__index = Array.prototype
 
 local _hx_static_init = function() end
+
+_hx_print = print or function() end
 
 _hx_static_init()

@@ -27,6 +27,10 @@ jobs:
           haxe -version
           haxelib install --always libs.hxml
           haxe test-macro.hxml
+      - name: Run test that should fail
+        working-directory: ./danielo_nvim
+        run: |
+          ./run-fail-test.sh
       - name: Ensure lua code output doesn't change
         uses: tj-actions/verify-changed-files@v13
         id: changedfiles

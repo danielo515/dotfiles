@@ -2,6 +2,8 @@ libs.hxml
 --macro nullSafety("vim", Strict)
 --macro nullSafety("plenary", Strict)
 --macro nullSafety("parser", Strict)
+--macro Safety.safeNavigation("kickstart")
+--macro Safety.safeNavigation("plugins")
 --macro nullSafety("kickstart", Strict)
 --macro nullSafety("plugins", Strict)
 
@@ -16,6 +18,7 @@ libs.hxml
 
 -D lua-vanilla
 -D luajit
+-D dump=prettty
 
 
 -cp src
@@ -24,10 +27,5 @@ libs.hxml
 --each
 
 --main kickstart.Kickstart
---lua out/lua/kickstart/init.lua
 
---next
-
-plugins.Setup
-
---lua out/lua/plugins.lua
+--lua out/init.lua

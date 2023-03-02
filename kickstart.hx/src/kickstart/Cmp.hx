@@ -1,17 +1,17 @@
 package kickstart;
 
-import kickstart.Kickstart.Luasnip;
+import plugins.Plugins.Luasnip;
 import lua.Table;
+
+typedef Dict = lua.Table< String, Dynamic >;
 
 typedef CmpConfig = TableWrapper< {
   snippet:{
     expand:Dynamic -> Void,
   },
-  mapping:lua.Table< String, Dynamic >,
+  mapping:Dict,
   sources:Array< {name:String} >
 } >
-
-typedef Dict = lua.Table< String, Dynamic >;
 
 @native('preset')
 extern class Preset {
@@ -24,7 +24,9 @@ extern class Cmp {
   static final mapping:{preset:Preset};
   static function setup(config:CmpConfig):Void;
   static inline function getMappings():Dict {
-    return untyped __lua__("
+    final ls = Luasnip.require();
+    return untyped __lua__(
+      "
 {
     ['<C-d>'] = {0}.mapping.scroll_docs(-4),
     ['<C-f>'] = {0}.mapping.scroll_docs(4),
@@ -54,12 +56,14 @@ extern class Cmp {
   }
       ",
       Cmp,
-      Luasnip);
+      ls
+    );
   }
   static public inline function configure():Void {
     final mapping = Cmp.mapping.preset.insert(getMappings());
+    final ls = Luasnip.require();
     Cmp.setup({
-      snippet: {expand: (args:Dynamic) -> kickstart.Kickstart.Luasnip.lsp_expand(args.body)},
+      snippet: {expand: (args:Dynamic) -> ls!.lsp_expand(args.body)},
       mapping: mapping,
       sources: [{name: 'luasnip'}, {name: 'nvim_lsp'}]
     });
