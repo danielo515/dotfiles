@@ -65,7 +65,7 @@ function M.config()
     -- Populate node_modules .bin
     { "VimEnter", "", add_node_bin, "Add the local node_modules to the vim PATH" },
     -- uncomment the following if you want to show diagnostics on hover
-    { "CursorHold", "*", "lua vim.diagnostic.open_float()" },
+    -- { "CursorHold", "*", "lua vim.diagnostic.open_float()" },
   }
   local group = vim.api.nvim_create_augroup("Danielo", {})
   for _, command in ipairs(autocommands) do
