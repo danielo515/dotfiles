@@ -1,8 +1,5 @@
 local plugins = {
-  {
-    "nvim-telescope/telescope-frecency.nvim",
-    requires = { "tami5/sqlite.lua" },
-  },
+  -- { "nvim-telescope/telescope-frecency.nvim", requires = { "tami5/sqlite.lua" }, },
   {
     "nvim-telescope/telescope-file-browser.nvim",
   },
@@ -40,7 +37,7 @@ lvim.builtin.telescope.on_config_done = function(tele)
   -- we use protected-mode (pcall) just in case the plugin wasn't loaded yet.
   local _, actions = pcall(require, "telescope.actions")
   local state = require "telescope.actions.state"
-  tele.load_extension "frecency"
+  -- tele.load_extension "frecency"
   -- tele.load_extension("command_palette")
   -- tele.load_extension "notify"
   tele.load_extension "file_browser"
@@ -151,10 +148,10 @@ lvim.builtin.telescope.on_config_done = function(tele)
   tele.setup(opts)
 end
 
-lvim.builtin.telescope.extensions.frecency = {
-  auto_validate = false,
-  default_workspace = "CWD",
-  show_unindexed = false,
-  show_scores = true,
-}
+-- lvim.builtin.telescope.extensions.frecency = {
+--   auto_validate = false,
+--   default_workspace = "CWD",
+--   show_unindexed = false,
+--   show_scores = true,
+-- }
 return plugins
