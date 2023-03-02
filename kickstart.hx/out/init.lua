@@ -1202,7 +1202,19 @@ __kickstart__Kickstart_Kickstart_Fields_.main = function()
         module=spec.module,
         module_pattern=spec.module_pattern
       }
-  local spec = _hx_o({__fields__={name=true,cmd=true,event=true},name="zbirenbaum/copilot.lua",cmd="Copilot",event=__vim__VimTypes_LuaArray_Impl_.from(_hx_tab_array({[0]="InsertEnter"}, 1))});
+  local spec = _hx_o({__fields__={name=true,cmd=true,event=true,config=true},name="zbirenbaum/copilot.lua",cmd="Copilot",event=__vim__VimTypes_LuaArray_Impl_.from(_hx_tab_array({[0]="InsertEnter"}, 1)),config=function(_,...) return function() 
+    local this1;
+    local _hx_1_requireResult_status, _hx_1_requireResult_value = _G.pcall(_G.require, "copilot");
+    if (_hx_1_requireResult_status) then 
+      this1 = _hx_1_requireResult_value;
+    else
+      this1 = nil;
+    end;
+    local x = this1;
+    if (x ~= nil) then 
+      x.setup(({copilot_node_command = "node", filetypes = ({yaml = false, markdown = false, help = false, gitcommit = false, gitrebase = false, hgcommit = false, svn = false, cvs = false}), panel = ({enabled = true, auto_refresh = true, keymap = ({jump_prev = "[[", jump_next = "]]", accept = "<CR>", refresh = "gr", open = "<M-CR>"}), layout = ({position = "bottom", ratio = 0.4})}), suggestion = ({enabled = true, auto_trigger = true, debounce = 75, keymap = ({accept = "<c-e>", accept_word = false, accept_line = false, next = "<M-b>", prev = "<M-v>", dismiss = "<C-c>"})})}));
+    end;
+  end(...) end});
   local plugins = _hx_tab_array({[0]=plugins, plugins1, plugins2, plugins3, plugins4, plugins5, plugins6, plugins7, plugins8, plugins9, plugins10, plugins11, plugins12, plugins13, plugins14, { 
         spec.name, 
         disable=spec.disable,
@@ -1391,22 +1403,11 @@ __kickstart__Kickstart_Kickstart_Fields_.setupPlugins = function()
   local gs = this1;
   if (gs ~= nil) then 
     gs.setup(({signs = ({add = ({text = "+"}), change = ({text = "~"}), delete = ({text = "_"}), topdelete = ({text = "‾"}), changedelete = ({text = "~"})})}));
-    local this1;
-    local _hx_6_requireResult_status, _hx_6_requireResult_value = _G.pcall(_G.require, "copilot");
-    if (_hx_6_requireResult_status) then 
-      this1 = _hx_6_requireResult_value;
-    else
-      this1 = nil;
-    end;
-    local x = this1;
-    if (x ~= nil) then 
-      x.setup(({copilot_node_command = "node", filetypes = ({yaml = false, markdown = false, help = false, gitcommit = false, gitrebase = false, hgcommit = false, svn = false, cvs = false}), panel = ({enabled = true, auto_refresh = true, keymap = ({jump_prev = "[[", jump_next = "]]", accept = "<CR>", refresh = "gr", open = "<M-CR>"}), layout = ({position = "bottom", ratio = 0.4})}), suggestion = ({enabled = true, auto_trigger = true, debounce = 75, keymap = ({accept = "<c-e>", accept_word = false, accept_line = false, next = "<M-b>", prev = "<M-v>", dismiss = "<C-c>"})})}));
-    end;
   end;
   local this1;
-  local _hx_7_requireResult_status, _hx_7_requireResult_value = _G.pcall(_G.require, "lspconfig");
-  if (_hx_7_requireResult_status) then 
-    this1 = _hx_7_requireResult_value;
+  local _hx_6_requireResult_status, _hx_6_requireResult_value = _G.pcall(_G.require, "lspconfig");
+  if (_hx_6_requireResult_status) then 
+    this1 = _hx_6_requireResult_value;
   else
     this1 = nil;
   end;
@@ -1431,18 +1432,18 @@ __kickstart__Kickstart_Kickstart_Fields_.setupPlugins = function()
           elseif (server_name1) == "jsonls" then 
             local _v_ = __plugins__Plugins_Plugins_Fields_.safeRequire("schemastore");
             local _v_ = (function() 
+              local _hx_7
+              if (_v_ == nil) then 
+              _hx_7 = nil; else 
+              _hx_7 = _v_.json; end
+              return _hx_7
+            end )();
+            local jsonSchemas = (function() 
               local _hx_8
               if (_v_ == nil) then 
               _hx_8 = nil; else 
-              _hx_8 = _v_.json; end
+              _hx_8 = _v_:schemas(); end
               return _hx_8
-            end )();
-            local jsonSchemas = (function() 
-              local _hx_9
-              if (_v_ == nil) then 
-              _hx_9 = nil; else 
-              _hx_9 = _v_:schemas(); end
-              return _hx_9
             end )();
             local schemas = ({_hx_o({__fields__={description=true,fileMatch=true,name=true,url=true},description="Haxe format schema",fileMatch=({"hxformat.json"}),name="hxformat.schema.json",url="https://raw.githubusercontent.com/vshaxe/vshaxe/master/schemas/hxformat.schema.json"})});
             if (jsonSchemas ~= nil) then 
