@@ -3,6 +3,7 @@ libs.hxml
 --macro nullSafety("plenary", Strict)
 --macro nullSafety("parser", Strict)
 --macro Safety.safeNavigation("kickstart")
+--macro Safety.safeNavigation("plugins")
 --macro nullSafety("kickstart", Strict)
 --macro nullSafety("plugins", Strict)
 

@@ -1,5 +1,6 @@
 package kickstart;
 
+import plugins.FzfLua;
 import plugins.Copilot;
 import plugins.LspConfig.Lspconfig;
 
@@ -67,6 +68,11 @@ function main() {
       cmd: "Copilot",
       event: ["InsertEnter"],
       config: plugins.Copilot.configure
+    },
+    {
+      name: "ibhagwan/fzf-lua",
+      requires: t(["nvim-tree/nvim-web-devicons"]),
+      config: plugins.FzfLua.configure
     }
   ];
 

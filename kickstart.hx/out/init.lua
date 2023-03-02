@@ -207,6 +207,7 @@ __kickstart__Untyped_Untyped_Fields_ = _hx_e()
 __lua_StringMap = _hx_e()
 __packer__Packer_Packer_Fields_ = _hx_e()
 __plugins__Copilot_Copilot_Fields_ = _hx_e()
+__plugins__FzfLua_FzfLua_Fields_ = _hx_e()
 __plugins__Plugins_Plugins_Fields_ = _hx_e()
 __vim__TableTools_TableTools_Fields_ = _hx_e()
 __vim__VimTypes_LuaArray_Impl_ = _hx_e()
@@ -1204,7 +1205,7 @@ __kickstart__Kickstart_Kickstart_Fields_.main = function()
         module_pattern=spec.module_pattern
       }
   local spec = _hx_o({__fields__={name=true,cmd=true,event=true,config=true},name="zbirenbaum/copilot.lua",cmd="Copilot",event=__vim__VimTypes_LuaArray_Impl_.from(_hx_tab_array({[0]="InsertEnter"}, 1)),config=function(_,...) return __plugins__Copilot_Copilot_Fields_.configure(...) end});
-  local plugins = _hx_tab_array({[0]=plugins, plugins1, plugins2, plugins3, plugins4, plugins5, plugins6, plugins7, plugins8, plugins9, plugins10, plugins11, plugins12, plugins13, plugins14, { 
+  local plugins15 = { 
         spec.name, 
         disable=spec.disable,
         as=spec.as,
@@ -1231,7 +1232,36 @@ __kickstart__Kickstart_Kickstart_Fields_.main = function()
         cond=spec.cond,
         module=spec.module,
         module_pattern=spec.module_pattern
-      }}, 16);
+      }
+  local spec = _hx_o({__fields__={name=true,requires=true,config=true},name="ibhagwan/fzf-lua",requires=({"nvim-tree/nvim-web-devicons"}),config=function(_,...) return __plugins__FzfLua_FzfLua_Fields_.configure(...) end});
+  local plugins = _hx_tab_array({[0]=plugins, plugins1, plugins2, plugins3, plugins4, plugins5, plugins6, plugins7, plugins8, plugins9, plugins10, plugins11, plugins12, plugins13, plugins14, plugins15, { 
+        spec.name, 
+        disable=spec.disable,
+        as=spec.as,
+        installer=spec.installer,
+        updater=spec.updater,
+        after=spec.after,
+        rtp=spec.rtp,
+        opt=spec.opt,
+        bufread=spec.bufread,
+        branch=spec.branch,
+        tag=spec.tag,
+        commit=spec.commit,
+        lock=spec.lock,
+        run=spec.run,
+        requires=spec.requires,
+        rocks=spec.rocks,
+        config=spec.config,
+        setup=spec.setup,
+        cmd=spec.cmd,
+        ft=spec.ft,
+        keys=spec.keys,
+        event=spec.event,
+        fn=spec.fn,
+        cond=spec.cond,
+        module=spec.module,
+        module_pattern=spec.module_pattern
+      }}, 17);
   local is_bootstrap = __packer__Packer_Packer_Fields_.ensureInstalled();
   local packer = _G.require("packer");
   packer.startup(function(use) 
@@ -1524,6 +1554,14 @@ __plugins__Copilot_Copilot_Fields_.configure = function()
   local x = this1;
   if (x ~= nil) then 
     x.setup(({copilot_node_command = "node", filetypes = ({yaml = false, markdown = false, help = false, gitcommit = false, gitrebase = false, hgcommit = false, svn = false, cvs = false}), panel = ({enabled = true, auto_refresh = true, keymap = ({jump_prev = "[[", jump_next = "]]", accept = "<CR>", refresh = "gr", open = "<M-CR>"}), layout = ({position = "bottom", ratio = 0.4})}), suggestion = ({enabled = true, auto_trigger = true, debounce = 75, keymap = ({accept = "<c-e>", accept_word = false, accept_line = false, next = "<M-b>", prev = "<M-v>", dismiss = "<C-c>"})})}));
+  end;
+end
+
+__plugins__FzfLua_FzfLua_Fields_.new = {}
+__plugins__FzfLua_FzfLua_Fields_.configure = function() 
+  local module = __plugins__Plugins_Plugins_Fields_.safeRequire("fzf-lua");
+  if (module ~= nil) then 
+    module.setup(({}));
   end;
 end
 
