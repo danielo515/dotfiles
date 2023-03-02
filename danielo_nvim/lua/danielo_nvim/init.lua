@@ -968,6 +968,13 @@ end
 __vim_Vimx.join_paths = function(paths) 
   do return paths:join(__vim__Vimx_Vimx_Fields_.pathSeparator) end;
 end
+__vim_Vimx.file_exists = function(path) 
+  if (vim.fn.filereadable(path) == 0) then 
+    do return true end;
+  else
+    do return false end;
+  end;
+end
 
 __vim__Vimx_Vimx_Fields_.new = {}
 if _hx_bit_raw then

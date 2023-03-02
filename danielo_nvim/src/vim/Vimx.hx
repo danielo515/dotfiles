@@ -83,4 +83,15 @@ class Vimx {
   public static function join_paths(paths:Array< String >):String {
     return paths.join(pathSeparator);
   }
+
+  /**
+    Little wrapper that returns true if a file exists and is readable
+   */
+  public static function file_exists(path:String):Bool {
+    return if (Fn.filereadable(path) == 0) {
+      true;
+    } else {
+      false;
+    }
+  }
 }
