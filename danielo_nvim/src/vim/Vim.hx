@@ -23,6 +23,7 @@ extern class Fn {
   static function executable(binaryName:String):Int;
   static function json_encode(value:Dynamic):String;
   static function json_decode(json:String):Table< String, Dynamic >;
+  static function readfile(fname:String, ?type:String, ?max:Int):LuaArray< String >;
 }
 
 @:native("vim.keymap")

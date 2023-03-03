@@ -1,5 +1,6 @@
 package vim;
 
+import lua.Table;
 import vim.Vim.Fn;
 import vim.Vim.Loop;
 import vim.Api;
@@ -92,6 +93,18 @@ class Vimx {
       true;
     } else {
       false;
+    }
+  }
+
+  /**
+    Reads a json file and parses it if it exists.
+    Returns null if the file does not exist or is not readable
+   */
+  public static function read_json_file(path:String):Null< lua.Table< String, Dynamic > > {
+    if (file_exists(path)) {
+      return Fn.json_decode(Table.concat(Fn.readfile(path)));
+    } else {
+      return null;
     }
   }
 }

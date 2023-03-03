@@ -10632,12 +10632,12 @@
         "fname"
       ],
       [
-        "Null<Dynamic>",
-        "type"
+        "String",
+        "?type"
       ],
       [
-        "Null<Dynamic>",
-        "max"
+        "Int",
+        "?max"
       ]
     ],
     "fullyQualified_name": "vim.fn.readfile",
@@ -10680,7 +10680,7 @@
       "  GetFileName()->readfile()",
       "```"
     ],
-    "return_type": "Array<Dynamic>"
+    "return_type": "lua.Table<Int,Dynamic>"
   },
   {
     "annotations": [

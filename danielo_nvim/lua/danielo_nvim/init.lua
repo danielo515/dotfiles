@@ -975,6 +975,13 @@ __vim_Vimx.file_exists = function(path)
     do return false end;
   end;
 end
+__vim_Vimx.read_json_file = function(path) 
+  if (__vim_Vimx.file_exists(path)) then 
+    do return vim.fn.json_decode(_G.table.concat(vim.fn.readfile(path))) end;
+  else
+    do return nil end;
+  end;
+end
 
 __vim__Vimx_Vimx_Fields_.new = {}
 if _hx_bit_raw then
