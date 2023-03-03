@@ -237,4 +237,6 @@ local treesitter = require "user.treesitter"
 treesitter.config()
 local inject_sha = require("user.util.plugins").inject_snapshot_commit
 local snapshot_path = join_paths(get_config_dir(), "snapshots", "default.json")
-return inject_sha(concat_lists(plugins, unpack(treesitter.plugins), require "user.telescope.settings"), snapshot_path)
+local plugins =
+  inject_sha(concat_lists(plugins, unpack(treesitter.plugins), require "user.telescope.settings"), snapshot_path)
+return plugins
