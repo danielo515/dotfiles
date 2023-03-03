@@ -1,12 +1,12 @@
 package vim;
 
+import haxe.Constraints.Function;
 import lua.Table;
 import vim.Vim.Fn;
 import vim.Vim.Loop;
 import vim.Api;
 import lua.StringMap;
 import vim.VimTypes;
-import haxe.Constraints.Function;
 
 using Safety;
 
@@ -16,19 +16,13 @@ final pathSeparator = Loop.os_uname().sysname == 'Windows' ? '\\' : '/';
 class Vimx {
   public static final autogroups:StringMap< Group > = new StringMap();
 
-  /**
-    Creates a new autocommand and associates it to the given group name.
-    If the group has not been registered before, it gets created and cached
-    so future commands with the same group name will re-use the same group.
-    Note that existing commands on the group created outside of this function
-    are not checked for existence.
-   */
-  static public function autocmd(
+  // internal wrapper
+  static function acmd(
     groupName:String,
     events:LuaArray< VimEvent >,
     pattern:String,
     ?description:String,
-    cb:Function
+    cb
   ) {
     var group:Group;
     switch (autogroups.get(groupName)) {
@@ -42,6 +36,33 @@ class Vimx {
       events,
       new AutoCmdOpts(pattern, cb, group, description.or('$groupName:[$pattern]'))
     );
+  }
+
+  /**
+    Creates a new autocommand and associates it to the given group name.
+    If the group has not been registered before, it gets created and cached
+    so future commands with the same group name will re-use the same group.
+    Note that existing commands on the group created outside of this function
+    are not checked for existence.
+   */
+  static public inline function autocmd(
+    groupName:String,
+    events:LuaArray< VimEvent >,
+    pattern:String,
+    ?description:String,
+    cb:Function
+  ) {
+    acmd(groupName, events, pattern, description, Cb(cb));
+  }
+
+  static public inline function autocmdStr(
+    groupName:String,
+    events:LuaArray< VimEvent >,
+    pattern:String,
+    ?description:String,
+    command:String
+  ) {
+    acmd(groupName, events, pattern, description, Str(command));
   }
 
   /**

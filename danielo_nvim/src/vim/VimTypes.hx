@@ -1,5 +1,6 @@
 package vim;
 
+import haxe.Constraints.Function;
 import lua.Table;
 import haxe.extern.EitherType;
 import lua.NativeStringTools;
@@ -8,6 +9,11 @@ typedef ArgComplete = vim.types.ArgComplete;
 abstract Tabpage(Int) {}
 abstract Client(Int) {}
 abstract Group(Int) {}
+
+enum FunctionOrString {
+  Cb(cb:Function);
+  Str(cmd:String);
+}
 
 abstract GroupOpts(Table< String, Bool >) {
   public inline function new(clear:Bool) {

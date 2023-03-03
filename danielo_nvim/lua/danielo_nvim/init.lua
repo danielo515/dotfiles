@@ -207,6 +207,7 @@ __lua_StringMap = _hx_e()
 __packer__Packer_Packer_Fields_ = _hx_e()
 __plenary_Job = _G.require("plenary.job")
 __vim__TableTools_TableTools_Fields_ = _hx_e()
+__vim_FunctionOrString = _hx_e()
 __vim__VimTypes_LuaArray_Impl_ = _hx_e()
 __vim_Vimx = _hx_e()
 __vim__Vimx_Vimx_Fields_ = _hx_e()
@@ -534,10 +535,11 @@ ___Main_Main_Fields_.main = function()
       vim.pretty_print(choice);
     end);
   end, ({bang = true, complete = Std.string("customlist,v:lua.") .. Std.string("require'packer'.plugin_complete"), desc = "Testing from haxe", force = true, nargs = 1, range = "%"}));
-  __vim_Vimx.autocmd("HaxeEvent", __vim__VimTypes_LuaArray_Impl_.from(_hx_tab_array({[0]="BufWritePost"}, 1)), "*.hx", "Created from haxe", function() 
+  local tmp = __vim_FunctionOrString.Cb(function() 
     vim.pretty_print("Hello from axe", vim.fn.expand(_G.string.format("%s%s", "%", ":p")));
     do return true end;
   end);
+  __vim_Vimx.acmd("HaxeEvent", __vim__VimTypes_LuaArray_Impl_.from(_hx_tab_array({[0]="BufWritePost"}, 1)), "*.hx", "Created from haxe", tmp);
   local nargs = nil;
   vim.api.nvim_create_user_command("OpenInGh", function(args) 
     ___Main_Main_Fields_.openInGh((function() 
@@ -920,6 +922,9 @@ __vim__TableTools_TableTools_Fields_.findNext = function(table,fn)
   do return loop(next, t, _hx_box_mr(_hx_table.pack(next(t, _hx_1_p_index)), {"index", "value"})) end;
 end
 
+__vim_FunctionOrString.Cb = function(cb) local _x = _hx_tab_array({[0]="Cb",0,cb,__enum__=__vim_FunctionOrString}, 3); return _x; end 
+__vim_FunctionOrString.Str = function(cmd) local _x = _hx_tab_array({[0]="Str",1,cmd,__enum__=__vim_FunctionOrString}, 3); return _x; end 
+
 __vim__VimTypes_LuaArray_Impl_.new = {}
 __vim__VimTypes_LuaArray_Impl_.from = function(arr) 
   local ret = ({});
@@ -935,7 +940,7 @@ end
 
 __vim_Vimx.new = {}
 _hx_exports["vimx"] = __vim_Vimx
-__vim_Vimx.autocmd = function(groupName,events,pattern,description,cb) 
+__vim_Vimx.acmd = function(groupName,events,pattern,description,cb) 
   local group;
   local _g = __vim_Vimx.autogroups:get(groupName);
   if (_g == nil) then 
@@ -944,13 +949,25 @@ __vim_Vimx.autocmd = function(groupName,events,pattern,description,cb)
   else
     group = _g;
   end;
-  vim.api.nvim_create_autocmd(events, ({pattern = pattern, callback = cb, group = group, desc = (function() 
+  local this1 = ({pattern = pattern, group = group, desc = (function() 
     local _hx_1
     if (description == nil) then 
     _hx_1 = Std.string(Std.string(Std.string(Std.string("") .. Std.string(groupName)) .. Std.string(":[")) .. Std.string(pattern)) .. Std.string("]"); else 
     _hx_1 = description; end
     return _hx_1
-  end )(), once = false, nested = false}));
+  end )(), once = false, nested = false});
+  local tmp = cb[1];
+  if (tmp) == 0 then 
+    this1.cb = cb[2];
+  elseif (tmp) == 1 then 
+    this1.cmd = cb[2]; end;
+  vim.api.nvim_create_autocmd(events, this1);
+end
+__vim_Vimx.autocmd = function(groupName,events,pattern,description,cb) 
+  __vim_Vimx.acmd(groupName, events, pattern, description, __vim_FunctionOrString.Cb(cb));
+end
+__vim_Vimx.autocmdStr = function(groupName,events,pattern,description,command) 
+  __vim_Vimx.acmd(groupName, events, pattern, description, __vim_FunctionOrString.Str(command));
 end
 __vim_Vimx.copyToClipboard = function(str) 
   vim.cmd(Std.string(Std.string("let @* = \"") .. Std.string(str)) .. Std.string("\""));
