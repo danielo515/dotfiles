@@ -1,7 +1,6 @@
 package kickstart;
 
 import plugins.FzfLua;
-import plugins.Copilot;
 import plugins.LspConfig.Lspconfig;
 
 using vim.TableTools;
@@ -73,7 +72,8 @@ function main() {
       name: "ibhagwan/fzf-lua",
       requires: t(["nvim-tree/nvim-web-devicons"]),
       config: plugins.FzfLua.configure
-    }
+    },
+    {name: "jdonaldson/vaxe"}
   ];
 
   final is_bootstrap = Packer.init(plugins);
@@ -199,7 +199,7 @@ function setupPlugins() {
       },
     });
   }
-  final wk:VimPlugin< WhichKey > = "which-key";
+  final wk:VimPlugin< plugins.WhichKey > = "which-key";
   wk.call(wk -> {
     Vim.o.timeout = true;
     Vim.o.timeoutlen = 300;
@@ -344,4 +344,3 @@ function keymaps() {
     );
   }
 }
-
