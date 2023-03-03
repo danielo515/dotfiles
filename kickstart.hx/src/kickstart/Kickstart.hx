@@ -6,6 +6,7 @@ import plugins.LspConfig.Lspconfig;
 using vim.TableTools;
 
 import plugins.Plugins.SchemaStore;
+import plugins.WhichKey;
 import plugins.Plugins.MasonLspConfig;
 import plugins.Plugins.Cmp_nvim_lsp;
 import vim.Lsp;
@@ -199,7 +200,7 @@ function setupPlugins() {
       },
     });
   }
-  final wk:VimPlugin< plugins.WhichKey > = "which-key";
+  final wk:VimPlugin< WhichKey > = "which-key";
   wk.call(wk -> {
     Vim.o.timeout = true;
     Vim.o.timeoutlen = 300;

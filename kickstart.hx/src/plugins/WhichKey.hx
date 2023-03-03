@@ -1,5 +1,6 @@
 package plugins;
 
+import vim.VimTypes;
 /*
   WhichKey.nvim default configuration values.
   {
