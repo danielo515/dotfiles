@@ -958,7 +958,7 @@ __vim_Vimx.acmd = function(groupName,events,pattern,description,cb)
   end )(), once = false, nested = false});
   local tmp = cb[1];
   if (tmp) == 0 then 
-    this1.cb = cb[2];
+    this1.callback = cb[2];
   elseif (tmp) == 1 then 
     this1.cmd = cb[2]; end;
   vim.api.nvim_create_autocmd(events, this1);
