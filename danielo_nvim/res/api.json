@@ -15,7 +15,7 @@
       ],
       [
         "Null<lua.Table<String, Dynamic>>",
-        "opts"
+        "?opts"
       ]
     ],
     "fullyQualified_name": "vim.api.nvim__get_runtime",
@@ -454,7 +454,7 @@
       ],
       [
         "Null<lua.Table<String, Dynamic>>",
-        "opts"
+        "?opts"
       ]
     ],
     "fullyQualified_name": "vim.api.nvim_buf_create_user_command",
@@ -700,7 +700,7 @@
       ],
       [
         "Null<lua.Table<String, Dynamic>>",
-        "opts"
+        "?opts"
       ]
     ],
     "fullyQualified_name": "vim.api.nvim_buf_get_commands",
@@ -1248,7 +1248,7 @@
       ],
       [
         "Null<lua.Table<String, Dynamic>>",
-        "opts"
+        "?opts"
       ]
     ],
     "fullyQualified_name": "vim.api.nvim_buf_set_extmark",
@@ -1395,7 +1395,7 @@
       ],
       [
         "Null<lua.Table<String, Dynamic>>",
-        "opts"
+        "?opts"
       ]
     ],
     "fullyQualified_name": "vim.api.nvim_buf_set_keymap",
@@ -1801,7 +1801,7 @@
     "parameters": [
       [
         "Null<lua.Table<String, Dynamic>>",
-        "opts"
+        "?opts"
       ]
     ],
     "fullyQualified_name": "vim.api.nvim_clear_autocmds",
@@ -1844,11 +1844,11 @@
     "parameters": [
       [
         "Null<lua.Table<String, Dynamic>>",
-        "cmd"
+        "?cmd"
       ],
       [
         "Null<lua.Table<String, Dynamic>>",
-        "opts"
+        "?opts"
       ]
     ],
     "fullyQualified_name": "vim.api.nvim_cmd",
@@ -1930,7 +1930,7 @@
       ],
       [
         "Null<lua.Table<String, Dynamic>>",
-        "opts"
+        "?opts"
       ]
     ],
     "fullyQualified_name": "vim.api.nvim_create_augroup",
@@ -1972,7 +1972,7 @@
       ],
       [
         "Null<lua.Table<String, Dynamic>>",
-        "opts"
+        "?opts"
       ]
     ],
     "fullyQualified_name": "vim.api.nvim_create_autocmd",
@@ -2169,7 +2169,7 @@
       ],
       [
         "Null<lua.Table<String, Dynamic>>",
-        "opts"
+        "?opts"
       ]
     ],
     "fullyQualified_name": "vim.api.nvim_create_user_command",
@@ -2543,7 +2543,7 @@
       ],
       [
         "Null<lua.Table<String, Dynamic>>",
-        "opts"
+        "?opts"
       ]
     ],
     "fullyQualified_name": "vim.api.nvim_eval_statusline",
@@ -2636,7 +2636,7 @@
       ],
       [
         "Null<lua.Table<String, Dynamic>>",
-        "opts"
+        "?opts"
       ]
     ],
     "fullyQualified_name": "vim.api.nvim_exec_autocmds",
@@ -2741,7 +2741,7 @@
     "parameters": [
       [
         "Null<lua.Table<String, Dynamic>>",
-        "opts"
+        "?opts"
       ]
     ],
     "fullyQualified_name": "vim.api.nvim_get_autocmds",
@@ -2896,7 +2896,7 @@
     "parameters": [
       [
         "Null<lua.Table<String, Dynamic>>",
-        "opts"
+        "?opts"
       ]
     ],
     "fullyQualified_name": "vim.api.nvim_get_commands",
@@ -2922,7 +2922,7 @@
     "parameters": [
       [
         "Null<lua.Table<String, Dynamic>>",
-        "opts"
+        "?opts"
       ]
     ],
     "fullyQualified_name": "vim.api.nvim_get_context",
@@ -3261,7 +3261,7 @@
       ],
       [
         "Null<lua.Table<String, Dynamic>>",
-        "opts"
+        "?opts"
       ]
     ],
     "fullyQualified_name": "vim.api.nvim_get_option_value",
@@ -3747,7 +3747,7 @@
       ],
       [
         "Null<lua.Table<String, Dynamic>>",
-        "config"
+        "?config"
       ]
     ],
     "fullyQualified_name": "vim.api.nvim_open_win",
@@ -4419,7 +4419,7 @@
       ],
       [
         "Null<lua.Table<String, Dynamic>>",
-        "opts"
+        "?opts"
       ]
     ],
     "fullyQualified_name": "vim.api.nvim_set_decoration_provider",
@@ -4487,7 +4487,7 @@
       ],
       [
         "Null<lua.Table<String, Dynamic>>",
-        "val"
+        "?val"
       ]
     ],
     "fullyQualified_name": "vim.api.nvim_set_hl",
@@ -4608,7 +4608,7 @@
       ],
       [
         "Null<lua.Table<String, Dynamic>>",
-        "opts"
+        "?opts"
       ]
     ],
     "fullyQualified_name": "vim.api.nvim_set_keymap",
@@ -4692,7 +4692,7 @@
       ],
       [
         "Null<lua.Table<String, Dynamic>>",
-        "opts"
+        "?opts"
       ]
     ],
     "fullyQualified_name": "vim.api.nvim_set_option_value",
@@ -5423,7 +5423,7 @@
       ],
       [
         "Null<lua.Table<String, Dynamic>>",
-        "config"
+        "?config"
       ]
     ],
     "fullyQualified_name": "vim.api.nvim_win_set_config",

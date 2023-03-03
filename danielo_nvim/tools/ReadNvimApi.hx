@@ -140,7 +140,7 @@ typedef AnnotationMap = Map< String, Annotation >;
         [];
       case args:
         args.map(x -> switch (annotations.get(x)) {
-          case Optional(name, type): ['Null<$type>', name];
+          case Optional(name, type): ['Null<$type>', '?$name'];
           case Param(name, type): [type, name];
           case _: ['Dynamic', x];
         });
@@ -337,8 +337,9 @@ class ReadNvimApi {
         writeFile('./res/lsp.json', lsp);
         final lspBuf = vimBuiltin.parsePath('lsp/buf.lua').filter(removePrivate);
         writeFile('./res/lsp_buf.json', lspBuf);
-        final filetype = vimBuiltin.parsePath('filetype.lua').filter(removePrivate);
-        writeFile('./res/filetype.json', filetype);
+      // This bad boy breaks the parsing for some reason
+      // final filetype = vimBuiltin.parsePath('filetype.lua').filter(removePrivate);
+      // writeFile('./res/filetype.json', filetype);
 
       case Error(error):
         Sys.println("Could not get neovim path, skip parsing");

@@ -26,6 +26,10 @@ function getDumpPath(filename:String):String {
   return Path.join([getLibraryBase(), '../../dump', filename]);
 }
 
+/**
+  Reads the neovim API from a vim dump file and generates the Haxe externs.
+  This only covers nvim.api, not the other modules.
+ */
 macro function generateApi():Void {
   var specs = Json.parse(File.getContent(getResPath('nvim-api.json')));
 
@@ -104,6 +108,9 @@ abstract ParamDef(Array< String >) {
     return this[1];
 }
 
+/**
+  A function definition from the neovim API dump.
+ */
 typedef FunctionDef = {
   final name:String;
   final method:Bool;
@@ -136,6 +143,11 @@ function parseTypeFromStr(typeString:String) {
   }
 }
 
+/**
+  Given a namespace, which should match one of the available JSON files in the res folder,
+  generates methods with the function definitions read from that file and attaches them to the
+  target class. This is intended to be used as a build macro
+ */
 macro function attachApi(namespace:String):Array< Field > {
   var fields = Context.getBuildFields();
   final existingFields = fields.map(f -> f.name);
@@ -153,8 +165,9 @@ macro function attachApi(namespace:String):Array< Field > {
         access: [AStatic, APublic],
         kind: FFun({
           args: f.parameters.map(p -> ({
-            name: p.name,
-            type: parseTypeFromStr(p.type)
+            name: p.name.replace("?", ""),
+            type: parseTypeFromStr(p.type),
+            opt: p.name.charAt(0) == "?"
           } : FunctionArg)),
           ret: parseTypeFromStr(f.return_type)
         }),
