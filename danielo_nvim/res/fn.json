@@ -103,7 +103,7 @@
       "  mylist->add(val1)->add(val2)",
       "```"
     ],
-    "return_type": "Array<Dynamic>"
+    "return_type": "lua.Table<Int,Dynamic>"
   },
   {
     "annotations": [
@@ -345,7 +345,7 @@
       "  the argument list.  Returns an empty List if the {winid}",
       "  argument is invalid."
     ],
-    "return_type": "Array<Dynamic>"
+    "return_type": "lua.Table<Int,Dynamic>"
   },
   {
     "annotations": [
@@ -2277,7 +2277,7 @@
     "name": "cursor",
     "parameters": [
       [
-        "Array<Dynamic>",
+        "lua.Table<Int,Dynamic>",
         "list"
       ]
     ],
@@ -2724,7 +2724,7 @@
       "  GetNumber()->digraph_getlist()",
       "```"
     ],
-    "return_type": "Array<Dynamic>"
+    "return_type": "lua.Table<Int,Dynamic>"
   },
   {
     "annotations": [
@@ -3419,7 +3419,7 @@
       "  mylist->extend(otherlist)",
       "```"
     ],
-    "return_type": "Array<Dynamic>"
+    "return_type": "lua.Table<Int,Dynamic>"
   },
   {
     "annotations": [
@@ -3628,7 +3628,7 @@
       "  mylist->filter(expr2)",
       "```"
     ],
-    "return_type": "Array<Dynamic>"
+    "return_type": "lua.Table<Int,Dynamic>"
   },
   {
     "annotations": [
@@ -3725,7 +3725,7 @@
     "name": "flatten",
     "parameters": [
       [
-        "Array<Dynamic>",
+        "lua.Table<Int,Dynamic>",
         "list"
       ],
       [
@@ -3760,7 +3760,7 @@
       "  mylist->flatten()",
       "```"
     ],
-    "return_type": "Array<Dynamic>"
+    "return_type": "lua.Table<Int,Dynamic>"
   },
   {
     "annotations": [
@@ -4447,7 +4447,7 @@
       "  GetBufnr()->getbufinfo()",
       "```"
     ],
-    "return_type": "Array<Dynamic>"
+    "return_type": "lua.Table<Int,Dynamic>"
   },
   {
     "annotations": [
@@ -4501,7 +4501,7 @@
       "Can also be used as a |method|: >",
       "  GetBufnr()->getbufline(lnum)"
     ],
-    "return_type": "Array<Dynamic>"
+    "return_type": "lua.Table<Int,Dynamic>"
   },
   {
     "annotations": [
@@ -4587,7 +4587,7 @@
       "  GetBufnr()->getchangelist()",
       "```"
     ],
-    "return_type": "Array<Dynamic>"
+    "return_type": "lua.Table<Int,Dynamic>"
   },
   {
     "annotations": [
@@ -4726,7 +4726,7 @@
       "  GetMark()->getcharpos()",
       "```"
     ],
-    "return_type": "Array<Dynamic>"
+    "return_type": "lua.Table<Int,Dynamic>"
   },
   {
     "annotations": [
@@ -4986,7 +4986,7 @@
       "  GetPattern()->getcompletion('color')",
       "```"
     ],
-    "return_type": "Array<Dynamic>"
+    "return_type": "lua.Table<Int,Dynamic>"
   },
   {
     "annotations": [
@@ -5032,7 +5032,7 @@
       "  GetWinid()->getcurpos()",
       "```"
     ],
-    "return_type": "Array<Dynamic>"
+    "return_type": "lua.Table<Int,Dynamic>"
   },
   {
     "annotations": [
@@ -5062,7 +5062,7 @@
       "  GetWinid()->getcursorcharpos()",
       "```"
     ],
-    "return_type": "Array<Dynamic>"
+    "return_type": "lua.Table<Int,Dynamic>"
   },
   {
     "annotations": [
@@ -5339,7 +5339,7 @@
       "",
       "```"
     ],
-    "return_type": "Array<Dynamic>"
+    "return_type": "lua.Table<Int,Dynamic>"
   },
   {
     "annotations": [
@@ -5392,7 +5392,7 @@
       "",
       "<    To get lines from another buffer see |getbufline()|"
     ],
-    "return_type": "Array<Dynamic>"
+    "return_type": "lua.Table<Int,Dynamic>"
   },
   {
     "annotations": [
@@ -5484,7 +5484,7 @@
       "  GetBufnr()->getmarklist()",
       "```"
     ],
-    "return_type": "Array<Dynamic>"
+    "return_type": "lua.Table<Int,Dynamic>"
   },
   {
     "annotations": [
@@ -5530,7 +5530,7 @@
       "  :unlet m",
       "```"
     ],
-    "return_type": "Array<Dynamic>"
+    "return_type": "lua.Table<Int,Dynamic>"
   },
   {
     "annotations": [
@@ -5631,7 +5631,7 @@
       "    GetMark()->getpos()",
       "```"
     ],
-    "return_type": "Array<Dynamic>"
+    "return_type": "lua.Table<Int,Dynamic>"
   },
   {
     "annotations": [
@@ -5769,7 +5769,7 @@
         "?p1"
       ],
       [
-        "Null<Array<Dynamic>>",
+        "Null<lua.Table<Int,Dynamic>>",
         "?list"
       ]
     ],
@@ -5912,7 +5912,7 @@
       "  GetTabnr()->gettabinfo()",
       "```"
     ],
-    "return_type": "Array<Dynamic>"
+    "return_type": "lua.Table<Int,Dynamic>"
   },
   {
     "annotations": [
@@ -6112,7 +6112,7 @@
       "  GetWinnr()->getwininfo()",
       "```"
     ],
-    "return_type": "Array<Dynamic>"
+    "return_type": "lua.Table<Int,Dynamic>"
   },
   {
     "annotations": [
@@ -6153,7 +6153,7 @@
       "  GetTimeout()->getwinpos()",
       "```"
     ],
-    "return_type": "Array<Dynamic>"
+    "return_type": "lua.Table<Int,Dynamic>"
   },
   {
     "annotations": [
@@ -6341,7 +6341,7 @@
         "?nosuf"
       ],
       [
-        "Null<Array<Dynamic>>",
+        "Null<lua.Table<Int,Dynamic>>",
         "?list"
       ],
       [
@@ -7295,7 +7295,7 @@
       "  mylist->insert(item)",
       "```"
     ],
-    "return_type": "Array<Dynamic>"
+    "return_type": "lua.Table<Int,Dynamic>"
   },
   {
     "annotations": [],
@@ -7485,7 +7485,7 @@
       "Can also be used as a |method|: >",
       "  mydict->items()"
     ],
-    "return_type": "Array<Dynamic>"
+    "return_type": "lua.Table<Int,Dynamic>"
   },
   {
     "annotations": [
@@ -7715,7 +7715,7 @@
     "name": "join",
     "parameters": [
       [
-        "Array<Dynamic>",
+        "lua.Table<Int,Dynamic>",
         "list"
       ],
       [
@@ -7830,7 +7830,7 @@
       "  mydict->keys()",
       "```"
     ],
-    "return_type": "Array<Dynamic>"
+    "return_type": "lua.Table<Int,Dynamic>"
   },
   {
     "annotations": [
@@ -8130,7 +8130,7 @@
     "name": "list2str",
     "parameters": [
       [
-        "Array<Dynamic>",
+        "lua.Table<Int,Dynamic>",
         "list"
       ],
       [
@@ -8344,7 +8344,7 @@
       "  mylist->map(expr2)",
       "```"
     ],
-    "return_type": "Array<Dynamic>"
+    "return_type": "lua.Table<Int,Dynamic>"
   },
   {
     "annotations": [
@@ -8861,7 +8861,7 @@
       "  GetMatch()->matcharg()",
       "```"
     ],
-    "return_type": "Array<Dynamic>"
+    "return_type": "lua.Table<Int,Dynamic>"
   },
   {
     "annotations": [
@@ -8963,7 +8963,7 @@
     "name": "matchfuzzy",
     "parameters": [
       [
-        "Array<Dynamic>",
+        "lua.Table<Int,Dynamic>",
         "list"
       ],
       [
@@ -9049,7 +9049,7 @@
       "        \\ {'matchseq': 1})",
       "<    results in ['two one']."
     ],
-    "return_type": "Array<Dynamic>"
+    "return_type": "lua.Table<Int,Dynamic>"
   },
   {
     "annotations": [
@@ -9061,7 +9061,7 @@
     "name": "matchfuzzypos",
     "parameters": [
       [
-        "Array<Dynamic>",
+        "lua.Table<Int,Dynamic>",
         "list"
       ],
       [
@@ -9100,7 +9100,7 @@
       "```",
       "results in [[{\"id\": 10, \"text\": \"hello\"}], [[2, 3]], [127]]"
     ],
-    "return_type": "Array<Dynamic>"
+    "return_type": "lua.Table<Int,Dynamic>"
   },
   {
     "annotations": [
@@ -9147,7 +9147,7 @@
       "  GetText()->matchlist('word')",
       "```"
     ],
-    "return_type": "Array<Dynamic>"
+    "return_type": "lua.Table<Int,Dynamic>"
   },
   {
     "annotations": [
@@ -9254,7 +9254,7 @@
       "  GetText()->matchstrpos('word')",
       "```"
     ],
-    "return_type": "Array<Dynamic>"
+    "return_type": "lua.Table<Int,Dynamic>"
   },
   {
     "annotations": [
@@ -9353,7 +9353,7 @@
       "  } ]",
       "<"
     ],
-    "return_type": "Array<Dynamic>"
+    "return_type": "lua.Table<Int,Dynamic>"
   },
   {
     "annotations": [
@@ -9619,7 +9619,7 @@
     "name": "msgpackdump",
     "parameters": [
       [
-        "Array<Dynamic>",
+        "lua.Table<Int,Dynamic>",
         "list"
       ],
       [
@@ -9649,7 +9649,7 @@
       "4. Other strings and |Blob|s are always dumped as BIN strings.",
       "5. Points 3. and 4. do not apply to |msgpack-special-dict|s."
     ],
-    "return_type": "Array<Dynamic>"
+    "return_type": "lua.Table<Int,Dynamic>"
   },
   {
     "annotations": [
@@ -9741,7 +9741,7 @@
       "  representing extension type. Second is",
       "  |readfile()|-style list of strings."
     ],
-    "return_type": "Array<Dynamic>"
+    "return_type": "lua.Table<Int,Dynamic>"
   },
   {
     "annotations": [
@@ -10560,7 +10560,7 @@
       "  GetExpr()->range()",
       "```"
     ],
-    "return_type": "Array<Dynamic>"
+    "return_type": "lua.Table<Int,Dynamic>"
   },
   {
     "annotations": [
@@ -10617,7 +10617,7 @@
       "  GetDirName()->readdir()",
       "```"
     ],
-    "return_type": "Array<Dynamic>"
+    "return_type": "lua.Table<Int,Dynamic>"
   },
   {
     "annotations": [
@@ -10680,7 +10680,7 @@
       "  GetFileName()->readfile()",
       "```"
     ],
-    "return_type": "Array<Dynamic>"
+    "return_type": "lua.Table<Int,Dynamic>"
   },
   {
     "annotations": [
@@ -10810,7 +10810,7 @@
       "```",
       "Note: |localtime()| returns the current (non-relative) time."
     ],
-    "return_type": "Array<Dynamic>"
+    "return_type": "lua.Table<Int,Dynamic>"
   },
   {
     "annotations": [
@@ -11032,7 +11032,7 @@
       "Can also be used as a |method|: >",
       "  mylist->reverse()"
     ],
-    "return_type": "Array<Dynamic>"
+    "return_type": "lua.Table<Int,Dynamic>"
   },
   {
     "annotations": [
@@ -11087,7 +11087,7 @@
         "event"
       ],
       [
-        "Null<Array<Dynamic>>",
+        "Null<lua.Table<Int,Dynamic>>",
         "?args"
       ],
       [
@@ -11122,7 +11122,7 @@
         "method"
       ],
       [
-        "Null<Array<Dynamic>>",
+        "Null<lua.Table<Int,Dynamic>>",
         "?args"
       ],
       [
@@ -11287,7 +11287,7 @@
       "  GetRow()->screenchars(col)",
       "```"
     ],
-    "return_type": "Array<Dynamic>"
+    "return_type": "lua.Table<Int,Dynamic>"
   },
   {
     "annotations": [
@@ -11947,7 +11947,7 @@
       "```",
       "See |match-parens| for a bigger and more useful example."
     ],
-    "return_type": "Array<Dynamic>"
+    "return_type": "lua.Table<Int,Dynamic>"
   },
   {
     "annotations": [
@@ -12005,7 +12005,7 @@
       "    GetPattern()->searchpos()",
       "```"
     ],
-    "return_type": "Array<Dynamic>"
+    "return_type": "lua.Table<Int,Dynamic>"
   },
   {
     "annotations": [
@@ -12201,7 +12201,7 @@
     "name": "setcellwidths",
     "parameters": [
       [
-        "Array<Dynamic>",
+        "lua.Table<Int,Dynamic>",
         "list"
       ]
     ],
@@ -12249,7 +12249,7 @@
         "expr"
       ],
       [
-        "Array<Dynamic>",
+        "lua.Table<Int,Dynamic>",
         "list"
       ]
     ],
@@ -12391,7 +12391,7 @@
     "name": "setcursorcharpos",
     "parameters": [
       [
-        "Array<Dynamic>",
+        "lua.Table<Int,Dynamic>",
         "list"
       ]
     ],
@@ -12554,7 +12554,7 @@
         "nr"
       ],
       [
-        "Array<Dynamic>",
+        "lua.Table<Int,Dynamic>",
         "list"
       ],
       [
@@ -12600,7 +12600,7 @@
     "name": "setmatches",
     "parameters": [
       [
-        "Array<Dynamic>",
+        "lua.Table<Int,Dynamic>",
         "list"
       ],
       [
@@ -12636,7 +12636,7 @@
         "expr"
       ],
       [
-        "Array<Dynamic>",
+        "lua.Table<Int,Dynamic>",
         "list"
       ]
     ],
@@ -12707,7 +12707,7 @@
     "name": "setqflist",
     "parameters": [
       [
-        "Array<Dynamic>",
+        "lua.Table<Int,Dynamic>",
         "list"
       ],
       [
@@ -13259,7 +13259,7 @@
     "name": "sign_define",
     "parameters": [
       [
-        "Array<Dynamic>",
+        "lua.Table<Int,Dynamic>",
         "list"
       ]
     ],
@@ -13267,7 +13267,7 @@
     "docs": [
       "List  define or update a list of signs"
     ],
-    "return_type": "Array<Dynamic>"
+    "return_type": "lua.Table<Int,Dynamic>"
   },
   {
     "annotations": [
@@ -13285,7 +13285,7 @@
     "docs": [
       "List  get a list of defined signs"
     ],
-    "return_type": "Array<Dynamic>"
+    "return_type": "lua.Table<Int,Dynamic>"
   },
   {
     "annotations": [
@@ -13308,7 +13308,7 @@
     "docs": [
       "List  get a list of placed signs"
     ],
-    "return_type": "Array<Dynamic>"
+    "return_type": "lua.Table<Int,Dynamic>"
   },
   {
     "annotations": [
@@ -13379,7 +13379,7 @@
     "name": "sign_placelist",
     "parameters": [
       [
-        "Array<Dynamic>",
+        "lua.Table<Int,Dynamic>",
         "list"
       ]
     ],
@@ -13387,7 +13387,7 @@
     "docs": [
       "List  place a list of signs"
     ],
-    "return_type": "Array<Dynamic>"
+    "return_type": "lua.Table<Int,Dynamic>"
   },
   {
     "annotations": [
@@ -13397,7 +13397,7 @@
     "name": "sign_undefine",
     "parameters": [
       [
-        "Array<Dynamic>",
+        "lua.Table<Int,Dynamic>",
         "list"
       ]
     ],
@@ -13405,7 +13405,7 @@
     "docs": [
       "List  undefine a list of signs"
     ],
-    "return_type": "Array<Dynamic>"
+    "return_type": "lua.Table<Int,Dynamic>"
   },
   {
     "annotations": [
@@ -13437,7 +13437,7 @@
     "name": "sign_unplacelist",
     "parameters": [
       [
-        "Array<Dynamic>",
+        "lua.Table<Int,Dynamic>",
         "list"
       ]
     ],
@@ -13445,7 +13445,7 @@
     "docs": [
       "List  unplace a list of signs"
     ],
-    "return_type": "Array<Dynamic>"
+    "return_type": "lua.Table<Int,Dynamic>"
   },
   {
     "annotations": [
@@ -13602,7 +13602,7 @@
     "name": "sort",
     "parameters": [
       [
-        "Array<Dynamic>",
+        "lua.Table<Int,Dynamic>",
         "list"
       ],
       [
@@ -13702,7 +13702,7 @@
       "  eval mylist->sort({i1, i2 -> i1 - i2})",
       "<"
     ],
-    "return_type": "Array<Dynamic>"
+    "return_type": "lua.Table<Int,Dynamic>"
   },
   {
     "annotations": [
@@ -13825,7 +13825,7 @@
       "  GetWord()->spellsuggest()",
       "```"
     ],
-    "return_type": "Array<Dynamic>"
+    "return_type": "lua.Table<Int,Dynamic>"
   },
   {
     "annotations": [
@@ -13884,7 +13884,7 @@
       "  GetString()->split()",
       "```"
     ],
-    "return_type": "Array<Dynamic>"
+    "return_type": "lua.Table<Int,Dynamic>"
   },
   {
     "annotations": [
@@ -13953,7 +13953,7 @@
       "  userinput->srand()",
       "```"
     ],
-    "return_type": "Array<Dynamic>"
+    "return_type": "lua.Table<Int,Dynamic>"
   },
   {
     "annotations": [
@@ -14110,7 +14110,7 @@
       "Can also be used as a |method|: >",
       "  GetString()->str2list()"
     ],
-    "return_type": "Array<Dynamic>"
+    "return_type": "lua.Table<Int,Dynamic>"
   },
   {
     "annotations": [
@@ -14724,7 +14724,7 @@
         "nr"
       ],
       [
-        "Null<Array<Dynamic>>",
+        "Null<lua.Table<Int,Dynamic>>",
         "?list"
       ]
     ],
@@ -15104,7 +15104,7 @@
       "  synconcealed(lnum, 5)   [1, 'X', 2]",
       "  synconcealed(lnum, 6)   [0, '', 0]"
     ],
-    "return_type": "Array<Dynamic>"
+    "return_type": "lua.Table<Int,Dynamic>"
   },
   {
     "annotations": [
@@ -15145,7 +15145,7 @@
       "character in a line and the first column in an empty line are",
       "valid positions."
     ],
-    "return_type": "Array<Dynamic>"
+    "return_type": "lua.Table<Int,Dynamic>"
   },
   {
     "annotations": [
@@ -15268,7 +15268,7 @@
       "  :echo GetCmd()->systemlist()",
       "```"
     ],
-    "return_type": "Array<Dynamic>"
+    "return_type": "lua.Table<Int,Dynamic>"
   },
   {
     "annotations": [
@@ -15303,7 +15303,7 @@
       "  GetTabpage()->tabpagebuflist()",
       "```"
     ],
-    "return_type": "Array<Dynamic>"
+    "return_type": "lua.Table<Int,Dynamic>"
   },
   {
     "annotations": [
@@ -15384,7 +15384,7 @@
       "Returns a |List| with the file names used to search for tags",
       "  for the current buffer.  This is the 'tags' option expanded."
     ],
-    "return_type": "Array<Dynamic>"
+    "return_type": "lua.Table<Int,Dynamic>"
   },
   {
     "annotations": [
@@ -15451,7 +15451,7 @@
       "  GetTagpattern()->taglist()",
       "```"
     ],
-    "return_type": "Array<Dynamic>"
+    "return_type": "lua.Table<Int,Dynamic>"
   },
   {
     "annotations": [
@@ -15610,7 +15610,7 @@
       "  GetTimer()->timer_info()",
       "```"
     ],
-    "return_type": "Array<Dynamic>"
+    "return_type": "lua.Table<Int,Dynamic>"
   },
   {
     "annotations": [],
@@ -16059,7 +16059,7 @@
       "    blocks.  Each item may again have an \"alt\"",
       "    item."
     ],
-    "return_type": "Array<Dynamic>"
+    "return_type": "lua.Table<Int,Dynamic>"
   },
   {
     "annotations": [
@@ -16071,7 +16071,7 @@
     "name": "uniq",
     "parameters": [
       [
-        "Array<Dynamic>",
+        "lua.Table<Int,Dynamic>",
         "list"
       ],
       [
@@ -16101,7 +16101,7 @@
       "  mylist->uniq()",
       "```"
     ],
-    "return_type": "Array<Dynamic>"
+    "return_type": "lua.Table<Int,Dynamic>"
   },
   {
     "annotations": [
@@ -16126,7 +16126,7 @@
       "  mydict->values()",
       "```"
     ],
-    "return_type": "Array<Dynamic>"
+    "return_type": "lua.Table<Int,Dynamic>"
   },
   {
     "annotations": [
@@ -16389,7 +16389,7 @@
       "  GetBufnr()->win_findbuf()",
       "```"
     ],
-    "return_type": "Array<Dynamic>"
+    "return_type": "lua.Table<Int,Dynamic>"
   },
   {
     "annotations": [
@@ -16509,7 +16509,7 @@
       "  GetWinid()->win_id2tabwin()",
       "```"
     ],
-    "return_type": "Array<Dynamic>"
+    "return_type": "lua.Table<Int,Dynamic>"
   },
   {
     "annotations": [
@@ -16634,7 +16634,7 @@
       "  GetWinid()->win_screenpos()",
       "```"
     ],
-    "return_type": "Array<Dynamic>"
+    "return_type": "lua.Table<Int,Dynamic>"
   },
   {
     "annotations": [
@@ -16825,7 +16825,7 @@
       "  GetTabnr()->winlayout()",
       "```"
     ],
-    "return_type": "Array<Dynamic>"
+    "return_type": "lua.Table<Int,Dynamic>"
   },
   {
     "annotations": [

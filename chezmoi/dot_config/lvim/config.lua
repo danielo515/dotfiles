@@ -47,7 +47,9 @@ D.pconf "user.dashboard"
 --#region Temporal test
 lvim.builtin.nvimtree.setup.update_cwd = false
 lvim.builtin.nvimtree.setup.hijack_directories = { enable = false }
+lvim.builtin.nvimtree.setup.update_cwd = false
 lvim.builtin.nvimtree.setup.update_focused_file.update_cwd = false
+lvim.builtin.nvimtree.setup.update_focused_file.enable = false
 --#endregion
 
 vim.wo.relativenumber = true

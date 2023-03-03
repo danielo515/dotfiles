@@ -59,7 +59,7 @@ typedef AnnotationMap = Map< String, Annotation >;
   static function formatTypeStr(type:String):String {
     return switch (type) {
       case '$kind[]':
-        'Array<${formatTypeStr(kind)}>';
+        'lua.Table<Int,${formatTypeStr(kind)}>';
       case 'any': 'Dynamic';
       case 'number' | 'Number': 'Int';
       case 'table' | 'List': 'lua.Table<Int, Dynamic>';
