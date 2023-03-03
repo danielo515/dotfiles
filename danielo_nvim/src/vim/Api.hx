@@ -45,7 +45,7 @@ abstract AutoCmdOpts(Table< String, Dynamic >) {
       case Cb(f):
         this.callback = f;
       case Str(cmd):
-        this.cmd = cmd;
+        this.command = cmd;
     }
   }
 }

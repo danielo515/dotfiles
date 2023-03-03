@@ -960,7 +960,7 @@ __vim_Vimx.acmd = function(groupName,events,pattern,description,cb)
   if (tmp) == 0 then 
     this1.callback = cb[2];
   elseif (tmp) == 1 then 
-    this1.cmd = cb[2]; end;
+    this1.command = cb[2]; end;
   vim.api.nvim_create_autocmd(events, this1);
 end
 __vim_Vimx.autocmd = function(groupName,events,pattern,description,cb) 
