@@ -210,6 +210,7 @@ __plugins__Copilot_Copilot_Fields_ = _hx_e()
 __plugins__FzfLua_FzfLua_Fields_ = _hx_e()
 __plugins__Plugins_Plugins_Fields_ = _hx_e()
 __vim__TableTools_TableTools_Fields_ = _hx_e()
+__vim_FunctionOrString = _hx_e()
 __vim__VimTypes_LuaArray_Impl_ = _hx_e()
 __vim_Vimx = _hx_e()
 __vim__Vimx_Vimx_Fields_ = _hx_e()
@@ -1325,10 +1326,13 @@ __kickstart__Kickstart_Kickstart_Fields_.main = function()
   __kickstart__Kickstart_Kickstart_Fields_.autoCommands();
 end
 __kickstart__Kickstart_Kickstart_Fields_.autoCommands = function() 
-  __vim_Vimx.autocmd("Kickstart", ({"BufWritePost"}), vim.fn.expand("$MYVIMRC"), "Reload the config", function() 
+  local tmp = __vim_FunctionOrString.Cb(function() 
     vim.cmd("source <afile> | PackerCompile");
   end);
-  __vim_Vimx.autocmd("Kickstart-yank", __vim__VimTypes_LuaArray_Impl_.from(_hx_tab_array({[0]="TextYankPost"}, 1)), "*", "Highlight on yank", __kickstart__Untyped_Untyped_Fields_.higlightOnYank);
+  __vim_Vimx.acmd("Kickstart", ({"BufWritePost"}), vim.fn.expand("$MYVIMRC"), "Reload the config", tmp);
+  __vim_Vimx.acmd("Kickstart-yank", __vim__VimTypes_LuaArray_Impl_.from(_hx_tab_array({[0]="TextYankPost"}, 1)), "*", "Highlight on yank", __vim_FunctionOrString.Cb(__kickstart__Untyped_Untyped_Fields_.higlightOnYank));
+  __vim_Vimx.acmd("Kickstart", ({"WinEnter"}), "*", "set relative numbers on win enter", __vim_FunctionOrString.Str("set relativenumber number cursorline"));
+  __vim_Vimx.acmd("Kickstart", ({"WinLeave"}), "*", "unset numbers on unfocussed window", __vim_FunctionOrString.Str("set norelativenumber nocursorline"));
 end
 __kickstart__Kickstart_Kickstart_Fields_.onAttach = function(x,bufnr) 
   local nmap = function(keys,func,desc) 
@@ -1616,6 +1620,9 @@ __vim__TableTools_TableTools_Fields_.concat = function(tableA,tableB)
   do return vim.list_extend(vim.list_extend(({}), tableA), tableB) end;
 end
 
+__vim_FunctionOrString.Cb = function(cb) local _x = _hx_tab_array({[0]="Cb",0,cb,__enum__=__vim_FunctionOrString}, 3); return _x; end 
+__vim_FunctionOrString.Str = function(cmd) local _x = _hx_tab_array({[0]="Str",1,cmd,__enum__=__vim_FunctionOrString}, 3); return _x; end 
+
 __vim__VimTypes_LuaArray_Impl_.new = {}
 __vim__VimTypes_LuaArray_Impl_.from = function(arr) 
   local ret = ({});
@@ -1631,7 +1638,7 @@ end
 
 __vim_Vimx.new = {}
 _hx_exports["vimx"] = __vim_Vimx
-__vim_Vimx.autocmd = function(groupName,events,pattern,description,cb) 
+__vim_Vimx.acmd = function(groupName,events,pattern,description,cb) 
   local group;
   local _g = __vim_Vimx.autogroups:get(groupName);
   if (_g == nil) then 
@@ -1640,13 +1647,25 @@ __vim_Vimx.autocmd = function(groupName,events,pattern,description,cb)
   else
     group = _g;
   end;
-  vim.api.nvim_create_autocmd(events, ({pattern = pattern, callback = cb, group = group, desc = (function() 
+  local this1 = ({pattern = pattern, group = group, desc = (function() 
     local _hx_1
     if (description == nil) then 
     _hx_1 = Std.string(Std.string(Std.string(Std.string("") .. Std.string(groupName)) .. Std.string(":[")) .. Std.string(pattern)) .. Std.string("]"); else 
     _hx_1 = description; end
     return _hx_1
-  end )(), once = false, nested = false}));
+  end )(), once = false, nested = false});
+  local tmp = cb[1];
+  if (tmp) == 0 then 
+    this1.callback = cb[2];
+  elseif (tmp) == 1 then 
+    this1.command = cb[2]; end;
+  vim.api.nvim_create_autocmd(events, this1);
+end
+__vim_Vimx.autocmd = function(groupName,events,pattern,description,cb) 
+  __vim_Vimx.acmd(groupName, events, pattern, description, __vim_FunctionOrString.Cb(cb));
+end
+__vim_Vimx.autocmdStr = function(groupName,events,pattern,description,command) 
+  __vim_Vimx.acmd(groupName, events, pattern, description, __vim_FunctionOrString.Str(command));
 end
 __vim_Vimx.copyToClipboard = function(str) 
   vim.cmd(Std.string(Std.string("let @* = \"") .. Std.string(str)) .. Std.string("\""));

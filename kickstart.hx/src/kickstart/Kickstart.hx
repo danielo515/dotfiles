@@ -6,7 +6,6 @@ import plugins.LspConfig.Lspconfig;
 using vim.TableTools;
 
 import plugins.Plugins.SchemaStore;
-import plugins.WhichKey;
 import plugins.Plugins.MasonLspConfig;
 import plugins.Plugins.Cmp_nvim_lsp;
 import vim.Lsp;
@@ -112,6 +111,20 @@ function autoCommands() {
     "*",
     "Highlight on yank",
     kickstart.Untyped.higlightOnYank
+  );
+  Vimx.autocmdStr(
+    "Kickstart",
+    t([WinEnter]),
+    "*",
+    "set relative numbers on win enter",
+    "set relativenumber number cursorline"
+  );
+  Vimx.autocmdStr(
+    "Kickstart",
+    t([WinLeave]),
+    "*",
+    "unset numbers on unfocussed window",
+    "set norelativenumber nocursorline"
   );
 }
 
