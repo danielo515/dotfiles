@@ -4,6 +4,7 @@ import hxparse.Lexer;
 import haxe.macro.Expr.Position;
 
 using StringTools;
+using Safety;
 
 enum LKeyword {
   And;
@@ -55,16 +56,11 @@ final luaKeywords:Map< String, LKeyword > = [
   "while" => LKeyword.While,
 ];
 
-typedef LuaDocRaw = {
-  final type:String;
-  final description:String;
-}
-
 enum TokenDef {
   Eof;
   Comment(content:String);
-  LuaDocParam(name:String, doc:LuaDocRaw);
-  LuaDocReturn(doc:LuaDocRaw);
+  LuaDocParam(content:String);
+  LuaDocReturn(content:String);
   Keyword(k:LKeyword);
   Identifier(name:String);
   Str(content:String);
@@ -87,7 +83,7 @@ class Token {
   public function toString() {
     return switch (tok) {
       case Comment(content): 'Comment("$content")';
-      case LuaDocParam(name, doc): 'LuaDocParam("$name","$doc")';
+      case LuaDocParam(content): 'LuaDocParam("$content")';
       case LuaDocReturn(doc): 'LuaDocReturn("$doc")';
       case Keyword(k): 'Keyword($k)';
       case Identifier(name): 'Identifier("$name")';
@@ -119,7 +115,6 @@ class LuaLexer extends Lexer implements hxparse.RuleBuilder {
   public static var consumeLine = @:rule ["[^\n]+" => lexer.current.ltrim()];
   // @:rule wraps the expression to the right of => with function(lexer) return
   public static var tok = @:rule [
-    "" => mk(lexer, Eof),
     "[+;\\-]" => lexer.token(tok), // Yes, I ignore all this crap
     "\\.\\.\\." => mk(lexer, ThreeDots),
     "\n" => mk(lexer, Newline),
@@ -157,20 +152,15 @@ class LuaLexer extends Lexer implements hxparse.RuleBuilder {
       final content = lexer.token(consumeLine);
       mk(lexer, Comment(content));
     },
-    "--@param" => {
+    "--- ?@param" => {
       final content = lexer.token(consumeLine);
-      mk(
-        lexer,
-        LuaDocParam(
-          content.split(" ")[0],
-          {type: content.split(" ")[1], description: content.split(" ")[2]}
-        )
-      );
+      mk(lexer, LuaDocParam(content));
     },
-    "--@return" => {
-      final content = lexer.token(returnDoc);
+    "--- ?@return" => {
+      final content = lexer.token(consumeLine);
       mk(lexer, LuaDocReturn(content));
     },
+    "" => null,
   ];
   public static var string = @:rule ["[^']+" => {
     final content = lexer.current;
@@ -180,9 +170,4 @@ class LuaLexer extends Lexer implements hxparse.RuleBuilder {
     final content = lexer.current;
     content + lexer.token(string);
   }, "\"" => ""];
-  public static var returnDoc = @:rule [" [a-zA-z]+" => {
-    final type = lexer.current.ltrim();
-    final description = lexer.token(consumeLine);
-    ({type: type, description: description} : LuaDocRaw);
-  }];
 }

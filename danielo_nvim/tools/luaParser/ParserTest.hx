@@ -1,9 +1,11 @@
 package tools.luaParser;
 
+import hxparse.Lexer;
 import haxe.io.Path;
 import sys.io.File;
 import byte.ByteData;
 import tools.luaParser.Lexer;
+import tools.luaParser.LuaDoc;
 import tools.luaParser.Lexer.TokenDef;
 
 using StringTools;
@@ -14,13 +16,13 @@ function readFixture(path:String):ByteData {
   return byte.ByteData.ofBytes(file);
 }
 
-function consumeTokens(lexer:LuaLexer):Array< Token > {
+function consumeTokens< T >(lexer:Lexer, tok):Array< T > {
   var tokens = [];
   try {
-    var token = lexer.token(LuaLexer.tok);
-    while (token.tok != Eof) {
+    var token = lexer.token(tok);
+    while (token != null) {
       tokens.push(token);
-      token = lexer.token(LuaLexer.tok);
+      token = lexer.token(tok);
     }
     return tokens;
   }
@@ -34,19 +36,39 @@ function consumeTokens(lexer:LuaLexer):Array< Token > {
 
 @colorize
 class ParserTest extends buddy.SingleSuite {
-  function compareTokens(a, b) {
-    // switch ([a, b]) {
-    //   case [Comment(payloadA), Comment(payloadB)]:
-    //     payloadA.should.be(payloadB);
-    //   case [defaultA, defaultB]:
-    //     defaultA.should.equal(defaultB);
-    // }
-  }
-
+  // function compareTokens(a:TokenDef, b:TokenDef) {
+  //   switch ([a, b]) {
+  //     case [Comment(payloadA), Comment(payloadB)]:
+  //       payloadA.should.be(payloadB);
+  //     case [defaultA, defaultB]:
+  //       defaultA.should.equal(defaultB);
+  //   }
+  // }
   public function new() {
-    // A test suite:
-    describe("Lexer", {
-      it("should parse the basic function", {
+    function compareTokens(a:TokenDef, b:TokenDef) {
+      switch ([a, b]) {
+        case [LuaDocParam(a), LuaDocParam(b)]:
+          a.should.be(b);
+        case [defaultA, defaultB]:
+          defaultA.should.equal(defaultB);
+      }
+    }
+    describe("Doc lexer", {
+      it("should lex the param comments", {
+        final suite:Map< String, Array< LuaDoc.DocToken > > = ["func fun()" => [DocToken.Identifier(
+          "func"
+        ), Identifier("fun")]];
+        for (string => expected in suite) {
+          final lexer = new LuaDocLexer(ByteData.ofString(string));
+          final tokens = consumeTokens(lexer, LuaDocLexer.paramDoc);
+          for (idx => token in tokens) {
+            token.should.equal(expected[idx]);
+          }
+        }
+      });
+    });
+    describe("Lua Lexer", {
+      it("should lex the basic function", {
         final lexer = new LuaLexer(readFixture("fixtures/basic_fn.lua"));
         final expected = [
           Comment("Invokes |vim-function| or |user-function| {func} with arguments {...}."),
@@ -61,7 +83,7 @@ class ParserTest extends buddy.SingleSuite {
           Newline,
           Comment("```"),
           Newline,
-          Comment("@param func fun()"),
+          LuaDocParam("func fun()"),
           Newline,
           Keyword(Function),
           Identifier("vim.call"),
@@ -73,16 +95,17 @@ class ParserTest extends buddy.SingleSuite {
           Newline
         ];
 
-        final tokens = consumeTokens(lexer).map(token -> token.tok);
+        final rawTokens = consumeTokens(lexer, LuaLexer.tok);
+        final tokens = rawTokens.map(token -> token.tok);
 
         for (idx => token in tokens) {
-          token.should.equal(expected[idx]);
+          compareTokens(token, expected[idx]);
         }
       });
 
-      it("should parse vim.iconv", {
+      it("should lex vim.iconv", {
         final lexer = new LuaLexer(readFixture("fixtures/vim_iconv.lua"));
-        final rawTokens = consumeTokens(lexer);
+        final rawTokens = consumeTokens(lexer, LuaLexer.tok);
         final tokens = rawTokens.map(token -> token.tok);
         final expected = [
           Comment("The result is a String, which is the text {str} converted from"),
@@ -109,13 +132,13 @@ class ParserTest extends buddy.SingleSuite {
           Newline,
           Comment("Converted string if conversion succeeds, `nil` otherwise."),
           Newline,
-          Comment("@param str string"),
+          LuaDocParam("str string"),
           Newline,
-          Comment("@param from number"),
+          LuaDocParam("from number"),
           Newline,
-          Comment("@param to number"),
+          LuaDocParam("to number"),
           Newline,
-          Comment("@param opts? table<string, any>"),
+          LuaDocParam("opts? table<string, any>"),
           Newline,
           Keyword(Function),
           Identifier("vim.iconv"),
@@ -129,29 +152,10 @@ class ParserTest extends buddy.SingleSuite {
           Newline
         ];
 
-        tools.Log.print(rawTokens);
         for (idx => token in tokens) {
-          token.should.equal(expected[idx]);
+          compareTokens(token, expected[idx]);
         }
       });
     });
-  }
-
-  static function main() {
-    // final input = "
-    //   -- This is a comment
-    //   -- This is another comment
-    //   --@param name description
-    //   --@return string description
-    //   function foo(name)
-    //     return 'Hello ' + name;
-    //   end
-    //   ".ltrim();
-    // final inputBytes = byte.ByteData.ofString(input);
-    // final lexer = new LuaLexer(inputBytes);
-    // var token = lexer.token(LuaLexer.tok);
-    // while (token.tok != Eof) {
-    //   token = lexer.token(LuaLexer.tok);
-    // }
   }
 }
