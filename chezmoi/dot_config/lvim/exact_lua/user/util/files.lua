@@ -1,3 +1,4 @@
+-- Deprecated file. Use D.file instead
 local Log = require "lvim.core.log"
 
 local function is_file_ok(filePath)
