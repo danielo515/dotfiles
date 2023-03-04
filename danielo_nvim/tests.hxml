@@ -1,0 +1,3 @@
+test-base.hxml
+-main tools.luaParser.ParserTest
+--interp
