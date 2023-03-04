@@ -70,6 +70,7 @@ enum TokenDef {
   Identifier(name:String);
   Lparen;
   Rparen;
+  ThreeDots;
   Str(content:String);
 }
 
@@ -101,11 +102,14 @@ class LuaLexer extends Lexer implements hxparse.RuleBuilder {
     return new Token(td, mkPos(lexer.curPos()));
   }
 
+  static final identifier_ = "[a-zA-Z_][a-zA-Z0-9_]*";
+
   public static var consumeLine = @:rule ["[^\n]+" => lexer.current.ltrim()];
   // @:rule wraps the expression to the right of => with function(lexer) return
   public static var tok = @:rule [
-    "[+;\\-]" => lexer.token(tok), // Yes, I ignore all this crap
     "" => mk(lexer, Eof),
+    "[+;\\-]" => lexer.token(tok), // Yes, I ignore all this crap
+    "\\.\\.\\." => mk(lexer, ThreeDots),
     "\n" => mk(lexer, Newline),
     "[\t ]+" => {
       var space = lexer.current;
@@ -123,6 +127,10 @@ class LuaLexer extends Lexer implements hxparse.RuleBuilder {
     "\"" => {
       final content = lexer.token(doubleQuotedString);
       mk(lexer, Str(content));
+    },
+    identifier_ + "\\." + identifier_ => { // Path access
+      final content = lexer.current;
+      mk(lexer, Identifier(content));
     },
     "[a-zA-Z_][a-zA-Z0-9_]*" => {
       final content = lexer.current;
@@ -152,17 +160,14 @@ class LuaLexer extends Lexer implements hxparse.RuleBuilder {
       mk(lexer, LuaDocReturn(content));
     },
   ];
-
   public static var string = @:rule ["[^']+" => {
     final content = lexer.current;
     content + lexer.token(string);
   }, "'" => ""];
-
   public static var doubleQuotedString = @:rule ["[^\"]+" => {
     final content = lexer.current;
     content + lexer.token(string);
   }, "\"" => ""];
-
   public static var returnDoc = @:rule [" [a-zA-z]+" => {
     final type = lexer.current.ltrim();
     final description = lexer.token(consumeLine);

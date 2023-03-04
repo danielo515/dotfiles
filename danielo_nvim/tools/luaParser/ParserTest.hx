@@ -16,43 +16,97 @@ function readFixture(path:String):ByteData {
 
 function consumeTokens(lexer:LuaLexer):Array< Token > {
   var tokens = [];
-  var token = lexer.token(LuaLexer.tok);
-  while (token.tok != Eof) {
-    tokens.push(token);
-    token = lexer.token(LuaLexer.tok);
+  try {
+    var token = lexer.token(LuaLexer.tok);
+    while (token.tok != Eof) {
+      tokens.push(token);
+      token = lexer.token(LuaLexer.tok);
+    }
+    return tokens;
   }
-  return tokens;
+  catch (e:Dynamic) {
+    trace("Error parsing", e);
+    trace("Dumping tokens:");
+    trace(tokens);
+    throw e;
+  }
 }
 
+@colorize
 class ParserTest extends buddy.SingleSuite {
+  function compareTokens(a, b) {
+    // switch ([a, b]) {
+    //   case [Comment(payloadA), Comment(payloadB)]:
+    //     payloadA.should.be(payloadB);
+    //   case [defaultA, defaultB]:
+    //     defaultA.should.equal(defaultB);
+    // }
+  }
+
   public function new() {
     // A test suite:
     describe("Lexer", {
-      final lexer = new LuaLexer(readFixture("fixtures/basic_fn.lua"));
-
       it("should parse the basic function", {
-        final tokens = consumeTokens(lexer);
-        tokens.length.should.be(12);
+        final lexer = new LuaLexer(readFixture("fixtures/basic_fn.lua"));
+        final expected = [
+          Comment("Invokes |vim-function| or |user-function| {func} with arguments {...}."),
+          Newline,
+          Comment("See also |vim.fn|."),
+          Newline,
+          Comment("Equivalent to:"),
+          Newline,
+          Comment("```lua"),
+          Newline,
+          Comment("vim.fn[func]({...})"),
+          Newline,
+          Comment("```"),
+          Newline,
+          Comment("@param func fun()"),
+          Newline,
+          Keyword(Function),
+          Identifier("vim.call"),
+          Rparen,
+          Identifier("func"),
+          ThreeDots,
+          Lparen,
+          Keyword(End),
+          Newline
+        ];
+
+        final tokens = consumeTokens(lexer).map(token -> token.tok);
+
+        for (idx => token in tokens) {
+          token.should.equal(expected[idx]);
+        }
+      });
+
+      it("should parse vim.iconv", {
+        final lexer = new LuaLexer(readFixture("fixtures/vim_iconv.lua"));
+        final tokens = consumeTokens(lexer).map(token -> token.tok);
+        final expected = [];
+
+        for (idx => token in tokens) {
+          token.should.equal(expected[idx]);
+        }
       });
     });
   }
 
   static function main() {
-    final input = "
-      -- This is a comment
-      -- This is another comment
-      --@param name description
-      --@return string description
-      function foo(name)
-        return 'Hello ' + name;
-      end
-      ".ltrim();
-    final inputBytes = byte.ByteData.ofString(input);
-    final lexer = new LuaLexer(inputBytes);
-    var token = lexer.token(LuaLexer.tok);
-    while (token.tok != Eof) {
-      trace(token);
-      token = lexer.token(LuaLexer.tok);
-    }
+    // final input = "
+    //   -- This is a comment
+    //   -- This is another comment
+    //   --@param name description
+    //   --@return string description
+    //   function foo(name)
+    //     return 'Hello ' + name;
+    //   end
+    //   ".ltrim();
+    // final inputBytes = byte.ByteData.ofString(input);
+    // final lexer = new LuaLexer(inputBytes);
+    // var token = lexer.token(LuaLexer.tok);
+    // while (token.tok != Eof) {
+    //   token = lexer.token(LuaLexer.tok);
+    // }
   }
 }
