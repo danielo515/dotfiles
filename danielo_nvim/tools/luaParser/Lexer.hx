@@ -115,9 +115,15 @@ class LuaLexer extends Lexer implements hxparse.RuleBuilder {
   public static var consumeLine = @:rule ["[^\n]+" => lexer.current.ltrim()];
   // @:rule wraps the expression to the right of => with function(lexer) return
   public static var tok = @:rule [
+    "return" => {
+      // I don't care about this things, so I just consume them
+      lexer.token(consumeLine);
+      lexer.token(tok);
+    },
     "[+;\\-]" => lexer.token(tok), // Yes, I ignore all this crap
     "\\.\\.\\." => mk(lexer, ThreeDots),
-    "\n" => mk(lexer, Newline),
+    "\n\n" => mk(lexer, Newline),
+    "\n" => lexer.token(tok),
     "[\t ]+" => {
       var space = lexer.current;
       var token:Token = lexer.token(tok);
@@ -148,10 +154,6 @@ class LuaLexer extends Lexer implements hxparse.RuleBuilder {
         mk(lexer, Identifier(content));
       }
     },
-    "--[^@]" => {
-      final content = lexer.token(consumeLine);
-      mk(lexer, Comment(content));
-    },
     "--- ?@param" => {
       final content = lexer.token(consumeLine);
       mk(lexer, LuaDocParam(content));
@@ -159,6 +161,10 @@ class LuaLexer extends Lexer implements hxparse.RuleBuilder {
     "--- ?@return" => {
       final content = lexer.token(consumeLine);
       mk(lexer, LuaDocReturn(content));
+    },
+    "---?[^@]" => {
+      final content = lexer.token(consumeLine);
+      mk(lexer, Comment(content));
     },
     "" => null,
   ];

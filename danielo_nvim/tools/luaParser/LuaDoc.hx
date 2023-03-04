@@ -12,12 +12,16 @@ typedef Param = {
 
 enum DocToken {
   Identifier(name:String);
+  ArrayMod;
+  OptionalMod;
   Keyword(name:String);
   Comma;
   CurlyOpen;
   CurlyClose;
   SquareOpen;
   SquareClose;
+  Lparen;
+  Rparen;
   TypeOpen;
   TypeClose;
   EOL;
@@ -25,21 +29,22 @@ enum DocToken {
 
 class LuaDocLexer extends Lexer implements hxparse.RuleBuilder {
   public static var paramDoc = @:rule [
-    "[a-zA-z]+ " => {
-      final name = lexer.current.rtrim();
+    "[a-zA-z]+" => {
+      final name = lexer.current;
       Identifier(name);
     },
     " " => lexer.token(paramDoc),
     "," => lexer.token(paramDoc),
+    "\\[\\]" => ArrayMod,
+    "\\?" => OptionalMod,
     "<" => TypeOpen,
+    ">" => TypeClose,
     "{" => CurlyClose,
     "}" => CurlyClose,
     "[" => SquareOpen,
     "]" => SquareClose,
-    "" => EOL,
+    "\\(" => Lparen,
+    "\\)" => Rparen,
+    "" => null,
   ];
-  public static var returnDoc = @:rule ["[a-zA-z]+" => {
-    final type = lexer.current.ltrim();
-    type;
-  }];
 }
