@@ -82,9 +82,54 @@ class ParserTest extends buddy.SingleSuite {
 
       it("should parse vim.iconv", {
         final lexer = new LuaLexer(readFixture("fixtures/vim_iconv.lua"));
-        final tokens = consumeTokens(lexer).map(token -> token.tok);
-        final expected = [];
+        final rawTokens = consumeTokens(lexer);
+        final tokens = rawTokens.map(token -> token.tok);
+        final expected = [
+          Comment("The result is a String, which is the text {str} converted from"),
+          Newline,
+          Comment("encoding {from} to encoding {to}. When the conversion fails `nil` is"),
+          Newline,
+          Comment("returned.  When some characters could not be converted they"),
+          Newline,
+          Comment('are replaced with "?".'),
+          Newline,
+          Comment("The encoding names are whatever the iconv() library function"),
+          Newline,
+          Comment('can accept, see ":Man 3 iconv".'),
+          Newline,
+          Comment("-- Parameters: ~"),
+          Newline,
+          Comment("• {str}   (string) Text to convert"),
+          Newline,
+          Comment("• {from}  (string) Encoding of {str}"),
+          Newline,
+          Comment("• {to}    (string) Target encoding"),
+          Newline,
+          Comment("-- Returns: ~"),
+          Newline,
+          Comment("Converted string if conversion succeeds, `nil` otherwise."),
+          Newline,
+          Comment("@param str string"),
+          Newline,
+          Comment("@param from number"),
+          Newline,
+          Comment("@param to number"),
+          Newline,
+          Comment("@param opts? table<string, any>"),
+          Newline,
+          Keyword(Function),
+          Identifier("vim.iconv"),
+          Rparen,
+          Identifier("str"),
+          Identifier("from"),
+          Identifier("to"),
+          Identifier("opts"),
+          Lparen,
+          Keyword(End),
+          Newline
+        ];
 
+        tools.Log.print(rawTokens);
         for (idx => token in tokens) {
           token.should.equal(expected[idx]);
         }

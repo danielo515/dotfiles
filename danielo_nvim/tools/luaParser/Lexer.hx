@@ -65,13 +65,13 @@ enum TokenDef {
   Comment(content:String);
   LuaDocParam(name:String, doc:LuaDocRaw);
   LuaDocReturn(doc:LuaDocRaw);
-  Newline;
   Keyword(k:LKeyword);
   Identifier(name:String);
+  Str(content:String);
+  Newline;
   Lparen;
   Rparen;
   ThreeDots;
-  Str(content:String);
 }
 
 class Token {
@@ -85,7 +85,19 @@ class Token {
   }
 
   public function toString() {
-    return tok;
+    return switch (tok) {
+      case Comment(content): 'Comment("$content")';
+      case LuaDocParam(name, doc): 'LuaDocParam("$name","$doc")';
+      case LuaDocReturn(doc): 'LuaDocReturn("$doc")';
+      case Keyword(k): 'Keyword($k)';
+      case Identifier(name): 'Identifier("$name")';
+      case Str(content): 'Str("$content")';
+      case Newline: 'Newline';
+      case Lparen: 'Lparen';
+      case Rparen: 'Rparen';
+      case ThreeDots: 'ThreeDots';
+      case Eof: 'Eof';
+    }
   }
 }
 
