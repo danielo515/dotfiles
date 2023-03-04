@@ -28,16 +28,23 @@ function M.config()
       "BufWritePost",
       "*.hx",
       function()
+        local function findhxbuild(path)
+          if D.file.is_file_ok(path .. "/build.hxml") then
+            return path
+          else
+            return findhxbuild(vim.fn.fnamemodify(path, ":h"))
+          end
+        end
         local path = vim.fn.expand "%:p:h"
-        local cwd = vim.fn.fnamemodify(path, ":h")
-        local result = job
+        local cwd = findhxbuild(path)
+        local result, stderr = job
           :new({
             command = "haxe",
             args = { "build.hxml" },
             cwd = cwd,
           })
           :sync(2000)
-        vim.pretty_print("build ran at " .. cwd, result)
+        vim.pretty_print("build ran at " .. cwd, result, stderr)
       end,
     },
     -- Re add to chezmoi snippet files, because that is the only way to have live reload of snippets
