@@ -88,7 +88,7 @@ typedef MatchStr = {line:String, match:String};
 function extractAllParamCommentsFromFile(file:String):Array< MatchStr > {
   final lines = readNeovimLuaFile(file);
   final comments = [];
-  final commentRegex = ~/-- ?@param(.*)/;
+  final commentRegex = ~/-{2,3} ?@param(.*)/;
   for (line in lines) {
     if (commentRegex.match(line)) {
       comments.push({line: line, match: commentRegex.matched(1)});

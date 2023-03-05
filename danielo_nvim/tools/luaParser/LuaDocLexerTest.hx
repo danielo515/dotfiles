@@ -205,4 +205,3 @@ class LuaDocLexerTest extends buddy.SingleSuite {
     });
   }
 }
-
