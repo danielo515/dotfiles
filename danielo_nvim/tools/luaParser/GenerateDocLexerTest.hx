@@ -38,9 +38,9 @@ function readNeovimLuaFile(relativePath:String):Array< String > {
   }
 }
 
-function generateTestCase(fixture, expected) {
+function generateTestCase(fixture, original, expected) {
   final contents = '
-  it("$fixture", {
+  it("$original", {
       final lexer = new LuaDocLexer(ByteData.ofString("$fixture"));
       final actual = ParserTest.consumeTokens(lexer, LuaDocLexer.paramDoc);
       final expected = [${expected.map(EnuP.printEnum).join(', ')}];
@@ -83,20 +83,22 @@ function generateTestFile(testSuites) {
   return contents;
 }
 
-function extractAllParamCommentsFromFile(file:String):Array< String > {
+typedef MatchStr = {line:String, match:String};
+
+function extractAllParamCommentsFromFile(file:String):Array< MatchStr > {
   final lines = readNeovimLuaFile(file);
   final comments = [];
   final commentRegex = ~/-- ?@param(.*)/;
   for (line in lines) {
     if (commentRegex.match(line)) {
-      comments.push(commentRegex.matched(1));
+      comments.push({line: line, match: commentRegex.matched(1)});
     }
   }
   return comments;
 }
 
-function parseParamComment(comment:String) {
-  final lexer = new LuaDocLexer(ByteData.ofString(comment));
+function parseParamComment(comment:MatchStr):Array< LuaDoc.DocToken > {
+  final lexer = new LuaDocLexer(ByteData.ofString(comment.match));
   final tokens = ParserTest.consumeTokens(lexer, LuaDocLexer.paramDoc);
   return tokens;
 }
@@ -107,7 +109,7 @@ function main() {
   final commentsAsTokens = commentsAsStrings.map(parseParamComment);
   final testCases = [for (idx => expected in commentsAsTokens) {
     final fixture = commentsAsStrings[idx];
-    generateTestCase(fixture, expected);
+    generateTestCase(fixture.match, fixture.line, expected);
   }];
   final testSuite = generateTestSuite(file, testCases);
   final testFile = generateTestFile([testSuite]);

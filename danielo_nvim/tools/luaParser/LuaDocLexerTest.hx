@@ -15,7 +15,7 @@ using buddy.Should;
 class LuaDocLexerTest extends buddy.SingleSuite {
   public function new() {
     describe("vim/filetype.lua", {
-      it(" bufnr number|nil The buffer to get the lines from", {
+      it("---@param bufnr number|nil The buffer to get the lines from", {
         final lexer = new LuaDocLexer(
           ByteData.ofString(" bufnr number|nil The buffer to get the lines from")
         );
@@ -27,7 +27,7 @@ class LuaDocLexerTest extends buddy.SingleSuite {
       });
 
       it(
-        " start_lnum number|nil The line number of the first line (inclusive, 1-based)",
+        "---@param start_lnum number|nil The line number of the first line (inclusive, 1-based)",
         {
           final lexer = new LuaDocLexer(
             ByteData.ofString(
@@ -43,7 +43,7 @@ class LuaDocLexerTest extends buddy.SingleSuite {
       );
 
       it(
-        " end_lnum number|nil The line number of the last line (inclusive, 1-based)",
+        "---@param end_lnum number|nil The line number of the last line (inclusive, 1-based)",
         {
           final lexer = new LuaDocLexer(
             ByteData.ofString(
@@ -58,7 +58,7 @@ class LuaDocLexerTest extends buddy.SingleSuite {
         }
       );
 
-      it(" s string The string to check", {
+      it("---@param s string The string to check", {
         final lexer = new LuaDocLexer(ByteData.ofString(" s string The string to check"));
         final actual = ParserTest.consumeTokens(lexer, LuaDocLexer.paramDoc);
         final expected = [
@@ -74,7 +74,7 @@ class LuaDocLexerTest extends buddy.SingleSuite {
         }
       });
 
-      it(" patterns table<string> A list of Lua patterns", {
+      it("---@param patterns table<string> A list of Lua patterns", {
         final lexer = new LuaDocLexer(
           ByteData.ofString(" patterns table<string> A list of Lua patterns")
         );
@@ -96,7 +96,7 @@ class LuaDocLexerTest extends buddy.SingleSuite {
         }
       });
 
-      it(" bufnr number The buffer to get the line from", {
+      it("---@param bufnr number The buffer to get the line from", {
         final lexer = new LuaDocLexer(
           ByteData.ofString(" bufnr number The buffer to get the line from")
         );
@@ -118,7 +118,7 @@ class LuaDocLexerTest extends buddy.SingleSuite {
       });
 
       it(
-        " start_lnum number The line number of the first line to start from (inclusive, 1-based)",
+        "---@param start_lnum number The line number of the first line to start from (inclusive, 1-based)",
         {
           final lexer = new LuaDocLexer(
             ByteData.ofString(
@@ -148,32 +148,37 @@ class LuaDocLexerTest extends buddy.SingleSuite {
         }
       );
 
-      it(" filetypes table A table containing new filetype maps (see example).", {
-        final lexer = new LuaDocLexer(
-          ByteData.ofString(" filetypes table A table containing new filetype maps (see example).")
-        );
-        final actual = ParserTest.consumeTokens(lexer, LuaDocLexer.paramDoc);
-        final expected = [
-          Identifier("filetypes"),
-          Identifier("table"),
-          Identifier("A"),
-          Identifier("table"),
-          Identifier("containing"),
-          Identifier("new"),
-          Identifier("filetype"),
-          Identifier("maps"),
-          Lparen,
-          Identifier("see"),
-          Identifier("example"),
-          Rparen
-        ];
-        for (idx => token in actual) {
-          token.should.equal(expected[idx]);
+      it(
+        "---@param filetypes table A table containing new filetype maps (see example).",
+        {
+          final lexer = new LuaDocLexer(
+            ByteData.ofString(
+              " filetypes table A table containing new filetype maps (see example)."
+            )
+          );
+          final actual = ParserTest.consumeTokens(lexer, LuaDocLexer.paramDoc);
+          final expected = [
+            Identifier("filetypes"),
+            Identifier("table"),
+            Identifier("A"),
+            Identifier("table"),
+            Identifier("containing"),
+            Identifier("new"),
+            Identifier("filetype"),
+            Identifier("maps"),
+            Lparen,
+            Identifier("see"),
+            Identifier("example"),
+            Rparen
+          ];
+          for (idx => token in actual) {
+            token.should.equal(expected[idx]);
+          }
         }
-      });
+      );
 
       it(
-        " args table Table specifying which matching strategy to use. Accepted keys are:",
+        "---@param args table Table specifying which matching strategy to use. Accepted keys are:",
         {
           final lexer = new LuaDocLexer(
             ByteData.ofString(
