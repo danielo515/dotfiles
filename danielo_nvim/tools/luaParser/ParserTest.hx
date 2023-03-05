@@ -29,8 +29,7 @@ function consumeTokens< T >(lexer:Lexer, tok):Array< T > {
   catch (e:Dynamic) {
     trace("Error parsing", e);
     trace("Dumping tokens:");
-    trace(tokens);
-    throw e;
+    return tokens;
   }
 }
 
