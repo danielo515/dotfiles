@@ -14,9 +14,14 @@ using haxe.EnumTools;
 using haxe.macro.ExprTools;
 
 function readNeovimLuaFile(relativePath:String):Array< String > {
-  final basePath = FileTools.getNvimRuntimePath() + '/lua/' + relativePath;
-  final contents = File.getContent(Path.join([basePath, 'lua', relativePath]));
-  return contents.split('\n');
+  final runtimePath = FileTools.getNvimRuntimePath();
+  switch (runtimePath) {
+    case Error(e):
+      throw e;
+    case Ok(path):
+      final contents = File.getContent(Path.join([path, 'lua', relativePath]));
+      return contents.split('\n');
+  }
 }
 
 @:tink class EnuP {
@@ -47,8 +52,7 @@ function generateTestCase(fixture, expected) {
 };
 
 function generateTestSuite(referenceFile:String, testCases) {
-  final contents = '
-  describe("$referenceFile", {
+  final contents = 'describe("$referenceFile", {
     ${testCases.join("\n\t")}
   });';
   return contents;
@@ -64,14 +68,14 @@ function generateTestFile(testSuites) {
     import byte.ByteData;
     import tools.luaParser.Lexer;
     import tools.luaParser.LuaDoc;
-    import tools.luaParser.Lexer.TokenDef;
+    import tools.luaParser.LuaDoc.DocToken;
 
     using StringTools;
     using buddy.Should;
 
+    @colorize
     class LuaDocLexerTest extends buddy.SingleSuite {
-      public function new() {
-        ${testSuites.join("\n\t")}
+      public function new() { ${testSuites.join("\n\t")}
       }
     }
   ';
@@ -79,13 +83,33 @@ function generateTestFile(testSuites) {
   return contents;
 }
 
+function extractAllParamCommentsFromFile(file:String):Array< String > {
+  final lines = readNeovimLuaFile(file);
+  final comments = [];
+  final commentRegex = ~/-- ?@param(.*)/;
+  for (line in lines) {
+    if (commentRegex.match(line)) {
+      comments.push(commentRegex.matched(1));
+    }
+  }
+  return comments;
+}
+
+function parseParamComment(comment:String) {
+  final lexer = new LuaDocLexer(ByteData.ofString(comment));
+  final tokens = ParserTest.consumeTokens(lexer, LuaDocLexer.paramDoc);
+  return tokens;
+}
+
 function main() {
-  final file = "lua/luadoc.lua";
-  final fixture = 'foo string';
-  final lexer = new LuaDocLexer(ByteData.ofString(fixture));
-  final expected = ParserTest.consumeTokens(lexer, LuaDocLexer.paramDoc);
-  final testCase = generateTestCase(fixture, expected);
-  final testSuite = generateTestSuite(file, [testCase]);
+  final file = 'vim/filetype.lua';
+  final commentsAsStrings = extractAllParamCommentsFromFile(file);
+  final commentsAsTokens = commentsAsStrings.map(parseParamComment);
+  final testCases = [for (idx => expected in commentsAsTokens) {
+    final fixture = commentsAsStrings[idx];
+    generateTestCase(fixture, expected);
+  }];
+  final testSuite = generateTestSuite(file, testCases);
   final testFile = generateTestFile([testSuite]);
   writeTextFile('tools/luaParser/LuaDocLexerTest.hx', testFile);
 };
