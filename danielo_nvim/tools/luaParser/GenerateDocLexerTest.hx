@@ -34,49 +34,48 @@ function readNeovimLuaFile(relativePath:String):Array< String > {
 }
 
 function generateTestCase(fixture, expected) {
-  // final contents = macro it($v{fixture}, macro @mergeBlock {
-  //   final lexer = new LuaDocLexer('$fixture');
-  //   final actual = consumeTokens(lexer, LuaDocLexer.paramDoc);
-  //   for (idx => token in actual) {
-  //     compareTokens(token, expected[idx]);
-  //   }
-  // });
-  final contents = 'it("$fixture", {
-    final lexer = new LuaDocLexer("$fixture");
-    final actual = consumeTokens(lexer, LuaDocLexer.paramDoc);
-    final expected = [${expected.map(EnuP.printEnum).join(', ')}];
-    for (idx => token in actual) {
-      compareTokens(token, expected[idx]);
-    }
-  })';
-  trace(contents.toString());
+  final contents = '
+  it("$fixture", {
+      final lexer = new LuaDocLexer(ByteData.ofString("$fixture"));
+      final actual = ParserTest.consumeTokens(lexer, LuaDocLexer.paramDoc);
+      final expected = [${expected.map(EnuP.printEnum).join(', ')}];
+      for (idx => token in actual) {
+        token.should.equal(expected[idx]);
+      }
+  });';
   return contents;
 };
 
 function generateTestSuite(referenceFile:String, testCases) {
-  final contents = macro describe('$v{referenceFile}', {
-    $a{testCases}
-  });
-  trace(contents.toString());
+  final contents = '
+  describe("$referenceFile", {
+    ${testCases.join("\n\t")}
+  });';
   return contents;
 };
 
 function generateTestFile(testSuites) {
-  final contents = macro @:mergeBlock {
-    // import hxparse.Lexer;
-    // import haxe.io.Path;
-    // import sys.io.File;
-    // import byte.ByteData;
-    // import tools.luaParser.Lexer;
-    // import tools.luaParser.LuaDoc;
-    // import tools.luaParser.Lexer.TokenDef;
+  final contents = '
+    package tools.luaParser;
 
-    macro class LuaDocLexerTest extends buddy.SingleSuite {
+    import hxparse.Lexer;
+    import haxe.io.Path;
+    import sys.io.File;
+    import byte.ByteData;
+    import tools.luaParser.Lexer;
+    import tools.luaParser.LuaDoc;
+    import tools.luaParser.Lexer.TokenDef;
+
+    using StringTools;
+    using buddy.Should;
+
+    class LuaDocLexerTest extends buddy.SingleSuite {
       public function new() {
-        $a{testSuites}
+        ${testSuites.join("\n\t")}
       }
     }
-  };
+  ';
+
   return contents;
 }
 
@@ -86,9 +85,7 @@ function main() {
   final lexer = new LuaDocLexer(ByteData.ofString(fixture));
   final expected = ParserTest.consumeTokens(lexer, LuaDocLexer.paramDoc);
   final testCase = generateTestCase(fixture, expected);
-  writeTextFile('LuaDocLexerTest', testCase);
-  // final testSuite = generateTestSuite(file, [testCase]);
-  // final testFile = generateTestFile([testSuite]);
-  // final printer = new haxe.macro.Printer("  ");
-  // // trace(printer.printExpr(testFile));
+  final testSuite = generateTestSuite(file, [testCase]);
+  final testFile = generateTestFile([testSuite]);
+  writeTextFile('tools/luaParser/LuaDocLexerTest.hx', testFile);
 };
