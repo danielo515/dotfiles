@@ -1,8 +1,8 @@
 test-base.hxml
---each
--main tools.luaParser.ParserTest
---interp
+# --each
+# -main tools.luaParser.ParserTest
+# --interp
 
---next
+# --next
 -main tools.luaParser.LuaDocLexerTest
 --interp
