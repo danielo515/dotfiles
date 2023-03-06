@@ -123,10 +123,15 @@ class LuaDocParser extends hxparse.Parser< hxparse.LexerTokenSource< DocToken >,
     return switch stream {
       // case [CurlyOpen, t = parseType(), CurlyClose,]:
       //   'Object($t)';
-      case [DocType(Table), TypeOpen, t = parseTypeArgs()]:
-        'Table<$t>';
+      case [DocType(Table)]:
+        switch stream {
+          case [SPC]: 'Table';
+          case [TypeOpen, t = parseTypeArgs(), TypeClose]:
+            'Table<$t>';
+        }
       case [DocType(t)]:
         switch stream {
+          case [SPC]: '$t';
           case [Pipe, e = parseEither('$t')]: e;
           case _: '$t';
         }

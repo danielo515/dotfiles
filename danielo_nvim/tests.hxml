@@ -4,5 +4,5 @@ test-base.hxml
 # --interp
 
 # --next
--main tools.luaParser.LuaDocLexerTest
+-main tools.luaParser.LuaDocParserTest
 --interp

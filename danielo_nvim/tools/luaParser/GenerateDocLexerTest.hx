@@ -45,10 +45,8 @@ function generateTestCase(fixture, original, expected) {
   it("$original", {
       final parser = new LuaDocParser(ByteData.ofString("$fixture"));
       final actual = parser.parse();
-      final expected = $expected;
-      for (idx => token in actual) {
-        token.should.equal(expected[idx]);
-      }
+      final expected = ${Json.stringify(expected)};
+      Json.stringify(actual).should.be(expected);
   });';
   return contents;
 };
@@ -64,10 +62,8 @@ function generateTestFile(testSuites) {
   final contents = '
     package tools.luaParser;
 
-    import hxparse.Lexer;
-    import haxe.io.Path;
-    import sys.io.File;
     import byte.ByteData;
+    import haxe.Json;
     import tools.luaParser.Lexer;
     import tools.luaParser.LuaDoc;
     import tools.luaParser.LuaDoc.DocToken;
@@ -76,7 +72,7 @@ function generateTestFile(testSuites) {
     using buddy.Should;
 
     @colorize
-    class LuaDocLexerTest extends buddy.SingleSuite {
+    class LuaDocParserTest extends buddy.SingleSuite {
       public function new() { ${testSuites.join("\n\t")}
       }
     }
@@ -101,9 +97,9 @@ function extractAllParamCommentsFromFile(file:String):Array< MatchStr > {
 
 function parseParamComment(comment:MatchStr) {
   final parser = new LuaDocParser(ByteData.ofString(comment.match));
-  Log.prettyPrint("", comment);
+  Log.prettyPrint("=====", comment.line);
   final parseResult = parser.parse();
-  trace('\n', parseResult);
+  Log.prettyPrint('', parseResult);
   return parseResult;
 }
 
@@ -120,12 +116,11 @@ function generateTestCasesForFile(filename:String) {
 function main() {
   final file = 'vim/filetype.lua';
   final testCases = generateTestCasesForFile(file);
-  Log.prettyPrint("testCases", testCases);
-  // final testSuite = generateTestSuite(file, testCases);
-  // final testFile = generateTestFile([testSuite]);
-  // writeTextFile('tools/luaParser/LuaDocLexerTest.hx', testFile);
+  final testSuite = generateTestSuite(file, testCases);
+  final testFile = generateTestFile([testSuite]);
+  writeTextFile('tools/luaParser/LuaDocParserTest.hx', testFile);
   // final parsed = new LuaDocParser(
-  //   ByteData.ofString(' bufnr number|nil The buffer to get the lines from')
+  //   ByteData.ofString('bufnr string The buffer to get the lines from')
   // ).parse();
   // Log.prettyPrint("parsed", parsed);
 };
