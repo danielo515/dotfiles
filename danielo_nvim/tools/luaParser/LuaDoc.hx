@@ -1,5 +1,6 @@
 package tools.luaParser;
 
+import byte.ByteData;
 import hxparse.Lexer;
 
 using StringTools;
@@ -10,20 +11,21 @@ typedef Param = {
   final description:String;
 }
 
-enum DocType {
+enum TypeToken {
   Function;
   Number;
   String;
   Table;
   Boolean;
+  Nil;
 }
 
 enum DocToken {
   Identifier(name:String);
   Description(text:String);
+  DocType(type:TypeToken);
   ArrayMod;
   OptionalMod;
-  DocType(type:DocType);
   Comma;
   CurlyOpen;
   CurlyClose;
@@ -34,19 +36,23 @@ enum DocToken {
   TypeOpen;
   TypeClose;
   Pipe;
+  Spc;
   EOL;
 }
 
 class LuaDocLexer extends Lexer implements hxparse.RuleBuilder {
-  public static var desc = @:rule ["[^\n]*" => Description(lexer.current),];
+  static var ident = "[a-zA-Z_][a-zA-Z0-9_]*";
+
+  public static var desc = @:rule [
+    "[^\n]*" => Description(lexer.current.ltrim()),
+    "" => EOL
+  ];
   public static var paramDoc = @:rule [
-    "[a-zA-z]+" => {
-      final name = lexer.current;
-      Identifier(name);
-    },
-    " +" => lexer.token(paramDoc),
+    ident => {final name = lexer.current.ltrim().rtrim(); Identifier(name);},
+    "" => EOL,
   ];
   public static var typeDoc = @:rule [
+    // " " => Spc,
     " " => lexer.token(typeDoc),
     "," => lexer.token(typeDoc),
     "\\[\\]" => ArrayMod,
@@ -60,12 +66,23 @@ class LuaDocLexer extends Lexer implements hxparse.RuleBuilder {
     "\\(" => Lparen,
     "\\)" => Rparen,
     "\\|" => Pipe,
-    "" => null,
+    "number" => DocType(TypeToken.Number),
+    "string" => DocType(TypeToken.String),
+    "table" => DocType(TypeToken.Table),
+    "boolean" => DocType(TypeToken.Boolean),
+    "function" => DocType(TypeToken.Function),
+    "fun" => DocType(TypeToken.Function),
+    "nil" => DocType(Nil),
+    "" => EOL,
+    // ident => throw 'Unknown type "${lexer.current}"',
   ];
 }
 
 class LuaDocParser extends hxparse.Parser< hxparse.LexerTokenSource< DocToken >, DocToken > implements hxparse.ParserBuilder {
+  private final inputAsString:byte.ByteData;
+
   public function new(input:byte.ByteData) {
+    inputAsString = (input);
     var lexer = new LuaDocLexer(input);
     var ts = new hxparse.LexerTokenSource(lexer, LuaDocLexer.paramDoc);
     super(ts);
@@ -73,24 +90,54 @@ class LuaDocParser extends hxparse.Parser< hxparse.LexerTokenSource< DocToken >,
 
   public function parse() {
     return switch stream {
-      case [
-        Identifier(name),
-        t = parseType(),
-        Description(text),
-        EOL
-      ]:
-        return [name, t, text];
+      case [Identifier(name)]:
+        stream.ruleset = LuaDocLexer.typeDoc;
+        if (this.peek(1) == EOL)
+          return {name: name, type: null, description: null};
+        try {
+          final t = parseType();
+          stream.ruleset = LuaDocLexer.desc;
+          final text = parseDesc();
+          return {name: name, type: t, description: text};
+        }
+        catch (e) {
+          Log.print2("Error parsing type: ", e);
+          Log.print("Remaining input: ");
+          final pos = stream.curPos().pmin;
+          Log.print('"${inputAsString.readString(pos, inputAsString.length - pos)}"');
+          throw(e);
+        }
+      case _:
+        trace("Expecting identifier, dup state", null);
+        trace(stream, null);
+        throw "Unexpected token";
     }
   }
 
   public function parseType() {
     return switch stream {
+      case [Spc]:
       case [CurlyOpen, t = parseType(), CurlyClose,]:
-        t + "";
-      case [DocType(t), Pipe, t2 = parseType()]:
-        'Either($t, $t2)';
+        'Object($t)';
+      case [
+        DocType(Table),
+        TypeOpen,
+        t = parseType(),
+        TypeClose
+      ]:
+        'Table<$t>';
       case [DocType(t)]:
         t + "";
+      case [t = parseType(), Pipe, t2 = parseType()]:
+        'Either<$t, $t2>';
+    }
+  }
+
+  public function parseDesc() {
+    return switch stream {
+      case [Description(text), EOL]:
+        text;
+      case _: "";
     }
   }
 }

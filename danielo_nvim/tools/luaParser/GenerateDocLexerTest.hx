@@ -1,5 +1,6 @@
 package tools.luaParser;
 
+import haxe.Json;
 import haxe.io.Path;
 import haxe.EnumTools;
 import haxe.EnumTools.EnumValueTools;
@@ -39,11 +40,12 @@ function readNeovimLuaFile(relativePath:String):Array< String > {
 }
 
 function generateTestCase(fixture, original, expected) {
+  // final expected = [${expected.map(EnuP.printEnum).join(', ')}];
   final contents = '
   it("$original", {
-      final lexer = new LuaDocLexer(ByteData.ofString("$fixture"));
-      final actual = ParserTest.consumeTokens(lexer, LuaDocLexer.paramDoc);
-      final expected = [${expected.map(EnuP.printEnum).join(', ')}];
+      final parser = new LuaDocParser(ByteData.ofString("$fixture"));
+      final actual = parser.parse();
+      final expected = $expected;
       for (idx => token in actual) {
         token.should.equal(expected[idx]);
       }
@@ -88,7 +90,7 @@ typedef MatchStr = {line:String, match:String};
 function extractAllParamCommentsFromFile(file:String):Array< MatchStr > {
   final lines = readNeovimLuaFile(file);
   final comments = [];
-  final commentRegex = ~/-{2,3} ?@param(.*)/;
+  final commentRegex = ~/-{2,3} ?@param (.*)/;
   for (line in lines) {
     if (commentRegex.match(line)) {
       comments.push({line: line, match: commentRegex.matched(1)});
@@ -97,21 +99,33 @@ function extractAllParamCommentsFromFile(file:String):Array< MatchStr > {
   return comments;
 }
 
-function parseParamComment(comment:MatchStr):Array< LuaDoc.DocToken > {
-  final lexer = new LuaDocLexer(ByteData.ofString(comment.match));
-  final tokens = ParserTest.consumeTokens(lexer, LuaDocLexer.paramDoc);
-  return tokens;
+function parseParamComment(comment:MatchStr) {
+  final parser = new LuaDocParser(ByteData.ofString(comment.match));
+  Log.prettyPrint("", comment);
+  final parseResult = parser.parse();
+  trace('\n', parseResult);
+  return parseResult;
+}
+
+function generateTestCasesForFile(filename:String) {
+  final commentsAsStrings = extractAllParamCommentsFromFile(filename);
+  final commentsParsed = commentsAsStrings.map(parseParamComment);
+  final testCases = [for (idx => expected in commentsParsed) {
+    final fixture = commentsAsStrings[idx];
+    generateTestCase(fixture.match, fixture.line, Json.stringify(expected));
+  }];
+  return testCases;
 }
 
 function main() {
   final file = 'vim/filetype.lua';
-  final commentsAsStrings = extractAllParamCommentsFromFile(file);
-  final commentsAsTokens = commentsAsStrings.map(parseParamComment);
-  final testCases = [for (idx => expected in commentsAsTokens) {
-    final fixture = commentsAsStrings[idx];
-    generateTestCase(fixture.match, fixture.line, expected);
-  }];
-  final testSuite = generateTestSuite(file, testCases);
-  final testFile = generateTestFile([testSuite]);
-  writeTextFile('tools/luaParser/LuaDocLexerTest.hx', testFile);
+  final testCases = generateTestCasesForFile(file);
+  Log.prettyPrint("testCases", testCases);
+  // final testSuite = generateTestSuite(file, testCases);
+  // final testFile = generateTestFile([testSuite]);
+  // writeTextFile('tools/luaParser/LuaDocLexerTest.hx', testFile);
+  // final parsed = new LuaDocParser(
+  //   ByteData.ofString(' bufnr number|nil The buffer to get the lines from')
+  // ).parse();
+  // Log.prettyPrint("parsed", parsed);
 };

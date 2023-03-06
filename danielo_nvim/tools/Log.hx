@@ -10,3 +10,8 @@ function prettyPrint(?msg, data:Dynamic) {
 function print(data:Dynamic) {
   Sys.println(data);
 }
+
+function print2(msg, data:Dynamic) {
+  Sys.print(msg);
+  Sys.println(data);
+}
