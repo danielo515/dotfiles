@@ -36,7 +36,7 @@ enum DocToken {
   TypeOpen;
   TypeClose;
   Pipe;
-  Spc;
+  SPC;
   EOL;
 }
 
@@ -49,10 +49,11 @@ class LuaDocLexer extends Lexer implements hxparse.RuleBuilder {
   ];
   public static var paramDoc = @:rule [
     ident => {final name = lexer.current.ltrim().rtrim(); Identifier(name);},
+    " " => SPC,
     "" => EOL,
   ];
   public static var typeDoc = @:rule [
-    // " " => Spc,
+    // " " => SPC,
     " " => lexer.token(typeDoc),
     "," => lexer.token(typeDoc),
     "\\[\\]" => ArrayMod,
@@ -90,47 +91,62 @@ class LuaDocParser extends hxparse.Parser< hxparse.LexerTokenSource< DocToken >,
 
   public function parse() {
     return switch stream {
+      case [SPC]: parse();
       case [Identifier(name)]:
-        stream.ruleset = LuaDocLexer.typeDoc;
-        if (this.peek(1) == EOL)
-          return {name: name, type: null, description: null};
-        try {
-          final t = parseType();
-          stream.ruleset = LuaDocLexer.desc;
-          final text = parseDesc();
-          return {name: name, type: t, description: text};
+        switch stream {
+          case [EOL]:
+            return {name: name, type: null, description: null};
+          case [SPC]:
+            stream.ruleset = LuaDocLexer.typeDoc;
+            try {
+              final t = parseType();
+              stream.ruleset = LuaDocLexer.desc;
+              final text = parseDesc();
+              return {name: name, type: t, description: text};
+            }
+            catch (e) {
+              Log.print2("Error parsing type: ", e);
+              Log.print("Remaining input: ");
+              final pos = stream.curPos().pmin;
+              Log.print('"${inputAsString.readString(pos, inputAsString.length - pos)}"');
+              throw(e);
+            }
+          case _:
+            trace("Expecting identifier, dup state", null);
+            trace(stream, null);
+            throw "Unexpected token";
         }
-        catch (e) {
-          Log.print2("Error parsing type: ", e);
-          Log.print("Remaining input: ");
-          final pos = stream.curPos().pmin;
-          Log.print('"${inputAsString.readString(pos, inputAsString.length - pos)}"');
-          throw(e);
-        }
-      case _:
-        trace("Expecting identifier, dup state", null);
-        trace(stream, null);
-        throw "Unexpected token";
     }
   }
 
   public function parseType() {
     return switch stream {
-      case [Spc]:
-      case [CurlyOpen, t = parseType(), CurlyClose,]:
-        'Object($t)';
-      case [
-        DocType(Table),
-        TypeOpen,
-        t = parseType(),
-        TypeClose
-      ]:
+      // case [CurlyOpen, t = parseType(), CurlyClose,]:
+      //   'Object($t)';
+      case [DocType(Table), TypeOpen, t = parseTypeArgs()]:
         'Table<$t>';
       case [DocType(t)]:
-        t + "";
-      case [t = parseType(), Pipe, t2 = parseType()]:
-        'Either<$t, $t2>';
+        switch stream {
+          case [Pipe]: parseEither('$t');
+          case _: '$t';
+        }
     }
+  }
+
+  public function parseEither(left) {
+    return switch stream {
+      case [DocType(t)]: 'Either<$left, $t>';
+      case [Pipe, DocType(t)]: parseEither(left);
+    };
+  }
+
+  public function parseTypeArgs() {
+    return switch stream {
+      case [TypeClose]: '';
+      case [DocType(Table), TypeOpen, t = parseTypeArgs()]: t;
+      // @formatter:on
+      case [DocType(t)]: t + '';
+    };
   }
 
   public function parseDesc() {
