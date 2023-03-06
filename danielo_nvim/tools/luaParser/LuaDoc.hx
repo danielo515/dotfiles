@@ -53,8 +53,8 @@ class LuaDocLexer extends Lexer implements hxparse.RuleBuilder {
     "" => EOL,
   ];
   public static var typeDoc = @:rule [
-    // " " => SPC,
-    " " => lexer.token(typeDoc),
+    " " => SPC,
+    // " " => lexer.token(typeDoc),
     "," => lexer.token(typeDoc),
     "\\[\\]" => ArrayMod,
     "\\?" => OptionalMod,
@@ -127,7 +127,7 @@ class LuaDocParser extends hxparse.Parser< hxparse.LexerTokenSource< DocToken >,
         'Table<$t>';
       case [DocType(t)]:
         switch stream {
-          case [Pipe]: parseEither('$t');
+          case [Pipe, e = parseEither('$t')]: e;
           case _: '$t';
         }
     }
@@ -135,8 +135,12 @@ class LuaDocParser extends hxparse.Parser< hxparse.LexerTokenSource< DocToken >,
 
   public function parseEither(left) {
     return switch stream {
-      case [DocType(t)]: 'Either<$left, $t>';
-      case [Pipe, DocType(t)]: parseEither(left);
+      case [DocType(t)]:
+        switch stream {
+          case [SPC]:
+            'Either<$left, $t>';
+          case [Pipe, e = parseEither('$t')]: 'Either<$left, $e>';
+        }
     };
   }
 
