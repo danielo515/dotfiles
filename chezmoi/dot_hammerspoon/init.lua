@@ -41,10 +41,6 @@ subscribeToFocus("kitty", function(window)
 	hs.layout.apply(layout)
 end)
 
-subscribeToFocus(chrome_app_name, function(window)
-	window:centerOnScreen()
-end)
-
 local function osa(tabName)
 	local script = [[
   tell application "Google Chrome" to activate
@@ -83,7 +79,10 @@ hs.hotkey.bind(hyper, "2", function()
 	hs.application.launchOrFocus("Kitty")
 end)
 hs.hotkey.bind(hyper, "3", function()
-	hs.application.launchOrFocus(chrome_app_name)
+	local opened = hs.application.launchOrFocus(chrome_app_name)
+	if opened then
+		hs.window.find(chrome_app_name):centerOnScreen()
+	end
 end)
 hs.hotkey.bind(hyper, "w", osa("whatsapp"))
 hs.hotkey.bind(hyper, "i", osa("inbox"))
