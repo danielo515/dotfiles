@@ -110,7 +110,7 @@ class LuaDocParser extends hxparse.Parser< hxparse.LexerTokenSource< DocToken >,
       case [Identifier(name)]:
         switch stream {
           case [EOL]:
-            return {name: name, type: null, description: null};
+            return {name: name, type: "Any", description: ""};
           case [SPC]:
             stream.ruleset = LuaDocLexer.typeDoc;
             try {
@@ -118,6 +118,11 @@ class LuaDocParser extends hxparse.Parser< hxparse.LexerTokenSource< DocToken >,
               final t = parseType();
               Log.print("Parsed types");
               stream.ruleset = LuaDocLexer.desc;
+              if (peek(0) == SPC) {
+                junk();
+              } else {
+                Log.print("WARNING: No space after types");
+              }
               final text = parseDesc();
               return {name: name, type: t, description: text};
             }
@@ -164,10 +169,6 @@ class LuaDocParser extends hxparse.Parser< hxparse.LexerTokenSource< DocToken >,
           case [Pipe, e = parseEither('$t')]: e;
           case _: '$t';
         }
-      case [SPC]: // Ok, let's say spaces at top level are ignored and see what happens
-      case _:
-        Log.print("Default");
-        "";
     }
   }
 
@@ -222,7 +223,6 @@ class LuaDocParser extends hxparse.Parser< hxparse.LexerTokenSource< DocToken >,
     return switch stream {
       case [Description(text), EOL]:
         text;
-      case _: "";
     }
   }
 }

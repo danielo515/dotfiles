@@ -113,7 +113,7 @@ class LuaDocParserTest extends buddy.SingleSuite {
           );
           final actual = parser.parse();
           final expected = Json.stringify(
-            {"name": "filetypes", "description": "", "type": "Table"}
+            {"name": "filetypes", "description": "A table containing new filetype maps (see example).", "type": "Table"}
           );
           Json.stringify(actual).should.be(expected);
         }
@@ -128,7 +128,9 @@ class LuaDocParserTest extends buddy.SingleSuite {
             )
           );
           final actual = parser.parse();
-          final expected = Json.stringify({"name": "args", "description": "", "type": "Table"});
+          final expected = Json.stringify(
+            {"name": "args", "description": "Table specifying which matching strategy to use. Accepted keys are:", "type": "Table"}
+          );
           Json.stringify(actual).should.be(expected);
         }
       );
