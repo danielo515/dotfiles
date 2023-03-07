@@ -7,6 +7,7 @@ local retina = "Built-in Retina Display"
 local primaryScreen = hs.screen("C49J89x")
 local featherWindowTitle = "Feather.*"
 local chrome_app_name = "Google Chrome"
+local tella_dev_window_title = "Danielo.*Tella "
 local wf = hs.window.filter
 
 local function locateFeather(window)
@@ -38,6 +39,10 @@ subscribeToFocus("kitty", function(window)
 		{ chrome_app_name, nil, primaryScreen, hs.layout.left50, nil, nil },
 	}
 	hs.layout.apply(layout)
+end)
+
+subscribeToFocus(chrome_app_name, function(window)
+	window:centerOnScreen()
 end)
 
 local function osa(tabName)
@@ -76,6 +81,9 @@ hs.hotkey.bind(hyper, "1", function()
 end)
 hs.hotkey.bind(hyper, "2", function()
 	hs.application.launchOrFocus("Kitty")
+end)
+hs.hotkey.bind(hyper, "3", function()
+	hs.application.launchOrFocus(chrome_app_name)
 end)
 hs.hotkey.bind(hyper, "w", osa("whatsapp"))
 hs.hotkey.bind(hyper, "i", osa("inbox"))
