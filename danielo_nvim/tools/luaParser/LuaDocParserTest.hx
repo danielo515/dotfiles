@@ -215,6 +215,70 @@ class LuaDocParserTest extends buddy.SingleSuite {
         Json.stringify(actual).should.be(expected);
       });
     });
+    describe("vim/keymap.lua", {
+      it(
+        "---@param mode string|table    Same mode short names as |nvim_set_keymap()|.",
+        {
+          final parser = new LuaDocParser(
+            ByteData.ofString("mode string|table    Same mode short names as |nvim_set_keymap()|.")
+          );
+          final actual = parser.parse();
+          final expected = Json.stringify(
+            {"name": "mode", "description": "Same mode short names as |nvim_set_keymap()|.", "type": "Either<String, Table>"}
+          );
+          Json.stringify(actual).should.be(expected);
+        }
+      );
+
+      it("---@param lhs string           Left-hand side |{lhs}| of the mapping.", {
+        final parser = new LuaDocParser(
+          ByteData.ofString("lhs string           Left-hand side |{lhs}| of the mapping.")
+        );
+        final actual = parser.parse();
+        final expected = Json.stringify(
+          {"name": "lhs", "description": "Left-hand side |{lhs}| of the mapping.", "type": "String"}
+        );
+        Json.stringify(actual).should.be(expected);
+      });
+
+      it(
+        "---@param rhs string|function  Right-hand side |{rhs}| of the mapping. Can also be a Lua function.",
+        {
+          final parser = new LuaDocParser(
+            ByteData.ofString(
+              "rhs string|function  Right-hand side |{rhs}| of the mapping. Can also be a Lua function."
+            )
+          );
+          final actual = parser.parse();
+          final expected = Json.stringify(
+            {"name": "rhs", "description": "Right-hand side |{rhs}| of the mapping. Can also be a Lua function.", "type": "Either<String, TFunction>"}
+          );
+          Json.stringify(actual).should.be(expected);
+        }
+      );
+
+      it("---@param opts table|nil A table of |:map-arguments|.", {
+        final parser = new LuaDocParser(
+          ByteData.ofString("opts table|nil A table of |:map-arguments|.")
+        );
+        final actual = parser.parse();
+        final expected = Json.stringify(
+          {"name": "opts", "description": "A table of |:map-arguments|.", "type": "Either<Table, Nil>"}
+        );
+        Json.stringify(actual).should.be(expected);
+      });
+
+      it("---@param opts table|nil A table of optional arguments:", {
+        final parser = new LuaDocParser(
+          ByteData.ofString("opts table|nil A table of optional arguments:")
+        );
+        final actual = parser.parse();
+        final expected = Json.stringify(
+          {"name": "opts", "description": "A table of optional arguments:", "type": "Either<Table, Nil>"}
+        );
+        Json.stringify(actual).should.be(expected);
+      });
+    });
   }
 }
 

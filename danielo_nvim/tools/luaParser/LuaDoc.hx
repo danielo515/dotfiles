@@ -144,19 +144,15 @@ class LuaDocParser extends hxparse.Parser< hxparse.LexerTokenSource< DocToken >,
     return switch stream {
       case [DocType(Table)]:
         Log.print("Hey table");
+        if (peek(0) == SPC || peek(0) == Rparen) {
+          return 'Table';
+        }
         switch stream {
-          // If the whole types is within parens and table is last, ignore paren close
-          // case [Rparen]:
-          //   Log.print("Hey table+paren");
-          //   'Table';
-          // case [SPC]:
-          //   Log.print("Hey table+space");
-          //   'Table';
           case [TypeOpen, t = parseTypeArgs(), TypeClose]:
             'Table<$t>';
-          case _:
-            Log.print("Hey default within table");
-            "Table";
+          case [Pipe]:
+            Log.print("Hey Pipe next to table");
+            parseEither("Table");
         }
       case [Lparen, t = parseType(), Rparen]: // This is ridiculous, but neovim people thinks is nice
         Log.print("Hey within parents");

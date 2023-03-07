@@ -110,7 +110,7 @@ function generateTestCasesForFile(filename:String) {
 }
 
 function main() {
-  final files = ['vim/filetype.lua', 'vim/fs.lua'];
+  final files = ['vim/filetype.lua', 'vim/fs.lua', 'vim/keymap.lua'];
   final testSuites = [for (file in files) {
     final testCases = generateTestCasesForFile(file);
     generateTestSuite(file, testCases);
