@@ -77,6 +77,57 @@
       Json.stringify(actual).should.be(expected);
   });
   });
+	describe("vim/fs.lua", {
+    
+  it("---@param start (string) Initial file or directory.", {
+      final parser = new LuaDocParser(ByteData.ofString("start (string) Initial file or directory."));
+      final actual = parser.parse();
+      final expected = "{\"name\":\"start\",\"description\":\"string) Initial file or directory.\",\"type\":null}";
+      Json.stringify(actual).should.be(expected);
+  });
+	
+  it("---@param file (string) File or directory", {
+      final parser = new LuaDocParser(ByteData.ofString("file (string) File or directory"));
+      final actual = parser.parse();
+      final expected = "{\"name\":\"file\",\"description\":\"string) File or directory\",\"type\":null}";
+      Json.stringify(actual).should.be(expected);
+  });
+	
+  it("---@param file (string) File or directory", {
+      final parser = new LuaDocParser(ByteData.ofString("file (string) File or directory"));
+      final actual = parser.parse();
+      final expected = "{\"name\":\"file\",\"description\":\"string) File or directory\",\"type\":null}";
+      Json.stringify(actual).should.be(expected);
+  });
+	
+  it("---@param path (string) An absolute or relative path to the directory to iterate", {
+      final parser = new LuaDocParser(ByteData.ofString("path (string) An absolute or relative path to the directory to iterate"));
+      final actual = parser.parse();
+      final expected = "{\"name\":\"path\",\"description\":\"string) An absolute or relative path to the directory to iterate\",\"type\":null}";
+      Json.stringify(actual).should.be(expected);
+  });
+	
+  it("---@param names (string|table|fun(name: string): boolean) Names of the files", {
+      final parser = new LuaDocParser(ByteData.ofString("names (string|table|fun(name: string): boolean) Names of the files"));
+      final actual = parser.parse();
+      final expected = "{\"name\":\"names\",\"description\":\"string|table|fun(name: string): boolean) Names of the files\",\"type\":null}";
+      Json.stringify(actual).should.be(expected);
+  });
+	
+  it("---@param opts (table) Optional keyword arguments:", {
+      final parser = new LuaDocParser(ByteData.ofString("opts (table) Optional keyword arguments:"));
+      final actual = parser.parse();
+      final expected = "{\"name\":\"opts\",\"description\":\"table) Optional keyword arguments:\",\"type\":null}";
+      Json.stringify(actual).should.be(expected);
+  });
+	
+  it("---@param path (string) Path to normalize", {
+      final parser = new LuaDocParser(ByteData.ofString("path (string) Path to normalize"));
+      final actual = parser.parse();
+      final expected = "{\"name\":\"path\",\"description\":\"string) Path to normalize\",\"type\":null}";
+      Json.stringify(actual).should.be(expected);
+  });
+  });
       }
     }
   

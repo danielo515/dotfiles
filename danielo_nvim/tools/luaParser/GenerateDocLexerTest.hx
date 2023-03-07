@@ -1,10 +1,6 @@
 package tools.luaParser;
 
 import haxe.Json;
-import haxe.io.Path;
-import haxe.EnumTools;
-import haxe.EnumTools.EnumValueTools;
-import sys.io.File;
 import tools.FileTools;
 import haxe.io.Path;
 import sys.io.File;
@@ -114,10 +110,12 @@ function generateTestCasesForFile(filename:String) {
 }
 
 function main() {
-  final file = 'vim/filetype.lua';
-  final testCases = generateTestCasesForFile(file);
-  final testSuite = generateTestSuite(file, testCases);
-  final testFile = generateTestFile([testSuite]);
+  final files = ['vim/filetype.lua', 'vim/fs.lua'];
+  final testSuites = [for (file in files) {
+    final testCases = generateTestCasesForFile(file);
+    generateTestSuite(file, testCases);
+  }];
+  final testFile = generateTestFile(testSuites);
   writeTextFile('tools/luaParser/LuaDocParserTest.hx', testFile);
   // final parsed = new LuaDocParser(
   //   ByteData.ofString('bufnr string The buffer to get the lines from')

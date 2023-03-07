@@ -2,6 +2,7 @@ package tools.luaParser;
 
 import byte.ByteData;
 import hxparse.Lexer;
+import hxparse.ParserError.ParserError;
 
 using StringTools;
 using Safety;
@@ -12,12 +13,14 @@ typedef Param = {
 }
 
 enum TypeToken {
-  Function;
+  TFunction;
   Number;
   String;
   Table;
   Boolean;
   Nil;
+  Colon;
+  TIdentifier(name:String);
 }
 
 enum DocToken {
@@ -71,9 +74,11 @@ class LuaDocLexer extends Lexer implements hxparse.RuleBuilder {
     "string" => DocType(TypeToken.String),
     "table" => DocType(TypeToken.Table),
     "boolean" => DocType(TypeToken.Boolean),
-    "function" => DocType(TypeToken.Function),
-    "fun" => DocType(TypeToken.Function),
+    "function" => DocType(TypeToken.TFunction),
+    "fun" => DocType(TypeToken.TFunction),
     "nil" => DocType(Nil),
+    ":" => DocType(Colon),
+    ident => DocType(TIdentifier(lexer.current)),
     "" => EOL,
     // ident => throw 'Unknown type "${lexer.current}"',
   ];
@@ -104,11 +109,13 @@ class LuaDocParser extends hxparse.Parser< hxparse.LexerTokenSource< DocToken >,
               final text = parseDesc();
               return {name: name, type: t, description: text};
             }
-            catch (e) {
+            catch (e:ParserError) {
               Log.print2("Error parsing type: ", e);
+              Log.print2("line", e.pos.format(inputAsString));
               Log.print("Remaining input: ");
-              final pos = stream.curPos().pmin;
-              Log.print('"${inputAsString.readString(pos, inputAsString.length - pos)}"');
+              final pos = stream.curPos().pmax;
+              Log.print('"${inputAsString.readString(0, inputAsString.length)}"');
+              Log.print("^".lpad(" ", pos + 1)); // account for the quote
               throw(e);
             }
           case _:
@@ -121,14 +128,16 @@ class LuaDocParser extends hxparse.Parser< hxparse.LexerTokenSource< DocToken >,
 
   public function parseType() {
     return switch stream {
-      // case [CurlyOpen, t = parseType(), CurlyClose,]:
-      //   'Object($t)';
       case [DocType(Table)]:
         switch stream {
           case [SPC]: 'Table';
           case [TypeOpen, t = parseTypeArgs(), TypeClose]:
             'Table<$t>';
         }
+      case [Lparen, t = parseType(), Rparen]: // This is ridiculous, but neovim people thinks is nice
+        '$t';
+      case [DocType(TFunction), Lparen, t = parseFunctionArgs()]:
+        '$t';
       case [DocType(t)]:
         switch stream {
           case [SPC]: '$t';
@@ -138,13 +147,40 @@ class LuaDocParser extends hxparse.Parser< hxparse.LexerTokenSource< DocToken >,
     }
   }
 
+  public function parseFunctionArgs() {
+    return switch stream {
+      case [DocType(TIdentifier(name)), DocType(Colon)]:
+        // We should discard spaces that may be separating argument and type
+        if (peek(0) == SPC)
+          junk();
+        final t = parseType();
+        trace(peek(0), null);
+        final returnType = switch [peek(
+          0
+        ), peek(1), peek(2)] { // account for potential return type
+          case [Rparen, DocType(Colon), SPC]:
+            junk();
+            junk();
+            junk();
+            parseType();
+          case [Rparen, DocType(Colon), _]:
+            junk();
+            junk();
+            parseType();
+          case _: 'Void';
+        }
+        'FunctionWithArgs($name: $t):$returnType';
+    }
+  }
+
   public function parseEither(left) {
     return switch stream {
       case [DocType(t)]:
         switch stream {
           case [SPC]:
             'Either<$left, $t>';
-          case [Pipe, e = parseEither('$t')]: 'Either<$left, $e>';
+          // case [Pipe, e = parseEither('$t')]: 'Either<$left, $e>';
+          case [Pipe, e = parseType()]: 'Either<$left, $e>';
         }
     };
   }
