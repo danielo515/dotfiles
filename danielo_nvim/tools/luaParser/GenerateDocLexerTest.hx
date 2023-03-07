@@ -41,7 +41,7 @@ function generateTestCase(fixture, original, expected) {
   it("$original", {
       final parser = new LuaDocParser(ByteData.ofString("$fixture"));
       final actual = parser.parse();
-      final expected = ${Json.stringify(expected)};
+      final expected = Json.stringify($expected);
       Json.stringify(actual).should.be(expected);
   });';
   return contents;

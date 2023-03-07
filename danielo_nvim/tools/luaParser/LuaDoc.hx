@@ -114,7 +114,9 @@ class LuaDocParser extends hxparse.Parser< hxparse.LexerTokenSource< DocToken >,
           case [SPC]:
             stream.ruleset = LuaDocLexer.typeDoc;
             try {
+              Log.print("Abou to parse types");
               final t = parseType();
+              Log.print("Parsed types");
               stream.ruleset = LuaDocLexer.desc;
               final text = parseDesc();
               return {name: name, type: t, description: text};
@@ -134,17 +136,25 @@ class LuaDocParser extends hxparse.Parser< hxparse.LexerTokenSource< DocToken >,
   }
 
   public function parseType() {
-    dumpAtCurrent();
     return switch stream {
       case [DocType(Table)]:
+        Log.print("Hey table");
         switch stream {
           // If the whole types is within parens and table is last, ignore paren close
-          case [Rparen]: 'Table';
-          case [SPC]: 'Table';
+          // case [Rparen]:
+          //   Log.print("Hey table+paren");
+          //   'Table';
+          // case [SPC]:
+          //   Log.print("Hey table+space");
+          //   'Table';
           case [TypeOpen, t = parseTypeArgs(), TypeClose]:
             'Table<$t>';
+          case _:
+            Log.print("Hey default within table");
+            "Table";
         }
       case [Lparen, t = parseType(), Rparen]: // This is ridiculous, but neovim people thinks is nice
+        Log.print("Hey within parents");
         '$t';
       case [DocType(TFunction), Lparen, t = parseFunctionArgs()]:
         '$t';
@@ -155,6 +165,9 @@ class LuaDocParser extends hxparse.Parser< hxparse.LexerTokenSource< DocToken >,
           case _: '$t';
         }
       case [SPC]: // Ok, let's say spaces at top level are ignored and see what happens
+      case _:
+        Log.print("Default");
+        "";
     }
   }
 
@@ -165,10 +178,8 @@ class LuaDocParser extends hxparse.Parser< hxparse.LexerTokenSource< DocToken >,
         if (peek(0) == SPC)
           junk();
         final t = parseType();
-        trace(peek(0), null);
-        final returnType = switch [peek(
-          0
-        ), peek(1), peek(2)] { // account for potential return type
+        // account for potential return type
+        final returnType = switch [peek(0), peek(1), peek(2)] {
           case [Rparen, DocType(Colon), SPC]:
             junk();
             junk();
@@ -197,6 +208,7 @@ class LuaDocParser extends hxparse.Parser< hxparse.LexerTokenSource< DocToken >,
   }
 
   public function parseTypeArgs() {
+    Log.print("Hey table args parsing");
     return switch stream {
       case [TypeClose]: '';
       case [DocType(Table), TypeOpen, t = parseTypeArgs()]: t;
@@ -206,6 +218,7 @@ class LuaDocParser extends hxparse.Parser< hxparse.LexerTokenSource< DocToken >,
   }
 
   public function parseDesc() {
+    Log.print("Hey desc parsing");
     return switch stream {
       case [Description(text), EOL]:
         text;
