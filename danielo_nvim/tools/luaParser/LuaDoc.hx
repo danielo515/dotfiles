@@ -94,6 +94,16 @@ class LuaDocParser extends hxparse.Parser< hxparse.LexerTokenSource< DocToken >,
     super(ts);
   }
 
+  public function dumpAtCurrent() {
+    final pos = stream.curPos();
+    final max:Int = inputAsString.length - 1;
+    Log.print2("> Last parsed token: ", this.last);
+    Log.print2("> ", inputAsString.readString(0, max));
+    // final cursorWidth = (pos.pmax - pos.pmin) - 1;
+    // Log.print("^".lpad(" ", pos.pmin + 1) + "^".lpad(" ", cursorWidth));
+    Log.print("^".lpad(" ", pos.pmax + 2));
+  }
+
   public function parse() {
     return switch stream {
       case [SPC]: parse();
@@ -110,26 +120,26 @@ class LuaDocParser extends hxparse.Parser< hxparse.LexerTokenSource< DocToken >,
               return {name: name, type: t, description: text};
             }
             catch (e:ParserError) {
-              Log.print2("Error parsing type: ", e);
+              Log.print2("Error parsing type: \n\t", e);
+              dumpAtCurrent();
               Log.print2("line", e.pos.format(inputAsString));
-              Log.print("Remaining input: ");
-              final pos = stream.curPos().pmax;
-              Log.print('"${inputAsString.readString(0, inputAsString.length)}"');
-              Log.print("^".lpad(" ", pos + 1)); // account for the quote
               throw(e);
             }
           case _:
             trace("Expecting identifier, dup state", null);
-            trace(stream, null);
+            dumpAtCurrent();
             throw "Unexpected token";
         }
     }
   }
 
   public function parseType() {
+    dumpAtCurrent();
     return switch stream {
       case [DocType(Table)]:
         switch stream {
+          // If the whole types is within parens and table is last, ignore paren close
+          case [Rparen]: 'Table';
           case [SPC]: 'Table';
           case [TypeOpen, t = parseTypeArgs(), TypeClose]:
             'Table<$t>';
@@ -144,6 +154,7 @@ class LuaDocParser extends hxparse.Parser< hxparse.LexerTokenSource< DocToken >,
           case [Pipe, e = parseEither('$t')]: e;
           case _: '$t';
         }
+      case [SPC]: // Ok, let's say spaces at top level are ignored and see what happens
     }
   }
 
