@@ -1,5 +1,6 @@
 package tools.luaParser;
 
+import haxe.Json;
 import byte.ByteData;
 import hxparse.Lexer;
 import hxparse.ParserError.ParserError;
@@ -58,7 +59,7 @@ class LuaDocLexer extends Lexer implements hxparse.RuleBuilder {
   public static var typeDoc = @:rule [
     " " => SPC,
     // " " => lexer.token(typeDoc),
-    "," => lexer.token(typeDoc),
+    ", ?" => Comma,
     "\\[\\]" => ArrayMod,
     "\\?" => OptionalMod,
     "<" => TypeOpen,
@@ -114,7 +115,7 @@ class LuaDocParser extends hxparse.Parser< hxparse.LexerTokenSource< DocToken >,
           case [SPC]:
             stream.ruleset = LuaDocLexer.typeDoc;
             try {
-              Log.print("Abou to parse types");
+              Log.print("About to parse types");
               final t = parseType();
               Log.print("Parsed types");
               stream.ruleset = LuaDocLexer.desc;
@@ -142,28 +143,57 @@ class LuaDocParser extends hxparse.Parser< hxparse.LexerTokenSource< DocToken >,
 
   public function parseType() {
     return switch stream {
+      case [Lparen, t = parseType(), Rparen]: // This is ridiculous, but neovim people thinks is nice
+        Log.print("Hey within parents");
+        '$t';
       case [DocType(Table)]:
-        Log.print("Hey table");
-        if (peek(0) == SPC || peek(0) == Rparen) {
-          return 'Table';
-        }
+        // Log.print("Hey table");
+        // if (peek(0) == SPC || peek(0) == Rparen) {
+        //   return 'Table';
+        // }
         switch stream {
           case [TypeOpen, t = parseTypeArgs(), TypeClose]:
             'Table<$t>';
           case [Pipe]:
             Log.print("Hey Pipe next to table");
             parseEither("Table");
+          case _: 'Table';
         }
-      case [Lparen, t = parseType(), Rparen]: // This is ridiculous, but neovim people thinks is nice
-        Log.print("Hey within parents");
-        '$t';
-      case [DocType(TFunction), Lparen, t = parseFunctionArgs()]:
-        '$t';
+      case [CurlyOpen, t = parseObj(new Map())]:
+        'Obj<$t>';
+      case [DocType(TFunction)]: switch stream {
+          case [Lparen, t = parseFunctionArgs()]: '$t';
+          case [Pipe, e = parseEither('Function')]: e;
+          case _: 'Function';
+        }
       case [DocType(t)]:
         switch stream {
           case [SPC]: '$t';
           case [Pipe, e = parseEither('$t')]: e;
           case _: '$t';
+        }
+    }
+  }
+
+  public function parseTuple(size, arg) {
+    return switch stream {
+      case [Comma, t = parseType()]:
+        parseTuple(size + 1, arg + ',' + t);
+      case [CurlyClose]:
+        arg;
+    }
+  }
+
+  public function parseObj(acc:Map< String, String >) {
+    return switch stream {
+      case [DocType(t)]:
+        parseTuple(1, '$t');
+      case [Identifier(name), DocType(Colon), t = parseType()]:
+        acc.set(name, t);
+        switch stream {
+          case [CurlyClose]: Json.stringify(acc);
+          case [Comma]:
+            parseObj(acc);
         }
     }
   }
@@ -196,10 +226,10 @@ class LuaDocParser extends hxparse.Parser< hxparse.LexerTokenSource< DocToken >,
     return switch stream {
       case [DocType(t)]:
         switch stream {
-          case [SPC]:
-            'Either<$left, $t>';
           // case [Pipe, e = parseEither('$t')]: 'Either<$left, $e>';
           case [Pipe, e = parseType()]: 'Either<$left, $e>';
+          case _:
+            'Either<$left, $t>';
         }
     };
   }

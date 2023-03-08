@@ -9,6 +9,7 @@ import tools.luaParser.LuaDoc;
 
 using haxe.EnumTools;
 using haxe.macro.ExprTools;
+using StringTools;
 
 function readNeovimLuaFile(relativePath:String):Array< String > {
   final runtimePath = FileTools.getNvimRuntimePath();
@@ -101,7 +102,10 @@ function parseParamComment(comment:MatchStr) {
 
 function generateTestCasesForFile(filename:String) {
   final commentsAsStrings = extractAllParamCommentsFromFile(filename);
-  final commentsParsed = commentsAsStrings.map(parseParamComment);
+  final commentsParsed = commentsAsStrings.filter((str) -> {
+    // Yes, this ridiculous thing is there
+    !str.line.contains("(context support not yet implemented)");
+  }).map(parseParamComment);
   final testCases = [for (idx => expected in commentsParsed) {
     final fixture = commentsAsStrings[idx];
     generateTestCase(fixture.match, fixture.line, Json.stringify(expected));
@@ -110,7 +114,12 @@ function generateTestCasesForFile(filename:String) {
 }
 
 function main() {
-  final files = ['vim/filetype.lua', 'vim/fs.lua', 'vim/keymap.lua'];
+  final files = [
+    'vim/filetype.lua',
+    'vim/fs.lua',
+    'vim/keymap.lua',
+    'vim/lsp/buf.lua'
+  ];
   final testSuites = [for (file in files) {
     final testCases = generateTestCasesForFile(file);
     generateTestSuite(file, testCases);
