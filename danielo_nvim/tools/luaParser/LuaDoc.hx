@@ -80,8 +80,8 @@ class LuaDocLexer extends Lexer implements hxparse.RuleBuilder {
     "nil" => DocType(Nil),
     ":" => DocType(Colon),
     ident => DocType(TIdentifier(lexer.current)),
+    ", ?optional" => OptionalMod,
     "" => EOL,
-    // ident => throw 'Unknown type "${lexer.current}"',
   ];
 }
 
@@ -100,9 +100,10 @@ class LuaDocParser extends hxparse.Parser< hxparse.LexerTokenSource< DocToken >,
     final max:Int = inputAsString.length - 1;
     Log.print2("> Last parsed token: ", this.last);
     Log.print2("> ", inputAsString.readString(0, max));
-    // final cursorWidth = (pos.pmax - pos.pmin) - 1;
-    // Log.print("^".lpad(" ", pos.pmin + 1) + "^".lpad(" ", cursorWidth));
-    Log.print("^".lpad(" ", pos.pmax + 2));
+    final cursorWidth = (pos.pmax - pos.pmin) - 1;
+    final padding = 2;
+    Log.print("^".lpad(" ", pos.pmin + padding) + "^".lpad(" ", cursorWidth + padding));
+    // Log.print("^".lpad(" ", pos.pmax + 2));
   }
 
   public function parse() {
@@ -128,7 +129,7 @@ class LuaDocParser extends hxparse.Parser< hxparse.LexerTokenSource< DocToken >,
               return {name: name, type: t, description: text};
             }
             catch (e:ParserError) {
-              Log.print2("Error parsing type: \n\t", e);
+              Log.print2("Error parsing: \n\t", e);
               dumpAtCurrent();
               Log.print2("line", e.pos.format(inputAsString));
               throw(e);
@@ -143,14 +144,15 @@ class LuaDocParser extends hxparse.Parser< hxparse.LexerTokenSource< DocToken >,
 
   public function parseType() {
     return switch stream {
-      case [Lparen, t = parseType(), Rparen]: // This is ridiculous, but neovim people thinks is nice
-        Log.print("Hey within parents");
-        '$t';
+      case [Lparen, t = parseType()]: // This is ridiculous, but neovim people thinks is nice
+        Log.print("Hey within parens");
+        switch stream {
+          case [OptionalMod]: '?$t';
+          case [Rparen]:
+            '$t';
+          case _: throw("Unclosed parenthesis");
+        }
       case [DocType(Table)]:
-        // Log.print("Hey table");
-        // if (peek(0) == SPC || peek(0) == Rparen) {
-        //   return 'Table';
-        // }
         switch stream {
           case [TypeOpen, t = parseTypeArgs(), TypeClose]:
             'Table<$t>';
@@ -160,7 +162,7 @@ class LuaDocParser extends hxparse.Parser< hxparse.LexerTokenSource< DocToken >,
           case _: 'Table';
         }
       case [CurlyOpen, t = parseObj(new Map())]:
-        'Obj<$t>';
+        '$t';
       case [DocType(TFunction)]: switch stream {
           case [Lparen, t = parseFunctionArgs()]: '$t';
           case [Pipe, e = parseEither('Function')]: e;
@@ -168,7 +170,7 @@ class LuaDocParser extends hxparse.Parser< hxparse.LexerTokenSource< DocToken >,
         }
       case [DocType(t)]:
         switch stream {
-          case [SPC]: '$t';
+          case [OptionalMod]: '?$t';
           case [Pipe, e = parseEither('$t')]: e;
           case _: '$t';
         }
@@ -180,7 +182,7 @@ class LuaDocParser extends hxparse.Parser< hxparse.LexerTokenSource< DocToken >,
       case [Comma, t = parseType()]:
         parseTuple(size + 1, arg + ',' + t);
       case [CurlyClose]:
-        arg;
+        'Vector$size<$arg>';
     }
   }
 
@@ -191,7 +193,7 @@ class LuaDocParser extends hxparse.Parser< hxparse.LexerTokenSource< DocToken >,
       case [Identifier(name), DocType(Colon), t = parseType()]:
         acc.set(name, t);
         switch stream {
-          case [CurlyClose]: Json.stringify(acc);
+          case [CurlyClose]: 'Obj(${Json.stringify(acc)})';
           case [Comma]:
             parseObj(acc);
         }
@@ -249,6 +251,9 @@ class LuaDocParser extends hxparse.Parser< hxparse.LexerTokenSource< DocToken >,
     return switch stream {
       case [Description(text), EOL]:
         text;
+      // Yeah, seems description is optional too
+      case [EOL]:
+        '';
     }
   }
 }

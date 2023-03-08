@@ -279,6 +279,330 @@ class LuaDocParserTest extends buddy.SingleSuite {
         Json.stringify(actual).should.be(expected);
       });
     });
+    describe("vim/lsp/buf.lua", {
+      it("---@param method (string) LSP method name", {
+        final parser = new LuaDocParser(ByteData.ofString("method (string) LSP method name"));
+        final actual = parser.parse();
+        final expected = Json.stringify(
+          {"name": "method", "description": "LSP method name", "type": "String"}
+        );
+        Json.stringify(actual).should.be(expected);
+      });
+
+      it("---@param params (table|nil) Parameters to send to the server", {
+        final parser = new LuaDocParser(
+          ByteData.ofString("params (table|nil) Parameters to send to the server")
+        );
+        final actual = parser.parse();
+        final expected = Json.stringify(
+          {"name": "params", "description": "Parameters to send to the server", "type": "Either<Table, Nil>"}
+        );
+        Json.stringify(actual).should.be(expected);
+      });
+
+      it(
+        "---@param handler (function|nil) See |lsp-handler|. Follows |lsp-handler-resolution|",
+        {
+          final parser = new LuaDocParser(
+            ByteData.ofString(
+              "handler (function|nil) See |lsp-handler|. Follows |lsp-handler-resolution|"
+            )
+          );
+          final actual = parser.parse();
+          final expected = Json.stringify(
+            {"name": "handler", "description": "See |lsp-handler|. Follows |lsp-handler-resolution|", "type": "Either<Function, Nil>"}
+          );
+          Json.stringify(actual).should.be(expected);
+        }
+      );
+
+      it("---@param options table|nil additional options", {
+        final parser = new LuaDocParser(ByteData.ofString("options table|nil additional options"));
+        final actual = parser.parse();
+        final expected = Json.stringify(
+          {"name": "options", "description": "additional options", "type": "Either<Table, Nil>"}
+        );
+        Json.stringify(actual).should.be(expected);
+      });
+
+      it("---@param options table|nil additional options", {
+        final parser = new LuaDocParser(ByteData.ofString("options table|nil additional options"));
+        final actual = parser.parse();
+        final expected = Json.stringify(
+          {"name": "options", "description": "additional options", "type": "Either<Table, Nil>"}
+        );
+        Json.stringify(actual).should.be(expected);
+      });
+
+      it("---@param options table|nil additional options", {
+        final parser = new LuaDocParser(ByteData.ofString("options table|nil additional options"));
+        final actual = parser.parse();
+        final expected = Json.stringify(
+          {"name": "options", "description": "additional options", "type": "Either<Table, Nil>"}
+        );
+        Json.stringify(actual).should.be(expected);
+      });
+
+      it("---@param options table|nil additional options", {
+        final parser = new LuaDocParser(ByteData.ofString("options table|nil additional options"));
+        final actual = parser.parse();
+        final expected = Json.stringify(
+          {"name": "options", "description": "additional options", "type": "Either<Table, Nil>"}
+        );
+        Json.stringify(actual).should.be(expected);
+      });
+
+      it(
+        "--- @param options table|nil Optional table which holds the following optional fields:",
+        {
+          final parser = new LuaDocParser(
+            ByteData.ofString(
+              "options table|nil Optional table which holds the following optional fields:"
+            )
+          );
+          final actual = parser.parse();
+          final expected = Json.stringify(
+            {"name": "options", "description": "Optional table which holds the following optional fields:", "type": "Either<Table, Nil>"}
+          );
+          Json.stringify(actual).should.be(expected);
+        }
+      );
+
+      it("---@param options (table|nil) Can be used to specify FormattingOptions.", {
+        final parser = new LuaDocParser(
+          ByteData.ofString("options (table|nil) Can be used to specify FormattingOptions.")
+        );
+        final actual = parser.parse();
+        final expected = Json.stringify(
+          {"name": "options", "description": "Can be used to specify FormattingOptions.", "type": "Either<Table, Nil>"}
+        );
+        Json.stringify(actual).should.be(expected);
+      });
+
+      it("---@param options table|nil with valid `FormattingOptions` entries", {
+        final parser = new LuaDocParser(
+          ByteData.ofString("options table|nil with valid `FormattingOptions` entries")
+        );
+        final actual = parser.parse();
+        final expected = Json.stringify(
+          {"name": "options", "description": "with valid `FormattingOptions` entries", "type": "Either<Table, Nil>"}
+        );
+        Json.stringify(actual).should.be(expected);
+      });
+
+      it("---@param timeout_ms (number) Request timeout", {
+        final parser = new LuaDocParser(ByteData.ofString("timeout_ms (number) Request timeout"));
+        final actual = parser.parse();
+        final expected = Json.stringify(
+          {"name": "timeout_ms", "description": "Request timeout", "type": "Number"}
+        );
+        Json.stringify(actual).should.be(expected);
+      });
+
+      it("---@param options (table|nil) `FormattingOptions` entries", {
+        final parser = new LuaDocParser(
+          ByteData.ofString("options (table|nil) `FormattingOptions` entries")
+        );
+        final actual = parser.parse();
+        final expected = Json.stringify(
+          {"name": "options", "description": "`FormattingOptions` entries", "type": "Either<Table, Nil>"}
+        );
+        Json.stringify(actual).should.be(expected);
+      });
+
+      it("---@param timeout_ms (number|nil) Request timeout", {
+        final parser = new LuaDocParser(
+          ByteData.ofString("timeout_ms (number|nil) Request timeout")
+        );
+        final actual = parser.parse();
+        final expected = Json.stringify(
+          {"name": "timeout_ms", "description": "Request timeout", "type": "Either<Number, Nil>"}
+        );
+        Json.stringify(actual).should.be(expected);
+      });
+
+      it(
+        "---@param order (table|nil) List of client names. Formatting is requested from clients",
+        {
+          final parser = new LuaDocParser(
+            ByteData.ofString(
+              "order (table|nil) List of client names. Formatting is requested from clients"
+            )
+          );
+          final actual = parser.parse();
+          final expected = Json.stringify(
+            {"name": "order", "description": "List of client names. Formatting is requested from clients", "type": "Either<Table, Nil>"}
+          );
+          Json.stringify(actual).should.be(expected);
+        }
+      );
+
+      it("---@param options Table with valid `FormattingOptions` entries.", {
+        final parser = new LuaDocParser(
+          ByteData.ofString("options Table with valid `FormattingOptions` entries.")
+        );
+        final actual = parser.parse();
+        final expected = Json.stringify(
+          {"name": "options", "description": "with valid `FormattingOptions` entries.", "type": "TIdentifier(Table)"}
+        );
+        Json.stringify(actual).should.be(expected);
+      });
+
+      it("---@param start_pos ({number, number}, optional) mark-indexed position.", {
+        final parser = new LuaDocParser(
+          ByteData.ofString("start_pos ({number, number}, optional) mark-indexed position.")
+        );
+        final actual = parser.parse();
+        final expected = Json.stringify(
+          {"name": "start_pos", "description": ") mark-indexed position.", "type": "?Vector2<Number,Number>"}
+        );
+        Json.stringify(actual).should.be(expected);
+      });
+
+      it("---@param end_pos ({number, number}, optional) mark-indexed position.", {
+        final parser = new LuaDocParser(
+          ByteData.ofString("end_pos ({number, number}, optional) mark-indexed position.")
+        );
+        final actual = parser.parse();
+        final expected = Json.stringify(
+          {"name": "end_pos", "description": ") mark-indexed position.", "type": "?Vector2<Number,Number>"}
+        );
+        Json.stringify(actual).should.be(expected);
+      });
+
+      it(
+        "---@param new_name string|nil If not provided, the user will be prompted for a new",
+        {
+          final parser = new LuaDocParser(
+            ByteData.ofString(
+              "new_name string|nil If not provided, the user will be prompted for a new"
+            )
+          );
+          final actual = parser.parse();
+          final expected = Json.stringify(
+            {"name": "new_name", "description": "If not provided, the user will be prompted for a new", "type": "Either<String, Nil>"}
+          );
+          Json.stringify(actual).should.be(expected);
+        }
+      );
+
+      it("---@param options table|nil additional options", {
+        final parser = new LuaDocParser(ByteData.ofString("options table|nil additional options"));
+        final actual = parser.parse();
+        final expected = Json.stringify(
+          {"name": "options", "description": "additional options", "type": "Either<Table, Nil>"}
+        );
+        Json.stringify(actual).should.be(expected);
+      });
+
+      it("---@param context (table) Context for the request", {
+        final parser = new LuaDocParser(
+          ByteData.ofString("context (table) Context for the request")
+        );
+        final actual = parser.parse();
+        final expected = Json.stringify(
+          {"name": "context", "description": "Context for the request", "type": "Table"}
+        );
+        Json.stringify(actual).should.be(expected);
+      });
+
+      it("---@param options table|nil additional options", {
+        final parser = new LuaDocParser(ByteData.ofString("options table|nil additional options"));
+        final actual = parser.parse();
+        final expected = Json.stringify(
+          {"name": "options", "description": "additional options", "type": "Either<Table, Nil>"}
+        );
+        Json.stringify(actual).should.be(expected);
+      });
+
+      it("---@param options table|nil additional options", {
+        final parser = new LuaDocParser(ByteData.ofString("options table|nil additional options"));
+        final actual = parser.parse();
+        final expected = Json.stringify(
+          {"name": "options", "description": "additional options", "type": "Either<Table, Nil>"}
+        );
+        Json.stringify(actual).should.be(expected);
+      });
+
+      it("---@param query (string, optional)", {
+        final parser = new LuaDocParser(ByteData.ofString("query (string, optional)"));
+        final actual = parser.parse();
+        final expected = Json.stringify({"name": "query", "description": "", "type": "?String"});
+        Json.stringify(actual).should.be(expected);
+      });
+
+      it("---@param options table|nil additional options", {
+        final parser = new LuaDocParser(ByteData.ofString("options table|nil additional options"));
+        final actual = parser.parse();
+        final expected = Json.stringify(
+          {"name": "options", "description": "additional options", "type": "Either<Table, Nil>"}
+        );
+        Json.stringify(actual).should.be(expected);
+      });
+
+      it(
+        "---@param options table|nil Optional table which holds the following optional fields:",
+        {
+          final parser = new LuaDocParser(
+            ByteData.ofString(
+              "options table|nil Optional table which holds the following optional fields:"
+            )
+          );
+          final actual = parser.parse();
+          final expected = Json.stringify(
+            {"name": "options", "description": "Optional table which holds the following optional fields:", "type": "Either<Table, Nil>"}
+          );
+          Json.stringify(actual).should.be(expected);
+        }
+      );
+
+      it(
+        "---@param context table|nil `CodeActionContext` of the LSP specification:",
+        {
+          final parser = new LuaDocParser(
+            ByteData.ofString("context table|nil `CodeActionContext` of the LSP specification:")
+          );
+          final actual = parser.parse();
+          final expected = Json.stringify(
+            {"name": "context", "description": "`CodeActionContext` of the LSP specification:", "type": "Either<Table, Nil>"}
+          );
+          Json.stringify(actual).should.be(expected);
+        }
+      );
+
+      it("---@param start_pos ({number, number}, optional) mark-indexed position.", {
+        final parser = new LuaDocParser(
+          ByteData.ofString("start_pos ({number, number}, optional) mark-indexed position.")
+        );
+        final actual = parser.parse();
+        final expected = Json.stringify(
+          {"name": "start_pos", "description": ") mark-indexed position.", "type": "?Vector2<Number,Number>"}
+        );
+        Json.stringify(actual).should.be(expected);
+      });
+
+      it("---@param end_pos ({number, number}, optional) mark-indexed position.", {
+        final parser = new LuaDocParser(
+          ByteData.ofString("end_pos ({number, number}, optional) mark-indexed position.")
+        );
+        final actual = parser.parse();
+        final expected = Json.stringify(
+          {"name": "end_pos", "description": ") mark-indexed position.", "type": "?Vector2<Number,Number>"}
+        );
+        Json.stringify(actual).should.be(expected);
+      });
+
+      it("---@param command_params table A valid `ExecuteCommandParams` object", {
+        final parser = new LuaDocParser(
+          ByteData.ofString("command_params table A valid `ExecuteCommandParams` object")
+        );
+        final actual = parser.parse();
+        final expected = Json.stringify(
+          {"name": "command_params", "description": "A valid `ExecuteCommandParams` object", "type": "Table"}
+        );
+        Json.stringify(actual).should.be(expected);
+      });
+    });
   }
 }
 

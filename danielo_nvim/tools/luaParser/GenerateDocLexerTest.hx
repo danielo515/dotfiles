@@ -89,7 +89,11 @@ function extractAllParamCommentsFromFile(file:String):Array< MatchStr > {
       comments.push({line: line, match: commentRegex.matched(1)});
     }
   }
-  return comments;
+  final filteredComments = comments.filter((str) -> {
+    // Yes, this ridiculous thing is there
+    !str.line.contains("(context support not yet implemented)");
+  });
+  return filteredComments;
 }
 
 function parseParamComment(comment:MatchStr) {
@@ -102,10 +106,7 @@ function parseParamComment(comment:MatchStr) {
 
 function generateTestCasesForFile(filename:String) {
   final commentsAsStrings = extractAllParamCommentsFromFile(filename);
-  final commentsParsed = commentsAsStrings.filter((str) -> {
-    // Yes, this ridiculous thing is there
-    !str.line.contains("(context support not yet implemented)");
-  }).map(parseParamComment);
+  final commentsParsed = commentsAsStrings.map(parseParamComment);
   final testCases = [for (idx => expected in commentsParsed) {
     final fixture = commentsAsStrings[idx];
     generateTestCase(fixture.match, fixture.line, Json.stringify(expected));
