@@ -233,13 +233,14 @@ __safety_SafetyException = _hx_e()
 __safety_NullPointerException = _hx_e()
 __test__RawTable_RawTable_Fields_ = _hx_e()
 __test__TestMacros_TestMacros_Fields_ = _hx_e()
-__vim__Vim_Vector3_Impl_ = _hx_e()
-__vim__Vim_Vector4_Impl_ = _hx_e()
 __vim__Vim_Vim_Fields_ = _hx_e()
+__vim_FunctionOrString = _hx_e()
 __vim__VimTypes_GroupOpts_Impl_ = _hx_e()
 __vim__VimTypes_LuaArray_Impl_ = _hx_e()
 __vim__VimTypes_LuaObj_Impl_ = _hx_e()
 __vim__VimTypes_ExpandString_Impl_ = _hx_e()
+__vim__VimTypes_Vector3_Impl_ = _hx_e()
+__vim__VimTypes_Vector4_Impl_ = _hx_e()
 __vim_types_ArgCompleteEnum = _hx_e()
 __vim_types__ArgComplete_ArgComplete_Impl_ = _hx_e()
 
@@ -1325,48 +1326,18 @@ __test__TestMacros_TestMacros_Fields_.objectWithLambdas = function()
 	})
 end
 
-__vim__Vim_Vector3_Impl_.new = {}
-__vim__Vim_Vector3_Impl_.first = function(this1)
-	do
-		return this1[1]
-	end
-end
-__vim__Vim_Vector3_Impl_.second = function(this1)
-	do
-		return this1[2]
-	end
-end
-__vim__Vim_Vector3_Impl_.last = function(this1)
-	do
-		return this1[3]
-	end
-end
-
-__vim__Vim_Vector4_Impl_.new = {}
-__vim__Vim_Vector4_Impl_.first = function(this1)
-	do
-		return this1[1]
-	end
-end
-__vim__Vim_Vector4_Impl_.second = function(this1)
-	do
-		return this1[2]
-	end
-end
-__vim__Vim_Vector4_Impl_.third = function(this1)
-	do
-		return this1[3]
-	end
-end
-__vim__Vim_Vector4_Impl_.last = function(this1)
-	do
-		return this1[4]
-	end
-end
-
 __vim__Vim_Vim_Fields_.new = {}
 __vim__Vim_Vim_Fields_.comment = function()
 	---@diagnostic disable;
+end
+
+__vim_FunctionOrString.Cb = function(cb)
+	local _x = _hx_tab_array({ [0] = "Cb", 0, cb, __enum__ = __vim_FunctionOrString }, 3)
+	return _x
+end
+__vim_FunctionOrString.Str = function(cmd)
+	local _x = _hx_tab_array({ [0] = "Str", 1, cmd, __enum__ = __vim_FunctionOrString }, 3)
+	return _x
 end
 
 __vim__VimTypes_GroupOpts_Impl_.new = {}
@@ -1438,6 +1409,45 @@ end
 __vim__VimTypes_ExpandString_Impl_.plus = function(path, modifiers)
 	do
 		return _G.string.format("%s%s", path, modifiers)
+	end
+end
+
+__vim__VimTypes_Vector3_Impl_.new = {}
+__vim__VimTypes_Vector3_Impl_.first = function(this1)
+	do
+		return this1[1]
+	end
+end
+__vim__VimTypes_Vector3_Impl_.second = function(this1)
+	do
+		return this1[2]
+	end
+end
+__vim__VimTypes_Vector3_Impl_.last = function(this1)
+	do
+		return this1[3]
+	end
+end
+
+__vim__VimTypes_Vector4_Impl_.new = {}
+__vim__VimTypes_Vector4_Impl_.first = function(this1)
+	do
+		return this1[1]
+	end
+end
+__vim__VimTypes_Vector4_Impl_.second = function(this1)
+	do
+		return this1[2]
+	end
+end
+__vim__VimTypes_Vector4_Impl_.third = function(this1)
+	do
+		return this1[3]
+	end
+end
+__vim__VimTypes_Vector4_Impl_.last = function(this1)
+	do
+		return this1[4]
 	end
 end
 
