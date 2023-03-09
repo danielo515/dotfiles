@@ -21,7 +21,11 @@ enum TypeToken {
   Boolean;
   Nil;
   Colon;
+  Any;
+  TVarArgs;
   TIdentifier(name:String);
+  WindowId;
+  BufferId;
 }
 
 enum DocToken {
@@ -55,6 +59,7 @@ class LuaDocLexer extends Lexer implements hxparse.RuleBuilder {
     ident => {final name = lexer.current.ltrim().rtrim(); Identifier(name);},
     " " => SPC,
     "" => EOL,
+    "\\.\\.\\." => Identifier("kwargs"),
     "\\?" => OptionalMod,
   ];
   public static var typeDoc = @:rule [
@@ -78,12 +83,16 @@ class LuaDocLexer extends Lexer implements hxparse.RuleBuilder {
     "boolean" => DocType(TypeToken.Boolean),
     "function" => DocType(TypeToken.TFunction),
     "fun" => DocType(TypeToken.TFunction),
+    "any" => DocType(Any),
+    "window" => DocType(WindowId),
+    "buffer" => DocType(BufferId),
     // Don't judge me
     "fun\\(\\)" => DocType(TypeToken.TFunction),
     "nil" => DocType(Nil),
     ":" => DocType(Colon),
     ident => DocType(TIdentifier(lexer.current)),
     ", ?optional" => OptionalMod,
+    "\\.\\.\\." => DocType(TVarArgs),
     "" => EOL,
   ];
 }
@@ -189,6 +198,7 @@ class LuaDocParser extends hxparse.Parser< hxparse.LexerTokenSource< DocToken >,
         }
       case [DocType(t)]:
         switch stream {
+          case [ArrayMod]: 'Array<$t>';
           case [OptionalMod]: '?$t';
           case [Pipe, e = parseEither('$t')]: e;
           case _: '$t';
@@ -229,6 +239,7 @@ class LuaDocParser extends hxparse.Parser< hxparse.LexerTokenSource< DocToken >,
         // account for potential return type
         final returnType = switch [peek(0), peek(1), peek(2)] {
           case [Rparen, DocType(Colon), SPC]:
+            // I need to manually consume them because we are not in a stream switch
             junk();
             junk();
             junk();
@@ -247,7 +258,6 @@ class LuaDocParser extends hxparse.Parser< hxparse.LexerTokenSource< DocToken >,
     return switch stream {
       case [DocType(t)]:
         switch stream {
-          // case [Pipe, e = parseEither('$t')]: 'Either<$left, $e>';
           case [Pipe, e = parseType()]: 'Either<$left, $e>';
           case _:
             'Either<$left, $t>';
@@ -258,10 +268,13 @@ class LuaDocParser extends hxparse.Parser< hxparse.LexerTokenSource< DocToken >,
   public function parseTypeArgs() {
     Log.print("Hey table args parsing");
     return switch stream {
-      case [TypeClose]: '';
-      case [DocType(Table), TypeOpen, t = parseTypeArgs()]: t;
-      // @formatter:on
-      case [DocType(t)]: t + '';
+      case [DocType(t)]:
+        if (peek(0) == Comma) {
+          junk();
+          t + ',' + parseTypeArgs();
+        } else {
+          t + '';
+        }
     };
   }
 
