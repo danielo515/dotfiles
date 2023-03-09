@@ -78,6 +78,8 @@ class LuaDocLexer extends Lexer implements hxparse.RuleBuilder {
     "boolean" => DocType(TypeToken.Boolean),
     "function" => DocType(TypeToken.TFunction),
     "fun" => DocType(TypeToken.TFunction),
+    // Don't judge me
+    "fun\\(\\)" => DocType(TypeToken.TFunction),
     "nil" => DocType(Nil),
     ":" => DocType(Colon),
     ident => DocType(TIdentifier(lexer.current)),
@@ -111,9 +113,20 @@ class LuaDocParser extends hxparse.Parser< hxparse.LexerTokenSource< DocToken >,
     return switch stream {
       case [SPC]: parse();
       case [Identifier(name)]:
+        final isOptional = if (peek(0) == OptionalMod) {
+          junk();
+          true;
+        } else {
+          false;
+        };
         switch stream {
           case [EOL]:
-            return {name: name, type: "Any", description: ""};
+            return {
+              name: name,
+              type: "Any",
+              description: "",
+              isOptional: isOptional
+            };
           case [SPC]:
             stream.ruleset = LuaDocLexer.typeDoc;
             try {
@@ -127,7 +140,12 @@ class LuaDocParser extends hxparse.Parser< hxparse.LexerTokenSource< DocToken >,
                 Log.print("WARNING: No space after types");
               }
               final text = parseDesc();
-              return {name: name, type: t, description: text};
+              return {
+                name: (isOptional ? "?" : "") + name,
+                type: t,
+                description: text,
+                isOptional: isOptional,
+              };
             }
             catch (e:ParserError) {
               Log.print2("Error parsing: \n\t", e);
