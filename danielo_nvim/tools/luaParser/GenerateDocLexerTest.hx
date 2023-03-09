@@ -10,6 +10,7 @@ import tools.luaParser.LuaDoc;
 using haxe.EnumTools;
 using haxe.macro.ExprTools;
 using StringTools;
+using Lambda;
 
 function readNeovimLuaFile(relativePath:String):Array< String > {
   final runtimePath = FileTools.getNvimRuntimePath();
@@ -104,8 +105,7 @@ function parseParamComment(comment:MatchStr) {
   return parseResult;
 }
 
-function generateTestCasesForFile(filename:String) {
-  final commentsAsStrings = extractAllParamCommentsFromFile(filename);
+function generateTestCases(commentsAsStrings:Array< MatchStr >) {
   final commentsParsed = commentsAsStrings.map(parseParamComment);
   final testCases = [for (idx => expected in commentsParsed) {
     final fixture = commentsAsStrings[idx];
@@ -114,7 +114,7 @@ function generateTestCasesForFile(filename:String) {
   return testCases;
 }
 
-function main() {
+function generateTestCasesFromRuntimeFiles() {
   final files = [
     'vim/filetype.lua',
     'vim/fs.lua',
@@ -122,10 +122,44 @@ function main() {
     'vim/lsp/buf.lua'
   ];
   final testSuites = [for (file in files) {
-    final testCases = generateTestCasesForFile(file);
+    final commentsAsStrings = extractAllParamCommentsFromFile(file);
+    final testCases = generateTestCases(commentsAsStrings);
     generateTestSuite(file, testCases);
   }];
-  final testFile = generateTestFile(testSuites);
+  return testSuites;
+}
+
+/**
+  Uses our existing json files already extracted to generate test 
+  against them.
+ */
+function generateTestCasesFromJsonResFiles() {
+  final files = ['fn.json', 'api.json',];
+  final commentRegex = ~/ ?@param (.*)/;
+  final testSuites = [for (file in files) {
+    final specs:Array< {annotations:Array< String >} > = Json.parse(
+      File.getContent(FileTools.getResPath(file))
+    );
+    final commentsAsStrings = specs.flatMap((spec) -> {
+      spec.annotations.flatMap((line) -> {
+        if (commentRegex.match(line)) {
+          final match = commentRegex.matched(1);
+          [{line: line, match: match}];
+        } else {
+          [];
+        };
+      });
+    });
+    final testCases = generateTestCases(commentsAsStrings);
+    generateTestSuite(file, testCases);
+  }];
+  return testSuites;
+}
+
+function main() {
+  final testSuites = generateTestCasesFromRuntimeFiles();
+  final testSuitesFromJson = generateTestCasesFromJsonResFiles();
+  final testFile = generateTestFile(testSuites.concat(testSuitesFromJson));
   writeTextFile('tools/luaParser/LuaDocParserTest.hx', testFile);
   // final parsed = new LuaDocParser(
   //   ByteData.ofString('bufnr string The buffer to get the lines from')

@@ -55,6 +55,7 @@ class LuaDocLexer extends Lexer implements hxparse.RuleBuilder {
     ident => {final name = lexer.current.ltrim().rtrim(); Identifier(name);},
     " " => SPC,
     "" => EOL,
+    "\\?" => OptionalMod,
   ];
   public static var typeDoc = @:rule [
     " " => SPC,
