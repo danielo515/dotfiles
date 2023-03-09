@@ -24,3 +24,4 @@ jobs:
           destination-repository-name: 'kickstart.hx'
           user-email: rdanielo@gmail.com
           target-branch: master
+          commit-message: "${{ github.event.head_commit.message }}"

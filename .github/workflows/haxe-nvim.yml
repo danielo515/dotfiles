@@ -62,3 +62,4 @@ jobs:
           destination-repository-name: 'haxe-nvim'
           user-email: rdanielo@gmail.com
           target-branch: master
+          commit-message: "${{ github.event.head_commit.message }}"
