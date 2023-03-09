@@ -41,6 +41,7 @@ jobs:
         if: steps.changedfiles.outputs.files_changed == 'true'
         run: |
           echo "Changed files: ${{ steps.changedfiles.outputs.changed_files }}"
+          git --no-pager diff "${{ steps.changedfiles.outputs.changed_files }}"
           exit 1
       - name: creates output
         # Run only on main branch
