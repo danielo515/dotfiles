@@ -226,7 +226,6 @@ typedef AnnotationMap = Map< String, Annotation >;
 }
 
 class ReadNvimApi {
-  final rawData:ApiData;
   final outputPath:String;
 
   public final nvimPath:Result< String >;
@@ -236,7 +235,6 @@ class ReadNvimApi {
   public function new(outputPath:String) {
     final bytes = readMsgpack();
     this.outputPath = outputPath;
-    rawData = MsgPack.decode(bytes);
     nvimPath = getNvimRuntime();
   }
 
@@ -263,11 +261,12 @@ class ReadNvimApi {
   }
 
   public static function getNvimRuntime() {
-    return switch (executeCommand(
-      "nvim",
-      ["--clean", "--headless", "--cmd", "echo $VIMRUNTIME | qa "],
-      true
-    )) {
+    return switch (executeCommand("nvim", [
+      "--clean",
+      "--headless",
+      "--cmd",
+      "echo $VIMRUNTIME | qa "
+    ], true)) {
       case Error(error):
         Sys.println("Failed to get VIMRUNTIME");
         Sys.println(error);
@@ -297,7 +296,6 @@ class ReadNvimApi {
   }
 
   static function main() {
-    final vimApi = new ReadNvimApi('./res/nvim-api.json');
     final tmpDir = switch (getTmpDir("nvim-api")) {
       case Ok(dirPath):
         Sys.println('Using $dirPath as temp folder');
@@ -315,6 +313,7 @@ class ReadNvimApi {
         Sys.println("Failed clone neodev repo");
         return;
     };
+    // Extracting info from neodev repository
     final neoDev = new AnnotationParser((leaf) -> Path.join([tmpDir, "types", "stable", leaf]));
 
     try {
@@ -327,9 +326,11 @@ class ReadNvimApi {
       Sys.println(e);
       Sys.println("Error during parsing, proceeding to cleanup");
     }
+    final vimApi = new ReadNvimApi('./res/nvim-api.json');
     // vimApi.cleanup(tmpDir);
     switch (vimApi.nvimPath) {
       case Ok(path):
+        // Extracting info from neovim runtime path
         final vimBuiltin = new AnnotationParser((leaf) -> Path.join([path, "lua", "vim", leaf]));
         final parsed = vimBuiltin.parsePath('fs.lua');
         writeFile('./res/fs.json', parsed);

@@ -29,6 +29,7 @@ function getDumpPath(filename:String):String {
 /**
   Reads the neovim API from a vim dump file and generates the Haxe externs.
   This only covers nvim.api, not the other modules.
+  @deprecated. We read from a different dump with more and better information
  */
 macro function generateApi():Void {
   var specs = Json.parse(File.getContent(getResPath('nvim-api.json')));
@@ -41,21 +42,23 @@ macro function generateApi():Void {
     #if !dump
     meta: [meta("native", [macro "vim.api"])],
     #end
-    fields: [for (f in (specs.functions : Array< FunctionDef >)) {
-      {
-        name: f.name,
-        access: [AStatic, APublic],
-        meta: (f.deprecated_since != null) ? [meta('deprecated')] : [],
-        kind: FFun({
-          args: f.parameters.map(p -> ({
-            name: p.name,
-            type: resolveType(f.name, p.name, p.type)
-          } : FunctionArg)),
-          ret: resolveType(f.name, null, f.return_type)
-        }),
-        pos: (macro null).pos
+    fields: [
+      for (f in (specs.functions : Array< FunctionDef >)) {
+        {
+          name: f.name,
+          access: [AStatic, APublic],
+          meta: (f.deprecated_since != null) ? [meta('deprecated')] : [],
+          kind: FFun({
+            args: f.parameters.map(p -> ({
+              name: p.name,
+              type: resolveType(f.name, p.name, p.type)
+            } : FunctionArg)),
+            ret: resolveType(f.name, null, f.return_type)
+          }),
+          pos: (macro null).pos
+        }
       }
-    }],
+    ],
     pos: (macro null).pos
   });
 }
