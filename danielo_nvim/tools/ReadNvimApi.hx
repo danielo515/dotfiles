@@ -133,7 +133,13 @@ typedef AnnotationMap = Map< String, Annotation >;
     }, result);
   }
 
-  static function parseFunctionArgs(annotations:AnnotationMap, args) {
+  /**
+   * Generates the parameters list for a function.
+   * It tries to match the real function arguments with the
+   * ones in the documentation, which are provided in the annotations map.
+   * If they can not be determined, it will use the type Dynamic.
+   */
+  static function parseFunctionArgs(annotations:AnnotationMap, args:String) {
     final args:Array< String > = args.split(',').map(StringTools.trim);
     return switch (args) {
       case [''] | []:
