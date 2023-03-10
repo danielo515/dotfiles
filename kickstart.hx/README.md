@@ -14,6 +14,16 @@ This repo is an example of a personal configuration written using the haxe-nvim 
 If you want an example of how to write NeoVim plugins using Haxe, then 
 take a look at the [template plugin](https://github.com/danielo515/haxe-nvim-example-plugin)
 
+## How it looks?
+
+### FZF integrations
+![fzf_files](./screenshots/fzf_files.png)
+![fzf_help](./screenshots/fzf_help.png) 
+### Snippets and copilot
+![copilot_cmp_snippets](./screenshots/copilot_cmp_snippets.png) 
+### Which key
+![which-key](./screenshots/which-key.png) 
+
 ## How to use
 
 If you just want to use this configuration for your NeoVim 
