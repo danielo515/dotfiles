@@ -1,5 +1,6 @@
 package tools.luaParser;
 
+import haxe.ds.StringMap;
 import haxe.Json;
 import tools.FileTools;
 import haxe.io.Path;
@@ -11,6 +12,9 @@ using haxe.EnumTools;
 using haxe.macro.ExprTools;
 using StringTools;
 using Lambda;
+
+// Prevent generating tests for the same comment twice
+final globallyViewedComments = new StringMap< Bool >();
 
 function readNeovimLuaFile(relativePath:String):Array< String > {
   final runtimePath = FileTools.getNvimRuntimePath();
@@ -87,7 +91,12 @@ function extractAllParamCommentsFromFile(file:String):Array< MatchStr > {
   final commentRegex = ~/-{2,3} ?@param (.*)/;
   for (line in lines) {
     if (commentRegex.match(line)) {
-      comments.push({line: line, match: commentRegex.matched(1)});
+      final matched = commentRegex.matched(1);
+      if (globallyViewedComments.exists(matched)) {
+        continue;
+      }
+      globallyViewedComments.set(matched, true);
+      comments.push({line: line, match: matched});
     }
   }
   final filteredComments = comments.filter((str) -> {
@@ -144,6 +153,11 @@ function generateTestCasesFromJsonResFiles() {
       spec.annotations.flatMap((line) -> {
         if (commentRegex.match(line)) {
           final match = commentRegex.matched(1);
+
+          if (globallyViewedComments.exists(match)) {
+            return [];
+          }
+          globallyViewedComments.set(match, true);
           [{line: line, match: match}];
         } else {
           [];
