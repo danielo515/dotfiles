@@ -19,6 +19,16 @@ return {
         augend.date.alias["%m/%d"],
         augend.date.alias["%H:%M"],
         augend.constant.alias.bool,
+        augend.constant.new {
+          elements = { "and", "or" },
+          word = true, -- if false, "sand" is incremented into "sor", "doctor" into "doctand", etc.
+          cyclic = true, -- "or" is incremented into "and".
+        },
+        augend.constant.new {
+          elements = { "&&", "||" },
+          word = false,
+          cyclic = true,
+        },
       },
     }
   end,
