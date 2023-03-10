@@ -2183,14 +2183,14 @@ class LuaDocParserTest extends buddy.SingleSuite {
         Json.stringify(actual).should.be(expected);
       });
 
-      it(" @param command object => command: TIdentifier(object)", {
+      it(" @param command object => command: Dynamic", {
         final parser = new LuaDocParser(ByteData.ofString("command object"));
         final actual = parser.parse();
         final expected = Json.stringify({
           "name": "command",
           "description": "",
           "isOptional": false,
-          "type": "TIdentifier(object)"
+          "type": "Dynamic"
         });
         Json.stringify(actual).should.be(expected);
       });
@@ -2231,26 +2231,26 @@ class LuaDocParserTest extends buddy.SingleSuite {
         Json.stringify(actual).should.be(expected);
       });
 
-      it(" @param start object => start: TIdentifier(object)", {
+      it(" @param start object => start: Dynamic", {
         final parser = new LuaDocParser(ByteData.ofString("start object"));
         final actual = parser.parse();
         final expected = Json.stringify({
           "name": "start",
           "description": "",
           "isOptional": false,
-          "type": "TIdentifier(object)"
+          "type": "Dynamic"
         });
         Json.stringify(actual).should.be(expected);
       });
 
-      it(" @param end_ object => end_: TIdentifier(object)", {
+      it(" @param end_ object => end_: Dynamic", {
         final parser = new LuaDocParser(ByteData.ofString("end_ object"));
         final actual = parser.parse();
         final expected = Json.stringify({
           "name": "end_",
           "description": "",
           "isOptional": false,
-          "type": "TIdentifier(object)"
+          "type": "Dynamic"
         });
         Json.stringify(actual).should.be(expected);
       });
@@ -2339,26 +2339,26 @@ class LuaDocParserTest extends buddy.SingleSuite {
         Json.stringify(actual).should.be(expected);
       });
 
-      it(" @param value object => value: TIdentifier(object)", {
+      it(" @param value object => value: Dynamic", {
         final parser = new LuaDocParser(ByteData.ofString("value object"));
         final actual = parser.parse();
         final expected = Json.stringify({
           "name": "value",
           "description": "",
           "isOptional": false,
-          "type": "TIdentifier(object)"
+          "type": "Dynamic"
         });
         Json.stringify(actual).should.be(expected);
       });
 
-      it(" @param dict object => dict: TIdentifier(object)", {
+      it(" @param dict object => dict: Dynamic", {
         final parser = new LuaDocParser(ByteData.ofString("dict object"));
         final actual = parser.parse();
         final expected = Json.stringify({
           "name": "dict",
           "description": "",
           "isOptional": false,
-          "type": "TIdentifier(object)"
+          "type": "Dynamic"
         });
         Json.stringify(actual).should.be(expected);
       });
@@ -2435,14 +2435,14 @@ class LuaDocParserTest extends buddy.SingleSuite {
         Json.stringify(actual).should.be(expected);
       });
 
-      it(" @param event object => event: TIdentifier(object)", {
+      it(" @param event object => event: Dynamic", {
         final parser = new LuaDocParser(ByteData.ofString("event object"));
         final actual = parser.parse();
         final expected = Json.stringify({
           "name": "event",
           "description": "",
           "isOptional": false,
-          "type": "TIdentifier(object)"
+          "type": "Dynamic"
         });
         Json.stringify(actual).should.be(expected);
       });

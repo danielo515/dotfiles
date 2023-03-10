@@ -26,6 +26,7 @@ enum TypeToken {
   TIdentifier(name:String);
   WindowId;
   BufferId;
+  Dynamic;
 }
 
 enum DocToken {
@@ -86,6 +87,7 @@ class LuaDocLexer extends Lexer implements hxparse.RuleBuilder {
     "any" => DocType(Any),
     "window" => DocType(WindowId),
     "buffer" => DocType(BufferId),
+    "object" => DocType(TypeToken.Dynamic),
     // Don't judge me
     "fun\\(\\)" => DocType(TypeToken.TFunction),
     "nil" => DocType(Nil),
