@@ -165,7 +165,7 @@ function onAttach(x:Dynamic, bufnr:Buffer):Void {
   // ); // See `:help K` for why this keymap
 
   nmap('K', LspBuf.hover, 'Hover Documentation');
-  nmap('<C-k>', LspBuf.signature_help, 'Signature Documentation'); // Lesser used LSP functionality
+  // imap('<C-k>', LspBuf.signature_help, 'Signature Documentation'); // Lesser used LSP functionality
 
   nmap('gD', LspBuf.declaration, '[G]oto [D]eclaration');
   nmap('<leader>wa', LspBuf.add_workspace_folder, '[W]orkspace [A]dd Folder');
@@ -356,5 +356,9 @@ function keymaps() {
       "<Cmd>lua require('fzf-lua').help_tags()<CR>",
       {desc: 'Find help tags', silent: true}
     );
+    Keymap.set(t([Normal]), '<c-k>', "<c-w>k", {desc: 'Move to window up', silent: true});
+    Keymap.set(t([Normal]), '<c-j>', "<c-w>j", {desc: 'Move to window down', silent: true});
+    Keymap.set(t([Normal]), '<c-h>', "<c-w>h", {desc: 'Move to window left', silent: true});
+    Keymap.set(t([Normal]), '<c-l>', "<c-w>l", {desc: 'Move to window right', silent: true});
   }
 }
