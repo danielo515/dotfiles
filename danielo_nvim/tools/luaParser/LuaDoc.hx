@@ -97,6 +97,13 @@ class LuaDocLexer extends Lexer implements hxparse.RuleBuilder {
   ];
 }
 
+typedef ParamDoc = {
+  final name:String;
+  final type:String;
+  final description:String;
+  final isOptional:Bool;
+}
+
 class LuaDocParser extends hxparse.Parser< hxparse.LexerTokenSource< DocToken >, DocToken > implements hxparse.ParserBuilder {
   private final inputAsString:byte.ByteData;
 
@@ -118,7 +125,7 @@ class LuaDocParser extends hxparse.Parser< hxparse.LexerTokenSource< DocToken >,
     // Log.print("^".lpad(" ", pos.pmax + 2));
   }
 
-  public function parse() {
+  public function parse():ParamDoc {
     return switch stream {
       case [SPC]: parse();
       case [Identifier(name)]:

@@ -41,13 +41,13 @@ function readNeovimLuaFile(relativePath:String):Array< String > {
   }
 }
 
-function generateTestCase(fixture, original, expected) {
+function generateTestCase(fixture, original, expected:ParamDoc) {
   // final expected = [${expected.map(EnuP.printEnum).join(', ')}];
   final contents = '
-  it("$original", {
+  it("$original => ${expected.name}: ${expected.type}", {
       final parser = new LuaDocParser(ByteData.ofString("$fixture"));
       final actual = parser.parse();
-      final expected = Json.stringify($expected);
+      final expected = Json.stringify(${Json.stringify(expected)});
       Json.stringify(actual).should.be(expected);
   });';
   return contents;
@@ -66,9 +66,7 @@ function generateTestFile(testSuites) {
 
     import byte.ByteData;
     import haxe.Json;
-    import tools.luaParser.Lexer;
     import tools.luaParser.LuaDoc;
-    import tools.luaParser.LuaDoc.DocToken;
 
     using StringTools;
     using buddy.Should;
@@ -118,7 +116,7 @@ function generateTestCases(commentsAsStrings:Array< MatchStr >) {
   final commentsParsed = commentsAsStrings.map(parseParamComment);
   final testCases = [for (idx => expected in commentsParsed) {
     final fixture = commentsAsStrings[idx];
-    generateTestCase(fixture.match, fixture.line, Json.stringify(expected));
+    generateTestCase(fixture.match, fixture.line, expected);
   }];
   return testCases;
 }
@@ -174,7 +172,9 @@ function main() {
   final testSuites = generateTestCasesFromRuntimeFiles();
   final testSuitesFromJson = generateTestCasesFromJsonResFiles();
   final testFile = generateTestFile(testSuites.concat(testSuitesFromJson));
-  writeTextFile('tools/luaParser/LuaDocParserTest.hx', testFile);
+  final destinationFile = 'tools/luaParser/LuaDocParserTest.hx';
+  writeTextFile(destinationFile, testFile);
+  Cmd.executeCommand('haxelib', ['run', 'formatter', '-s', destinationFile]);
   // final parsed = new LuaDocParser(
   //   ByteData.ofString('bufnr string The buffer to get the lines from')
   // ).parse();
