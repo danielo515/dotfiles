@@ -1,5 +1,6 @@
 package tools.luaParser;
 
+import sys.FileSystem;
 import haxe.ds.StringMap;
 import haxe.Json;
 import tools.FileTools;
@@ -172,7 +173,10 @@ function main() {
   final testSuites = generateTestCasesFromRuntimeFiles();
   final testSuitesFromJson = generateTestCasesFromJsonResFiles();
   final testFile = generateTestFile(testSuites.concat(testSuitesFromJson));
-  final destinationFile = 'tools/luaParser/LuaDocParserTest.hx';
+  final destinationFile = FileSystem.absolutePath(Path.join([
+    FileTools.getDirFromPackagePath('tools/Cmd.hx'),
+    '/luaParser/LuaDocParserTest.hx'
+  ]));
   writeTextFile(destinationFile, testFile);
   Cmd.executeCommand('haxelib', ['run', 'formatter', '-s', destinationFile]);
   // final parsed = new LuaDocParser(

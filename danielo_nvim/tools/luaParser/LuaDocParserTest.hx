@@ -2977,4 +2977,3 @@ class LuaDocParserTest extends buddy.SingleSuite {
     });
   }
 }
-
