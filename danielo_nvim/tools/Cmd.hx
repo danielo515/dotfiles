@@ -3,13 +3,24 @@ package tools;
 import haxe.io.Path;
 import sys.io.Process;
 
+function readStd(source:haxe.io.Input):String {
+  return try {
+    source.readAll().toString();
+  }
+  catch (e:Dynamic) {
+    "";
+  };
+}
+
 function executeCommand(cmd, args, readStder = false):Result< String > {
   final res = new Process(cmd, args);
   return switch (res.exitCode(true)) {
     case 0:
-      Ok(!readStder ? res.stdout.readAll().toString() : res.stderr.readAll().toString());
+      final stdOut = readStd(res.stdout);
+      Ok(!readStder ? stdOut : res.stderr.readAll().toString());
     case _:
-      Error(res.stderr.readLine());
+      Log.print("Error executing command: " + cmd + " " + args.join(" "));
+      Error(readStd(res.stderr));
   }
 }
 
