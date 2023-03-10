@@ -38,7 +38,6 @@ local plugins = {
   require "user.plugins.git-conflict-config",
   require "user.plugins.search-replace",
   require "user.plugins.copilot-config",
-  -- require "user.plugins.tabnine",
   -- Awesome diff view
   require "user.diffview",
   require "user.plugins.cheat",
