@@ -445,6 +445,7 @@ return {
           -- hide tabnr
           ["--delimiter"] = "'[\\):]'",
           ["--with-nth"] = "2..",
+          ["--cycle"] = "",
         },
       },
       lines = {

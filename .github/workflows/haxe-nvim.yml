@@ -27,6 +27,7 @@ jobs:
           haxe -version
           haxelib install --always libs.hxml
           haxe test-macro.hxml
+          haxe tests.hxml
       - name: Run test that should fail
         working-directory: ./danielo_nvim
         run: |
@@ -41,6 +42,7 @@ jobs:
         if: steps.changedfiles.outputs.files_changed == 'true'
         run: |
           echo "Changed files: ${{ steps.changedfiles.outputs.changed_files }}"
+          git --no-pager diff "${{ steps.changedfiles.outputs.changed_files }}"
           exit 1
       - name: creates output
         # Run only on main branch
@@ -61,3 +63,4 @@ jobs:
           destination-repository-name: 'haxe-nvim'
           user-email: rdanielo@gmail.com
           target-branch: master
+          commit-message: "${{ github.event.head_commit.message }}"

@@ -1344,7 +1344,6 @@ __kickstart__Kickstart_Kickstart_Fields_.onAttach = function(x,bufnr)
   nmap("gI", vim.lsp.buf.implementation, "[G]oto [I]mplementation");
   nmap("<leader>D", vim.lsp.buf.type_definition, "Type [D]efinition");
   nmap("K", vim.lsp.buf.hover, "Hover Documentation");
-  nmap("<C-k>", vim.lsp.buf.signature_help, "Signature Documentation");
   nmap("gD", vim.lsp.buf.declaration, "[G]oto [D]eclaration");
   nmap("<leader>wa", vim.lsp.buf.add_workspace_folder, "[W]orkspace [A]dd Folder");
   nmap("<leader>wr", vim.lsp.buf.remove_workspace_folder, "[W]orkspace [R]emove Folder");
@@ -1538,6 +1537,10 @@ __kickstart__Kickstart_Kickstart_Fields_.keymaps = function()
     vim.keymap.set(({"n"}), "<leader>fg", "<Cmd>lua require('fzf-lua').grep()<CR>", ({desc = "Grep files", expr = nil, silent = true}));
     vim.keymap.set(({"n"}), "<leader>fb", "<Cmd>lua require('fzf-lua').buffers()<CR>", ({desc = "Find buffers", expr = nil, silent = true}));
     vim.keymap.set(({"n"}), "<leader>fh", "<Cmd>lua require('fzf-lua').help_tags()<CR>", ({desc = "Find help tags", expr = nil, silent = true}));
+    vim.keymap.set(({"n"}), "<c-k>", "<c-w>k", ({desc = "Move to window up", expr = nil, silent = true}));
+    vim.keymap.set(({"n"}), "<c-j>", "<c-w>j", ({desc = "Move to window down", expr = nil, silent = true}));
+    vim.keymap.set(({"n"}), "<c-h>", "<c-w>h", ({desc = "Move to window left", expr = nil, silent = true}));
+    vim.keymap.set(({"n"}), "<c-l>", "<c-w>l", ({desc = "Move to window right", expr = nil, silent = true}));
   end;
 end
 
