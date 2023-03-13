@@ -563,13 +563,14 @@ ___Main_Main_Fields_.main = function()
   end, ({bang = false, complete = nil, desc = "Open the current file in github", force = true, nargs = nargs, range = true}));
   local nargs = nil;
   vim.api.nvim_create_user_command("CopyGhUrl", function(args) 
-    ___Main_Main_Fields_.copyGhUrl((function() 
-      local _hx_1
-      if (args.count > 0) then 
-      _hx_1 = Std.string(":") .. Std.string(args.count); else 
-      _hx_1 = ""; end
-      return _hx_1
-    end )());
+    local _g = args.range;
+    local tmp;
+    if (_g) == 1 then 
+      tmp = Std.string(":") .. Std.string(args.line1);
+    elseif (_g) == 2 then 
+      tmp = Std.string(Std.string(Std.string(":") .. Std.string(args.line1)) .. Std.string("-")) .. Std.string(args.line2);else
+    tmp = ""; end;
+    ___Main_Main_Fields_.copyGhUrl(tmp);
   end, ({bang = false, complete = nil, desc = "Copy current file github URL", force = true, nargs = nargs, range = true}));
   vim.api.nvim_create_user_command("CopyMessagesToClipboard", function(args) 
     ___Main_Main_Fields_.copy_messages_to_clipboard(args.args);
