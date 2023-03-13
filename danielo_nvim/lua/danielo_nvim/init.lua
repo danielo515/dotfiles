@@ -574,7 +574,9 @@ ___Main_Main_Fields_.main = function()
     ___Main_Main_Fields_.copy_messages_to_clipboard(args.args);
   end, ({bang = false, complete = nil, desc = "Copy the n number of messages to clipboard", force = true, nargs = 1, range = true}));
   vim.api.nvim_create_user_command("GetPluginVersion", function(args) 
-    vim.pretty_print(__packer__Packer_Packer_Fields_.get_plugin_version(args.args));
+    local version = __packer__Packer_Packer_Fields_.get_plugin_version(args.args);
+    vim.pretty_print(version);
+    __vim_Vimx.copyToClipboard(version);
   end, ({bang = false, complete = nil, desc = "Gets the git version of a installed packer plugin", force = true, nargs = 1, range = true}));
   vim.keymap.set("n", "tl", ___Main_Main_Fields_.nexTab, ({desc = "Go to next tab", expr = false, silent = true}));
   vim.o.inccommand = "split";
