@@ -544,7 +544,7 @@ ___Main_Main_Fields_.main = function()
   end, ({bang = true, complete = function(lead,full,x) 
     vim.pretty_print(lead, full, x);
     do return ({"afa","bea",Std.string(lead) .. Std.string("bro")}) end;
-  end, desc = "Testing from haxe for completion callback", force = true, nargs = 1, range = "%"}));
+  end, desc = "Testing from haxe for completion callback", force = true, nargs = "*", range = "%"}));
   local tmp = __vim_FunctionOrString.Cb(function() 
     vim.pretty_print("Hello from axe", vim.fn.expand(_G.string.format("%s%s", "%", ":p")));
     do return true end;
@@ -552,22 +552,23 @@ ___Main_Main_Fields_.main = function()
   __vim_Vimx.acmd("HaxeEvent", __vim__VimTypes_LuaArray_Impl_.from(_hx_tab_array({[0]="BufWritePost"}, 1)), "*.hx", "Created from haxe", tmp);
   local nargs = nil;
   vim.api.nvim_create_user_command("OpenInGh", function(args) 
-    ___Main_Main_Fields_.openInGh((function() 
+    local _g = args.range;
+    local tmp;
+    if (_g) == 1 then 
+      tmp = Std.string(":") .. Std.string(args.line1);
+    elseif (_g) == 2 then 
+      tmp = Std.string(Std.string(Std.string(":") .. Std.string(args.line1)) .. Std.string("-")) .. Std.string(args.line2);else
+    tmp = ""; end;
+    ___Main_Main_Fields_.openInGh(tmp);
+  end, ({bang = false, complete = nil, desc = "Open the current file in github", force = true, nargs = nargs, range = true}));
+  local nargs = nil;
+  vim.api.nvim_create_user_command("CopyGhUrl", function(args) 
+    ___Main_Main_Fields_.copyGhUrl((function() 
       local _hx_1
       if (args.count > 0) then 
       _hx_1 = Std.string(":") .. Std.string(args.count); else 
       _hx_1 = ""; end
       return _hx_1
-    end )());
-  end, ({bang = false, complete = nil, desc = "Open the current file in github", force = true, nargs = nargs, range = true}));
-  local nargs = nil;
-  vim.api.nvim_create_user_command("CopyGhUrl", function(args) 
-    ___Main_Main_Fields_.copyGhUrl((function() 
-      local _hx_2
-      if (args.count > 0) then 
-      _hx_2 = Std.string(":") .. Std.string(args.count); else 
-      _hx_2 = ""; end
-      return _hx_2
     end )());
   end, ({bang = false, complete = nil, desc = "Copy current file github URL", force = true, nargs = nargs, range = true}));
   vim.api.nvim_create_user_command("CopyMessagesToClipboard", function(args) 
