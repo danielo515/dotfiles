@@ -535,6 +535,16 @@ ___Main_Main_Fields_.main = function()
       vim.pretty_print(choice);
     end);
   end, ({bang = true, complete = Std.string("customlist,v:lua.") .. Std.string("require'packer'.plugin_complete"), desc = "Testing from haxe", force = true, nargs = 1, range = "%"}));
+  vim.api.nvim_create_user_command("HaxeCmdCompletion", function(args) 
+    vim.pretty_print(args);
+    vim.pretty_print(vim.spell.check("Hello bru! Hau are you?")[1][1]);
+    vim.ui.select(({"a"}), ({prompt = "Pick one sexy option"}), function(choice,_) 
+      vim.pretty_print(choice);
+    end);
+  end, ({bang = true, complete = function(lead,full,x) 
+    vim.pretty_print(lead, full, x);
+    do return ({"afa","bea",Std.string(lead) .. Std.string("bro")}) end;
+  end, desc = "Testing from haxe for completion callback", force = true, nargs = 1, range = "%"}));
   local tmp = __vim_FunctionOrString.Cb(function() 
     vim.pretty_print("Hello from axe", vim.fn.expand(_G.string.format("%s%s", "%", ":p")));
     do return true end;
