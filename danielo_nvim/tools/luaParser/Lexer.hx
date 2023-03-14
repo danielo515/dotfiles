@@ -65,9 +65,14 @@ enum TokenDef {
   Identifier(name:String);
   Str(content:String);
   Newline;
-  Lparen;
-  Rparen;
+  OpenParen;
+  CloseParen;
+  CurlyOpen;
+  CurlyClose;
+  SquareOpen;
+  SquareClose;
   ThreeDots;
+  Comma;
 }
 
 class Token {
@@ -89,10 +94,15 @@ class Token {
       case Identifier(name): 'Identifier("$name")';
       case Str(content): 'Str("$content")';
       case Newline: 'Newline';
-      case Lparen: 'Lparen';
-      case Rparen: 'Rparen';
+      case OpenParen: '(';
+      case CloseParen: ')';
       case ThreeDots: 'ThreeDots';
       case Eof: 'Eof';
+      case CurlyOpen: '{';
+      case CurlyClose: '}';
+      case SquareOpen: '[';
+      case SquareClose: ']';
+      case Comma: ',';
     }
   }
 }
@@ -130,9 +140,9 @@ class LuaLexer extends Lexer implements hxparse.RuleBuilder {
       token.space = space;
       token;
     },
-    "\\(" => mk(lexer, Rparen),
-    "\\)" => mk(lexer, Lparen),
-    "," => lexer.token(tok),
+    "\\(" => mk(lexer, CloseParen),
+    "\\)" => mk(lexer, OpenParen),
+    "," => mk(lexer, Comma),
     "'" => {
       final content = lexer.token(string);
       mk(lexer, Str(content));
