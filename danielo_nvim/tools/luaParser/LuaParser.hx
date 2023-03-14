@@ -19,7 +19,7 @@ class LuaParser extends hxparse.Parser< hxparse.LexerTokenSource< Token >, Token
   public function parse():Tok {
     return switch stream {
       case [{tok: Comment(content)}]:
-        final comments = parseBlockComment(content, []);
+        final comments = parseBlockComment([content], []);
         trace(comments);
         comments;
 
@@ -29,14 +29,15 @@ class LuaParser extends hxparse.Parser< hxparse.LexerTokenSource< Token >, Token
     }
   };
 
-  function parseBlockComment(description:String, luaDoc:Array< String >) {
+  function parseBlockComment(description:Array< String >, luaDoc:Array< String >) {
     return switch stream {
       case [{tok: Comment(content)}]:
-        parseBlockComment(description + content, []);
+        description.push(content);
+        parseBlockComment(description, []);
       case [{tok: LuaDocParam(param)}]:
         luaDoc.push(param);
         parseBlockComment(description, luaDoc);
-      case _: CommentBlock(description, luaDoc);
+      case _: CommentBlock(description.join('\n'), luaDoc);
     }
   }
 
