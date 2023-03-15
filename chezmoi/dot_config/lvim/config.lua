@@ -17,7 +17,7 @@ packer.init {
   },
 }
 -- general
-lvim.log.level = "debug"
+-- lvim.log.level = "debug"
 lvim.format_on_save = true
 -- TODO: update on new lvim versions
 lvim.colorscheme = "tokyonight"
