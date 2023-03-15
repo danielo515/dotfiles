@@ -25,9 +25,9 @@ enum Tok {
 class LuaParser extends hxparse.Parser< hxparse.LexerTokenSource< Token >, Token > implements hxparse.ParserBuilder {
   final input:ByteData;
 
-  public function new(input:byte.ByteData) {
+  public function new(input:byte.ByteData, sourceName = "") {
     this.input = input;
-    var lexer = new LuaLexer(input);
+    var lexer = new LuaLexer(input, sourceName);
     var ts = new hxparse.LexerTokenSource(lexer, LuaLexer.tok);
     super(ts);
   }
@@ -43,6 +43,9 @@ class LuaParser extends hxparse.Parser< hxparse.LexerTokenSource< Token >, Token
           final comments = parseBlockComment([content], []);
           final func = parseFunction();
           FunctionWithDocs(func.name, func.args, comments.luaDoc, comments.description);
+        case [x]:
+          Log.print('Ignoring top level token: "$x"');
+          parse();
       }
     }
     catch (e:ParserError) {
