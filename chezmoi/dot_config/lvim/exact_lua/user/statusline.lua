@@ -89,7 +89,6 @@ lvim.builtin.lualine.sections.lualine_c = {
   components.lsp,
   components.diagnostics,
   components.treesitter,
-  { "tabnine" },
   { nvim_gps, cond = hide_in_width },
 }
 lvim.builtin.lualine.sections.lualine_x = {
