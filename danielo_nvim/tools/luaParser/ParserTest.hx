@@ -1,5 +1,6 @@
 package tools.luaParser;
 
+import ApiGen.FunctionWithDocs;
 import hxparse.Lexer;
 import haxe.io.Path;
 import sys.io.File;
@@ -46,33 +47,36 @@ function dumpComments(tokens:Array< TokenDef >) {
 @colorize
 class ParserTest extends buddy.SingleSuite {
   public function new() {
-    function compareTokens(a:TokenDef, b:TokenDef) {
-      switch ([a, b]) {
-        case [LuaDocParam(a), LuaDocParam(b)]:
-          a.should.be(b);
-        case [defaultA, defaultB]:
-          defaultA.should.equal(defaultB);
-      }
-    }
     describe("Lua Lexer", {
       it("should parse the basic function", {
         final parser = new LuaParser(readFixture("fixtures/basic_fn.lua"));
-        final expected = [];
+        final expectedDescription = [
+          "Invokes |vim-function| or |user-function| {func} with arguments {...}.",
+          "See also |vim.fn|.",
+          "Equivalent to:",
+          "```lua",
+          "    vim.fn[func]({...})",
+          "```",
+        ].join('\n');
         final actual = parser.parse();
-        trace(actual);
+        switch (actual) {
+          case FunctionWithDocs(name, args, description, luadoc):
+            Log.print2('($description)\n', '($expectedDescription)');
+            name.should.be("vim.call");
+            description.should.be(expectedDescription);
+          case _: fail("Expected function with docs");
+        }
       });
 
       it("should lex vim.iconv", {
         final parser = new LuaParser(readFixture("fixtures/vim_iconv.lua"));
         final expected = [];
         final actual = parser.parse();
-        trace(actual);
       });
       it("should lex filetype_getLInes", {
         final parser = new LuaParser(readFixture("fixtures/filetype_getLInes.lua"));
         final expected = [];
         final actual = parser.parse();
-        Log.print(actual);
       });
     });
   }
