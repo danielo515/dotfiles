@@ -8,11 +8,17 @@ package tools.luaParser;
 **/
 import byte.ByteData;
 import tools.luaParser.Lexer;
+import tools.luaParser.LuaDoc;
 import hxparse.ParserError.ParserError;
 
 enum Tok {
   Function(name:String, args:Array< String >);
-  FunctionWithDocs(name:String, args:Array< String >, description:String, luaDoc:Array< String >);
+  FunctionWithDocs(
+    name:String,
+    args:Array< String >,
+    typedArgs:Array< ParamDoc >,
+    description:String
+  );
   CommentBlock(desc:String, luaDoc:Array< String >);
 }
 
@@ -36,7 +42,7 @@ class LuaParser extends hxparse.Parser< hxparse.LexerTokenSource< Token >, Token
         case [{tok: Comment(content)}]:
           final comments = parseBlockComment([content], []);
           final func = parseFunction();
-          FunctionWithDocs(func.name, func.args, comments.description, comments.luaDoc);
+          FunctionWithDocs(func.name, func.args, comments.luaDoc, comments.description);
       }
     }
     catch (e:ParserError) {
@@ -54,16 +60,18 @@ class LuaParser extends hxparse.Parser< hxparse.LexerTokenSource< Token >, Token
     }
   }
 
-  function parseBlockComment(description:Array< String >, luaDoc:Array< String >) {
+  function parseBlockComment(description:Array< String >, luaDoc:Array< ParamDoc >) {
     return switch stream {
       case [{tok: Comment(content)}]:
         description.push(content);
         parseBlockComment(description, []);
       case [{tok: LuaDocParam(param)}]:
-        luaDoc.push(param);
+        final paramParsed = new LuaDocParser(ByteData.ofString(param)).parse();
+        luaDoc.push(paramParsed);
         parseBlockComment(description, luaDoc);
       case [{tok: LuaDocReturn(content)}]:
-        luaDoc.push(content);
+        // luaDoc.push(content);
+        Log.print('LuaDocReturn: "$content"');
         parseBlockComment(description, luaDoc);
       case _: {description: description.join('\n'), luaDoc: luaDoc};
     }

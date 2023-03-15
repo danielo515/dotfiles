@@ -148,9 +148,7 @@ class LuaDocParser extends hxparse.Parser< hxparse.LexerTokenSource< DocToken >,
           case [SPC]:
             stream.ruleset = LuaDocLexer.typeDoc;
             try {
-              Log.print("About to parse types");
               final t = parseType();
-              Log.print("Parsed types");
               stream.ruleset = LuaDocLexer.desc;
               if (peek(0) == SPC) {
                 junk();
@@ -288,7 +286,6 @@ class LuaDocParser extends hxparse.Parser< hxparse.LexerTokenSource< DocToken >,
   }
 
   public function parseDesc() {
-    Log.print("Hey desc parsing");
     return switch stream {
       case [Description(text), EOL]:
         text;

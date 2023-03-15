@@ -1,12 +1,10 @@
 package tools.luaParser;
 
-import ApiGen.FunctionWithDocs;
 import hxparse.Lexer;
 import haxe.io.Path;
+import haxe.Json;
 import sys.io.File;
 import byte.ByteData;
-import tools.luaParser.Lexer;
-import tools.luaParser.LuaDoc;
 import tools.luaParser.Lexer.TokenDef;
 
 using StringTools;
@@ -60,9 +58,15 @@ class ParserTest extends buddy.SingleSuite {
         ].join('\n');
         final actual = parser.parse();
         switch (actual) {
-          case FunctionWithDocs(name, args, description, luadoc):
-            Log.print2('($description)\n', '($expectedDescription)');
+          case FunctionWithDocs(name, args, typedArgs, description):
             name.should.be("vim.call");
+            args.should.containExactly(["func", "kwargs"]);
+            Json.stringify(typedArgs).should.be(Json.stringify([{
+              name: "func",
+              description: "",
+              isOptional: false,
+              type: "Function"
+            }]));
             description.should.be(expectedDescription);
           case _: fail("Expected function with docs");
         }
