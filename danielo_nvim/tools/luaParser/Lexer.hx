@@ -122,7 +122,7 @@ class LuaLexer extends Lexer implements hxparse.RuleBuilder {
 
   static final identifier_ = "[a-zA-Z_][a-zA-Z0-9_]*";
 
-  public static var consumeLine = @:rule ["[^\n]+" => lexer.current.ltrim()];
+  public static var consumeLine = @:rule ["[^\n]+" => lexer.current];
   // @:rule wraps the expression to the right of => with function(lexer) return
   public static var tok = @:rule [
     "return" => {
@@ -140,8 +140,8 @@ class LuaLexer extends Lexer implements hxparse.RuleBuilder {
       token.space = space;
       token;
     },
-    "\\(" => mk(lexer, CloseParen),
-    "\\)" => mk(lexer, OpenParen),
+    "\\(" => mk(lexer, OpenParen),
+    "\\)" => mk(lexer, CloseParen),
     "," => mk(lexer, Comma),
     "'" => {
       final content = lexer.token(string);
