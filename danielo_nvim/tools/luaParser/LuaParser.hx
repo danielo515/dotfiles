@@ -56,7 +56,29 @@ class LuaParser extends hxparse.Parser< hxparse.LexerTokenSource< Token >, Token
     return switch stream {
       case [{tok: Keyword(Function)}, {tok: Identifier(name)}]:
         final args = parseArgs();
+        ignoreFunctionBody(1);
         {name: name, args: args};
+    }
+  }
+
+  /**
+    I told you at the top of the file, we only parse top level stuff.
+    This will ignore everytihing withint the function body, even other functions
+   */
+  public function ignoreFunctionBody(nestLevel:Int) {
+    return switch stream {
+      case [
+        {tok: Keyword(If | For | While | Until | Function)}
+      ]:
+        ignoreFunctionBody(nestLevel + 1);
+      case [{tok: Keyword(End)}]:
+        if (nestLevel == 1) {
+          return;
+        }
+        ignoreFunctionBody(nestLevel - 1);
+      // just doing `case _:` does not consume the token
+      case [_]:
+        ignoreFunctionBody(nestLevel);
     }
   }
 
