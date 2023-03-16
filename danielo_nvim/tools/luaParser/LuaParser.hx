@@ -11,14 +11,16 @@ import tools.luaParser.Lexer;
 import tools.luaParser.LuaDoc;
 import hxparse.ParserError.ParserError;
 
+typedef FunctionDefinition = {
+  name:String,
+  namespace:Array< String >,
+  args:Array< String >,
+  typedArgs:Array< ParamDoc >,
+  description:String
+};
+
 enum Tok {
-  Function(name:String, args:Array< String >);
-  FunctionWithDocs(
-    name:String,
-    args:Array< String >,
-    typedArgs:Array< ParamDoc >,
-    description:String
-  );
+  FunctionWithDocs(definition:FunctionDefinition);
   CommentBlock(desc:String, luaDoc:Array< String >);
 }
 
@@ -42,7 +44,13 @@ class LuaParser extends hxparse.Parser< hxparse.LexerTokenSource< Token >, Token
         case [{tok: Comment(content)}]:
           final comments = parseBlockComment([content], []);
           final func = parseFunction();
-          FunctionWithDocs(func.name, func.args, comments.luaDoc, comments.description);
+          FunctionWithDocs({
+            name: func.name,
+            namespace: func.namespace,
+            args: func.args,
+            typedArgs: comments.luaDoc,
+            description: comments.description
+          });
         case [x]:
           Log.print('Ignoring top level token: "$x"');
           parse();
@@ -57,10 +65,14 @@ class LuaParser extends hxparse.Parser< hxparse.LexerTokenSource< Token >, Token
 
   public function parseFunction() {
     return switch stream {
-      case [{tok: Keyword(Function)}, {tok: Identifier(name)}]:
+      case [{tok: Keyword(Local)}, {tok: Keyword(Function)}, ident = parseIdent([])]:
         final args = parseArgs();
         ignoreFunctionBody(1);
-        {name: name, args: args};
+        {name: ident.name, namespace: ident.namespace, args: args};
+      case [{tok: Keyword(Function)}, ident = parseIdent([])]:
+        final args = parseArgs();
+        ignoreFunctionBody(1);
+        {name: ident.name, namespace: ident.namespace, args: args};
     }
   }
 
@@ -105,7 +117,12 @@ class LuaParser extends hxparse.Parser< hxparse.LexerTokenSource< Token >, Token
   public function parseArgs():Array< String > {
     return switch stream {
       case [{tok: OpenParen}]:
-        var args = parseSeparated(tok -> tok.tok == Comma, parseIdent);
+        var args = parseSeparated(tok -> tok.tok == Comma, () -> switch stream {
+          case [{tok: ThreeDots}]:
+            "kwargs";
+          case [{tok: Identifier(name)}]:
+            name;
+        });
         switch stream {
           case [{tok: CloseParen}]:
             args;
@@ -113,12 +130,14 @@ class LuaParser extends hxparse.Parser< hxparse.LexerTokenSource< Token >, Token
     }
   };
 
-  public function parseIdent() {
+  public function parseIdent(namespace:Array< String >) {
     return switch stream {
       case [{tok: ThreeDots}]:
-        "kwargs";
+        {name: "kwargs", namespace: []};
+      case [{tok: Namespace(name)}]:
+        parseIdent(namespace.concat([name]));
       case [{tok: Identifier(ident)}]:
-        ident;
+        {name: ident, namespace: namespace};
     }
   }
 }
