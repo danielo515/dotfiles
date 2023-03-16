@@ -65,11 +65,18 @@ class LuaParser extends hxparse.Parser< hxparse.LexerTokenSource< Token >, Token
 
   public function parseFunction() {
     return switch stream {
-      case [{tok: Keyword(Local)}, {tok: Keyword(Function)}, ident = parseIdent([])]:
+      case [
+        {tok: Keyword(Local)},
+        {tok: Keyword(Function)},
+        ident = parseNamespacedIdent([])
+      ]:
         final args = parseArgs();
         ignoreFunctionBody(1);
         {name: ident.name, namespace: ident.namespace, args: args};
-      case [{tok: Keyword(Function)}, ident = parseIdent([])]:
+      case [
+        {tok: Keyword(Function)},
+        ident = parseNamespacedIdent([])
+      ]:
         final args = parseArgs();
         ignoreFunctionBody(1);
         {name: ident.name, namespace: ident.namespace, args: args};
@@ -117,12 +124,7 @@ class LuaParser extends hxparse.Parser< hxparse.LexerTokenSource< Token >, Token
   public function parseArgs():Array< String > {
     return switch stream {
       case [{tok: OpenParen}]:
-        var args = parseSeparated(tok -> tok.tok == Comma, () -> switch stream {
-          case [{tok: ThreeDots}]:
-            "kwargs";
-          case [{tok: Identifier(name)}]:
-            name;
-        });
+        var args = parseSeparated(tok -> tok.tok == Comma, parseIdent);
         switch stream {
           case [{tok: CloseParen}]:
             args;
@@ -130,14 +132,21 @@ class LuaParser extends hxparse.Parser< hxparse.LexerTokenSource< Token >, Token
     }
   };
 
-  public function parseIdent(namespace:Array< String >) {
+  public function parseIdent():String {
     return switch stream {
       case [{tok: ThreeDots}]:
-        {name: "kwargs", namespace: []};
+        "kwargs";
+      case [{tok: Identifier(name)}]:
+        name;
+    }
+  }
+
+  public function parseNamespacedIdent(namespace:Array< String >) {
+    return switch stream {
       case [{tok: Namespace(name)}]:
-        parseIdent(namespace.concat([name]));
-      case [{tok: Identifier(ident)}]:
-        {name: ident, namespace: namespace};
+        parseNamespacedIdent(namespace.concat([name]));
+      case [name = parseIdent()]:
+        {name: name, namespace: namespace};
     }
   }
 }
