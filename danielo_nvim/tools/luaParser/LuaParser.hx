@@ -56,6 +56,8 @@ class LuaParser extends hxparse.Parser< hxparse.LexerTokenSource< Token >, Token
               typedArgs: comments.luaDoc,
               description: comments.description
             });
+          case [{tok: Eof}]:
+            return null;
           case [x]:
             Log.print('Ignoring top level token: "$x"');
             continue;

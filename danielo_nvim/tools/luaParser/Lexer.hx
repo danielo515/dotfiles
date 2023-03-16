@@ -57,7 +57,10 @@ final luaKeywords:Map< String, LKeyword > = [
 ];
 
 enum TokenDef {
+  Dot;
   Eof;
+  NotEqual;
+  LengthSharp;
   Comment(content:String);
   LuaDocParam(content:String);
   LuaDocReturn(content:String);
@@ -77,6 +80,9 @@ enum TokenDef {
   Comma;
   Colon;
   Equal;
+  Equality;
+  LessThan;
+  BiggerThan;
 }
 
 class Token {
@@ -134,11 +140,7 @@ class LuaLexer extends Lexer implements hxparse.RuleBuilder {
   public static var consumeLine = @:rule ["[^\n]+" => lexer.current];
   // @:rule wraps the expression to the right of => with function(lexer) return
   public static var tok = @:rule [
-    "return" => {
-      // I don't care about this things, so I just consume them
-      lexer.token(consumeLine);
-      lexer.token(tok);
-    },
+    "return" => mk(lexer, Keyword(LKeyword.Return)),
     "[+;\\-]" => lexer.token(tok), // Yes, I ignore all this crap
     "\\.\\.\\." => mk(lexer, ThreeDots),
     "\n\n" => mk(lexer, Newline),
@@ -150,6 +152,9 @@ class LuaLexer extends Lexer implements hxparse.RuleBuilder {
       token.space = space;
       token;
     },
+    "<" => mk(lexer, LessThan),
+    ">" => mk(lexer, BiggerThan),
+    "#" => mk(lexer, LengthSharp),
     "\\[" => mk(lexer, SquareOpen),
     "\\]" => mk(lexer, SquareClose),
     "\\{" => mk(lexer, CurlyOpen),
@@ -157,7 +162,9 @@ class LuaLexer extends Lexer implements hxparse.RuleBuilder {
     "\\(" => mk(lexer, OpenParen),
     "\\)" => mk(lexer, CloseParen),
     "," => mk(lexer, Comma),
+    "==" => mk(lexer, Equality),
     "=" => mk(lexer, Equal),
+    "~=" => mk(lexer, NotEqual),
     ":" => mk(lexer, Colon),
     "'" => {
       final content = lexer.token(string);
@@ -180,6 +187,7 @@ class LuaLexer extends Lexer implements hxparse.RuleBuilder {
         mk(lexer, Identifier(content));
       }
     },
+    "\\." => mk(lexer, Dot),
     "--- ?@param" => {
       final content = lexer.token(consumeLine);
       mk(lexer, LuaDocParam(content));
@@ -192,7 +200,7 @@ class LuaLexer extends Lexer implements hxparse.RuleBuilder {
       final content = lexer.token(consumeLine);
       mk(lexer, Comment(content));
     },
-    "" => null,
+    "" => mk(lexer, Eof),
   ];
   public static var string = @:rule ["[^']+" => {
     final content = lexer.current;
