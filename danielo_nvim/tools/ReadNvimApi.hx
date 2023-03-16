@@ -350,8 +350,13 @@ class ReadNvimApi {
         // This bad boy breaks the parsing for some reason
         final filetypeContent = File.getBytes(Path.join([path, 'lua', 'vim', 'filetype.lua']));
         final parser = new LuaParser(ByteData.ofBytes(filetypeContent), 'filetype.lua');
-        Log.print(parser.parse());
-        Log.print(parser.parse());
+        var parsed = parser.parse();
+        Log.print2("parsed=====>", parsed);
+        while (parsed != null) {
+          parsed = parser.parse();
+          Log.print2("parsed=====>", parsed);
+        }
+        trace("NO more");
       // writeFile('./res/filetype.json', filetype);
 
       case Error(error):
