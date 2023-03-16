@@ -1,6 +1,6 @@
 libs.hxml
 
 -cp tools
--main ReadNvimApi
+-main tools.ReadNvimApi
 
 --interp
