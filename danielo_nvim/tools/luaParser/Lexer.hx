@@ -65,6 +65,7 @@ enum TokenDef {
   Identifier(name:String);
   Namespace(name:String);
   Str(content:String);
+  Digit(value:String);
   Newline;
   OpenParen;
   CloseParen;
@@ -128,6 +129,7 @@ class LuaLexer extends Lexer implements hxparse.RuleBuilder {
   }
 
   static final identifier_ = "[a-zA-Z_][a-zA-Z0-9_]*";
+  static final digit = "[0-9]+";
 
   public static var consumeLine = @:rule ["[^\n]+" => lexer.current];
   // @:rule wraps the expression to the right of => with function(lexer) return
@@ -141,12 +143,15 @@ class LuaLexer extends Lexer implements hxparse.RuleBuilder {
     "\\.\\.\\." => mk(lexer, ThreeDots),
     "\n\n" => mk(lexer, Newline),
     "\n" => lexer.token(tok),
+    digit => lexer.token(tok),
     "[\t ]+" => {
       var space = lexer.current;
       var token:Token = lexer.token(tok);
       token.space = space;
       token;
     },
+    "\\[" => mk(lexer, SquareOpen),
+    "\\]" => mk(lexer, SquareClose),
     "\\{" => mk(lexer, CurlyOpen),
     "\\}" => mk(lexer, CurlyClose),
     "\\(" => mk(lexer, OpenParen),
