@@ -65,14 +65,16 @@ class LuaParser extends hxparse.Parser< hxparse.LexerTokenSource< Token >, Token
 
   public function parseFunction() {
     return switch stream {
-      case [
-        {tok: Keyword(Local)},
-        {tok: Keyword(Function)},
-        ident = parseNamespacedIdent([])
-      ]:
-        final args = parseArgs();
-        ignoreFunctionBody(1);
-        {name: ident.name, namespace: ident.namespace, args: args};
+      case [{tok: Keyword(Local)},]:
+        switch stream {
+          case [
+            {tok: Keyword(Function)},
+            ident = parseNamespacedIdent([])
+          ]:
+            final args = parseArgs();
+            ignoreFunctionBody(1);
+            {name: ident.name, namespace: ident.namespace, args: args};
+        }
       case [
         {tok: Keyword(Function)},
         ident = parseNamespacedIdent([])
