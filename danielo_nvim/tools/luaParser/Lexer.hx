@@ -74,6 +74,7 @@ enum TokenDef {
   SquareClose;
   ThreeDots;
   Comma;
+  Colon;
   Equal;
 }
 
@@ -152,6 +153,7 @@ class LuaLexer extends Lexer implements hxparse.RuleBuilder {
     "\\)" => mk(lexer, CloseParen),
     "," => mk(lexer, Comma),
     "=" => mk(lexer, Equal),
+    ":" => mk(lexer, Colon),
     "'" => {
       final content = lexer.token(string);
       mk(lexer, Str(content));
