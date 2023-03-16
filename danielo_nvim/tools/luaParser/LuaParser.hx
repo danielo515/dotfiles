@@ -38,12 +38,16 @@ class LuaParser extends hxparse.Parser< hxparse.LexerTokenSource< Token >, Token
     ParseDump.dumpAtCurrent(stream.curPos(), this.input, this.last.toString());
   }
 
-  public function parse():Tok {
+  final public function parse():Tok {
     return try {
       switch stream {
         case [{tok: Comment(content)}]:
           final comments = parseBlockComment([content], []);
-          final func = parseFunction();
+          final func = parseOptional(parseFunction);
+          if (func == null) {
+            Log.print('Ignoring comment block');
+            return parse();
+          }
           FunctionWithDocs({
             name: func.name,
             namespace: func.namespace,
