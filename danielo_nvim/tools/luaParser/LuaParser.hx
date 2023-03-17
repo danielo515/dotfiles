@@ -42,6 +42,7 @@ class LuaParser extends hxparse.Parser< hxparse.LexerTokenSource< Token >, Token
 
   final public function parse():Tok {
     try {
+      // This is so we can use the same body for both the private and public functions
       inline function parseFunctionWithDocs(isPrivate = false) {
         switch stream {
           case [{tok: Comment(content)}]:
@@ -85,6 +86,9 @@ class LuaParser extends hxparse.Parser< hxparse.LexerTokenSource< Token >, Token
             return fn;
           case [{tok: Eof}]:
             return Tok.Eof;
+          // case [table = parseTableConstructor()]:
+          //   Log.print('Ignoring top level table: "$table"');
+          //   continue;
           case [x]:
             Log.print('Ignoring top level token: "$x"');
             continue;
@@ -126,6 +130,8 @@ class LuaParser extends hxparse.Parser< hxparse.LexerTokenSource< Token >, Token
    */
   public function ignoreFunctionBody(nestLevel:Int) {
     return switch stream {
+      // This are the tokens that can add a nest level that is dependent on the End token
+      // so we account for them in order to know when the function body ends
       case [
         {tok: Keyword(If | For | While | Until | Function)}
       ]:
@@ -184,6 +190,53 @@ class LuaParser extends hxparse.Parser< hxparse.LexerTokenSource< Token >, Token
         parseNamespacedIdent(namespace.concat([name]));
       case [name = parseIdent()]:
         {name: name, namespace: namespace};
+    }
+  }
+
+  public function parseTableConstructor() {
+    switch stream {
+      case [{tok: CurlyOpen}, f = parseFieldList(), {tok: CurlyClose}]:
+        return f;
+    }
+  }
+
+  public function parseComment() {
+    return switch stream {
+      case [{tok: Comment(content)}]:
+        Log.print('Ignoring comment: "$content"');
+    }
+  }
+
+  public function parseFieldList() {
+    parseOptional(parseComment);
+    return parseSeparated(tok -> tok.tok == Comma, parseField);
+  }
+
+  public function parseField() {
+    return switch stream {
+      case [
+        {tok: SquareOpen},
+        expr = parseExpression(),
+        {tok: SquareClose},
+        {tok: Equal},
+        value = parseExpression()
+      ]:
+        {key: expr, value: value};
+      case [expr = parseExpression(), {tok: Equal}, value = parseExpression()]:
+        {key: expr, value: value};
+      case [expr = parseExpression()]:
+        {key: expr, value: expr};
+    }
+  }
+
+  public function parseExpression() {
+    parseOptional(parseComment);
+    return switch stream {
+      case [{tok: StringLiteral(value) | Identifier(value)}]:
+        value;
+      case [{tok: Keyword(Function)}, args = parseArgs()]:
+        ignoreFunctionBody(1);
+        "AnonFunction";
     }
   }
 }

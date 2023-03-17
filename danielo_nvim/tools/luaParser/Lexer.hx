@@ -68,7 +68,7 @@ enum TokenDef {
   Keyword(k:LKeyword);
   Identifier(name:String);
   Namespace(name:String);
-  Str(content:String);
+  StringLiteral(content:String);
   Digit(value:String);
   Newline;
   OpenParen;
@@ -103,7 +103,7 @@ class Token {
       case LuaDocReturn(doc): 'LuaDocReturn("$doc")';
       case Keyword(k): 'Keyword($k)';
       case Identifier(name): 'Identifier("$name")';
-      case Str(content): 'Str("$content")';
+      case StringLiteral(content): 'StringLiteral("$content")';
       case other:
         '$other';
 
@@ -169,11 +169,11 @@ class LuaLexer extends Lexer implements hxparse.RuleBuilder {
     ":" => mk(lexer, Colon),
     "'" => {
       final content = lexer.token(string);
-      mk(lexer, Str(content));
+      mk(lexer, StringLiteral(content));
     },
     "\"" => {
       final content = lexer.token(doubleQuotedString);
-      mk(lexer, Str(content));
+      mk(lexer, StringLiteral(content));
     },
     identifier_ + "\\." => { // Path access
       final content = lexer.current;
