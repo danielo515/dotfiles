@@ -352,7 +352,7 @@ class ReadNvimApi {
         final parser = new LuaParser(ByteData.ofBytes(filetypeContent), 'filetype.lua');
         var parsed = parser.parse();
         Log.print2("parsed=====>", parsed);
-        while (parsed != null) {
+        while (parsed != Tok.Eof) {
           parsed = parser.parse();
           Log.print2("parsed=====>", parsed);
         }

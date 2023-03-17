@@ -16,12 +16,14 @@ typedef FunctionDefinition = {
   namespace:Array< String >,
   args:Array< String >,
   typedArgs:Array< ParamDoc >,
-  description:String
+  description:String,
+  isPrivate:Bool,
 };
 
 enum Tok {
   FunctionWithDocs(definition:FunctionDefinition);
   CommentBlock(desc:String, luaDoc:Array< String >);
+  Eof;
 }
 
 class LuaParser extends hxparse.Parser< hxparse.LexerTokenSource< Token >, Token > implements hxparse.ParserBuilder {
@@ -40,24 +42,49 @@ class LuaParser extends hxparse.Parser< hxparse.LexerTokenSource< Token >, Token
 
   final public function parse():Tok {
     try {
-      while (true) {
+      inline function parseFunctionWithDocs(isPrivate = false) {
         switch stream {
           case [{tok: Comment(content)}]:
             final comments = parseBlockComment([content], []);
             final func = parseOptional(parseFunction);
             if (func == null) {
               Log.print('Ignoring comment block');
-              continue;
+              return null;
             }
             return FunctionWithDocs({
               name: func.name,
               namespace: func.namespace,
               args: func.args,
               typedArgs: comments.luaDoc,
-              description: comments.description
+              description: comments.description,
+              isPrivate: isPrivate
             });
+          case [fn = parseFunction()]:
+            return FunctionWithDocs({
+              name: fn.name,
+              namespace: fn.namespace,
+              args: fn.args,
+              typedArgs: [],
+              description: "",
+              isPrivate: isPrivate
+            });
+        }
+      }
+      while (true) {
+        switch stream {
+          case [{tok: LuaDocPrivate}]:
+            final fn = parseFunctionWithDocs(true);
+            if (fn == null) {
+              continue;
+            }
+            return fn;
+          case [fn = parseFunctionWithDocs(false)]:
+            if (fn == null) {
+              continue;
+            }
+            return fn;
           case [{tok: Eof}]:
-            return null;
+            return Tok.Eof;
           case [x]:
             Log.print('Ignoring top level token: "$x"');
             continue;
