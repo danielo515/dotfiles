@@ -1,3 +1,4 @@
+import vim.Api;
 import vim.Vimx;
 import plenary.Job;
 import vim.Vim;
@@ -97,6 +98,10 @@ function main() {
     },
     ExactlyOne
   );
+  command("Scratch", "creates a scratch buffer", (_) -> {
+    final buffer = Api.nvim_create_buf(false, true);
+    Api.nvim_win_set_buf(CurrentWindow, buffer);
+  });
   // final keymaps = vim.Api.nvim_buf_get_keymap(CurrentBuffer, "n");
   // Vim.print(keymaps.map(x -> '${x.lhs} -> ${x.rhs} ${x.desc}'));
   vim.Keymap.set(Normal, "tl", nexTab, {desc: "Go to next tab", silent: true, expr: false});

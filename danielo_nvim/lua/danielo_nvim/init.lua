@@ -580,6 +580,10 @@ ___Main_Main_Fields_.main = function()
     vim.pretty_print(version);
     __vim_Vimx.copyToClipboard(version);
   end, ({bang = false, complete = nil, desc = "Gets the git version of a installed packer plugin", force = true, nargs = 1, range = true}));
+  local nargs = nil;
+  vim.api.nvim_create_user_command("Scratch", function(_) 
+    vim.api.nvim_win_set_buf(0, vim.api.nvim_create_buf(false, true));
+  end, ({bang = false, complete = nil, desc = "creates a scratch buffer", force = true, nargs = nargs, range = true}));
   vim.keymap.set("n", "tl", ___Main_Main_Fields_.nexTab, ({desc = "Go to next tab", expr = false, silent = true}));
   vim.o.inccommand = "split";
 end
