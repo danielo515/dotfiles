@@ -64,6 +64,7 @@ enum TokenDef {
   Comment(content:String);
   LuaDocParam(content:String);
   LuaDocReturn(content:String);
+  LuaDocPrivate;
   Keyword(k:LKeyword);
   Identifier(name:String);
   Namespace(name:String);
@@ -195,6 +196,9 @@ class LuaLexer extends Lexer implements hxparse.RuleBuilder {
     "--- ?@return" => {
       final content = lexer.token(consumeLine);
       mk(lexer, LuaDocReturn(content));
+    },
+    "--- ?@private" => {
+      mk(lexer, LuaDocPrivate);
     },
     "---?[^@]" => {
       final content = lexer.token(consumeLine);
