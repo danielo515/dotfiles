@@ -86,9 +86,9 @@ class LuaParser extends hxparse.Parser< hxparse.LexerTokenSource< Token >, Token
             return fn;
           case [{tok: Eof}]:
             return Tok.Eof;
-          // case [table = parseTableConstructor()]:
-          //   Log.print('Ignoring top level table: "$table"');
-          //   continue;
+          case [table = parseTableConstructor()]:
+            Log.print('Ignoring top level table: "$table"');
+            continue;
           case [x]:
             Log.print('Ignoring top level token: "$x"');
             continue;
@@ -194,8 +194,13 @@ class LuaParser extends hxparse.Parser< hxparse.LexerTokenSource< Token >, Token
   }
 
   public function parseTableConstructor() {
+    Log.print('parseTableConstructor');
     switch stream {
-      case [{tok: CurlyOpen}, f = parseFieldList(), {tok: CurlyClose}]:
+      case [
+        {tok: CurlyOpen},
+        f = parseOptional(parseFieldList),
+        {tok: CurlyClose}
+      ]:
         return f;
     }
   }
@@ -207,12 +212,27 @@ class LuaParser extends hxparse.Parser< hxparse.LexerTokenSource< Token >, Token
     }
   }
 
+  // fieldlist ::= field {fieldsep field} [fieldsep]
   public function parseFieldList() {
-    parseOptional(parseComment);
-    return parseSeparated(tok -> tok.tok == Comma, parseField);
+    trace('parseFieldList');
+    final fields = [];
+    while (true) {
+      parseOptional(parseComment);
+      switch stream {
+        case [field = parseField()]:
+          fields.push(field);
+        case [{tok: Comma}, field = parseOptional(parseField)]:
+          if (field == null) {
+            return fields;
+          }
+          fields.push(field);
+      }
+    }
   }
 
+  //	field ::= `[´ exp `]´ `=´ exp | Name `=´ exp | exp
   public function parseField() {
+    trace('parseField');
     return switch stream {
       case [
         {tok: SquareOpen},
@@ -221,22 +241,88 @@ class LuaParser extends hxparse.Parser< hxparse.LexerTokenSource< Token >, Token
         {tok: Equal},
         value = parseExpression()
       ]:
+        trace('parsed field: $expr = $value');
         {key: expr, value: value};
-      case [expr = parseExpression(), {tok: Equal}, value = parseExpression()]:
-        {key: expr, value: value};
+      case [{tok: Identifier(key)}, {tok: Equal}, value = parseExpression()]:
+        trace('parsed field: $key = $value');
+        {key: key, value: value};
       case [expr = parseExpression()]:
-        {key: expr, value: expr};
+        switch stream {
+          case [{tok: Equal}, value = parseExpression()]:
+            {key: expr, value: value};
+          case _:
+            {key: null, value: expr};
+        }
     }
   }
 
+  /*
+    exp ::=  nil | false | true | Number | String | `...´ | function | 
+       prefixexp | tableconstructor | exp binop exp | unop exp
+   */
   public function parseExpression() {
+    trace('parseExpression');
     parseOptional(parseComment);
     return switch stream {
-      case [{tok: StringLiteral(value) | Identifier(value)}]:
-        value;
+      case [{tok: StringLiteral(value)}]: value;
+      case [{tok: Keyword(False | True)}]: 'Bool';
       case [{tok: Keyword(Function)}, args = parseArgs()]:
         ignoreFunctionBody(1);
         "AnonFunction";
+      case [table = parseTableConstructor()]:
+        trace('nested table', table);
+        'table';
+      case [prefix = parsePrefixExp()]:
+        prefix;
+    }
+  }
+
+  // varSuffix ::= `[´ exp `]´ | `.´ Name
+  public function parseVarSuffix() {
+    trace('parseVarSuffix');
+    return switch stream {
+      case [{tok: SquareOpen}, expr = parseExpression(), {tok: SquareClose}]:
+        '[' + expr + ']';
+      case [{tok: Dot}, {tok: Identifier(name)}]:
+        '.' + name;
+    }
+  }
+
+  // var ::= Name | varSuffix
+  public function parseVar() {
+    trace('parseVar');
+    return switch stream {
+      case [{tok: Identifier(name)}]:
+        name;
+      case [suffix = parseVarSuffix()]:
+        suffix;
+    }
+  }
+
+  // prefixexp ::= Name | `(´ exp `)´ | prefixexp varSuffix | var `[´ exp `]´ | var `.´ Name
+  public function parsePrefixExp() {
+    trace('parsePrefixExp');
+    return switch stream {
+      case [{tok: Identifier(name)}]:
+        name;
+      case [{tok: OpenParen}, expr = parseExpression(), {tok: CloseParen}]:
+        expr;
+      case [v = parseVar(), suffix = parseVarSuffix()]:
+        Log.print('var + suffix : $v$suffix');
+        v + suffix;
+    }
+  }
+
+  // functioncall ::=  prefixexp args | prefixexp `:´ Name args
+  public function parseFunctionCall() {
+    return switch stream {
+      case [
+        {tok: Identifier(name)},
+        {tok: OpenParen},
+        args = parseSeparated(tok -> tok.tok == Comma, parseExpression),
+        {tok: CloseParen}
+      ]:
+        {name: name, args: args};
     }
   }
 }
