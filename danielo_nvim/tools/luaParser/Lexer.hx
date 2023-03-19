@@ -58,6 +58,8 @@ final luaKeywords:Map< String, LKeyword > = [
 
 enum TokenDef {
   Dot;
+  ThreeDots;
+  DotDot;
   Eof;
   NotEqual;
   LengthSharp;
@@ -77,7 +79,6 @@ enum TokenDef {
   CurlyClose;
   SquareOpen;
   SquareClose;
-  ThreeDots;
   Comma;
   Colon;
   Equal;
@@ -123,6 +124,8 @@ class Token {
 }
 
 class LuaLexer extends Lexer implements hxparse.RuleBuilder {
+  static public var ignoreComments = false;
+
   static function mkPos(p:hxparse.Position) {
     return {
       file: p.psource,
@@ -144,6 +147,7 @@ class LuaLexer extends Lexer implements hxparse.RuleBuilder {
     "return" => mk(lexer, Keyword(LKeyword.Return)),
     "[+;\\-]" => lexer.token(tok), // Yes, I ignore all this crap
     "\\.\\.\\." => mk(lexer, ThreeDots),
+    "\\.\\." => mk(lexer, DotDot),
     "\n\n" => mk(lexer, Newline),
     "\n" => lexer.token(tok),
     digit => lexer.token(tok),
@@ -202,6 +206,9 @@ class LuaLexer extends Lexer implements hxparse.RuleBuilder {
     },
     "---?[^@]" => {
       final content = lexer.token(consumeLine);
+      if (ignoreComments) {
+        return lexer.token(tok);
+      }
       mk(lexer, Comment(content));
     },
     "" => mk(lexer, Eof),

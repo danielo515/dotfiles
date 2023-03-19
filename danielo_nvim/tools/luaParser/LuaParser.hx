@@ -72,6 +72,7 @@ class LuaParser extends hxparse.Parser< hxparse.LexerTokenSource< Token >, Token
         }
       }
       while (true) {
+        LuaLexer.ignoreComments = false;
         switch stream {
           case [{tok: LuaDocPrivate}]:
             final fn = parseFunctionWithDocs(true);
@@ -195,6 +196,8 @@ class LuaParser extends hxparse.Parser< hxparse.LexerTokenSource< Token >, Token
 
   public function parseTableConstructor() {
     Log.print('parseTableConstructor');
+    // TODO: use a different ruleset This is dirty and awful
+    LuaLexer.ignoreComments = true;
     return switch stream {
       case [
         {tok: CurlyOpen},
@@ -226,6 +229,7 @@ class LuaParser extends hxparse.Parser< hxparse.LexerTokenSource< Token >, Token
   //	field ::= `[´ exp `]´ `=´ exp | Name `=´ exp | exp
   public function parseField() {
     trace('parseField');
+    optionallyIgnoreComments();
     return switch stream {
       case [
         {tok: SquareOpen},
