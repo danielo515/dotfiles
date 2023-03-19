@@ -195,20 +195,13 @@ class LuaParser extends hxparse.Parser< hxparse.LexerTokenSource< Token >, Token
 
   public function parseTableConstructor() {
     Log.print('parseTableConstructor');
-    switch stream {
+    return switch stream {
       case [
         {tok: CurlyOpen},
         f = parseOptional(parseFieldList),
         {tok: CurlyClose}
       ]:
-        return f;
-    }
-  }
-
-  public function parseComment() {
-    return switch stream {
-      case [{tok: Comment(content)}]:
-        Log.print('Ignoring comment: "$content"');
+        f;
     }
   }
 
@@ -217,7 +210,7 @@ class LuaParser extends hxparse.Parser< hxparse.LexerTokenSource< Token >, Token
     trace('parseFieldList');
     final fields = [];
     while (true) {
-      parseOptional(parseComment);
+      optionallyIgnoreComments();
       switch stream {
         case [field = parseField()]:
           fields.push(field);
@@ -256,13 +249,24 @@ class LuaParser extends hxparse.Parser< hxparse.LexerTokenSource< Token >, Token
     }
   }
 
+  public function optionallyIgnoreComments():Void {
+    while (true) {
+      switch stream {
+        case [{tok: Comment(content)}]:
+          Log.print('Ignoring comment: "$content"');
+        case _:
+          return;
+      }
+    }
+  }
+
   /*
     exp ::=  nil | false | true | Number | String | `...´ | function | 
        prefixexp | tableconstructor | exp binop exp | unop exp
    */
   public function parseExpression() {
     trace('parseExpression');
-    parseOptional(parseComment);
+    optionallyIgnoreComments();
     return switch stream {
       case [{tok: StringLiteral(value)}]: value;
       case [{tok: Keyword(False | True)}]: 'Bool';
@@ -280,6 +284,7 @@ class LuaParser extends hxparse.Parser< hxparse.LexerTokenSource< Token >, Token
   // varSuffix ::= `[´ exp `]´ | `.´ Name
   public function parseVarSuffix() {
     trace('parseVarSuffix');
+    optionallyIgnoreComments();
     return switch stream {
       case [{tok: SquareOpen}, expr = parseExpression(), {tok: SquareClose}]:
         '[' + expr + ']';
