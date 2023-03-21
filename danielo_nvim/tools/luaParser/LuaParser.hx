@@ -8,6 +8,7 @@ package tools.luaParser;
 **/
 import byte.ByteData;
 import tools.luaParser.Lexer;
+import haxe.Json;
 import tools.luaParser.LuaDoc;
 import hxparse.ParserError.ParserError;
 
@@ -213,7 +214,6 @@ class LuaParser extends hxparse.Parser< hxparse.LexerTokenSource< Token >, Token
     trace('parseFieldList');
     final fields = [];
     while (true) {
-      optionallyIgnoreComments();
       switch stream {
         case [field = parseField()]:
           fields.push(field);
@@ -264,14 +264,21 @@ class LuaParser extends hxparse.Parser< hxparse.LexerTokenSource< Token >, Token
     }
   }
 
+  public function paseBinop(left) {
+    trace('paseBinop');
+    return switch stream {
+      case [{tok: DotDot}, right = parseExpression()]:
+        {left: left, right: right};
+    }
+  }
+
   /*
     exp ::=  nil | false | true | Number | String | `...´ | function | 
        prefixexp | tableconstructor | exp binop exp | unop exp
    */
   public function parseExpression() {
     trace('parseExpression');
-    optionallyIgnoreComments();
-    return switch stream {
+    final exp = switch stream {
       case [{tok: StringLiteral(value)}]: value;
       case [{tok: Keyword(False | True)}]: 'Bool';
       case [{tok: Keyword(Function)}, args = parseArgs()]:
@@ -283,6 +290,10 @@ class LuaParser extends hxparse.Parser< hxparse.LexerTokenSource< Token >, Token
       case [prefix = parsePrefixExp()]:
         prefix;
     }
+    if (peek(1).tok == DotDot) {
+      return Json.stringify(paseBinop(exp));
+    }
+    return exp;
   }
 
   // varSuffix ::= `[´ exp `]´ | `.´ Name
