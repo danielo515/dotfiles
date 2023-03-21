@@ -179,10 +179,10 @@ class LuaLexer extends Lexer implements hxparse.RuleBuilder {
       final content = lexer.token(doubleQuotedString);
       mk(lexer, StringLiteral(content));
     },
-    identifier_ + "\\." => { // Path access
-      final content = lexer.current;
-      mk(lexer, Namespace(content.replace(".", "")));
-    },
+    // identifier_ + "\\." => { // Path access
+    //   final content = lexer.current;
+    //   mk(lexer, Namespace(content.replace(".", "")));
+    // },
     identifier_ => {
       final content = lexer.current;
       final keyword = luaKeywords.get(content);

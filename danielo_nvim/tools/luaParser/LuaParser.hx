@@ -104,22 +104,30 @@ class LuaParser extends hxparse.Parser< hxparse.LexerTokenSource< Token >, Token
     }
   };
 
+  // 	funcname ::= Name {`.´ Name} [`:´ Name]
+  public function parseFunctionName(namespace:Array< String >) {
+    return switch stream {
+      case [{tok: Identifier(name)}]:
+        switch stream {
+          case [{tok: Dot}]:
+            parseFunctionName(namespace.concat([name]));
+          case [{tok: Colon}]:
+            parseFunctionName(namespace.concat([name]));
+          case _: {name: name, namespace: namespace};
+        }
+    }
+  }
+
   public function parseFunction() {
     return switch stream {
       case [{tok: Keyword(Local)},]:
         switch stream {
-          case [
-            {tok: Keyword(Function)},
-            ident = parseNamespacedIdent([])
-          ]:
+          case [{tok: Keyword(Function)}, ident = parseFunctionName([])]:
             final args = parseArgs();
             ignoreFunctionBody(1);
             {name: ident.name, namespace: ident.namespace, args: args};
         }
-      case [
-        {tok: Keyword(Function)},
-        ident = parseNamespacedIdent([])
-      ]:
+      case [{tok: Keyword(Function)}, ident = parseFunctionName([])]:
         final args = parseArgs();
         ignoreFunctionBody(1);
         {name: ident.name, namespace: ident.namespace, args: args};
@@ -183,15 +191,6 @@ class LuaParser extends hxparse.Parser< hxparse.LexerTokenSource< Token >, Token
         "kwargs";
       case [{tok: Identifier(name)}]:
         name;
-    }
-  }
-
-  public function parseNamespacedIdent(namespace:Array< String >) {
-    return switch stream {
-      case [{tok: Namespace(name)}]:
-        parseNamespacedIdent(namespace.concat([name]));
-      case [name = parseIdent()]:
-        {name: name, namespace: namespace};
     }
   }
 
