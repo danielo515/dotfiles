@@ -280,12 +280,15 @@ class LuaParser extends hxparse.Parser< hxparse.LexerTokenSource< Token >, Token
     final exp = switch stream {
       case [{tok: StringLiteral(value)}]: value;
       case [{tok: Keyword(False | True)}]: 'Bool';
+      case [{tok: Keyword(Nil)}]: 'Null';
       case [{tok: Keyword(Function)}, args = parseArgs()]:
         ignoreFunctionBody(1);
         "AnonFunction";
       case [table = parseTableConstructor()]:
         trace('nested table', table);
         'table';
+      case [functionCall = parseFunctionCall()]:
+        functionCall.name;
       case [prefix = parsePrefixExp()]:
         prefix;
     }
@@ -323,12 +326,16 @@ class LuaParser extends hxparse.Parser< hxparse.LexerTokenSource< Token >, Token
     trace('parsePrefixExp');
     return switch stream {
       case [{tok: Identifier(name)}]:
-        name;
+        switch stream {
+          case [suffix = parseOptional(parseVarSuffix)]:
+            name + suffix + parseOptional(parseVarSuffix);
+          case _:
+            name;
+        }
       case [{tok: OpenParen}, expr = parseExpression(), {tok: CloseParen}]:
         expr;
-      case [v = parseVar(), suffix = parseVarSuffix()]:
-        Log.print('var + suffix : $v$suffix');
-        v + suffix;
+      case [suffix = parseVarSuffix()]:
+        suffix;
     }
   }
 
@@ -336,7 +343,7 @@ class LuaParser extends hxparse.Parser< hxparse.LexerTokenSource< Token >, Token
   public function parseFunctionCall() {
     return switch stream {
       case [
-        {tok: Identifier(name)},
+        name = parsePrefixExp(),
         {tok: OpenParen},
         args = parseSeparated(tok -> tok.tok == Comma, parseExpression),
         {tok: CloseParen}
