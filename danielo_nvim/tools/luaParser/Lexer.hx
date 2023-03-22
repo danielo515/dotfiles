@@ -71,7 +71,9 @@ enum TokenDef {
   Identifier(name:String);
   Namespace(name:String);
   StringLiteral(content:String);
-  Digit(value:String);
+  IntegerLiteral(value:String);
+  FloatLiteral(value:String);
+  HexLiteral(value:String);
   Newline;
   OpenParen;
   CloseParen;
@@ -81,10 +83,19 @@ enum TokenDef {
   SquareClose;
   Comma;
   Colon;
+  Semicolon;
+  Plus;
+  Minus;
+  Asterisk;
+  Slash;
+  Percent;
+  Hat;
   Equal;
   Equality;
   LessThan;
   BiggerThan;
+  LessEqual;
+  BiggerEqual;
 }
 
 class Token {
@@ -105,20 +116,10 @@ class Token {
       case Keyword(k): 'Keyword($k)';
       case Identifier(name): 'Identifier("$name")';
       case StringLiteral(content): 'StringLiteral("$content")';
-      case other:
-        '$other';
-
-        // case Newline: 'Newline';
-        // case OpenParen: '(';
-        // case CloseParen: ')';
-        // case ThreeDots: 'ThreeDots';
-        // case Eof: 'Eof';
-        // case CurlyOpen: '{';
-        // case CurlyClose: '}';
-        // case SquareOpen: '[';
-        // case SquareClose: ']';
-        // case Comma: '","';
-        // case Equal: '"="';
+      case IntegerLiteral(value): 'IntegerLiteral("$value")';
+      case FloatLiteral(value): 'FloatLiteral("$value")';
+      case HexLiteral(value): 'HexLiteral("$value")';
+      case other: '$other';
     }
   }
 }
@@ -139,24 +140,36 @@ class LuaLexer extends Lexer implements hxparse.RuleBuilder {
   }
 
   static final identifier_ = "[a-zA-Z_][a-zA-Z0-9_]*";
-  static final digit = "[0-9]+";
+  static final integer = "[0-9]+";
+  static final float = "[0-9]+\\.[0-9]([eE][-+]?[0-9]+)?";
+  static final hex = "0[xX][0-9a-fA-F]+";
 
   public static var consumeLine = @:rule ["[^\n]+" => lexer.current];
   // @:rule wraps the expression to the right of => with function(lexer) return
   public static var tok = @:rule [
     "return" => mk(lexer, Keyword(LKeyword.Return)),
-    "[+;\\-]" => lexer.token(tok), // Yes, I ignore all this crap
+    "\\+" => mk(lexer, Plus),
+    ";" => mk(lexer, Semicolon),
+    "\\-" => mk(lexer, Minus),
+    "\\*" => mk(lexer, Asterisk),
+    "\\/" => mk(lexer, Slash),
+    "%" => mk(lexer, Percent),
+    "\\^" => mk(lexer, Hat),
     "\\.\\.\\." => mk(lexer, ThreeDots),
     "\\.\\." => mk(lexer, DotDot),
     "\n\n" => mk(lexer, Newline),
     "\n" => lexer.token(tok),
-    digit => lexer.token(tok),
+    hex => mk(lexer, HexLiteral(lexer.current)),
+    float => mk(lexer, FloatLiteral(lexer.current)),
+    integer => mk(lexer, IntegerLiteral(lexer.current)),
     "[\t ]+" => {
       var space = lexer.current;
       var token:Token = lexer.token(tok);
       token.space = space;
       token;
     },
+    "<=" => mk(lexer, LessEqual),
+    ">=" => mk(lexer, BiggerEqual),
     "<" => mk(lexer, LessThan),
     ">" => mk(lexer, BiggerThan),
     "#" => mk(lexer, LengthSharp),
@@ -171,18 +184,18 @@ class LuaLexer extends Lexer implements hxparse.RuleBuilder {
     "=" => mk(lexer, Equal),
     "~=" => mk(lexer, NotEqual),
     ":" => mk(lexer, Colon),
+    "\\[\\[" => {
+      final content = lexer.token(longBracketString);
+      mk(lexer, StringLiteral(content));
+    },
     "'" => {
-      final content = lexer.token(string);
+      final content = lexer.token(singleQuotedString);
       mk(lexer, StringLiteral(content));
     },
     "\"" => {
       final content = lexer.token(doubleQuotedString);
       mk(lexer, StringLiteral(content));
     },
-    // identifier_ + "\\." => { // Path access
-    //   final content = lexer.current;
-    //   mk(lexer, Namespace(content.replace(".", "")));
-    // },
     identifier_ => {
       final content = lexer.current;
       final keyword = luaKeywords.get(content);
@@ -213,12 +226,17 @@ class LuaLexer extends Lexer implements hxparse.RuleBuilder {
     },
     "" => mk(lexer, Eof),
   ];
-  public static var string = @:rule ["[^']+" => {
+
+  public static var longBracketString = @:rule ["\\]\\]" => "", "[^\\]]+" => {
     final content = lexer.current;
-    content + lexer.token(string);
+    content + lexer.token(longBracketString);
+  }];
+  public static var singleQuotedString = @:rule ["[^']+" => {
+    final content = lexer.current;
+    content + lexer.token(singleQuotedString); // make sure to consume the closing quote
   }, "'" => ""];
   public static var doubleQuotedString = @:rule ["[^\"]+" => {
     final content = lexer.current;
-    content + lexer.token(string);
+    content + lexer.token(doubleQuotedString); // make sure to consume the closing quote
   }, "\"" => ""];
 }

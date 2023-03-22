@@ -266,8 +266,17 @@ class LuaParser extends hxparse.Parser< hxparse.LexerTokenSource< Token >, Token
   public function paseBinop(left) {
     trace('paseBinop');
     return switch stream {
-      case [{tok: DotDot}, right = parseExpression()]:
+      case [{tok: DotDot | Plus}, right = parseExpression()]:
         {left: left, right: right};
+    }
+  }
+
+  public function parseNumber() {
+    return switch stream {
+      case [{tok: Minus}]:
+        "-" + parseNumber();
+      case [{tok: IntegerLiteral(value)}]:
+        value;
     }
   }
 
@@ -279,6 +288,7 @@ class LuaParser extends hxparse.Parser< hxparse.LexerTokenSource< Token >, Token
     trace('parseExpression');
     final exp = switch stream {
       case [{tok: StringLiteral(value)}]: value;
+      case [value = parseNumber()]: value;
       case [{tok: Keyword(False | True)}]: 'Bool';
       case [{tok: Keyword(Nil)}]: 'Null';
       case [{tok: Keyword(Function)}, args = parseArgs()]:
@@ -292,10 +302,11 @@ class LuaParser extends hxparse.Parser< hxparse.LexerTokenSource< Token >, Token
       case [prefix = parsePrefixExp()]:
         prefix;
     }
-    if (peek(1).tok == DotDot) {
-      return Json.stringify(paseBinop(exp));
+    return switch (peek(1).tok) {
+      case DotDot | Plus:
+        Json.stringify(paseBinop(exp));
+      case _: exp;
     }
-    return exp;
   }
 
   // varSuffix ::= `[´ exp `]´ | `.´ Name
