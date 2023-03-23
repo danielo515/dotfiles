@@ -107,6 +107,7 @@ local plugins = {
       require("user.neoclip").config()
     end,
   },
+  "hrsh7th/cmp-copilot",
   -- powerful search and replace
   {
     "windwp/nvim-spectre",
