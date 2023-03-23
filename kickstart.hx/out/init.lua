@@ -1600,6 +1600,9 @@ __kickstart__Kickstart_Kickstart_Fields_.keymaps = function()
     vim.keymap.set(({"n"}), "<c-j>", "<c-w>j", ({desc = "Move to window down", expr = nil, silent = true}));
     vim.keymap.set(({"n"}), "<c-h>", "<c-w>h", ({desc = "Move to window left", expr = nil, silent = true}));
     vim.keymap.set(({"n"}), "<c-l>", "<c-w>l", ({desc = "Move to window right", expr = nil, silent = true}));
+    if (__plugins__Plugins_Plugins_Fields_.safeRequire("neo-tree") ~= nil) then 
+      vim.keymap.set("n", "<leader>e", ":Neotree filesystem reveal left toggle<cr>", ({desc = "Toggle NeoTree", expr = false, silent = true}));
+    end;
   end;
 end
 
@@ -1673,6 +1676,7 @@ __plugins__Plugins_Plugins_Impl_.configure = function()
   if (module ~= nil) then 
     module.setup(({close_if_last_window = false}));
   end;
+  vim.keymap.set("n", "<C-n>", ":NeoTreeFocus<CR>", ({desc = "Open file tree", expr = false, silent = true}));
 end
 
 __plugins__Plugins_Plugins_Fields_.new = {}

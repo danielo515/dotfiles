@@ -372,5 +372,13 @@ function keymaps() {
     Keymap.set(t([Normal]), '<c-j>', "<c-w>j", {desc: 'Move to window down', silent: true});
     Keymap.set(t([Normal]), '<c-h>', "<c-w>h", {desc: 'Move to window left', silent: true});
     Keymap.set(t([Normal]), '<c-l>', "<c-w>l", {desc: 'Move to window right', silent: true});
+    NeoTree.require().run(_ -> {
+      Keymap.set(
+        Normal,
+        '<leader>e',
+        ":Neotree filesystem reveal left toggle<cr>",
+        {desc: 'Toggle NeoTree', silent: true, expr: false}
+      );
+    });
   }
 }
