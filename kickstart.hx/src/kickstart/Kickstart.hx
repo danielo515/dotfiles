@@ -28,6 +28,7 @@ function main() {
     {name: "wbthomason/packer.nvim"},
     {name: "kylechui/nvim-surround"},
     {name: "folke/which-key.nvim"},
+    {name: "nvim-lua/plenary.nvim"},
     { // LSP Configuration & Plugins
       name: "neovim/nvim-lspconfig",
       requires: t([
