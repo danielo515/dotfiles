@@ -1,5 +1,6 @@
 package kickstart;
 
+import plugins.Plugins.NeoTree;
 import plugins.FzfLua;
 import plugins.LspConfig.Lspconfig;
 
@@ -29,6 +30,16 @@ function main() {
     {name: "kylechui/nvim-surround"},
     {name: "folke/which-key.nvim"},
     {name: "nvim-lua/plenary.nvim"},
+    {
+      name: "nvim-neo-tree/neo-tree.nvim",
+      branch: "v2.x",
+      requires: t([
+        "nvim-lua/plenary.nvim",
+        "nvim-tree/nvim-web-devicons",
+        "MunifTanjim/nui.nvim",
+      ]),
+      config: NeoTree.configure,
+    },
     { // LSP Configuration & Plugins
       name: "neovim/nvim-lspconfig",
       requires: t([

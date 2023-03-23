@@ -11,6 +11,17 @@ import vim.VimTypes;
   };
 }
 
+extern class NeoTree {
+  @:luaDotMethod function setup(opts:TableWrapper< {close_if_last_window:Bool} >):Void;
+  inline static function require():Null< NeoTree > {
+    final module:Null< NeoTree > = _require('neo-tree');
+    return module;
+  }
+  inline static function configure():Void {
+    NeoTree.require()!.setup({close_if_last_window: false});
+  }
+}
+
 extern class IndentBlankline {
   @:luaDotMethod function setup(config:lua.Table< String, Dynamic >):Void;
   inline static function require():Null< IndentBlankline > {
