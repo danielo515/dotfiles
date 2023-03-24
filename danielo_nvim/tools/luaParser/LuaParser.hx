@@ -18,6 +18,7 @@ typedef FunctionDefinition = {
   args:Array< String >,
   typedArgs:Array< ParamDoc >,
   description:String,
+  returnDoc:ReturnDoc,
   isPrivate:Bool,
 };
 
@@ -59,7 +60,8 @@ class LuaParser extends hxparse.Parser< hxparse.LexerTokenSource< Token >, Token
               args: func.args,
               typedArgs: comments.luaDoc,
               description: comments.description,
-              isPrivate: isPrivate
+              isPrivate: isPrivate,
+              returnDoc: comments.returnDoc
             });
           case [fn = parseFunction()]:
             return FunctionWithDocs({
@@ -68,7 +70,8 @@ class LuaParser extends hxparse.Parser< hxparse.LexerTokenSource< Token >, Token
               args: fn.args,
               typedArgs: [],
               description: "",
-              isPrivate: isPrivate
+              isPrivate: isPrivate,
+              returnDoc: null,
             });
         }
       }
@@ -167,10 +170,9 @@ class LuaParser extends hxparse.Parser< hxparse.LexerTokenSource< Token >, Token
         luaDoc.push(paramParsed);
         parseBlockComment(description, luaDoc);
       case [{tok: LuaDocReturn(content)}]:
-        // luaDoc.push(content);
-        Log.print('LuaDocReturn: "$content"');
-        parseBlockComment(description, luaDoc);
-      case _: {description: description.join('\n'), luaDoc: luaDoc};
+        final returnParsed = new LuaDocParser(ByteData.ofString(content)).parseReturn();
+        {description: description.join('\n'), luaDoc: luaDoc, returnDoc: returnParsed}
+      case _: {description: description.join('\n'), luaDoc: luaDoc, returnDoc: null};
     }
   }
 

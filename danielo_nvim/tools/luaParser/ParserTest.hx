@@ -168,7 +168,8 @@ class ParserTest extends buddy.SingleSuite {
             args: args,
             typedArgs: typedArgs,
             description: description,
-            isPrivate: isPrivate
+            isPrivate: isPrivate,
+            returnDoc: rt
           }):
             name.should.be(expected.name);
             namespace.should.containExactly(expected.namespace);
@@ -176,6 +177,8 @@ class ParserTest extends buddy.SingleSuite {
             Json.stringify(typedArgs).should.be(Json.stringify(expected.typedArgs));
             description.should.be(expected.description);
             isPrivate.should.be(expected.isPrivate);
+            rt.description.should.be("Array of lines, or string when end_lnum is omitted");
+            rt.type.should.be("Either<String, Table<String>>");
           case _: fail("Expected function with docs");
         }
       });
