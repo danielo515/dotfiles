@@ -106,6 +106,11 @@ typedef ParamDoc = {
   final isOptional:Bool;
 }
 
+typedef ReturnDoc = {
+  final type:String;
+  final description:String;
+}
+
 class LuaDocParser extends hxparse.Parser< hxparse.LexerTokenSource< DocToken >, DocToken > implements hxparse.ParserBuilder {
   private final inputAsString:byte.ByteData;
 
@@ -174,6 +179,18 @@ class LuaDocParser extends hxparse.Parser< hxparse.LexerTokenSource< DocToken >,
             dumpAtCurrent();
             throw "Unexpected token";
         }
+    }
+  }
+
+  public function parseReturn():ReturnDoc {
+    stream.ruleset = LuaDocLexer.typeDoc;
+    return switch stream {
+      case [SPC]:
+        parseReturn();
+      case [t = parseType()]:
+        stream.ruleset = LuaDocLexer.desc;
+        final text = parseDesc();
+        return {type: t, description: text};
     }
   }
 
