@@ -209,11 +209,11 @@ __packer__Packer_Packer_Fields_ = _hx_e()
 __plugins__Copilot_Copilot_Fields_ = _hx_e()
 __plugins__FzfLua_FzfLua_Fields_ = _hx_e()
 __plugins__Plugins_Plugins_Impl_ = _hx_e()
-__plugins__Plugins_Plugins_Fields_ = _hx_e()
+__vim_plugin_VimPlugin = _hx_e()
 __vim__TableTools_TableTools_Fields_ = _hx_e()
 __vim_FunctionOrString = _hx_e()
 __vim__VimTypes_LuaArray_Impl_ = _hx_e()
-__vim_Vimx = _hx_e()
+local vimx = _hx_e()
 __vim__Vimx_Vimx_Fields_ = _hx_e()
 
 local _hx_bind, _hx_bit, _hx_staticToInstance, _hx_funcToField, _hx_maxn, _hx_print, _hx_apply_self, _hx_box_mr, _hx_bit_clamp, _hx_table, _hx_bit_raw
@@ -1388,10 +1388,10 @@ __kickstart__Kickstart_Kickstart_Fields_.autoCommands = function()
   local tmp = __vim_FunctionOrString.Cb(function() 
     vim.cmd("source <afile> | PackerCompile");
   end);
-  __vim_Vimx.acmd("Kickstart", ({"BufWritePost"}), vim.fn.expand("$MYVIMRC"), "Reload the config", tmp);
-  __vim_Vimx.acmd("Kickstart-yank", __vim__VimTypes_LuaArray_Impl_.from(_hx_tab_array({[0]="TextYankPost"}, 1)), "*", "Highlight on yank", __vim_FunctionOrString.Cb(__kickstart__Untyped_Untyped_Fields_.higlightOnYank));
-  __vim_Vimx.acmd("Kickstart", ({"WinEnter"}), "*", "set relative numbers on win enter", __vim_FunctionOrString.Str("set relativenumber number cursorline"));
-  __vim_Vimx.acmd("Kickstart", ({"WinLeave"}), "*", "unset numbers on unfocussed window", __vim_FunctionOrString.Str("set norelativenumber nocursorline"));
+  vimx.acmd("Kickstart", ({"BufWritePost"}), vim.fn.expand("$MYVIMRC"), "Reload the config", tmp);
+  vimx.acmd("Kickstart-yank", __vim__VimTypes_LuaArray_Impl_.from(_hx_tab_array({[0]="TextYankPost"}, 1)), "*", "Highlight on yank", __vim_FunctionOrString.Cb(__kickstart__Untyped_Untyped_Fields_.higlightOnYank));
+  vimx.acmd("Kickstart", ({"WinEnter"}), "*", "set relative numbers on win enter", __vim_FunctionOrString.Str("set relativenumber number cursorline"));
+  vimx.acmd("Kickstart", ({"WinLeave"}), "*", "unset numbers on unfocussed window", __vim_FunctionOrString.Str("set norelativenumber nocursorline"));
 end
 __kickstart__Kickstart_Kickstart_Fields_.onAttach = function(x,bufnr) 
   local nmap = function(keys,func,desc) 
@@ -1414,28 +1414,28 @@ __kickstart__Kickstart_Kickstart_Fields_.onAttach = function(x,bufnr)
   end, ({bang = false, desc = "Format current buffer with LSP", force = true, nargs = 0, range = false}));
 end
 __kickstart__Kickstart_Kickstart_Fields_.setupPlugins = function() 
-  local _v_ = __plugins__Plugins_Plugins_Fields_.safeRequire("Comment");
+  local _v_ = vimx.safeRequire("Comment");
   if (_v_ ~= nil) then 
     _v_.setup();
   end;
-  local _v_ = __plugins__Plugins_Plugins_Fields_.safeRequire("indent_blankline");
+  local _v_ = vimx.safeRequire("indent_blankline");
   if (_v_ ~= nil) then 
     _v_.setup(({char = "┊", show_trailing_blankline_indent = false}));
   end;
-  local _v_ = __plugins__Plugins_Plugins_Fields_.safeRequire("neodev");
+  local _v_ = vimx.safeRequire("neodev");
   if (_v_ ~= nil) then 
     _v_.setup();
   end;
-  local _v_ = __plugins__Plugins_Plugins_Fields_.safeRequire("mason");
+  local _v_ = vimx.safeRequire("mason");
   if (_v_ ~= nil) then 
     _v_.setup();
   end;
-  local _v_ = __plugins__Plugins_Plugins_Fields_.safeRequire("fidget");
+  local _v_ = vimx.safeRequire("fidget");
   if (_v_ ~= nil) then 
     _v_.setup();
   end;
   local mapping = __kickstart_Cmp.mapping.preset;
-  local ls = __plugins__Plugins_Plugins_Fields_.safeRequire("luasnip");
+  local ls = vimx.safeRequire("luasnip");
   local mapping = mapping.insert(
 {
     ['<C-d>'] = __kickstart_Cmp.mapping.scroll_docs(-4),
@@ -1465,14 +1465,14 @@ __kickstart__Kickstart_Kickstart_Fields_.setupPlugins = function()
     end, { 'i', 's' }),
   }
       );
-  local ls = __plugins__Plugins_Plugins_Fields_.safeRequire("luasnip");
+  local ls = vimx.safeRequire("luasnip");
   __kickstart_Cmp.setup(({mapping = mapping, snippet = ({expand = function(args) 
     local _v_ = ls;
     if (_v_ ~= nil) then 
       _v_.lsp_expand(args.body);
     end;
   end}), sources = ({({name = "luasnip"}),({name = "nvim_lsp"})})}));
-  local _v_ = __plugins__Plugins_Plugins_Fields_.safeRequire("cmp_nvim_lsp");
+  local _v_ = vimx.safeRequire("cmp_nvim_lsp");
   local capabilities = (function() 
     local _hx_1
     if (_v_ == nil) then 
@@ -1525,7 +1525,7 @@ __kickstart__Kickstart_Kickstart_Fields_.setupPlugins = function()
   local lspconfig = this1;
   if (lspconfig ~= nil) then 
     local lspconfig = lspconfig;
-    local mason = __plugins__Plugins_Plugins_Fields_.safeRequire("mason-lspconfig");
+    local mason = vimx.safeRequire("mason-lspconfig");
     if (capabilities ~= nil) then 
       if (mason ~= nil) then 
         mason.setup_handlers(({function(server_name) 
@@ -1541,7 +1541,7 @@ __kickstart__Kickstart_Kickstart_Fields_.setupPlugins = function()
       capabilities = config_capabilities,
     });
           elseif (server_name1) == "jsonls" then 
-            local _v_ = __plugins__Plugins_Plugins_Fields_.safeRequire("schemastore");
+            local _v_ = vimx.safeRequire("schemastore");
             local _v_ = (function() 
               local _hx_7
               if (_v_ == nil) then 
@@ -1591,7 +1591,7 @@ __kickstart__Kickstart_Kickstart_Fields_.keymaps = function()
   vim.keymap.set(({"n"}), "k", "v:count == 0 ? 'gk' : 'k'", ({desc = "up when word-wrap", expr = true, silent = true}));
   vim.keymap.set(({"n"}), "j", "v:count == 0 ? 'gj' : 'j'", ({desc = "down when word-wrap", expr = true, silent = true}));
   vim.keymap.set(({"n"}), "<leader>w", "<Cmd>wa<CR>", ({desc = "Write all files", expr = nil, silent = true}));
-  if (__plugins__Plugins_Plugins_Fields_.safeRequire("fzf-lua") ~= nil) then 
+  if (vimx.safeRequire("fzf-lua") ~= nil) then 
     vim.keymap.set(({"n"}), "<leader>ff", "<Cmd>lua require('fzf-lua').files()<CR>", ({desc = "Find files", expr = nil, silent = true}));
     vim.keymap.set(({"n"}), "<leader>fg", "<Cmd>lua require('fzf-lua').grep()<CR>", ({desc = "Grep files", expr = nil, silent = true}));
     vim.keymap.set(({"n"}), "<leader>fb", "<Cmd>lua require('fzf-lua').buffers()<CR>", ({desc = "Find buffers", expr = nil, silent = true}));
@@ -1600,7 +1600,7 @@ __kickstart__Kickstart_Kickstart_Fields_.keymaps = function()
     vim.keymap.set(({"n"}), "<c-j>", "<c-w>j", ({desc = "Move to window down", expr = nil, silent = true}));
     vim.keymap.set(({"n"}), "<c-h>", "<c-w>h", ({desc = "Move to window left", expr = nil, silent = true}));
     vim.keymap.set(({"n"}), "<c-l>", "<c-w>l", ({desc = "Move to window right", expr = nil, silent = true}));
-    if (__plugins__Plugins_Plugins_Fields_.safeRequire("neo-tree") ~= nil) then 
+    if (vimx.safeRequire("neo-tree") ~= nil) then 
       vim.keymap.set("n", "<leader>e", ":Neotree filesystem reveal left toggle<cr>", ({desc = "Toggle NeoTree", expr = false, silent = true}));
     end;
   end;
@@ -1664,7 +1664,7 @@ end
 
 __plugins__FzfLua_FzfLua_Fields_.new = {}
 __plugins__FzfLua_FzfLua_Fields_.configure = function() 
-  local module = __plugins__Plugins_Plugins_Fields_.safeRequire("fzf-lua");
+  local module = vimx.safeRequire("fzf-lua");
   if (module ~= nil) then 
     module.setup(({}));
   end;
@@ -1672,22 +1672,13 @@ end
 
 __plugins__Plugins_Plugins_Impl_.new = {}
 __plugins__Plugins_Plugins_Impl_.configure = function() 
-  local module = __plugins__Plugins_Plugins_Fields_.safeRequire("neo-tree");
-  if (module ~= nil) then 
-    module.setup(({close_if_last_window = false}));
+  local _v_ = vimx.safeRequire("neo-tree");
+  if (_v_ ~= nil) then 
+    _v_.setup(({close_if_last_window = false}));
   end;
-  vim.keymap.set("n", "<C-n>", ":NeoTreeFocus<CR>", ({desc = "Open file tree", expr = false, silent = true}));
 end
 
-__plugins__Plugins_Plugins_Fields_.new = {}
-__plugins__Plugins_Plugins_Fields_.safeRequire = function(name) 
-  local _hx_1_module_status, _hx_1_module_value = _G.pcall(_G.require, name);
-  if (_hx_1_module_status) then 
-    do return _hx_1_module_value end;
-  else
-    do return nil end;
-  end;
-end
+__vim_plugin_VimPlugin.new = {}
 
 __vim__TableTools_TableTools_Fields_.new = {}
 __vim__TableTools_TableTools_Fields_.concat = function(tableA,tableB) 
@@ -1710,14 +1701,14 @@ __vim__VimTypes_LuaArray_Impl_.from = function(arr)
   do return ret end;
 end
 
-__vim_Vimx.new = {}
-_hx_exports["vimx"] = __vim_Vimx
-__vim_Vimx.acmd = function(groupName,events,pattern,description,cb) 
+vimx.new = {}
+_hx_exports["vimx"] = vimx
+vimx.acmd = function(groupName,events,pattern,description,cb) 
   local group;
-  local _g = __vim_Vimx.autogroups:get(groupName);
+  local _g = vimx.autogroups:get(groupName);
   if (_g == nil) then 
     group = vim.api.nvim_create_augroup(groupName, ({clear = true}));
-    __vim_Vimx.autogroups:set(groupName, group);
+    vimx.autogroups:set(groupName, group);
   else
     group = _g;
   end;
@@ -1735,38 +1726,46 @@ __vim_Vimx.acmd = function(groupName,events,pattern,description,cb)
     this1.command = cb[2]; end;
   vim.api.nvim_create_autocmd(events, this1);
 end
-__vim_Vimx.autocmd = function(groupName,events,pattern,description,cb) 
-  __vim_Vimx.acmd(groupName, events, pattern, description, __vim_FunctionOrString.Cb(cb));
+vimx.autocmd = function(groupName,events,pattern,description,cb) 
+  vimx.acmd(groupName, events, pattern, description, __vim_FunctionOrString.Cb(cb));
 end
-__vim_Vimx.autocmdStr = function(groupName,events,pattern,description,command) 
-  __vim_Vimx.acmd(groupName, events, pattern, description, __vim_FunctionOrString.Str(command));
+vimx.autocmdStr = function(groupName,events,pattern,description,command) 
+  vimx.acmd(groupName, events, pattern, description, __vim_FunctionOrString.Str(command));
 end
-__vim_Vimx.copyToClipboard = function(str) 
+vimx.copyToClipboard = function(str) 
   vim.cmd(Std.string(Std.string("let @* = \"") .. Std.string(str)) .. Std.string("\""));
   vim.notify("Copied to clipboard", "info");
 end
-__vim_Vimx.linesInCurrentWindow = function() 
+vimx.linesInCurrentWindow = function() 
   do return vim.fn.line("$", 0) end;
 end
-__vim_Vimx.firstLineVisibleCurrentWindow = function() 
+vimx.firstLineVisibleCurrentWindow = function() 
   do return vim.fn.line("w0", 0) end;
 end
-__vim_Vimx.lastLineVisibleCurrentWindow = function() 
+vimx.lastLineVisibleCurrentWindow = function() 
   do return vim.fn.line("w$", 0) end;
 end
-__vim_Vimx.join_paths = function(paths) 
+vimx.join_paths = function(paths) 
   do return paths:join(__vim__Vimx_Vimx_Fields_.pathSeparator) end;
 end
-__vim_Vimx.file_exists = function(path) 
+vimx.file_exists = function(path) 
   if (vim.fn.filereadable(path) == 0) then 
     do return true end;
   else
     do return false end;
   end;
 end
-__vim_Vimx.read_json_file = function(path) 
-  if (__vim_Vimx.file_exists(path)) then 
+vimx.read_json_file = function(path) 
+  if (vimx.file_exists(path)) then 
     do return vim.fn.json_decode(_G.table.concat(vim.fn.readfile(path))) end;
+  else
+    do return nil end;
+  end;
+end
+vimx.safeRequire = function(name) 
+  local _hx_1_module_status, _hx_1_module_value = _G.pcall(_G.require, name);
+  if (_hx_1_module_status) then 
+    do return _hx_1_module_value end;
   else
     do return nil end;
   end;
@@ -1805,7 +1804,7 @@ _hx_array_mt.__index = Array.prototype
 local _hx_static_init = function()
   __lua_StringMap.tnull = ({});
   
-  __vim_Vimx.autogroups = __lua_StringMap.new();
+  vimx.autogroups = __lua_StringMap.new();
   
   __vim__Vimx_Vimx_Fields_.pathSeparator = (function() 
     local _hx_1
