@@ -1,5 +1,6 @@
 package plugins;
 
+import vim.plugin.Plugin;
 import lua.Table.create as t;
 
 typedef FzfConfig = {
@@ -30,12 +31,9 @@ typedef FzfConfig = {
   }
 };
 
-extern class FzfLua {
+extern class FzfLua implements VimPlugin {
+  inline static final libName = 'fzf-lua';
   @:luaDotMethod function setup(config:Dynamic):Void;
-  inline static function require():Null< FzfLua > {
-    final module:Null< FzfLua > = plugins.Plugins._require('fzf-lua');
-    return module;
-  }
 }
 
 inline function configure() {

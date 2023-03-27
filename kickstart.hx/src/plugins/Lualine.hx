@@ -1,10 +1,9 @@
 package plugins;
 
-extern class Lualine {
-  inline static function require():Null< Lualine > {
-    final module = lua.Lua.pcall(lua.Lua.require, "lualine");
-    return module.status ? module.value : null;
-  }
+import vim.plugin.Plugin.VimPlugin;
+
+extern class Lualine implements VimPlugin {
+  inline static final libName = 'Lualine';
   @:luaDotMethod function setup(config:TableWrapper< {
     options:{
       icons_enabled:Bool,
