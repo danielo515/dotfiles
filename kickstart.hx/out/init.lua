@@ -207,9 +207,9 @@ __kickstart__Untyped_Untyped_Fields_ = _hx_e()
 __lua_StringMap = _hx_e()
 __packer__Packer_Packer_Fields_ = _hx_e()
 __plugins__Copilot_Copilot_Fields_ = _hx_e()
+__vim_plugin_VimPlugin = _hx_e()
 __plugins__FzfLua_FzfLua_Fields_ = _hx_e()
 __plugins__Plugins_Plugins_Impl_ = _hx_e()
-__vim_plugin_VimPlugin = _hx_e()
 __vim__TableTools_TableTools_Fields_ = _hx_e()
 __vim_FunctionOrString = _hx_e()
 __vim__VimTypes_LuaArray_Impl_ = _hx_e()
@@ -1480,21 +1480,14 @@ __kickstart__Kickstart_Kickstart_Fields_.setupPlugins = function()
     _hx_1 = _v_.default_capabilities(vim.lsp.protocol.make_client_capabilities()); end
     return _hx_1
   end )();
-  local _hx_2_module_status, _hx_2_module_value = _G.pcall(_G.require, "lualine");
-  local lualine = (function() 
-    local _hx_3
-    if (_hx_2_module_status) then 
-    _hx_3 = _hx_2_module_value; else 
-    _hx_3 = nil; end
-    return _hx_3
-  end )();
+  local lualine = vimx.safeRequire("Lualine");
   if (lualine ~= nil) then 
     lualine.setup(({options = ({icons_enabled = true, theme = "onedark", component_separators = "|", section_separators = ""})}));
   end;
   local this1;
-  local _hx_4_requireResult_status, _hx_4_requireResult_value = _G.pcall(_G.require, "which-key");
-  if (_hx_4_requireResult_status) then 
-    this1 = _hx_4_requireResult_value;
+  local _hx_2_requireResult_status, _hx_2_requireResult_value = _G.pcall(_G.require, "which-key");
+  if (_hx_2_requireResult_status) then 
+    this1 = _hx_2_requireResult_value;
   else
     this1 = nil;
   end;
@@ -1505,9 +1498,9 @@ __kickstart__Kickstart_Kickstart_Fields_.setupPlugins = function()
     wk.setup(({disable = nil, hidden = nil, icons = nil, ignore_missing = nil, key_labels = nil, layout = nil, motions = nil, operators = nil, plugins = ({marks = true, registers = true, spelling = ({enabled = true, suggestions = 20}), presets = ({operators = true, motions = true, text_objects = true, windows = true, nav = true, z = true, g = true})}), popup_mappings = nil, show_help = nil, show_keys = nil, triggers = nil, triggers_blacklist = nil, triggers_nowait = nil, window = nil}));
   end;
   local this1;
-  local _hx_5_requireResult_status, _hx_5_requireResult_value = _G.pcall(_G.require, "gitsigns");
-  if (_hx_5_requireResult_status) then 
-    this1 = _hx_5_requireResult_value;
+  local _hx_3_requireResult_status, _hx_3_requireResult_value = _G.pcall(_G.require, "gitsigns");
+  if (_hx_3_requireResult_status) then 
+    this1 = _hx_3_requireResult_value;
   else
     this1 = nil;
   end;
@@ -1516,9 +1509,9 @@ __kickstart__Kickstart_Kickstart_Fields_.setupPlugins = function()
     gs.setup(({signs = ({add = ({text = "+"}), change = ({text = "~"}), delete = ({text = "_"}), topdelete = ({text = "‾"}), changedelete = ({text = "~"})})}));
   end;
   local this1;
-  local _hx_6_requireResult_status, _hx_6_requireResult_value = _G.pcall(_G.require, "lspconfig");
-  if (_hx_6_requireResult_status) then 
-    this1 = _hx_6_requireResult_value;
+  local _hx_4_requireResult_status, _hx_4_requireResult_value = _G.pcall(_G.require, "lspconfig");
+  if (_hx_4_requireResult_status) then 
+    this1 = _hx_4_requireResult_value;
   else
     this1 = nil;
   end;
@@ -1543,18 +1536,18 @@ __kickstart__Kickstart_Kickstart_Fields_.setupPlugins = function()
           elseif (server_name1) == "jsonls" then 
             local _v_ = vimx.safeRequire("schemastore");
             local _v_ = (function() 
-              local _hx_7
+              local _hx_5
               if (_v_ == nil) then 
-              _hx_7 = nil; else 
-              _hx_7 = _v_.json; end
-              return _hx_7
+              _hx_5 = nil; else 
+              _hx_5 = _v_.json; end
+              return _hx_5
             end )();
             local jsonSchemas = (function() 
-              local _hx_8
+              local _hx_6
               if (_v_ == nil) then 
-              _hx_8 = nil; else 
-              _hx_8 = _v_:schemas(); end
-              return _hx_8
+              _hx_6 = nil; else 
+              _hx_6 = _v_:schemas(); end
+              return _hx_6
             end )();
             local schemas = ({_hx_o({__fields__={description=true,fileMatch=true,name=true,url=true},description="Haxe format schema",fileMatch=({"hxformat.json"}),name="hxformat.schema.json",url="https://raw.githubusercontent.com/vshaxe/vshaxe/master/schemas/hxformat.schema.json"})});
             if (jsonSchemas ~= nil) then 
@@ -1662,11 +1655,13 @@ __plugins__Copilot_Copilot_Fields_.configure = function()
   end;
 end
 
+__vim_plugin_VimPlugin.new = {}
+
 __plugins__FzfLua_FzfLua_Fields_.new = {}
 __plugins__FzfLua_FzfLua_Fields_.configure = function() 
-  local module = vimx.safeRequire("fzf-lua");
-  if (module ~= nil) then 
-    module.setup(({}));
+  local _v_ = vimx.safeRequire("fzf-lua");
+  if (_v_ ~= nil) then 
+    _v_.setup(({}));
   end;
 end
 
@@ -1677,8 +1672,6 @@ __plugins__Plugins_Plugins_Impl_.configure = function()
     _v_.setup(({close_if_last_window = false}));
   end;
 end
-
-__vim_plugin_VimPlugin.new = {}
 
 __vim__TableTools_TableTools_Fields_.new = {}
 __vim__TableTools_TableTools_Fields_.concat = function(tableA,tableB) 
