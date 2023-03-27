@@ -209,7 +209,7 @@ __plenary_Job = _G.require("plenary.job")
 __vim__TableTools_TableTools_Fields_ = _hx_e()
 __vim_FunctionOrString = _hx_e()
 __vim__VimTypes_LuaArray_Impl_ = _hx_e()
-__vim_Vimx = _hx_e()
+local vimx = _hx_e()
 __vim__Vimx_Vimx_Fields_ = _hx_e()
 
 local _hx_bind, _hx_bit, _hx_staticToInstance, _hx_funcToField, _hx_maxn, _hx_print, _hx_apply_self, _hx_box_mr, _hx_bit_clamp, _hx_table, _hx_bit_raw
@@ -549,7 +549,7 @@ ___Main_Main_Fields_.main = function()
     vim.pretty_print("Hello from axe", vim.fn.expand(_G.string.format("%s%s", "%", ":p")));
     do return true end;
   end);
-  __vim_Vimx.acmd("HaxeEvent", __vim__VimTypes_LuaArray_Impl_.from(_hx_tab_array({[0]="BufWritePost"}, 1)), "*.hx", "Created from haxe", tmp);
+  vimx.acmd("HaxeEvent", __vim__VimTypes_LuaArray_Impl_.from(_hx_tab_array({[0]="BufWritePost"}, 1)), "*.hx", "Created from haxe", tmp);
   local nargs = nil;
   vim.api.nvim_create_user_command("OpenInGh", function(args) 
     local _g = args.range;
@@ -578,7 +578,7 @@ ___Main_Main_Fields_.main = function()
   vim.api.nvim_create_user_command("GetPluginVersion", function(args) 
     local version = __packer__Packer_Packer_Fields_.get_plugin_version(args.args);
     vim.pretty_print(version);
-    __vim_Vimx.copyToClipboard(version);
+    vimx.copyToClipboard(version);
   end, ({bang = false, complete = nil, desc = "Gets the git version of a installed packer plugin", force = true, nargs = 1, range = true}));
   local nargs = nil;
   vim.api.nvim_create_user_command("Scratch", function(_) 
@@ -622,7 +622,7 @@ ___Main_Main_Fields_.copyGhUrl = function(line)
     vim.pretty_print("No URL");
   else
     vim.pretty_print(lines[1]);
-    __vim_Vimx.copyToClipboard(lines[1]);
+    vimx.copyToClipboard(lines[1]);
   end;
 end
 ___Main_Main_Fields_.setup = function() 
@@ -956,14 +956,14 @@ __vim__VimTypes_LuaArray_Impl_.from = function(arr)
   do return ret end;
 end
 
-__vim_Vimx.new = {}
-_hx_exports["vimx"] = __vim_Vimx
-__vim_Vimx.acmd = function(groupName,events,pattern,description,cb) 
+vimx.new = {}
+_hx_exports["vimx"] = vimx
+vimx.acmd = function(groupName,events,pattern,description,cb) 
   local group;
-  local _g = __vim_Vimx.autogroups:get(groupName);
+  local _g = vimx.autogroups:get(groupName);
   if (_g == nil) then 
     group = vim.api.nvim_create_augroup(groupName, ({clear = true}));
-    __vim_Vimx.autogroups:set(groupName, group);
+    vimx.autogroups:set(groupName, group);
   else
     group = _g;
   end;
@@ -981,38 +981,46 @@ __vim_Vimx.acmd = function(groupName,events,pattern,description,cb)
     this1.command = cb[2]; end;
   vim.api.nvim_create_autocmd(events, this1);
 end
-__vim_Vimx.autocmd = function(groupName,events,pattern,description,cb) 
-  __vim_Vimx.acmd(groupName, events, pattern, description, __vim_FunctionOrString.Cb(cb));
+vimx.autocmd = function(groupName,events,pattern,description,cb) 
+  vimx.acmd(groupName, events, pattern, description, __vim_FunctionOrString.Cb(cb));
 end
-__vim_Vimx.autocmdStr = function(groupName,events,pattern,description,command) 
-  __vim_Vimx.acmd(groupName, events, pattern, description, __vim_FunctionOrString.Str(command));
+vimx.autocmdStr = function(groupName,events,pattern,description,command) 
+  vimx.acmd(groupName, events, pattern, description, __vim_FunctionOrString.Str(command));
 end
-__vim_Vimx.copyToClipboard = function(str) 
+vimx.copyToClipboard = function(str) 
   vim.cmd(Std.string(Std.string("let @* = \"") .. Std.string(str)) .. Std.string("\""));
   vim.notify("Copied to clipboard", "info");
 end
-__vim_Vimx.linesInCurrentWindow = function() 
+vimx.linesInCurrentWindow = function() 
   do return vim.fn.line("$", 0) end;
 end
-__vim_Vimx.firstLineVisibleCurrentWindow = function() 
+vimx.firstLineVisibleCurrentWindow = function() 
   do return vim.fn.line("w0", 0) end;
 end
-__vim_Vimx.lastLineVisibleCurrentWindow = function() 
+vimx.lastLineVisibleCurrentWindow = function() 
   do return vim.fn.line("w$", 0) end;
 end
-__vim_Vimx.join_paths = function(paths) 
+vimx.join_paths = function(paths) 
   do return paths:join(__vim__Vimx_Vimx_Fields_.pathSeparator) end;
 end
-__vim_Vimx.file_exists = function(path) 
+vimx.file_exists = function(path) 
   if (vim.fn.filereadable(path) == 0) then 
     do return true end;
   else
     do return false end;
   end;
 end
-__vim_Vimx.read_json_file = function(path) 
-  if (__vim_Vimx.file_exists(path)) then 
+vimx.read_json_file = function(path) 
+  if (vimx.file_exists(path)) then 
     do return vim.fn.json_decode(_G.table.concat(vim.fn.readfile(path))) end;
+  else
+    do return nil end;
+  end;
+end
+vimx.safeRequire = function(name) 
+  local _hx_1_module_status, _hx_1_module_value = _G.pcall(_G.require, name);
+  if (_hx_1_module_status) then 
+    do return _hx_1_module_value end;
   else
     do return nil end;
   end;
@@ -1051,7 +1059,7 @@ _hx_array_mt.__index = Array.prototype
 local _hx_static_init = function()
   __lua_StringMap.tnull = ({});
   
-  __vim_Vimx.autogroups = __lua_StringMap.new();
+  vimx.autogroups = __lua_StringMap.new();
   
   __vim__Vimx_Vimx_Fields_.pathSeparator = (function() 
     local _hx_1
