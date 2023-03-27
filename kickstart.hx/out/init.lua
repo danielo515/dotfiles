@@ -201,13 +201,12 @@ local String = _hx_e()
 local Std = _hx_e()
 __haxe_iterators_ArrayIterator = _hx_e()
 __haxe_iterators_ArrayKeyValueIterator = _hx_e()
-__kickstart_Cmp = _G.require("cmp")
+__vim_plugin_VimPlugin = _hx_e()
 __kickstart__Kickstart_Kickstart_Fields_ = _hx_e()
 __kickstart__Untyped_Untyped_Fields_ = _hx_e()
 __lua_StringMap = _hx_e()
 __packer__Packer_Packer_Fields_ = _hx_e()
 __plugins__Copilot_Copilot_Fields_ = _hx_e()
-__vim_plugin_VimPlugin = _hx_e()
 __plugins__FzfLua_FzfLua_Fields_ = _hx_e()
 __plugins__Plugins_Plugins_Impl_ = _hx_e()
 __vim__TableTools_TableTools_Fields_ = _hx_e()
@@ -769,6 +768,8 @@ end
 __haxe_iterators_ArrayKeyValueIterator.super = function(self,array) 
   self.array = array;
 end
+
+__vim_plugin_VimPlugin.new = {}
 
 __kickstart__Kickstart_Kickstart_Fields_.new = {}
 __kickstart__Kickstart_Kickstart_Fields_.main = function() 
@@ -1434,29 +1435,31 @@ __kickstart__Kickstart_Kickstart_Fields_.setupPlugins = function()
   if (_v_ ~= nil) then 
     _v_.setup();
   end;
-  local mapping = __kickstart_Cmp.mapping.preset;
-  local ls = vimx.safeRequire("luasnip");
-  local mapping = mapping.insert(
+  local cmp = vimx.safeRequire("cmp");
+  if (cmp ~= nil) then 
+    local cmp1 = cmp.mapping.preset;
+    local ls = vimx.safeRequire("luasnip");
+    local mapping = cmp1.insert(
 {
-    ['<C-d>'] = __kickstart_Cmp.mapping.scroll_docs(-4),
-    ['<C-f>'] = __kickstart_Cmp.mapping.scroll_docs(4),
-    ['<C-n>'] = __kickstart_Cmp.mapping(__kickstart_Cmp.mapping.complete(),{'i'}),
-    ['<CR>'] = __kickstart_Cmp.mapping.confirm {
-      behavior = __kickstart_Cmp.ConfirmBehavior.Replace,
+    ['<C-d>'] = cmp.mapping.scroll_docs(-4),
+    ['<C-f>'] = cmp.mapping.scroll_docs(4),
+    ['<C-n>'] = cmp.mapping(cmp.mapping.complete(),{'i'}),
+    ['<CR>'] = cmp.mapping.confirm {
+      behavior = cmp.ConfirmBehavior.Replace,
       select = true,
     },
-    ['<Tab>'] = __kickstart_Cmp.mapping(function(fallback)
-      if __kickstart_Cmp.visible() then
-        __kickstart_Cmp.select_next_item()
+    ['<Tab>'] = cmp.mapping(function(fallback)
+      if cmp.visible() then
+        cmp.select_next_item()
       elseif ls.expand_or_jumpable() then
         ls.expand_or_jump()
       else
         fallback()
       end
     end, { 'i', 's' }),
-    ['<S-Tab>'] = __kickstart_Cmp.mapping(function(fallback)
-      if __kickstart_Cmp.visible() then
-        __kickstart_Cmp.select_prev_item()
+    ['<S-Tab>'] = cmp.mapping(function(fallback)
+      if cmp.visible() then
+        cmp.select_prev_item()
       elseif ls.jumpable(-1) then
         ls.jump(-1)
       else
@@ -1465,13 +1468,14 @@ __kickstart__Kickstart_Kickstart_Fields_.setupPlugins = function()
     end, { 'i', 's' }),
   }
       );
-  local ls = vimx.safeRequire("luasnip");
-  __kickstart_Cmp.setup(({mapping = mapping, snippet = ({expand = function(args) 
-    local _v_ = ls;
-    if (_v_ ~= nil) then 
-      _v_.lsp_expand(args.body);
-    end;
-  end}), sources = ({({name = "luasnip"}),({name = "nvim_lsp"})})}));
+    local ls = vimx.safeRequire("luasnip");
+    cmp.setup(({mapping = mapping, snippet = ({expand = function(args) 
+      local _v_ = ls;
+      if (_v_ ~= nil) then 
+        _v_.lsp_expand(args.body);
+      end;
+    end}), sources = ({({name = "luasnip"}),({name = "nvim_lsp"})})}));
+  end;
   local _v_ = vimx.safeRequire("cmp_nvim_lsp");
   local capabilities = (function() 
     local _hx_1
@@ -1654,8 +1658,6 @@ __plugins__Copilot_Copilot_Fields_.configure = function()
     x.setup(({copilot_node_command = "node", filetypes = ({yaml = false, markdown = false, help = false, gitcommit = false, gitrebase = false, hgcommit = false, svn = false, cvs = false}), panel = ({enabled = true, auto_refresh = true, keymap = ({jump_prev = "[[", jump_next = "]]", accept = "<CR>", refresh = "gr", open = "<M-CR>"}), layout = ({position = "bottom", ratio = 0.4})}), suggestion = ({enabled = true, auto_trigger = true, debounce = 75, keymap = ({accept = "<c-e>", accept_word = false, accept_line = false, next = "<M-b>", prev = "<M-v>", dismiss = "<C-c>"})})}));
   end;
 end
-
-__vim_plugin_VimPlugin.new = {}
 
 __plugins__FzfLua_FzfLua_Fields_.new = {}
 __plugins__FzfLua_FzfLua_Fields_.configure = function() 

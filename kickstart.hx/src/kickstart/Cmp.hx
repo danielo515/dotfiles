@@ -1,5 +1,6 @@
 package kickstart;
 
+import vim.plugin.Plugin.VimPlugin;
 import plugins.Plugins.Luasnip;
 import lua.Table;
 
@@ -19,11 +20,11 @@ extern class Preset {
   function insert(arg:Dict):Dict;
 }
 
-@:luaRequire('cmp')
-extern class Cmp {
-  static final mapping:{preset:Preset};
-  static function setup(config:CmpConfig):Void;
-  static inline function getMappings():Dict {
+extern class Cmp implements VimPlugin {
+  inline static final libName = 'cmp';
+  final mapping:{preset:Preset};
+  @:luaDotMethod function setup(config:CmpConfig):Void;
+  static inline function getMappings(cmp:Cmp):Dict {
     final ls = Luasnip.require();
     return untyped __lua__(
       "
@@ -55,14 +56,17 @@ extern class Cmp {
     end, { 'i', 's' }),
   }
       ",
-      Cmp,
+      cmp,
       ls
     );
   }
   static public inline function configure():Void {
-    final mapping = Cmp.mapping.preset.insert(getMappings());
+    final cmp = Cmp.require();
+    if (cmp == null)
+      return;
+    final mapping = cmp.mapping.preset.insert(Cmp.getMappings(cmp));
     final ls = Luasnip.require();
-    Cmp.setup({
+    cmp.setup({
       snippet: {expand: (args:Dynamic) -> ls!.lsp_expand(args.body)},
       mapping: mapping,
       sources: [{name: 'luasnip'}, {name: 'nvim_lsp'}]
