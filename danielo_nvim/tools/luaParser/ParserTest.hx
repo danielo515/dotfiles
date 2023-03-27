@@ -43,7 +43,7 @@ function dumpComments(tokens:Array< TokenDef >) {
 }
 
 @colorize
-class ParserTest extends buddy.SingleSuite {
+class ParserTest extends buddy.BuddySuite {
   public function new() {
     describe("Lua Lexer", {
       it("should parse the basic function", {
