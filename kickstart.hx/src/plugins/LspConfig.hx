@@ -1,6 +1,7 @@
 package plugins;
 
-import plugins.Plugins._require;
+import vim.plugin.Plugin.VimPlugin;
+import vim.Vimx;
 import vim.VimTypes;
 
 extern class LspConfigSetupFn {
@@ -23,13 +24,9 @@ extern class LspConfigSetupFn {
   };
 }
 
-extern class Lspconfig {
+extern class Lspconfig implements VimPlugin {
+  inline static final libName = 'lspconfig';
   final lua_ls:LspConfigSetupFn;
   final haxe_language_server:LspConfigSetupFn;
   final jsonls:LspConfigSetupFn;
-
-  inline static function require():Null< Lspconfig > {
-    final module:Null< Lspconfig > = _require('lspconfig');
-    return module;
-  }
 }
