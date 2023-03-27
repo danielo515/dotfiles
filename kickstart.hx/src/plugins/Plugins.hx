@@ -1,7 +1,6 @@
 package plugins;
 
 import vim.VimTypes;
-import vim.Vimx;
 import vim.plugin.Plugin;
 
 extern class NeoTree implements VimPlugin {
