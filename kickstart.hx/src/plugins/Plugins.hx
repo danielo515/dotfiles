@@ -12,7 +12,7 @@ extern class NeoTree implements VimPlugin {
 }
 
 extern class IndentBlankline implements VimPlugin {
-  inline static final libName = 'indent_blankline';
+  final libName = 'indent_blankline';
   @:luaDotMethod function setup(config:lua.Table< String, Dynamic >):Void;
 }
 

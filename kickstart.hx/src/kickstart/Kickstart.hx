@@ -165,16 +165,8 @@ function onAttach(x:Dynamic, bufnr:Buffer):Void {
   // nmap('gr', require('telescope.builtin').lsp_references, '[G]oto [R]eferences');
   nmap('gI', LspBuf.implementation, '[G]oto [I]mplementation');
   nmap('<leader>D', LspBuf.type_definition, 'Type [D]efinition');
-  // nmap(
-  //   '<leader>ds',
-  //   require('telescope.builtin').lsp_document_symbols,
-  //   '[D]ocument [S]ymbols'
-  // );
-  // nmap(
-  //   '<leader>ws',
-  //   require('telescope.builtin').lsp_dynamic_workspace_symbols,
-  //   '[W]orkspace [S]ymbols'
-  // ); // See `:help K` for why this keymap
+  nmap('<leader>ds', ':FzfLua lsp_document_symbols<cr>', '[D]ocument [S]ymbols');
+  nmap('<leader>wd', ':FzfLua diagnostics_workspace<CR>', '[W]orkspace [D]iagnostics');
 
   nmap('K', LspBuf.hover, 'Hover Documentation');
   // imap('<C-k>', LspBuf.signature_help, 'Signature Documentation'); // Lesser used LSP functionality
