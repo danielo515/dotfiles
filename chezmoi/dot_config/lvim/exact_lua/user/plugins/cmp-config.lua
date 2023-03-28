@@ -185,14 +185,6 @@ lvim.builtin.cmp.mapping["<Tab>"] = cmp.mapping(function(fallback)
   end
 end, { "i", "s" })
 
-lvim.builtin.cmp.mapping["<C-s>"] = cmp.mapping.complete {
-  config = {
-    sources = {
-      { name = "luasnip" },
-    },
-  },
-}
-
 if not cmdlineOk then
   vim.notify("Could not require cmp to setup cmdline", vim.log.levels.ERROR, { title = "Danielo" })
 end
@@ -203,9 +195,13 @@ lvim.builtin.cmp.formatting.source_names.rg = "(RG)"
 --#endregion
 -- Return a list of plugins to install to insert in main plugins list
 return {
+  -- Useful and proven
   { "lukas-reineke/cmp-rg" },
-  { "ray-x/cmp-treesitter" },
+  { "hrsh7th/cmp-cmdline", commit = "9c0e331" },
   { "andersevenrud/cmp-tmux" },
+  -- Not sure aobut them
+  -- { "ray-x/cmp-treesitter" },
+  -- { "hrsh7th/cmp-emoji" },
   {
     "David-Kunz/cmp-npm",
     requires = { "nvim-lua/plenary.nvim" },
@@ -213,8 +209,6 @@ return {
       require("cmp-npm").setup {}
     end,
   },
-  { "hrsh7th/cmp-emoji" },
-  { "hrsh7th/cmp-cmdline", commit = "9c0e331" },
   { "hrsh7th/cmp-nvim-lua", commit = "d276254e7198ab7d00f117e88e223b4bd8c02d21" },
   { "hrsh7th/cmp-calc" },
 }
