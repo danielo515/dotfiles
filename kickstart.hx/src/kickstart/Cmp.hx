@@ -20,10 +20,30 @@ extern class Preset {
   function insert(arg:Dict):Dict;
 }
 
+/*
+   Sorry if this combination of native and names feels weird.
+   I was trying to avoid having to call `cmdline.cmdline` from Cmp
+   The reason is because the lua code looks like this, where setup
+   is both a function and a table:
+  cmp.setup.cmdline(':', {
+    mapping = cmp.mapping.preset.cmdline(),
+    sources = cmp.config.sources({
+      { name = 'path' }
+    }, {
+      { name = 'cmdline' }
+    })
+  })
+ */
+extern class Cmdline {
+  @:luaDotMethod @:native('cmdline')
+  function setup(cmd:String, config:CmpConfig):Void;
+}
+
 extern class Cmp implements VimPlugin {
   inline static final libName = 'cmp';
   final mapping:{preset:Preset};
   @:luaDotMethod function setup(config:CmpConfig):Void;
+  @:native('setup') final cmdline:Cmdline;
   static inline function getMappings(cmp:Cmp):Dict {
     final ls = Luasnip.require();
     return untyped __lua__(
@@ -69,7 +89,16 @@ extern class Cmp implements VimPlugin {
     cmp.setup({
       snippet: {expand: (args:Dynamic) -> ls!.lsp_expand(args.body)},
       mapping: mapping,
-      sources: [{name: 'luasnip'}, {name: 'nvim_lsp'}]
+      sources: [
+        {name: 'luasnip'},
+        {name: 'nvim_lsp'},
+        {name: 'rg'},
+        {name: 'tmux'}
+      ]
+    });
+    cmp.cmdline.setup(':', {
+      mapping: mapping,
+      sources: [{name: 'path'}, {name: 'cmdline'}]
     });
   }
 }

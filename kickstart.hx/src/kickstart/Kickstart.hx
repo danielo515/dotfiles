@@ -54,10 +54,16 @@ function main() {
         "folke/neodev.nvim",
       ]),
     },
-    { // Autocompletion
+    // -- Autocompletion
+    {
       name: "hrsh7th/nvim-cmp",
       requires: t(["hrsh7th/cmp-nvim-lsp", "L3MON4D3/LuaSnip", "saadparwaiz1/cmp_luasnip"]),
     },
+
+    {name: "lukas-reineke/cmp-rg"},
+    {name: "hrsh7th/cmp-cmdline", commit: "9c0e331"},
+    {name: "andersevenrud/cmp-tmux"},
+    // -- Autocompletion end
     { // Highlight, edit, and navigate code
       name: "nvim-treesitter/nvim-treesitter",
       run: 'pcall(require("nvim-treesitter.install").update({ with_sync = true }))'
