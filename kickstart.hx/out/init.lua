@@ -207,6 +207,7 @@ __kickstart__Untyped_Untyped_Fields_ = _hx_e()
 __lua_StringMap = _hx_e()
 __packer__Packer_Packer_Fields_ = _hx_e()
 __plugins__Copilot_Copilot_Fields_ = _hx_e()
+__vim_plugin_VimPlugin = _hx_e()
 __plugins__FzfLua_FzfLua_Fields_ = _hx_e()
 __plugins__Plugins_Plugins_Impl_ = _hx_e()
 __vim__TableTools_TableTools_Fields_ = _hx_e()
@@ -1748,6 +1749,8 @@ __plugins__Copilot_Copilot_Fields_.configure = function()
     x.setup(({copilot_node_command = "node", filetypes = ({yaml = false, markdown = false, help = false, gitcommit = false, gitrebase = false, hgcommit = false, svn = false, cvs = false}), panel = ({enabled = true, auto_refresh = true, keymap = ({jump_prev = "[[", jump_next = "]]", accept = "<CR>", refresh = "gr", open = "<M-CR>"}), layout = ({position = "bottom", ratio = 0.4})}), suggestion = ({enabled = true, auto_trigger = true, debounce = 75, keymap = ({accept = "<c-e>", accept_word = false, accept_line = false, next = "<M-b>", prev = "<M-v>", dismiss = "<C-c>"})})}));
   end;
 end
+
+__vim_plugin_VimPlugin.new = {}
 
 __plugins__FzfLua_FzfLua_Fields_.new = {}
 __plugins__FzfLua_FzfLua_Fields_.configure = function() 
