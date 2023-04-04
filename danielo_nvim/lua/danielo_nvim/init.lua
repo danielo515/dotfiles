@@ -1000,7 +1000,7 @@ vimx.join_paths = function(paths)
   do return paths:join(__vim__Vimx_Vimx_Fields_.pathSeparator) end;
 end
 vimx.file_exists = function(path) 
-  if (vim.fn.filereadable(path) == 0) then 
+  if (vim.fn.filereadable(path) == 1) then 
     do return true end;
   else
     do return false end;
