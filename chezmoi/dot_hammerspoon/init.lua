@@ -85,6 +85,9 @@ hs.hotkey.bind(hyper, "3", function()
 		hs.window.find(chrome_app_name):centerOnScreen()
 	end
 end)
+hs.hotkey.bind(hyper, "4", function()
+	hs.application.launchOrFocus("Arc")
+end)
 hs.hotkey.bind(hyper, "w", osa("whatsapp"))
 hs.hotkey.bind(hyper, "i", osa("inbox"))
 
