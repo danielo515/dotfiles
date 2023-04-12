@@ -72,24 +72,9 @@ local function osa(tabName)
 end
 
 local hyper = { "cmd", "shift", "alt", "ctrl" }
-hs.hotkey.bind(hyper, "1", function()
-	hs.application.launchOrFocus("Slack")
-end)
-hs.hotkey.bind(hyper, "2", function()
-	hs.application.launchOrFocus("Kitty")
-	hs.keycodes.setLayout("com.apple.keylayout.US")
-end)
-hs.hotkey.bind(hyper, "3", function()
-	local opened = hs.application.launchOrFocus(chrome_app_name)
-	if opened then
-		hs.window.find(chrome_app_name):centerOnScreen()
-	end
-end)
-hs.hotkey.bind(hyper, "4", function()
-	hs.application.launchOrFocus("Arc")
-end)
 hs.hotkey.bind(hyper, "w", osa("whatsapp"))
 hs.hotkey.bind(hyper, "i", osa("inbox"))
+require("keybinds")
 
 -- Automatically copy firmwares to the keyboard
 local sourceFilePath = "/Users/danielo/GIT/glove80-zmk-config/combined/glove80.uf2"

@@ -1,0 +1,84 @@
+local chrome_app_name = "Google Chrome"
+
+local hyperApps = {
+	{ key = "1", appName = "Slack" },
+	{ key = "2", appName = "Kitty", layout = "com.apple.keylayout.US" },
+	{ key = "4", appName = "Arc" },
+}
+
+local hyper = { "cmd", "shift", "alt", "ctrl" }
+
+hs.fnutils.each(hyperApps, function(item)
+	hs.hotkey.bind(hyper, item.key, function()
+		hs.application.launchOrFocus(item.appName)
+		local app = hs.appfinder.appFromName(item.app)
+		if app then
+			app:activate()
+			app:unhide()
+		end
+		if item.layout ~= nil then
+			hs.keycodes.setLayout(item.layout)
+		end
+	end)
+end)
+
+hs.hotkey.bind(hyper, "3", function()
+	local opened = hs.application.launchOrFocus(chrome_app_name)
+	if opened then
+		hs.window.find(chrome_app_name):centerOnScreen()
+	end
+end)
+
+local function arrangeFinderWindowsInGrid()
+	-- Get the screen size
+	local screenFrame = hs.screen.mainScreen():frame()
+
+	-- Find all Finder windows
+	local finderWindows = hs.window.filter.new(false):setAppFilter("Finder", { currentSpace = true }):getWindows()
+
+	-- Calculate the grid dimensions
+	local gridRows = math.ceil(math.sqrt(#finderWindows))
+	local gridColumns = gridRows
+
+	-- Calculate window size for grid
+	local windowWidth = screenFrame.w / gridColumns
+	local windowHeight = screenFrame.h / gridRows
+
+	print("gridRows: " .. gridRows, "gridColumns: " .. gridColumns)
+	-- Iterate through Finder windows and position them in the grid
+	for index, win in ipairs(finderWindows) do
+		local row = math.floor((index - 1) / gridColumns)
+		local column = (index - 1) % gridColumns
+
+		local x = screenFrame.x + (column * windowWidth)
+		local y = screenFrame.y + (row * windowHeight)
+
+		win:setFrame({ x = x, y = y, w = windowWidth, h = windowHeight })
+		-- Move the window slightly to make it visible
+		local topLeft = win:topLeft()
+		win:setTopLeft({ x = topLeft.x + index - 1, y = topLeft.y })
+		-- win:raise()
+		win:focus()
+	end
+end
+
+-- Create a hotkey to trigger the script
+hs.hotkey.bind(hyper, "F", function()
+	arrangeFinderWindowsInGrid()
+end)
+
+-- toggle the hammerspoon console, focusing on the previous app when hidden
+local lastApp = nil
+local function toggleConsole()
+	local frontmost = hs.application.frontmostApplication()
+	hs.toggleConsole()
+	if frontmost:bundleID() == "org.hammerspoon.Hammerspoon" then
+		if lastApp ~= nil then
+			lastApp:activate()
+			lastApp = nil
+		end
+	else
+		lastApp = frontmost
+	end
+end
+hs.hotkey.bind(hyper, "c", toggleConsole)
