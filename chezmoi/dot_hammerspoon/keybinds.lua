@@ -29,24 +29,23 @@ hs.hotkey.bind(hyper, "3", function()
 	end
 end)
 
-local function arrangeFinderWindowsInGrid()
+local function arrangeAppWindowsInGrid(appName)
 	-- Get the screen size
 	local screenFrame = hs.screen.mainScreen():frame()
 
-	-- Find all Finder windows
-	local finderWindows = hs.window.filter.new(false):setAppFilter("Finder", { currentSpace = true }):getWindows()
+	-- Find all windows of the specified application in the current space
+	local appWindows = hs.window.filter.new(false):setAppFilter(appName, { currentSpace = true }):getWindows()
 
 	-- Calculate the grid dimensions
-	local gridRows = math.ceil(math.sqrt(#finderWindows))
+	local gridRows = math.ceil(math.sqrt(#appWindows))
 	local gridColumns = gridRows
 
 	-- Calculate window size for grid
 	local windowWidth = screenFrame.w / gridColumns
 	local windowHeight = screenFrame.h / gridRows
 
-	print("gridRows: " .. gridRows, "gridColumns: " .. gridColumns)
-	-- Iterate through Finder windows and position them in the grid
-	for index, win in ipairs(finderWindows) do
+	-- Iterate through windows and position them in the grid
+	for index, win in ipairs(appWindows) do
 		local row = math.floor((index - 1) / gridColumns)
 		local column = (index - 1) % gridColumns
 
@@ -54,17 +53,14 @@ local function arrangeFinderWindowsInGrid()
 		local y = screenFrame.y + (row * windowHeight)
 
 		win:setFrame({ x = x, y = y, w = windowWidth, h = windowHeight })
-		-- Move the window slightly to make it visible
-		local topLeft = win:topLeft()
-		win:setTopLeft({ x = topLeft.x + index - 1, y = topLeft.y })
-		-- win:raise()
+		-- Focus on the window to make it visible
 		win:focus()
 	end
 end
 
--- Create a hotkey to trigger the script
+-- Create a hotkey to trigger the script for Finder
 hs.hotkey.bind(hyper, "F", function()
-	arrangeFinderWindowsInGrid()
+	arrangeAppWindowsInGrid("Finder")
 end)
 
 -- toggle the hammerspoon console, focusing on the previous app when hidden
