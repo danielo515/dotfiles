@@ -63,6 +63,18 @@ hs.hotkey.bind(hyper, "F", function()
 	arrangeAppWindowsInGrid("Finder")
 end)
 
+hs.hotkey.bind(hyper, "space", function()
+	hs.grid.show()
+end)
+-- Get the currently focused application and put all its windows in a grid
+local function mainAppToGrid()
+	local mainApp = hs.application.frontmostApplication()
+	local mainAppName = mainApp:title()
+	arrangeAppWindowsInGrid(mainAppName)
+end
+
+hs.hotkey.bind(hyper, "g", mainAppToGrid)
+
 -- toggle the hammerspoon console, focusing on the previous app when hidden
 local lastApp = nil
 local function toggleConsole()
