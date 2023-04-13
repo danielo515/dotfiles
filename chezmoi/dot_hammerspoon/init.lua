@@ -75,6 +75,7 @@ local hyper = { "cmd", "shift", "alt", "ctrl" }
 hs.hotkey.bind(hyper, "w", osa("whatsapp"))
 hs.hotkey.bind(hyper, "i", osa("inbox"))
 require("keybinds")
+require("auto_tile")
 
 -- Automatically copy firmwares to the keyboard
 local sourceFilePath = "/Users/danielo/GIT/glove80-zmk-config/combined/glove80.uf2"
