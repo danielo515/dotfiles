@@ -9,7 +9,7 @@ local function autoTile(windowSource)
 	local wins = windowSource:getWindows()
 
 	if #wins == 1 then
-		wins[1]:moveToUnit(hs.layout.maximized)
+		wins[1]:moveToUnit(hs.layout.right50)
 	elseif #wins == 2 then
 		wins[1]:moveToUnit(hs.layout.left50)
 		wins[2]:moveToUnit(hs.layout.right50)

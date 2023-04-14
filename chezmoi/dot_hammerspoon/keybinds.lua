@@ -1,4 +1,5 @@
 local chrome_app_name = "Google Chrome"
+local ws = require("windowing")
 
 local hyperApps = {
 	{ key = "1", appName = "Slack" },
@@ -29,48 +30,20 @@ hs.hotkey.bind(hyper, "3", function()
 	end
 end)
 
-local function arrangeAppWindowsInGrid(appName)
-	-- Get the screen size
-	local screenFrame = hs.screen.mainScreen():frame()
-
-	-- Find all windows of the specified application in the current space
-	local appWindows = hs.window.filter.new(false):setAppFilter(appName, { currentSpace = true }):getWindows()
-
-	-- Calculate the grid dimensions
-	local gridRows = math.ceil(math.sqrt(#appWindows))
-	local gridColumns = gridRows
-
-	-- Calculate window size for grid
-	local windowWidth = screenFrame.w / gridColumns
-	local windowHeight = screenFrame.h / gridRows
-
-	-- Iterate through windows and position them in the grid
-	for index, win in ipairs(appWindows) do
-		local row = math.floor((index - 1) / gridColumns)
-		local column = (index - 1) % gridColumns
-
-		local x = screenFrame.x + (column * windowWidth)
-		local y = screenFrame.y + (row * windowHeight)
-
-		win:setFrame({ x = x, y = y, w = windowWidth, h = windowHeight })
-		-- Focus on the window to make it visible
-		win:focus()
-	end
-end
-
 -- Create a hotkey to trigger the script for Finder
 hs.hotkey.bind(hyper, "F", function()
-	arrangeAppWindowsInGrid("Finder")
+	ws.arrangeAppWindowsInGrid("Finder")
 end)
 
 hs.hotkey.bind(hyper, "space", function()
 	hs.grid.show()
 end)
+
 -- Get the currently focused application and put all its windows in a grid
 local function mainAppToGrid()
 	local mainApp = hs.application.frontmostApplication()
 	local mainAppName = mainApp:title()
-	arrangeAppWindowsInGrid(mainAppName)
+	ws.arrangeAppWindowsInGrid(mainAppName)
 end
 
 hs.hotkey.bind(hyper, "g", mainAppToGrid)
@@ -117,10 +90,10 @@ local function focusChromeTab(tabName)
 			hs.alert.show("Tab with name '" .. tabName .. "' not found.")
 		else
 			hs.alert.show("Tab '" .. tabName .. "' found and brought to front.")
+			hs.appfinder.appFromName(chrome_app_name):selectMenuItem({ "Tab", tabName })
 		end
 	end
 end
 
-local hyper = { "cmd", "shift", "alt", "ctrl" }
-hs.hotkey.bind(hyper, "w", focusChromeTab("whatsapp"))
+hs.hotkey.bind(hyper, "w", focusChromeTab("WhatsApp"))
 hs.hotkey.bind(hyper, "i", focusChromeTab("inbox"))
