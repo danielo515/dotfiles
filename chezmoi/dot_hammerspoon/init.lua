@@ -41,39 +41,6 @@ subscribeToFocus("kitty", function(window)
 	hs.layout.apply(layout)
 end)
 
-local function osa(tabName)
-	local script = [[
-  tell application "Google Chrome" to activate
-  tell application "Google Chrome"
-    set found to false
-    repeat with theWindow in windows
-      repeat with theTab in (tabs of theWindow)
-        if the title of theTab contains "%s" then
-          set found to true
-          set index of theWindow to 1
-          return id of theTab
-        end if
-      end repeat
-    end repeat
-    return found
-  end tell
-]]
-
-	return function()
-		local success, windowID, errors = hs.osascript.applescript(string.format(script, tabName))
-
-		print(success, windowID, type(windowID), hs.inspect(errors))
-		if success == false then
-			hs.alert.show("Tab with name '" .. tabName .. "' not found.")
-		else
-			hs.alert.show("Tab '" .. tabName .. "' found and brought to front.")
-		end
-	end
-end
-
-local hyper = { "cmd", "shift", "alt", "ctrl" }
-hs.hotkey.bind(hyper, "w", osa("whatsapp"))
-hs.hotkey.bind(hyper, "i", osa("inbox"))
 require("keybinds")
 require("auto_tile")
 
