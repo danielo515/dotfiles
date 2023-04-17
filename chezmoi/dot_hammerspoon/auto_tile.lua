@@ -2,6 +2,7 @@
 local appsToAutoTile = { "Finder" }
 
 --------------------------------------------------------------------------------
+local p = require("windowing").positions
 
 ---autotile all windows that belong to the window filter
 ---@param windowSource hs.window.filter
@@ -9,7 +10,7 @@ local function autoTile(windowSource)
 	local wins = windowSource:getWindows()
 
 	if #wins == 1 then
-		wins[1]:moveToUnit(hs.layout.right50)
+		wins[1]:moveToUnit(p.centered)
 	elseif #wins == 2 then
 		wins[1]:moveToUnit(hs.layout.left50)
 		wins[2]:moveToUnit(hs.layout.right50)
