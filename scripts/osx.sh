@@ -1,17 +1,7 @@
 #!/bin/bash
 # OSX.sh
 
-# -- Avoid network temp files ------------------------------------------------------------------
-defaults write com.apple.desktopservices DSDontWriteNetworkStores true
-# -- Screenshots ------------------------------------------------------------------
-screenshotsFolder="$HOME/Documents/screenshots"
-if get_boolean_response "Create a folder for the screenshots at $screenshotsFolder?"; then
-    mkdir "$screenshotsFolder"
-    defaults write com.apple.screencapture location  "$screenshotsFolder"
-else
-    echo_item "Skip changing default screenshots folder" "red"
-fi
-
+source ./osx_settings.sh
 # -- Homebrew ------------------------------------------------------------------
 
 if exists "brew"; then
