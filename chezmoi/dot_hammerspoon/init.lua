@@ -18,19 +18,19 @@ local function locateFeather(window)
 	hs.layout.apply(windowLayout)
 end
 
-local function subscribeToFocus(appName, callback)
-	wf.new(false):setAppFilter(appName, {}):subscribe(hs.window.filter.windowFocused, callback, true)
+local function subscribeToFocus(appName, callback, filterOptions)
+	local options = filterOptions or {}
+	wf.new(false):setAppFilter(appName, options):subscribe(hs.window.filter.windowFocused, callback, true)
 end
 
-local feather_filter = wf.new(false):setAppFilter(chrome_app_name, { allowTitles = featherWindowTitle })
-feather_filter:subscribe(hs.window.filter.windowFocused, locateFeather, true)
+subscribeToFocus(chrome_app_name, locateFeather, { allowTitles = featherWindowTitle })
 -- Slack listener
-wf.new(false):setAppFilter("Slack", {}):subscribe(hs.window.filter.windowFocused, function(window)
+subscribeToFocus("Slack", function(window)
 	local layout = {
 		{ nil, window, primaryScreen, hs.geometry.rect(0.3, 0, 0.45, 0.95), nil, nil },
 	}
 	hs.layout.apply(layout)
-end, true)
+end)
 
 -- Whenever we focus kitty, we position chrome to the right so we can see references
 -- or the web app we are working with
@@ -39,6 +39,7 @@ subscribeToFocus("kitty", function(window)
 		{ nil, window, primaryScreen, hs.layout.right70, nil, nil },
 		{ chrome_app_name, nil, primaryScreen, hs.layout.left50, nil, nil },
 		{ "time tracker", nil, retina, positions.right30, nil, nil },
+		{ "Slack", nil, retina, positions.left50, nil, nil },
 	}
 	hs.layout.apply(layout)
 end)
