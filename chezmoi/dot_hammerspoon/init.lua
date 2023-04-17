@@ -4,11 +4,12 @@ spoon.ReloadConfiguration:start()
 hs.loadSpoon("EmmyLua")
 
 local retina = "Built-in Retina Display"
-local primaryScreen = hs.screen("C49J89x")
+local primaryScreen = hs.screen.primaryScreen()
 local featherWindowTitle = "Feather.*"
 local chrome_app_name = "Google Chrome"
 local tella_dev_window_title = "Danielo.*Tella "
 local wf = hs.window.filter
+local positions = require("windowing").positions
 
 local function locateFeather(window)
 	local windowLayout = {
@@ -37,48 +38,24 @@ subscribeToFocus("kitty", function(window)
 	local layout = {
 		{ nil, window, primaryScreen, hs.layout.right70, nil, nil },
 		{ chrome_app_name, nil, primaryScreen, hs.layout.left50, nil, nil },
+		{ "time tracker", nil, retina, positions.right30, nil, nil },
 	}
 	hs.layout.apply(layout)
 end)
 
 require("keybinds")
 require("auto_tile")
+require("auto_flasher")
 
--- Automatically copy firmwares to the keyboard
-local sourceFilePath = "/Users/danielo/GIT/glove80-zmk-config/combined/glove80.uf2"
-local destinationVolumePath = "/Volumes/GLV80LHBOOT"
+hs.loadSpoon("Hyper")
 
-function cpyGlove80uf2(data)
-	if data.eventType == "added" and data.productName == "Glove80 LH Bootloader" then
-		local fileExists = hs.fs.attributes(sourceFilePath, "mode")
-		if fileExists == nil then
-			hs.notify.new({ title = "File not found", informativeText = "The file to be copied was not found." }):send()
-		else
-			hs.timer.doAfter(2, function()
-				local cmd = "cp " .. sourceFilePath .. " " .. destinationVolumePath .. "/"
-				local stdout, status, signal, result = hs.execute(cmd)
-				if result == 0 then
-					hs.notify
-						.new({
-							title = "File copied",
-							informativeText = "The file was successfully copied to the external drive.",
-						})
-						:send()
-				else
-					hs.notify
-						.new({
-							title = "Copy failed",
-							informativeText = "There was an error copying the file to the external drive.",
-						})
-						:send()
-					hs.printf("Error message: %s", stdout)
-				end
-			end)
-		end
-	end
-end
+App = hs.application
+Hyper = spoon.Hyper
 
-usbWatcher = hs.usb.watcher.new(cpyGlove80uf2)
-usbWatcher:start()
+Hyper:bindHotKeys({ hyperKey = { {}, "F1" } })
+
+Hyper:bind({}, "j", function()
+	App.launchOrFocusByBundleID("net.kovidgoyal.kitty")
+end)
 
 hs.alert.show("Config loaded", { text = "red" })
