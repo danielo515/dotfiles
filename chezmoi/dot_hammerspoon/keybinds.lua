@@ -56,7 +56,7 @@ local hyperApps = {
 	{ key = "3", callback = focusCenterChrome },
 	{ key = "4", appName = "Arc" },
 	{ key = "w", callback = ws.focusChromeTab("WhatsApp") },
-	{ key = "space", callback = hs.grid.show },
+	{ key = "space", callback = ws.referenceChooser },
 	{ key = "g", callback = mainAppToGrid },
 	{ key = "c", callback = toggleConsole },
 }

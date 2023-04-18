@@ -116,8 +116,55 @@ local function focusChromeTab(tabName)
 		end
 	end
 end
+
+-- picked from https://github.com/evantravers/hammerspoon-config/blob/38a7d8c0ad2190d1563d681725628e4399dcbe6c/movewindows.lua
+-- gathers all the open windows, except the current one
+-- and presents them in a chooser, so you can pick one
+-- that will be opened side by side with the current one.
+-- It defaults to 30/70 split, but if you hold the alt key
+-- will do 50/50 split.
+local function referenceChooser()
+	local windows = hs.fnutils.map(hs.window.filter.new():getWindows(), function(win)
+		if win ~= hs.window.focusedWindow() then
+			return {
+				text = win:title(),
+				subText = win:application():title(),
+				image = hs.image.imageFromAppBundle(win:application():bundleID()),
+				id = win:id(),
+			}
+		end
+	end)
+
+	local chooser = hs.chooser.new(function(choice)
+		if choice ~= nil then
+			local layout = {}
+			local focused = hs.window.focusedWindow()
+			local toRead = hs.window.find(choice.id)
+			if hs.eventtap.checkKeyboardModifiers()["alt"] then
+				hs.layout.apply({
+					{ nil, focused, focused:screen(), hs.layout.left50, 0, 0 },
+					{ nil, toRead, focused:screen(), hs.layout.right50, 0, 0 },
+				})
+			else
+				hs.layout.apply({
+					{ nil, focused, focused:screen(), hs.layout.right70, 0, 0 },
+					{ nil, toRead, focused:screen(), hs.layout.left30, 0, 0 },
+				})
+			end
+			toRead:raise()
+		end
+	end)
+
+	chooser
+		:placeholderText("Choose window for 50/50 split. Hold ⎇ for 70/30.")
+		:searchSubText(true)
+		:choices(windows)
+		:show()
+end
+
 return {
 	arrangeAppWindowsInGrid = arrangeAppWindowsInGrid,
 	positions = positions,
 	focusChromeTab = focusChromeTab,
+	referenceChooser = referenceChooser,
 }
