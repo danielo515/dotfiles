@@ -162,9 +162,47 @@ local function referenceChooser()
 		:show()
 end
 
+local function debugWindow()
+	local win = hs.window.focusedWindow()
+	local app = win:application()
+	local app_name = app:name()
+	local win_title = win:title()
+	local win_id = win:id()
+	local win_frame = win:frame()
+	local win_frame_string = "x: "
+		.. win_frame.x
+		.. " y: "
+		.. win_frame.y
+		.. " w: "
+		.. win_frame.w
+		.. " h: "
+		.. win_frame.h
+	local win_screen = win:screen():name()
+	local win_screen_frame = win:screen():frame()
+	local win_screen_frame_string = "x: "
+		.. win_screen_frame.x
+		.. " y: "
+		.. win_screen_frame.y
+		.. " w: "
+		.. win_screen_frame.w
+		.. " h: "
+		.. win_screen_frame.h
+	local debugLines = {
+		"app: " .. app_name,
+		"win title: " .. win_title,
+		"win_id: " .. win_id,
+		"frame: " .. win_frame_string,
+		"screen: " .. win_screen,
+		"screen frame: " .. win_screen_frame_string,
+	}
+	hs.alert.show(table.concat(debugLines, "\n"), 10)
+	print("\n" .. table.concat(debugLines, "\n"))
+end
+
 return {
 	arrangeAppWindowsInGrid = arrangeAppWindowsInGrid,
 	positions = positions,
 	focusChromeTab = focusChromeTab,
 	referenceChooser = referenceChooser,
+	debugWindow = debugWindow,
 }

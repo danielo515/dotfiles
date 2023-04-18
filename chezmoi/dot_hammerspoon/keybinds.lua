@@ -59,6 +59,7 @@ local hyperApps = {
 	{ key = "space", callback = ws.referenceChooser },
 	{ key = "g", callback = mainAppToGrid },
 	{ key = "c", callback = toggleConsole },
+	{ key = "i", callback = ws.debugWindow },
 }
 
 local hyper = { "cmd", "shift", "alt", "ctrl" }
