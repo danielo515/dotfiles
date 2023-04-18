@@ -37,7 +37,7 @@ end)
 subscribeToFocus("kitty", function(window)
 	local layout = {
 		{ nil, window, primaryScreen, hs.layout.right70, nil, nil },
-		{ chrome_app_name, nil, primaryScreen, hs.layout.left50, nil, nil },
+		{ chrome_app_name, nil, primaryScreen, positions.left34, nil, nil },
 		{ "time tracker", nil, retina, positions.right30, nil, nil },
 		{ "Slack", nil, retina, positions.left50, nil, nil },
 	}
