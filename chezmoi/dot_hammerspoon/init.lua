@@ -2,6 +2,7 @@ hs.ipc.cliInstall("/opt/homebrew")
 hs.loadSpoon("ReloadConfiguration")
 spoon.ReloadConfiguration:start()
 hs.loadSpoon("EmmyLua")
+hs.grid.setGrid("10x6")
 
 local retina = "Built-in Retina Display"
 local primaryScreen = hs.screen.primaryScreen()
@@ -10,6 +11,7 @@ local chrome_app_name = "Google Chrome"
 local tella_dev_window_title = "Danielo.*Tella "
 local wf = hs.window.filter
 local positions = require("windowing").positions
+Chrome = require("browser")("Google Chrome")
 
 local function locateFeather(window)
 	local windowLayout = {
