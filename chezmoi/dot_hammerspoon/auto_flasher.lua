@@ -8,7 +8,7 @@ local function cpyGlove80uf2(data)
 		if fileExists == nil then
 			hs.notify.new({ title = "File not found", informativeText = "The file to be copied was not found." }):send()
 		else
-			hs.timer.doAfter(2, function()
+			hs.timer.doAfter(3, function()
 				local cmd = "cp " .. sourceFilePath .. " " .. destinationVolumePath .. "/"
 				local stdout, status, signal, result = hs.execute(cmd)
 				if result == 0 then
@@ -25,7 +25,10 @@ local function cpyGlove80uf2(data)
 							informativeText = "There was an error copying the file to the external drive.",
 						})
 						:send()
-					hs.printf("Error message: %s", stdout)
+					hs.printf("Error message: '%s', Status: '%s'", stdout, status)
+					hs.printf("CMD: %s", cmd)
+					print("Signal: ", signal)
+					print("Result: ", result)
 				end
 			end)
 		end
@@ -34,3 +37,4 @@ end
 
 local usbWatcher = hs.usb.watcher.new(cpyGlove80uf2)
 usbWatcher:start()
+return usbWatcher

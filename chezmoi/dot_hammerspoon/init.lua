@@ -32,18 +32,22 @@ subscribeToFocus("Slack", function(window)
 		{ nil, window, primaryScreen, hs.geometry.rect(0.3, 0, 0.45, 0.95), nil, nil },
 	}
 	hs.layout.apply(layout)
-end)
+end, { rejectTitles = "Huddle" })
 
 -- Whenever we focus kitty, we position chrome to the right so we can see references
 -- or the web app we are working with
 subscribeToFocus("kitty", function(window)
+	local function notHuddle(name, title)
+		return not name:match("Huddle")
+	end
+
 	local layout = {
 		{ nil, window, primaryScreen, hs.layout.right70, nil, nil },
 		{ chrome_app_name, nil, primaryScreen, positions.left34, nil, nil },
 		{ "time tracker", nil, retina, positions.right30, nil, nil },
-		{ "Slack", nil, retina, positions.left50, nil, nil },
+		{ "Slack", "Huddle", retina, positions.left50, nil, nil },
 	}
-	hs.layout.apply(layout)
+	hs.layout.apply(layout, notHuddle)
 end)
 
 require("keybinds")
