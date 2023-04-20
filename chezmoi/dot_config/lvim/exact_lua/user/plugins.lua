@@ -42,12 +42,12 @@ local plugins = {
   require "user.diffview",
   require "user.plugins.fidget-config",
   { "mtdl9/vim-log-highlighting", ft = { "text", "log" } },
-  { -- Navigation by jumping to LSP objects like hop.nvim
-    "ziontee113/syntax-tree-surfer",
-    config = function()
-      require "user.syntax_tree_surfer"
-    end,
-  },
+  -- { -- Navigation by jumping to LSP objects like hop.nvim
+  --   "ziontee113/syntax-tree-surfer",
+  --   config = function()
+  --     require "user.syntax_tree_surfer"
+  --   end,
+  -- },
   require "user.plugins.trouble", -- some lsp diagnosis
 
   -- better surround options
