@@ -11,6 +11,8 @@ local chrome_app_name = "Google Chrome"
 local tella_dev_window_title = "Danielo.*Tella "
 local wf = hs.window.filter
 local positions = require("windowing").positions
+local StreamDeckServer = require("ws_stream-deck")
+StreamDeckServer:start()
 Chrome = require("browser")("Google Chrome")
 
 local function locateFeather(window)
@@ -73,7 +75,7 @@ local alertStyle = {
 		alpha = 0.75,
 		white = 0,
 	},
-	radius = 17,
+	radius = 10,
 	strokeColor = {
 		alpha = 1,
 		white = 1,
