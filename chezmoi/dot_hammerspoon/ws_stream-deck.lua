@@ -18,6 +18,7 @@
 --]]
 local json = hs.json
 local inspect = hs.inspect
+local context = nil
 
 -- Function to load an image file from disk and return its base64-encoded representation
 
@@ -34,11 +35,19 @@ end
 local function msgHandler(msg)
 	local params = json.decode(msg)
 	local response = {}
-	print(inspect(params))
-	local event = params and params.event or nil
+	print("event", inspect(params))
+	if params == nil then
+		return
+	end
+	local event = params.event
 	if event == nil then
 		return
 	end
+	if context ~= params.context then
+		context = params.context
+		print("context changed: " .. context)
+	end
+
 	if event == "keyDown" then
 		response = { event = "showOk", context = params.context }
 	elseif event == "willAppear" then
@@ -74,4 +83,14 @@ server:setCallback(function(method, path, headers, body)
 end)
 
 server:websocket("/ws", msgHandler)
-return server
+
+local module = {
+	server = server,
+}
+
+function module.setTitle(title)
+	local message = { event = "setTitle", context = context, payload = { title = title, target = 0, state = 0 } }
+	server:send(json.encode(message))
+end
+
+return module
