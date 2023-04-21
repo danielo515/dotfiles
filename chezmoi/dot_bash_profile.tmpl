@@ -39,3 +39,11 @@ export PATH="$HOME/.cargo/bin:$HOME/bin:$PATH"
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+
+# opam configuration
+test -r /Users/danielo/.opam/opam-init/init.sh && . /Users/danielo/.opam/opam-init/init.sh > /dev/null 2> /dev/null || true
+
+{{ if (eq .chezmoi.os "darwin") -}}
+# fix for little file descriptors on macos
+ulimit -n 10240
+{{ end }}
