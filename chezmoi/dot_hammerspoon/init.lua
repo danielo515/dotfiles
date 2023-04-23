@@ -3,6 +3,10 @@ hs.loadSpoon("ReloadConfiguration")
 spoon.ReloadConfiguration:start()
 hs.loadSpoon("EmmyLua")
 hs.grid.setGrid("10x6")
+local secrets = require("secrets")
+--[[ I specify not a hidden file because it is out of source control
+In reality it lives encrypted in the chezmoi repo, and copied there on init ]]
+secrets.start("secrets.json")
 
 local retina = "Built-in Retina Display"
 local primaryScreen = hs.screen.primaryScreen()
@@ -11,10 +15,16 @@ local chrome_app_name = "Google Chrome"
 local tella_dev_window_title = "Danielo.*Tella "
 local wf = hs.window.filter
 local positions = require("windowing").positions
-local StreamDeckServer = require("ws_stream-deck")
-StreamDeckServer:start()
-Chrome = require("browser")("Google Chrome")
+WatchVercel = require("watch_vercel")
 
+Chrome = require("browser")("Google Chrome")
+local StreamDeckServer = require("ws_stream-deck")
+StreamDeckServer.server:start()
+Danielo = { timer = nil }
+local vercel = hs.settings.get("secrets").tella.vercel
+WatchVercel.start(StreamDeckServer.setTitle, vercel.teamId, vercel.token)
+
+-- Windows
 local function locateFeather(window)
 	local windowLayout = {
 		{ nil, window, retina, hs.layout.left50, nil, nil },
