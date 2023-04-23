@@ -4,9 +4,14 @@
 {{- $zshFiles := glob (joinPath .chezmoi.workingTree "zsh" "*.zsh") -}}
 
 {{- define "includeWithComments" -}}
+{{- $filenameLen := len .filename -}}
+{{- $hashes := repeat $filenameLen "#" -}}
+# #############{{ $hashes }}####
 # ### START OF {{ .filename }} ###
-{{ include .filename }}
+# HASH: {{ .filename | sha256sum }}
+{{ include .filename -}}
 # ### END OF {{ .filename }} ###
+# ###########{{ $hashes }}####
 {{ end }}
 
 {{- range $zshFile := $zshFiles -}}
@@ -19,7 +24,7 @@
 {{- end -}}
 {{- end -}}
 {{- if (joinPath .chezmoi.homeDir ".config" "asdf-direnv" | stat ) }}
-# --- START OF asdf-direnv zshrc ---
+# ### START OF asdf-direnv zshrc ###
 source "${XDG_CONFIG_HOME:-$HOME/.config}/asdf-direnv/zshrc"
-# --- END OF asdf-direnv zshrc ---
+# ### END OF asdf-direnv zshrc ###
 {{- end }}

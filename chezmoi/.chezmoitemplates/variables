@@ -1,3 +1,5 @@
 # -- Dotfiles Directory --------------------------------------------------------
 export XDG_CONFIG_HOME="$HOME/.config"
 export DOTFILES="{{ .dotfiles }}"
+# Add local bin folders to path
+export PATH="/usr/local/sbin:$HOME/bin:$HOME/.local/bin:$PATH"
