@@ -37,8 +37,8 @@ if ! git submodule status | grep -q "$SPOON_DIR"; then
 
   # Commit the submodule
   git add ".gitmodules" "$SPOON_DIR"
-  # git config --local user.name "$GITHUB_USER"
-  # git config --local user.email "$GITHUB_EMAIL"
+  git config --local user.name "$GITHUB_USER"
+  git config --local user.email "$GITHUB_EMAIL"
   # git commit -m "Add $REPO_NAME submodule"
 
   git submodule sync --recursive "$SPOON_DIR"
