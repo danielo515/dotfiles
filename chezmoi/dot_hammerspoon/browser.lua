@@ -3,21 +3,20 @@ return function(browserName)
 		hs.application.launchOrFocus(browserName)
 	end
 	local function jump(url)
-		local script = ([[
-  (function() {
-    var brave = Application('%s');
-    brave.activate();
+		local script = ([[(function() {
+      var browser = Application('%s');
+      browser.activate();
 
-    for (win of brave.windows()) {
-      var tabIndex =
-        win.tabs().findIndex(tab => tab.url().match(/%s/));
+      for (win of browser.windows()) {
+        var tabIndex =
+          win.tabs().findIndex(tab => tab.url().match(/%s/));
 
-      if (tabIndex != -1) {
-        win.activeTabIndex = (tabIndex + 1);
-        win.index = 1;
+        if (tabIndex != -1) {
+          win.activeTabIndex = (tabIndex + 1);
+          win.index = 1;
+        }
       }
-    }
-  })();
+    })();
   ]]):format(browserName, url)
 
 		print(script)
