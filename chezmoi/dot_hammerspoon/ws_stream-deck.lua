@@ -21,6 +21,9 @@
 local json = hs.json
 local inspect = hs.inspect
 local contexts = {}
+local module = {
+	server = nil,
+}
 
 ---@param tbl table
 ---@param keyPath string
@@ -88,6 +91,7 @@ local function msgHandler(msg)
 	if id ~= nil and contexts[id] == nil then
 		contexts[id] = params.context
 		print("context added for id: " .. id)
+		module.resetTitle(id, "Not loaded")
 	end
 
 	local response = {}
@@ -117,10 +121,17 @@ end)
 
 server:websocket("/ws", msgHandler)
 
----@type table<string, any>
-local module = {
-	server = server,
-}
+module.server = server
+
+---@param id string
+---@param title string
+function module.resetTitle(id, title)
+	if id == nil or contexts[id] == nil then
+		return
+	end
+	local message = { event = "setTitle", context = contexts[id], payload = { title = title, target = 0, state = 0 } }
+	server:send(json.encode(message))
+end
 
 ---@param id string
 ---@param title string
