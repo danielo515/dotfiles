@@ -1,9 +1,25 @@
 {{ template "variables" . }}
 {{ template "path" . }}
-{{ include (joinPath .chezmoi.workingTree "zsh" "zshrc.zsh") }}
-{{- if (eq .chezmoi.os "darwin") -}}
-{{ include (joinPath .chezmoi.workingTree "zsh" "zshrc.osx.zsh") }}
+{{- $chezmoiOs := .chezmoi.os -}}
+{{- $zshFiles := glob (joinPath .chezmoi.workingTree "zsh" "*.zsh") -}}
+
+{{- define "includeWithComments" -}}
+# ### START OF {{ .filename }} ###
+{{ include .filename }}
+# ### END OF {{ .filename }} ###
 {{ end }}
+
+{{- range $zshFile := $zshFiles -}}
+{{- if hasSuffix "osx.zsh" $zshFile -}}
+  {{- if eq $chezmoiOs "darwin" -}}
+    {{ template "includeWithComments" (dict "filename" $zshFile) }}
+  {{- end -}}
+{{- else -}}
+  {{ template "includeWithComments" (dict "filename" $zshFile) }}
+{{- end -}}
+{{- end -}}
 {{- if (joinPath .chezmoi.homeDir ".config" "asdf-direnv" | stat ) }}
+# --- START OF asdf-direnv zshrc ---
 source "${XDG_CONFIG_HOME:-$HOME/.config}/asdf-direnv/zshrc"
+# --- END OF asdf-direnv zshrc ---
 {{- end }}
