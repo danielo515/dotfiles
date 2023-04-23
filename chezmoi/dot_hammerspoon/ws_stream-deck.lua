@@ -16,15 +16,14 @@
     }
   }
 --]]
----@alias Event table<string, any>
 
 local json = hs.json
-local inspect = hs.inspect
 local contexts = {}
 local module = {
 	server = nil,
 }
 
+-- Utility functions
 ---@param tbl table
 ---@param keyPath string
 ---@return any
@@ -53,6 +52,7 @@ local function loadImageAsBase64(imagePath)
 	return nil
 end
 
+-- Message handling functions
 ---@param id string
 ---@param imagePath string
 ---@return Event|nil
@@ -120,7 +120,6 @@ server:setCallback(function(method, path, headers, body)
 end)
 
 server:websocket("/ws", msgHandler)
-
 module.server = server
 
 ---@param id string
