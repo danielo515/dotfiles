@@ -13,8 +13,10 @@ GITHUB_USER="danielo515"
 GITHUB_EMAIL="rdanielo@gmail.com"
 HOMEPAGE="https://github.com/$GITHUB_USER/$REPO_NAME"
 
+HS_DIR="$(chezmoi source-path)/dot_hammerspoon"
+SPOON_TEMPLATE="$HS_DIR/init.tpl"
 # Set the Spoon directory path
-SPOON_DIR="$(chezmoi source-path)/dot_hammerspoon/Spoons/$REPO_NAME"
+SPOON_DIR="$HS_DIR/Spoons/$REPO_NAME"
 
 
 # Check if the repository already exists on GitHub
@@ -31,18 +33,17 @@ fi
 # Check if submodule exists
 if ! git submodule status | grep -q "$SPOON_DIR"; then
   # Add the repository as a submodule
-  git submodule add "https://github.com/$GITHUB_USER/$REPO_NAME.git" "$SPOON_DIR"
+  git submodule add -f "git@github.com:$GITHUB_USER/$REPO_NAME.git" "$SPOON_DIR"
 
   # Commit the submodule
   git add ".gitmodules" "$SPOON_DIR"
   # git config --local user.name "$GITHUB_USER"
   # git config --local user.email "$GITHUB_EMAIL"
-  git commit -m "Add $REPO_NAME submodule"
+  # git commit -m "Add $REPO_NAME submodule"
 
-  # Initialize the submodule and add the remote
-  git submodule update --init --recursive "$SPOON_DIR"
+  git submodule sync --recursive "$SPOON_DIR"
   # Initialize the Spoon with the Hammerspoon template at the desired path
-  hs -c "spoons.newSpoon('$SPOON_NAME', '$SPOON_DIR', { author = '$GITHUB_USER <$GITHUB_EMAIL>', homepage = '$HOMEPAGE' })"
+  hs -c "hs.spoons.newSpoon('$SPOON_NAME', '$SPOON_DIR', { author = '$GITHUB_USER <$GITHUB_EMAIL>', homepage = '$HOMEPAGE' }, '$SPOON_TEMPLATE')"
   cd "$SPOON_DIR"
   git add .
   git commit -m "Initial commit"
