@@ -1,7 +1,9 @@
 local hshttp = hs.http
 local json = hs.json
 
-local M = {}
+local M = {
+	timer = nil,
+}
 
 -- Define an enum for possible states
 local DeploymentState = {
@@ -10,6 +12,9 @@ local DeploymentState = {
 	ERROR = "ERROR",
 }
 
+--@param onUpdate function(status) - Called when the status changes
+--@param teamId string - The team ID
+--@param token string - The Vercel API token
 function M.start(onUpdate, teamId, token)
 	local function callback(status, body, headers)
 		if status ~= 200 then
@@ -40,8 +45,8 @@ function M.start(onUpdate, teamId, token)
 		else
 			print("No builds found for danielo@tella.tv")
 		end
-		M.timer = hs.timer.doAfter(5, function()
-			M.start(onUpdate)
+		M.timer = hs.timer.doAfter(10, function()
+			M.start(onUpdate, teamId, token)
 		end)
 	end
 
