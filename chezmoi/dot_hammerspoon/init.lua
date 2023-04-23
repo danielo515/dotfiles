@@ -12,7 +12,6 @@ local retina = "Built-in Retina Display"
 local primaryScreen = hs.screen.primaryScreen()
 local featherWindowTitle = "Feather.*"
 local chrome_app_name = "Google Chrome"
-local tella_dev_window_title = "Danielo.*Tella "
 local wf = hs.window.filter
 local positions = require("windowing").positions
 WatchVercel = require("watch_vercel")
@@ -22,7 +21,9 @@ local StreamDeckServer = require("ws_stream-deck")
 StreamDeckServer.server:start()
 Danielo = { timer = nil }
 local vercel = hs.settings.get("secrets").tella.vercel
-WatchVercel.start(StreamDeckServer.setTitle, vercel.teamId, vercel.token)
+WatchVercel.start(function(status)
+	StreamDeckServer.setTitle("vercelStatus", status)
+end, vercel.teamId, vercel.token)
 
 -- Windows
 local function locateFeather(window)

@@ -12,7 +12,7 @@ local DeploymentState = {
 	ERROR = "ERROR",
 }
 
---@param onUpdate function(status) - Called when the status changes
+--@param onUpdate function(status:string) - Called when the status changes
 --@param teamId string - The team ID
 --@param token string - The Vercel API token
 function M.start(onUpdate, teamId, token)

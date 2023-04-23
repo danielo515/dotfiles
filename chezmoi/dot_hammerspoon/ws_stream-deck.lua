@@ -16,57 +16,90 @@
     }
   }
 --]]
+---@alias Event table<string, any>
+
 local json = hs.json
 local inspect = hs.inspect
-local context = nil
+local contexts = {}
 
--- Function to load an image file from disk and return its base64-encoded representation
+---@param tbl table
+---@param keyPath string
+---@return any
+local function getValueForKeyPath(tbl, keyPath)
+	local keys = hs.fnutils.split(keyPath, ".", nil, true)
+	local value = tbl
 
+	for _, key in ipairs(keys) do
+		value = value[key]
+		if value == nil then
+			return nil
+		end
+	end
+
+	return value
+end
+
+---@param imagePath string
+---@return string|nil
 local function loadImageAsBase64(imagePath)
 	local image = hs.image.imageFromPath(imagePath)
 	if image then
 		local imageData = image:encodeAsURLString()
-		-- local imageBase64 = string.gsub(imageData, "^data:image/png;base64,", "")
 		return imageData
 	end
 	return nil
 end
 
+---@param id string
+---@param imagePath string
+---@return Event|nil
+local function getImageMessage(id, imagePath)
+	local imageBase64 = loadImageAsBase64(imagePath)
+	if imageBase64 then
+		return {
+			event = "setImage",
+			context = contexts[id],
+			payload = {
+				image = imageBase64,
+				target = 0,
+				state = 0,
+			},
+		}
+	else
+		hs.alert.show("Image not loaded: " .. imagePath)
+		return nil
+	end
+end
+
+---@param msg string
+---@return string|nil
 local function msgHandler(msg)
 	local params = json.decode(msg)
-	local response = {}
-	print("event", inspect(params))
 	if params == nil then
 		return
 	end
+
 	local event = params.event
 	if event == nil then
 		return
 	end
-	if context ~= params.context then
-		context = params.context
-		print("context changed: " .. context)
+
+	local id = getValueForKeyPath(params, "payload.settings.id")
+	if id ~= nil and contexts[id] == nil then
+		contexts[id] = params.context
+		print("context added for id: " .. id)
 	end
 
+	local response = {}
 	if event == "keyDown" then
-		response = { event = "showOk", context = params.context }
+		if id == nil or contexts[id] == nil then
+			return
+		end
+		response = { event = "showOk", context = contexts[id] }
 	elseif event == "willAppear" then
-		if params.payload.settings.id == "loadImage" then
-			local imagePath = "~/Pictures/tv-test.png" -- Set the path to your image file here
-			local imageBase64 = loadImageAsBase64(imagePath)
-			if imageBase64 then
-				response = {
-					event = "setImage",
-					context = params.context,
-					payload = {
-						image = imageBase64,
-						target = 0,
-						state = 0,
-					},
-				}
-			else
-				hs.alert.show("Image not loaded: " .. imagePath)
-			end
+		if id == "loadImage" then
+			local imagePath = "~/Pictures/tv-test.png"
+			response = getImageMessage(id, imagePath) or {}
 		end
 	end
 
@@ -84,12 +117,18 @@ end)
 
 server:websocket("/ws", msgHandler)
 
+---@type table<string, any>
 local module = {
 	server = server,
 }
 
-function module.setTitle(title)
-	local message = { event = "setTitle", context = context, payload = { title = title, target = 0, state = 0 } }
+---@param id string
+---@param title string
+function module.setTitle(id, title)
+	if id == nil or contexts[id] == nil then
+		return
+	end
+	local message = { event = "setTitle", context = contexts[id], payload = { title = title, target = 0, state = 0 } }
 	server:send(json.encode(message))
 end
 
