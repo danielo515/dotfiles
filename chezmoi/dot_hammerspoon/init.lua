@@ -1,6 +1,8 @@
 hs.ipc.cliInstall("/opt/homebrew")
 hs.loadSpoon("ReloadConfiguration")
 spoon.ReloadConfiguration:start()
+local StreamDeck = hs.loadSpoon("StreamDeckButton")
+StreamDeck:start()
 hs.loadSpoon("EmmyLua")
 hs.grid.setGrid("10x6")
 local secrets = require("secrets")
@@ -17,12 +19,10 @@ local positions = require("windowing").positions
 WatchVercel = require("watch_vercel")
 
 Chrome = require("browser")("Google Chrome")
-local StreamDeckServer = require("ws_stream-deck")
-StreamDeckServer.server:start()
 Danielo = { timer = nil }
 local vercel = hs.settings.get("secrets").tella.vercel
 WatchVercel.start(function(status)
-	StreamDeckServer.setTitle("vercelStatus", status)
+	StreamDeck.setTitle("vercelStatus", status)
 end, vercel.teamId, vercel.token)
 
 -- Windows
