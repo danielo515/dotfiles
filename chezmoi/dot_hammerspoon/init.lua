@@ -1,7 +1,7 @@
 hs.ipc.cliInstall("/opt/homebrew")
 hs.loadSpoon("ReloadConfiguration")
 spoon.ReloadConfiguration:start()
-local StreamDeck = hs.loadSpoon("StreamDeckButton")
+StreamDeck = hs.loadSpoon("StreamDeckButton")
 StreamDeck:start()
 hs.loadSpoon("EmmyLua")
 hs.grid.setGrid("10x6")
