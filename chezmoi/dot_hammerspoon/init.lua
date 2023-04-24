@@ -3,6 +3,14 @@ hs.loadSpoon("ReloadConfiguration")
 spoon.ReloadConfiguration:start()
 StreamDeck = hs.loadSpoon("StreamDeckButton")
 StreamDeck:start()
+StreamDeck:subscribeWillAppear("vercelStatus", function(context, params)
+	print("vercelStatus willAppear", context)
+	return StreamDeck.getImageMessage(
+		context,
+		-- "~/Pictures/danielo515_programmer_fighting_blasphemy_5303f07b-4184-87fb-f043d10e18c2.png"
+		"~/Pictures/tv-test.png"
+	)
+end)
 hs.loadSpoon("EmmyLua")
 hs.grid.setGrid("10x6")
 local secrets = require("secrets")
