@@ -13,7 +13,7 @@ window:
   # Values for `decorations` (macOS only):
   #     - transparent: Title bar, transparent background and title bar buttons
   #     - buttonless: Title bar, transparent background and no title bar buttons
-  decorations: transparent
+  decorations: buttonless
   opacity: 1.0
   # Spread additional padding evenly around the terminal content.
   dynamic_padding: true
@@ -27,19 +27,19 @@ scrolling:
 
 # Font configuration
 font:
-  size: 12.5
+  size: 12.0
   normal:
-    family: "Hack Nerd Font Mono"
+    family: "Inconsolata Nerd Font"
     style: Regular
 
   # Bold font face
   bold:
-    family: "VictorMono Nerd Font" 
+    family: "Iosevka Nerd Font Mono"
     style: Bold
 
   # Italic font face
   italic:
-    family: "VictorMono Nerd Font"
+    family: "Iosevka Nerd Font Mono"
     style: ExtraLight
     # Bold italic font face
     #bold_italic:
