@@ -113,6 +113,8 @@ function main() {
   setupPlugins();
   vimOptions();
   autoCommands();
+  // Is not very well know, but it is true that my personal config exist within haxe-nvim
+  Main.setup();
 }
 
 function autoCommands() {

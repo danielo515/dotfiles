@@ -627,6 +627,7 @@ ___Main_Main_Fields_.copyGhUrl = function(line)
   end;
 end
 ___Main_Main_Fields_.setup = function() 
+  ___Main_Main_Fields_.main();
   vim.pretty_print("ran setup");
 end
 _hx_exports["setup"] = ___Main_Main_Fields_.setup

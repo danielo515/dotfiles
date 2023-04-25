@@ -196,9 +196,11 @@ local Enum = _hx_e();
 
 local _hx_exports = _hx_exports or {}
 local Array = _hx_e()
+___Main_Main_Fields_ = _hx_e()
 local Math = _hx_e()
 local String = _hx_e()
 local Std = _hx_e()
+local Test = _hx_e()
 __haxe_iterators_ArrayIterator = _hx_e()
 __haxe_iterators_ArrayKeyValueIterator = _hx_e()
 __vim_plugin_VimPlugin = _hx_e()
@@ -206,8 +208,8 @@ __kickstart__Kickstart_Kickstart_Fields_ = _hx_e()
 __kickstart__Untyped_Untyped_Fields_ = _hx_e()
 __lua_StringMap = _hx_e()
 __packer__Packer_Packer_Fields_ = _hx_e()
+__plenary_Job = _G.require("plenary.job")
 __plugins__Copilot_Copilot_Fields_ = _hx_e()
-__vim_plugin_VimPlugin = _hx_e()
 __plugins__FzfLua_FzfLua_Fields_ = _hx_e()
 __plugins__Plugins_Plugins_Impl_ = _hx_e()
 __vim__TableTools_TableTools_Fields_ = _hx_e()
@@ -530,6 +532,112 @@ Array.prototype.resize = function(self,len)
   end;
 end
 
+___Main_Main_Fields_.new = {}
+___Main_Main_Fields_.main = function() 
+  vim.api.nvim_create_user_command("HaxeCmd", function(args) 
+    vim.pretty_print(args);
+    vim.pretty_print(vim.spell.check("Hello bru! Hau are you?")[1][1]);
+    vim.ui.select(({"a"}), ({prompt = "Pick one sexy option"}), function(choice,_) 
+      vim.pretty_print(choice);
+    end);
+  end, ({bang = true, complete = Std.string("customlist,v:lua.") .. Std.string("require'packer'.plugin_complete"), desc = "Testing from haxe", force = true, nargs = 1, range = "%"}));
+  vim.api.nvim_create_user_command("HaxeCmdCompletion", function(args) 
+    vim.pretty_print(args);
+    vim.pretty_print(vim.spell.check("Hello bru! Hau are you?")[1][1]);
+    vim.ui.select(({"a"}), ({prompt = "Pick one sexy option"}), function(choice,_) 
+      vim.pretty_print(choice);
+    end);
+  end, ({bang = true, complete = function(lead,full,x) 
+    vim.pretty_print(lead, full, x);
+    do return ({"afa","bea",Std.string(lead) .. Std.string("bro")}) end;
+  end, desc = "Testing from haxe for completion callback", force = true, nargs = "*", range = "%"}));
+  local tmp = __vim_FunctionOrString.Cb(function() 
+    vim.pretty_print("Hello from axe", vim.fn.expand(_G.string.format("%s%s", "%", ":p")));
+    do return true end;
+  end);
+  vimx.acmd("HaxeEvent", __vim__VimTypes_LuaArray_Impl_.from(_hx_tab_array({[0]="BufWritePost"}, 1)), "*.hx", "Created from haxe", tmp);
+  local nargs = nil;
+  vim.api.nvim_create_user_command("OpenInGh", function(args) 
+    local _g = args.range;
+    local tmp;
+    if (_g) == 1 then 
+      tmp = Std.string(":") .. Std.string(args.line1);
+    elseif (_g) == 2 then 
+      tmp = Std.string(Std.string(Std.string(":") .. Std.string(args.line1)) .. Std.string("-")) .. Std.string(args.line2);else
+    tmp = ""; end;
+    ___Main_Main_Fields_.openInGh(tmp);
+  end, ({bang = false, complete = nil, desc = "Open the current file in github", force = true, nargs = nargs, range = true}));
+  local nargs = nil;
+  vim.api.nvim_create_user_command("CopyGhUrl", function(args) 
+    local _g = args.range;
+    local tmp;
+    if (_g) == 1 then 
+      tmp = Std.string(":") .. Std.string(args.line1);
+    elseif (_g) == 2 then 
+      tmp = Std.string(Std.string(Std.string(":") .. Std.string(args.line1)) .. Std.string("-")) .. Std.string(args.line2);else
+    tmp = ""; end;
+    ___Main_Main_Fields_.copyGhUrl(tmp);
+  end, ({bang = false, complete = nil, desc = "Copy current file github URL", force = true, nargs = nargs, range = true}));
+  vim.api.nvim_create_user_command("CopyMessagesToClipboard", function(args) 
+    ___Main_Main_Fields_.copy_messages_to_clipboard(args.args);
+  end, ({bang = false, complete = nil, desc = "Copy the n number of messages to clipboard", force = true, nargs = 1, range = true}));
+  vim.api.nvim_create_user_command("GetPluginVersion", function(args) 
+    local version = __packer__Packer_Packer_Fields_.get_plugin_version(args.args);
+    vim.pretty_print(version);
+    vimx.copyToClipboard(version);
+  end, ({bang = false, complete = nil, desc = "Gets the git version of a installed packer plugin", force = true, nargs = 1, range = true}));
+  local nargs = nil;
+  vim.api.nvim_create_user_command("Scratch", function(_) 
+    vim.api.nvim_win_set_buf(0, vim.api.nvim_create_buf(false, true));
+  end, ({bang = false, complete = nil, desc = "creates a scratch buffer", force = true, nargs = nargs, range = true}));
+  vim.keymap.set("n", "tl", ___Main_Main_Fields_.nexTab, ({desc = "Go to next tab", expr = false, silent = true}));
+  vim.keymap.set("n", "<c-m-f>", ":FzfLua lines<cr>", ({desc = "Search in open files", expr = false, silent = true}));
+  vim.o.inccommand = "split";
+end
+___Main_Main_Fields_.runGh = function(args) 
+  if (vim.fn.executable("gh") ~= 1) then 
+    do return nil end;
+  end;
+  local args = ({command = "gh", args = args, on_stderr = function(args,return_val) 
+    vim.pretty_print("Job got stderr", args, return_val);
+  end});
+  do return __plenary_Job:new(args):sync() end;
+end
+___Main_Main_Fields_.openInGh = function(line) 
+  ___Main_Main_Fields_.runGh(__vim__VimTypes_LuaArray_Impl_.from(_hx_tab_array({[0]="browse", Std.string(vim.fn.expand("%")) .. Std.string(line), "--branch", ___Main_Main_Fields_.get_branch()[1]}, 4)));
+end
+___Main_Main_Fields_.get_branch = function() 
+  local args = ({command = "git", args = ({"rev-parse","--abbrev-ref","HEAD"}), on_stderr = function(args,return_val) 
+    vim.pretty_print("Something may have  failed", args, return_val);
+  end});
+  do return __plenary_Job:new(args):sync() end;
+end
+___Main_Main_Fields_.copy_messages_to_clipboard = function(number) 
+  vim.cmd(_G.string.format("let @* = execute('%smessages')", Test["or"](number, "")));
+  vim.notify(Std.string(Std.string("") .. Std.string(number)) .. Std.string(" :messages copied to the clipboard"), "info");
+end
+___Main_Main_Fields_.nexTab = function() 
+  local pages = vim.api.nvim_list_tabpages();
+  local currentTab = vim.api.nvim_get_current_tabpage();
+  vim.api.nvim_set_current_tabpage(Test["or"](__vim__TableTools_TableTools_Fields_.findNext(pages, function(id) 
+    do return id == currentTab end;
+  end), pages[1]));
+end
+___Main_Main_Fields_.copyGhUrl = function(line) 
+  local lines = ___Main_Main_Fields_.runGh(__vim__VimTypes_LuaArray_Impl_.from(_hx_tab_array({[0]="browse", Std.string(vim.fn.expand(_G.string.format("%s%s", "%", ":."))) .. Std.string(line), "--no-browser", "--branch", ___Main_Main_Fields_.get_branch()[1]}, 5)));
+  if (lines == nil) then 
+    vim.pretty_print("No URL");
+  else
+    vim.pretty_print(lines[1]);
+    vimx.copyToClipboard(lines[1]);
+  end;
+end
+___Main_Main_Fields_.setup = function() 
+  ___Main_Main_Fields_.main();
+  vim.pretty_print("ran setup");
+end
+_hx_exports["setup"] = ___Main_Main_Fields_.setup
+
 Math.new = {}
 Math.isNaN = function(f) 
   do return f ~= f end;
@@ -735,6 +843,15 @@ Std.int = function(x)
     do return 0 end;
   else
     do return _hx_bit_clamp(x) end;
+  end;
+end
+
+Test.new = {}
+Test["or"] = function(v,fallback) 
+  if (v ~= nil) then 
+    do return v end;
+  else
+    do return fallback end;
   end;
 end
 
@@ -1472,6 +1589,7 @@ __kickstart__Kickstart_Kickstart_Fields_.main = function()
   vim.wo.number = true;
   vim.o.inccommand = "split";
   __kickstart__Kickstart_Kickstart_Fields_.autoCommands();
+  ___Main_Main_Fields_.setup();
 end
 __kickstart__Kickstart_Kickstart_Fields_.autoCommands = function() 
   local tmp = __vim_FunctionOrString.Cb(function() 
@@ -1724,6 +1842,16 @@ __lua_StringMap.prototype.get = function(self,key)
 end
 
 __packer__Packer_Packer_Fields_.new = {}
+__packer__Packer_Packer_Fields_.get_plugin_version = function(name) 
+  if (_G.packer_plugins ~= nil) then 
+    local args = ({command = "git", cwd = _G.packer_plugins[name].path, args = ({"rev-parse","--short","HEAD"}), on_stderr = function(args,return_val) 
+      vim.pretty_print("Job got stderr", args, return_val);
+    end});
+    do return __plenary_Job:new(args):sync()[1] end;
+  else
+    do return "unknown" end;
+  end;
+end
 __packer__Packer_Packer_Fields_.ensureInstalled = function() 
   local install_path = Std.string(vim.fn.stdpath("data")) .. Std.string("/site/pack/packer/start/packer.nvim");
   if (vim.fn.empty(vim.fn.glob(install_path, nil)) > 0) then 
@@ -1750,8 +1878,6 @@ __plugins__Copilot_Copilot_Fields_.configure = function()
   end;
 end
 
-__vim_plugin_VimPlugin.new = {}
-
 __plugins__FzfLua_FzfLua_Fields_.new = {}
 __plugins__FzfLua_FzfLua_Fields_.configure = function() 
   local _v_ = vimx.safeRequire("fzf-lua");
@@ -1771,6 +1897,29 @@ end
 __vim__TableTools_TableTools_Fields_.new = {}
 __vim__TableTools_TableTools_Fields_.concat = function(tableA,tableB) 
   do return vim.list_extend(vim.list_extend(({}), tableA), tableB) end;
+end
+__vim__TableTools_TableTools_Fields_.findNext = function(table,fn) 
+  local _hx_1_p_next, _hx_1_p_table, _hx_1_p_index = _G.ipairs(table);
+  local next = _hx_1_p_next;
+  local t = _hx_1_p_table;
+  local loop = nil;
+  loop = function(next,table,nextP) 
+    local _hx_continue_1 = false;
+    while (true) do repeat 
+      if (fn(nextP.value)) then 
+        do return _G.select(2, next(table, nextP.index)) end;
+      else
+        nextP = _hx_box_mr(_hx_table.pack(next(table, nextP.index)), {"index", "value"});
+        break;
+      end;until true
+      if _hx_continue_1 then 
+      _hx_continue_1 = false;
+      break;
+      end;
+      
+    end;
+  end;
+  do return loop(next, t, _hx_box_mr(_hx_table.pack(next(t, _hx_1_p_index)), {"index", "value"})) end;
 end
 
 __vim_FunctionOrString.Cb = function(cb) local _x = _hx_tab_array({[0]="Cb",0,cb,__enum__=__vim_FunctionOrString}, 3); return _x; end 
@@ -1904,6 +2053,27 @@ local _hx_static_init = function()
   
   
 end
+
+_hx_box_mr = function(x,nt)
+    res = _hx_o({__fields__={}})
+    for i,v in ipairs(nt) do
+      res[v] = x[i]
+    end
+    return res
+end
+
+_hx_table = {}
+_hx_table.pack = _G.table.pack or function(...)
+    return {...}
+end
+_hx_table.unpack = _G.table.unpack or _G.unpack
+_hx_table.maxn = _G.table.maxn or function(t)
+  local maxn=0;
+  for i in pairs(t) do
+    maxn=type(i)=='number'and i>maxn and i or maxn
+  end
+  return maxn
+end;
 
 _hx_static_init();
 _G.xpcall(__kickstart__Kickstart_Kickstart_Fields_.main, _hx_error)

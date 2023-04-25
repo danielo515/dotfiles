@@ -186,5 +186,6 @@ function copyGhUrl(?line) {
 
 @:expose("setup")
 function setup() {
+  main();
   Vim.print("ran setup");
 }
