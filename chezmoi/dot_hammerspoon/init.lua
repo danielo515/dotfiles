@@ -25,7 +25,10 @@ local chrome_app_name = "Google Chrome"
 local wf = hs.window.filter
 local positions = require("windowing").positions
 WatchVercel = require("watch_vercel")
-
+StreamDeck:onKeyDown("vercelStatus", function()
+	print("vercelStatus keyDown")
+	WatchVercel.openLatest()
+end)
 Chrome = require("browser")("Google Chrome")
 Danielo = { timer = nil }
 local vercel = hs.settings.get("secrets").tella.vercel

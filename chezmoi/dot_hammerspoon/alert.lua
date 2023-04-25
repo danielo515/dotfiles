@@ -26,4 +26,8 @@ function M.important(msg)
 	hs.alert.show(msg, alertStyle)
 end
 
+function M.info(msg)
+	hs.alert.show(msg, hs.alert.defaultStyle)
+end
+
 return M

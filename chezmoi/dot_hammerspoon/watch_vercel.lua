@@ -3,6 +3,7 @@ local json = hs.json
 
 local M = {
 	timer = nil,
+	latestUrl = nil,
 }
 
 -- Define an enum for possible states
@@ -34,18 +35,19 @@ function M.start(onUpdate, teamId, token)
 			local creator = deployment["creator"]
 			if creator and creator["email"] == "danielo@tella.tv" then
 				firstBuildStatus = deployment["state"]
+				M.latestUrl = deployment["inspectorUrl"]
 				break
 			end
 		end
 
+		-- print(hs.inspect(data))
 		-- Print the status if found, or a not found message
 		if firstBuildStatus then
-			print("First build status for danielo@tella.tv: " .. firstBuildStatus)
 			onUpdate(firstBuildStatus)
 		else
 			print("No builds found for danielo@tella.tv")
 		end
-		M.timer = hs.timer.doAfter(10, function()
+		M.timer = hs.timer.doAfter(20, function()
 			M.start(onUpdate, teamId, token)
 		end)
 	end
@@ -61,4 +63,13 @@ function M.start(onUpdate, teamId, token)
 	}
 	hshttp.asyncGet(url, headers, callback)
 end
+
+function M.openLatest()
+	if M.latestUrl ~= nil then
+		hs.urlevent.openURL(M.latestUrl)
+	else
+		hs.alert.show("No latest URL")
+	end
+end
+
 return M
