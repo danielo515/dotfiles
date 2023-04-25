@@ -3,7 +3,7 @@ hs.loadSpoon("ReloadConfiguration")
 spoon.ReloadConfiguration:start()
 StreamDeck = hs.loadSpoon("StreamDeckButton")
 StreamDeck:start()
-StreamDeck:subscribeWillAppear("vercelStatus", function(context, params)
+StreamDeck:onWillAppear("vercelStatus", function(context, params)
 	print("vercelStatus willAppear", context)
 	return StreamDeck.getImageMessage(
 		context,
@@ -86,26 +86,4 @@ Hyper:bind({}, "j", function()
 	App.launchOrFocusByBundleID("net.kovidgoyal.kitty")
 end)
 
-local alertStyle = {
-	atScreenEdge = 0,
-	fadeInDuration = 0.15,
-	fadeOutDuration = 0.15,
-	fillColor = {
-		alpha = 0.75,
-		white = 0,
-	},
-	radius = 10,
-	strokeColor = {
-		alpha = 1,
-		white = 1,
-	},
-	strokeWidth = 2,
-	textColor = {
-		alpha = 1,
-		red = 1,
-	},
-	textFont = ".AppleSystemUIFont",
-	textSize = 27,
-}
-
-hs.alert.show("Config loaded", alertStyle)
+require("alert").important("Hammerspoon config loaded")
