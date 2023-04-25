@@ -77,6 +77,7 @@ end)
 require("keybinds")
 require("auto_tile")
 require("auto_flasher")
+require("watch_files")
 
 hs.loadSpoon("Hyper")
 
