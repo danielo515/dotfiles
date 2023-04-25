@@ -105,6 +105,12 @@ function main() {
   // final keymaps = vim.Api.nvim_buf_get_keymap(CurrentBuffer, "n");
   // Vim.print(keymaps.map(x -> '${x.lhs} -> ${x.rhs} ${x.desc}'));
   vim.Keymap.set(Normal, "tl", nexTab, {desc: "Go to next tab", silent: true, expr: false});
+  vim.Keymap.set(
+    Normal,
+    "<c-m-f>",
+    ":FzfLua lines<cr>",
+    {desc: "Search in open files", silent: true, expr: false}
+  );
   // show the effects of a search / replace in a live preview window
   Vim.o.inccommand = "split";
 }
