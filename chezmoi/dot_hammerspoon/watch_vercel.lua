@@ -4,8 +4,9 @@ local json = hs.json
 local M = {
 	timer = nil,
 	latestUrl = nil,
+	latstStatus = nil,
 	latestResponse = nil,
-	log = hs.logger.new("watch-vercel", "debug"),
+	log = hs.logger.new("VERCEL", "debug"),
 }
 
 -- Define an enum for possible states
@@ -20,6 +21,11 @@ local DeploymentState = {
 --@param token string - The Vercel API token
 function M.start(onUpdate, teamId, token)
 	local function callback(status, body, headers)
+		-- As soon as we get a response, schedule the next one
+		M.timer = hs.timer.doAfter(20, function()
+			M.start(onUpdate, teamId, token)
+		end)
+		M.latstStatus = status
 		if status ~= 200 then
 			M.log.e("Error:", status, body)
 			return
@@ -50,9 +56,6 @@ function M.start(onUpdate, teamId, token)
 		else
 			M.log.i("No builds found for danielo@tella.tv")
 		end
-		M.timer = hs.timer.doAfter(20, function()
-			M.start(onUpdate, teamId, token)
-		end)
 	end
 
 	local url = "https://api.vercel.com/v6/deployments?teamId=" .. teamId
