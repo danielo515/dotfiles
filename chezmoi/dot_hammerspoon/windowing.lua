@@ -124,7 +124,7 @@ end
 -- It defaults to 30/70 split, but if you hold the alt key
 -- will do 50/50 split.
 local function referenceChooser()
-	local windows = hs.fnutils.map(hs.window.filter.new():getWindows(), function(win)
+	local windows = hs.fnutils.map(hs.window.filter.new():setCurrentSpace(true):getWindows(), function(win)
 		if win ~= hs.window.focusedWindow() then
 			return {
 				text = win:title(),
@@ -156,7 +156,7 @@ local function referenceChooser()
 	end)
 
 	chooser
-		:placeholderText("Choose window for 50/50 split. Hold ⎇ for 70/30.")
+		:placeholderText("Choose window for 30/70 split. Hold ⎇ for 50/50.")
 		:searchSubText(true)
 		:choices(windows)
 		:show()
@@ -202,7 +202,6 @@ end
 return {
 	arrangeAppWindowsInGrid = arrangeAppWindowsInGrid,
 	positions = positions,
-	focusChromeTab = focusChromeTab,
 	referenceChooser = referenceChooser,
 	debugWindow = debugWindow,
 }
