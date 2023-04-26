@@ -1,6 +1,7 @@
 import:
   - ./keys.yml
 window:
+  option_as_alt: Both
   position:
     x: 550
     y: 0
@@ -85,7 +86,6 @@ cursor:
     blinking: On
 # Live config reload (changes require restart)
 live_config_reload: true
-alt_send_esc: true
 
 key_bindings:
   # (macOS only)
