@@ -4,6 +4,8 @@ local json = hs.json
 local M = {
 	timer = nil,
 	latestUrl = nil,
+	latestResponse = nil,
+	log = hs.logger.new("watch-vercel", "debug"),
 }
 
 -- Define an enum for possible states
@@ -19,12 +21,13 @@ local DeploymentState = {
 function M.start(onUpdate, teamId, token)
 	local function callback(status, body, headers)
 		if status ~= 200 then
-			print("Error:", status, body)
+			M.log.e("Error:", status, body)
 			return
 		end
 		local data = json.decode(body)
+		M.latestResponse = data
 		if data == nil then
-			print("Error: data is nil")
+			M.log.e("Error: data is nil")
 			return
 		end
 		local deployments = data["deployments"]
@@ -45,7 +48,7 @@ function M.start(onUpdate, teamId, token)
 		if firstBuildStatus then
 			onUpdate(firstBuildStatus)
 		else
-			print("No builds found for danielo@tella.tv")
+			M.log.i("No builds found for danielo@tella.tv")
 		end
 		M.timer = hs.timer.doAfter(20, function()
 			M.start(onUpdate, teamId, token)
@@ -61,6 +64,7 @@ function M.start(onUpdate, teamId, token)
 		["Sec-Fetch-Mode"] = "cors",
 		["Sec-Fetch-Site"] = "cross-site",
 	}
+	M.log.i("Fetching", url)
 	hshttp.asyncGet(url, headers, callback)
 end
 
