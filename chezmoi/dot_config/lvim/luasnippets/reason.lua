@@ -247,10 +247,21 @@ local normal_ones = {
     { trig = "jslog", dscr = "Javascript easier log", regTrig = false },
     fmt(
       [[ 
-          Js.log2("{}", {}{}); //TODO: Remove this debug line
+          Js.log2("{}", {}); //TODO: Remove this debug line
       ]],
       {
-        rep(1),
+        i(1),
+        i(0),
+      }
+    )
+  ),
+  s(
+    { trig = "deb", dscr = "Debug properly with fmt", regTrig = false },
+    fmt(
+      [[ 
+            Log.debug2(~call=__LOC__, ~fmt="{} %s", {});
+      ]],
+      {
         i(1),
         i(0),
       }
