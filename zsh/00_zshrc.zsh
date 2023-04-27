@@ -66,8 +66,8 @@ unsetopt auto_name_dirs
 zstyle ':completion:*:*:vim:*:*files' ignored-patterns '*.class'
 
 # -- Command History -----------------------------------------------------------
-export HISTSIZE=900
-export SAVEHIST=900
+export HISTSIZE=2000
+export SAVEHIST=2000
 
 # -- Options -------------------------------------------------------------------
 unsetopt correct_all
