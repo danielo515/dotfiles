@@ -120,3 +120,4 @@ check_command() {
 if [[ $(check_command exa) ]]; then
 alias ls='exa'
 fi
+alias sloc='scc'
