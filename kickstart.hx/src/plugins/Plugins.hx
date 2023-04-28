@@ -69,3 +69,33 @@ extern class SchemaStore implements VimPlugin {
   inline static final libName = 'schemastore';
   final json:JsonSchemas;
 }
+
+typedef TmuxBindings = TableWrapper< {
+  disableWhenZoomed:Bool,
+  keybindigs:{
+    left:String,
+    down:String,
+    up:String,
+    right:String,
+    lastActive:String,
+    next:String
+  }
+} >
+
+extern class TmuxNavigation implements VimPlugin {
+  inline static final libName = 'nvim-tmux-navigation';
+  @:luaDotMethod function setup(config:TmuxBindings):Void;
+  inline static function configure():Void {
+    TmuxNavigation.require()!.setup({
+      disableWhenZoomed: true,
+      keybindigs: {
+        left: "<C-h>",
+        down: "<C-j>",
+        up: "<C-k>",
+        right: "<C-l>",
+        lastActive: "<C-L>",
+        next: "<C-N>"
+      }
+    });
+  }
+}

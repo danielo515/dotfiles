@@ -1,5 +1,6 @@
 package kickstart;
 
+import plugins.Plugins.TmuxNavigation;
 import plugins.Plugins.NeoTree;
 import plugins.FzfLua;
 import plugins.LspConfig.Lspconfig;
@@ -91,7 +92,8 @@ function main() {
       requires: t(["nvim-tree/nvim-web-devicons"]),
       config: plugins.FzfLua.configure
     },
-    {name: "jdonaldson/vaxe"}
+    {name: "jdonaldson/vaxe"},
+    {name: "alexghergh/nvim-tmux-navigation"},
   ];
 
   final is_bootstrap = Packer.init(plugins);
@@ -207,6 +209,7 @@ function setupPlugins() {
   Mason.require()!.setup();
   Fidget.require()!.setup();
   Cmp.configure();
+  TmuxNavigation.configure();
 
   final capabilities = Cmp_nvim_lsp.require()!.default_capabilities(
     vim.Lsp.Protocol.make_client_capabilities()
@@ -368,10 +371,10 @@ function keymaps() {
       "<Cmd>lua require('fzf-lua').help_tags()<CR>",
       {desc: 'Find help tags', silent: true}
     );
-    Keymap.set(t([Normal]), '<c-k>', "<c-w>k", {desc: 'Move to window up', silent: true});
-    Keymap.set(t([Normal]), '<c-j>', "<c-w>j", {desc: 'Move to window down', silent: true});
-    Keymap.set(t([Normal]), '<c-h>', "<c-w>h", {desc: 'Move to window left', silent: true});
-    Keymap.set(t([Normal]), '<c-l>', "<c-w>l", {desc: 'Move to window right', silent: true});
+    // Keymap.set(t([Normal]), '<c-k>', "<c-w>k", {desc: 'Move to window up', silent: true});
+    // Keymap.set(t([Normal]), '<c-j>', "<c-w>j", {desc: 'Move to window down', silent: true});
+    // Keymap.set(t([Normal]), '<c-h>', "<c-w>h", {desc: 'Move to window left', silent: true});
+    // Keymap.set(t([Normal]), '<c-l>', "<c-w>l", {desc: 'Move to window right', silent: true});
     NeoTree.require().run(_ -> {
       Keymap.set(
         Normal,
