@@ -195,7 +195,6 @@ export PATH="/usr/local/opt/ruby/bin:$PATH"
 # added by travis gem
 [ ! -s /Users/danielo/.travis/travis.sh ] || source /Users/danielo/.travis/travis.sh
 export PATH="/usr/local/opt/ruby/bin:$PATH"
-
 # opam configuration
 [[ ! -r /Users/danielo/.opam/opam-init/init.zsh ]] || source /Users/danielo/.opam/opam-init/init.zsh  > /dev/null 2> /dev/null
 
