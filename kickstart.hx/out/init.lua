@@ -1530,7 +1530,7 @@ __kickstart__Kickstart_Kickstart_Fields_.main = function()
         module_pattern=spec.module_pattern
       }
   local spec = _hx_o({__fields__={name=true},name="jdonaldson/vaxe"});
-  local plugins = _hx_tab_array({[0]=plugins, plugins1, plugins2, plugins3, plugins4, plugins5, plugins6, plugins7, plugins8, plugins9, plugins10, plugins11, plugins12, plugins13, plugins14, plugins15, plugins16, plugins17, plugins18, plugins19, plugins20, plugins21, { 
+  local plugins22 = { 
         spec.name, 
         disable=spec.disable,
         as=spec.as,
@@ -1557,7 +1557,36 @@ __kickstart__Kickstart_Kickstart_Fields_.main = function()
         cond=spec.cond,
         module=spec.module,
         module_pattern=spec.module_pattern
-      }}, 23);
+      }
+  local spec = _hx_o({__fields__={name=true},name="alexghergh/nvim-tmux-navigation"});
+  local plugins = _hx_tab_array({[0]=plugins, plugins1, plugins2, plugins3, plugins4, plugins5, plugins6, plugins7, plugins8, plugins9, plugins10, plugins11, plugins12, plugins13, plugins14, plugins15, plugins16, plugins17, plugins18, plugins19, plugins20, plugins21, plugins22, { 
+        spec.name, 
+        disable=spec.disable,
+        as=spec.as,
+        installer=spec.installer,
+        updater=spec.updater,
+        after=spec.after,
+        rtp=spec.rtp,
+        opt=spec.opt,
+        bufread=spec.bufread,
+        branch=spec.branch,
+        tag=spec.tag,
+        commit=spec.commit,
+        lock=spec.lock,
+        run=spec.run,
+        requires=spec.requires,
+        rocks=spec.rocks,
+        config=spec.config,
+        setup=spec.setup,
+        cmd=spec.cmd,
+        ft=spec.ft,
+        keys=spec.keys,
+        event=spec.event,
+        fn=spec.fn,
+        cond=spec.cond,
+        module=spec.module,
+        module_pattern=spec.module_pattern
+      }}, 24);
   local is_bootstrap = __packer__Packer_Packer_Fields_.ensureInstalled();
   local packer = _G.require("packer");
   packer.startup(function(use) 
@@ -1685,6 +1714,10 @@ __kickstart__Kickstart_Kickstart_Fields_.setupPlugins = function()
     end}), sources = ({({name = "luasnip"}),({name = "nvim_lsp"}),({name = "rg"}),({name = "tmux"})})}));
     cmp.setup.cmdline(":", ({mapping = mapping, snippet = nil, sources = ({({name = "path"}),({name = "cmdline"})})}));
   end;
+  local _v_ = vimx.safeRequire("nvim-tmux-navigation");
+  if (_v_ ~= nil) then 
+    _v_.setup(({disable_when_zoomed = true, keybindings = ({left = "<C-h>", down = "<C-j>", up = "<C-k>", right = "<C-l>", last_active = "<C-L>", next = "<C-N>"})}));
+  end;
   local _v_ = vimx.safeRequire("cmp_nvim_lsp");
   local capabilities = (function() 
     local _hx_1
@@ -1802,10 +1835,6 @@ __kickstart__Kickstart_Kickstart_Fields_.keymaps = function()
     vim.keymap.set(({"n"}), "<leader>fg", "<Cmd>lua require('fzf-lua').grep()<CR>", ({desc = "Grep files", expr = nil, silent = true}));
     vim.keymap.set(({"n"}), "<leader>fb", "<Cmd>lua require('fzf-lua').buffers()<CR>", ({desc = "Find buffers", expr = nil, silent = true}));
     vim.keymap.set(({"n"}), "<leader>fh", "<Cmd>lua require('fzf-lua').help_tags()<CR>", ({desc = "Find help tags", expr = nil, silent = true}));
-    vim.keymap.set(({"n"}), "<c-k>", "<c-w>k", ({desc = "Move to window up", expr = nil, silent = true}));
-    vim.keymap.set(({"n"}), "<c-j>", "<c-w>j", ({desc = "Move to window down", expr = nil, silent = true}));
-    vim.keymap.set(({"n"}), "<c-h>", "<c-w>h", ({desc = "Move to window left", expr = nil, silent = true}));
-    vim.keymap.set(({"n"}), "<c-l>", "<c-w>l", ({desc = "Move to window right", expr = nil, silent = true}));
     if (vimx.safeRequire("neo-tree") ~= nil) then 
       vim.keymap.set("n", "<leader>e", ":Neotree filesystem reveal left toggle<cr>", ({desc = "Toggle NeoTree", expr = false, silent = true}));
     end;
