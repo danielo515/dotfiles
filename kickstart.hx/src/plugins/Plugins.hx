@@ -71,29 +71,29 @@ extern class SchemaStore implements VimPlugin {
 }
 
 typedef TmuxBindings = TableWrapper< {
-  disableWhenZoomed:Bool,
-  keybindigs:{
+  disable_when_zoomed:Bool,
+  keybindings:{
     left:String,
     down:String,
     up:String,
     right:String,
-    lastActive:String,
+    last_active:String,
     next:String
   }
-} >
+} >;
 
 extern class TmuxNavigation implements VimPlugin {
   inline static final libName = 'nvim-tmux-navigation';
   @:luaDotMethod function setup(config:TmuxBindings):Void;
   inline static function configure():Void {
     TmuxNavigation.require()!.setup({
-      disableWhenZoomed: true,
-      keybindigs: {
+      disable_when_zoomed: true,
+      keybindings: {
         left: "<C-h>",
         down: "<C-j>",
         up: "<C-k>",
         right: "<C-l>",
-        lastActive: "<C-L>",
+        last_active: "<C-L>",
         next: "<C-N>"
       }
     });

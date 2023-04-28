@@ -1716,7 +1716,7 @@ __kickstart__Kickstart_Kickstart_Fields_.setupPlugins = function()
   end;
   local _v_ = vimx.safeRequire("nvim-tmux-navigation");
   if (_v_ ~= nil) then 
-    _v_.setup(({disableWhenZoomed = true, keybindigs = ({left = "<C-h>", down = "<C-j>", up = "<C-k>", right = "<C-l>", lastActive = "<C-L>", next = "<C-N>"})}));
+    _v_.setup(({disable_when_zoomed = true, keybindings = ({left = "<C-h>", down = "<C-j>", up = "<C-k>", right = "<C-l>", last_active = "<C-L>", next = "<C-N>"})}));
   end;
   local _v_ = vimx.safeRequire("cmp_nvim_lsp");
   local capabilities = (function() 
