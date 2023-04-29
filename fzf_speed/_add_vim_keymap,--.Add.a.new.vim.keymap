@@ -1,0 +1,4 @@
+#!/usr/bin/env sh
+chedir=$(chezmoi source-path)
+TARGET=$(fd 'keymap*' "$chedir/dot_config/lvim/" | fzf --reverse --preview 'bat -n --color=always {}')
+exec nvim "$TARGET"
