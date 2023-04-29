@@ -65,6 +65,11 @@ subscribeToFocus("kitty", function(window)
 		return not name:match("Huddle")
 	end
 
+	local windowWidth = hs.window.focusedWindow():frame().w
+	if windowWidth < 2000 then
+		return
+	end
+
 	local layout = {
 		{ nil, window, primaryScreen, hs.layout.right70, nil, nil },
 		{ chrome_app_name, nil, primaryScreen, positions.left34, nil, nil },
