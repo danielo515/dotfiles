@@ -74,7 +74,7 @@ unsetopt correct_all
 unsetopt correct
 
 # -- Variables -----------------------------------------------------------------
-export EDITOR="$(brew --prefix)/bin/nvim"
+export EDITOR="nvim"
 alias vim=nvim
 alias vi=nvim
 
