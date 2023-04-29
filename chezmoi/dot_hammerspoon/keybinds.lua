@@ -49,10 +49,10 @@ hs.hotkey.bind({ "cmd", "shift" }, "P", function()
 		hs.appfinder.appFromName("Preview"):selectMenuItem({ "Tools", "Annotate", "Arrow" })
 	end)
 end)
-
+local US_LAYOUT = "com.apple.keylayout.US"
 local hyperApps = {
-	{ key = "1", appName = "Slack" },
-	{ key = "2", appName = "Kitty", layout = "com.apple.keylayout.US" },
+	{ key = "1", appName = "Slack", layout = US_LAYOUT },
+	{ key = "2", appName = "Kitty", layout = US_LAYOUT },
 	{ key = "3", callback = focusCenterChrome },
 	{ key = "4", appName = "Arc" },
 	{
