@@ -8,6 +8,19 @@ import hxparse.ParserError.ParserError;
 using StringTools;
 using Safety;
 
+class ParseErrorDetail extends hxparse.ParserError {
+  public final message:String;
+
+  public function new(pos:hxparse.Position, msg:String) {
+    super(pos);
+    this.message = msg;
+  }
+
+  override function toString() {
+    return "Parse error: " + message;
+  }
+}
+
 typedef Param = {
   final type:String;
   final description:String;
@@ -202,7 +215,7 @@ class LuaDocParser extends hxparse.Parser< hxparse.LexerTokenSource< DocToken >,
           case [OptionalMod]: '?$t';
           case [Rparen]:
             '$t';
-          case _: throw("Unclosed parenthesis");
+          case _: throw(new ParseErrorDetail(stream.curPos(), 'Unclosed parenthesis'));
         }
       case [DocType(Table)]:
         switch stream {
@@ -212,9 +225,10 @@ class LuaDocParser extends hxparse.Parser< hxparse.LexerTokenSource< DocToken >,
         }
       case [CurlyOpen, t = parseObj(new Map())]:
         parseType('$t');
-      case [DocType(TFunction)]: switch stream {
+      case [DocType(TFunction)]:
+        switch stream {
           case [Lparen, t = parseFunctionArgs()]: '$t';
-          case _: 'Function';
+          case _: parseType('Function');
         }
       case [Pipe]:
         var e = parseEither(acc);

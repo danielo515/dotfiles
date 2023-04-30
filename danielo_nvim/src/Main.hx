@@ -11,16 +11,6 @@ using vim.TableTools;
 using Lambda;
 using Test;
 
-/**
-
-  function M.create_sibling_file()
-  local path = vim.fn.expand "%:p:h"
-  local currentFileName = vim.fn.expand "%:t:r"
-  D.vim.input(function(filename)
-    vim.cmd("e " .. path .. "/" .. filename)
-  end, { currentFileName })
-  end
- */
 function createSiblingFile():Void {
   final path = Vim.expand(ExpandString.plus(CurentFile, Head));
   final currentFileName = vim.Fn.expand(ExpandString.plus(CurentFile, Tail));
