@@ -1,7 +1,4 @@
 {
-  "persistence.nvim": {
-    "commit": "77cf5a6"
-  },
   "tabout.nvim": {
     "commit": "be655cc"
   },
