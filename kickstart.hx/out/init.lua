@@ -533,6 +533,13 @@ Array.prototype.resize = function(self,len)
 end
 
 ___Main_Main_Fields_.new = {}
+___Main_Main_Fields_.createSiblingFile = function() 
+  local path = vim.fn.expand(_G.string.format("%s%s", "%", ":h"));
+  vim.fn.expand(_G.string.format("%s%s", "%", ":t"));
+  vim.ui.input(({completion = nil, prompt = "newFileName"}), function(filename) 
+    vim.cmd(Std.string(Std.string(Std.string("e ") .. Std.string(path)) .. Std.string("/")) .. Std.string(filename));
+  end);
+end
 ___Main_Main_Fields_.main = function() 
   vim.api.nvim_create_user_command("HaxeCmd", function(args) 
     vim.pretty_print(args);
@@ -581,6 +588,9 @@ ___Main_Main_Fields_.main = function()
   vim.api.nvim_create_user_command("CopyMessagesToClipboard", function(args) 
     ___Main_Main_Fields_.copy_messages_to_clipboard(args.args);
   end, ({bang = false, complete = nil, desc = "Copy the n number of messages to clipboard", force = true, nargs = 1, range = true}));
+  vim.api.nvim_create_user_command("CreateSiblingFile", function(_) 
+    ___Main_Main_Fields_.createSiblingFile();
+  end, ({bang = false, complete = nil, desc = "Create a file next to the current one", force = true, nargs = 0, range = true}));
   vim.api.nvim_create_user_command("GetPluginVersion", function(args) 
     local version = __packer__Packer_Packer_Fields_.get_plugin_version(args.args);
     vim.pretty_print(version);
@@ -2015,7 +2025,7 @@ vimx.join_paths = function(paths)
   do return paths:join(__vim__Vimx_Vimx_Fields_.pathSeparator) end;
 end
 vimx.file_exists = function(path) 
-  if (vim.fn.filereadable(path) == 0) then 
+  if (vim.fn.filereadable(path) == 1) then 
     do return true end;
   else
     do return false end;

@@ -1,9 +1,0 @@
-test-base.hxml
-# --each
-# -main tools.luaParser.ParserTest
-# --interp
-
-# --next
--main tools.MainTests
-
---interp
