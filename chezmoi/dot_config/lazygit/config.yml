@@ -1,4 +1,6 @@
 git:
+  pull:
+    mode: rebase
   paging:
     colorArg: always
     pager: diff-so-fancy
