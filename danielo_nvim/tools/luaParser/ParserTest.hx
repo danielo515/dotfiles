@@ -136,7 +136,7 @@ class ParserTest extends buddy.BuddySuite {
         }
       });
       it("should lex filetype_getLInes", {
-        final parser = new LuaParser(readFixture("fixtures/filetype_getLInes.lua"));
+        final parser = new LuaParser(readFixture("fixtures/filetype_getLines.lua"));
         final expected = {
           name: "getlines",
           namespace: ["M"],
