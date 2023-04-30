@@ -33,3 +33,4 @@ ember.d.ts
 .tool-versions
 # dist experiments
 dist-*
+!.gitkeep
