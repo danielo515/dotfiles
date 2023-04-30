@@ -224,7 +224,7 @@ local plugins = {
   "jdonaldson/vaxe",
   require "user.plugins.vim-notify",
   {
-    vim.fn.fnamemodify(chezmoi.get_chezmoi_dir(), ":h") .. "/danielo_nvim",
+    vim.fn.fnamemodify(chezmoi.get_chezmoi_dir(), ":h") .. "/haxe-nvim",
     config = function()
       require "danielo_nvim"
     end,
