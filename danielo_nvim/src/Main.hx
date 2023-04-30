@@ -11,6 +11,24 @@ using vim.TableTools;
 using Lambda;
 using Test;
 
+/**
+
+  function M.create_sibling_file()
+  local path = vim.fn.expand "%:p:h"
+  local currentFileName = vim.fn.expand "%:t:r"
+  D.vim.input(function(filename)
+    vim.cmd("e " .. path .. "/" .. filename)
+  end, { currentFileName })
+  end
+ */
+function createSiblingFile():Void {
+  final path = Vim.expand(ExpandString.plus(CurentFile, Head));
+  final currentFileName = vim.Fn.expand(ExpandString.plus(CurentFile, Tail));
+  vim.Ui.input({prompt: 'newFileName'}, (filename) -> {
+    Vim.cmd("e " + path + "/" + filename);
+  });
+}
+
 inline function command(name, description, fn, ?nargs) {
   vim.Api.nvim_create_user_command(name, fn, {
     desc: description,
@@ -87,6 +105,12 @@ function main() {
     "Copy the n number of messages to clipboard",
     (args) -> copy_messages_to_clipboard(args.args),
     ExactlyOne
+  );
+  command(
+    "CreateSiblingFile",
+    "Create a file next to the current one",
+    (_) -> createSiblingFile(),
+    None
   );
   command(
     "GetPluginVersion",
