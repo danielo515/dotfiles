@@ -94,11 +94,6 @@ M.config = function()
       button("e", " " .. kind.cmp_kind.File .. " New file", ":ene <BAR> startinsert <CR>"),
       button("s", " " .. kind.icons.magic .. " Restore", ":lua require('persistence').load()<cr>"),
       button(
-        "s",
-        " " .. kind.icons.magic .. " Restore last session",
-        ":lua require('persistence').load({ last = true })<cr>"
-      ),
-      button(
         "g",
         " " .. kind.icons.git .. " Git Status",
         ":lua require('lvim.core.terminal')._exec_toggle({cmd = 'lazygit', count = 1, direction = 'float'})<CR>"

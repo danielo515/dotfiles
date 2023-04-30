@@ -1,0 +1,125 @@
+[
+  {
+    "Constant" : [
+
+    ],
+    "submodules" : [
+
+    ],
+    "Function" : [
+
+    ],
+    "Variable" : [
+
+    ],
+    "stripped_doc" : [
+
+    ],
+    "desc" : "Hammerspoon has a module for custom keyboard shortcuts called",
+    "Deprecated" : [
+
+    ],
+    "type" : "Module",
+    "Constructor" : [
+
+    ],
+    "Field" : [
+
+    ],
+    "doc" : "Hammerspoon has a module for custom keyboard shortcuts called\n[hs.hotkey.modal](https:\/\/www.hammerspoon.org\/docs\/hs.hotkey.modal). Hyper\nis a [modern space cadet](https:\/\/stevelosh.com\/blog\/2012\/10\/a-modern-space-cadet\/)\ninspired wrapper on `hs.hotkey.modal` that changes one feature and adds\nanother:\n\n- changes the \"toggle\" style of `hs.hotkey.modal` to a \"momentary hold\" style\n- adds an optional `bindPassThrough` that drops out of Lua to send a \"Hyper chord\" to an OSX application.\n\nI chiefly use it to launch applications quickly from a single press, although I\nalso use it to create \"universal\" local bindings inspired by [Shawn Blanc's\nOopsieThings](https:\/\/thesweetsetup.com\/oopsiethings-applescript-for-things-on-mac\/).",
+    "Command" : [
+
+    ],
+    "Method" : [
+      {
+        "doc" : "Expects a config table in the form of {\"hyperKey\" = {mods, key}}.\n\nReturns:\n * self",
+        "parameters" : [
+
+        ],
+        "stripped_doc" : [
+          "Expects a config table in the form of {\"hyperKey\" = {mods, key}}.",
+          ""
+        ],
+        "def" : "Hyper:bindHotKeys(table) -> hs.hotkey.modal",
+        "notes" : [
+
+        ],
+        "signature" : "Hyper:bindHotKeys(table) -> hs.hotkey.modal",
+        "type" : "Method",
+        "returns" : [
+          " * self"
+        ],
+        "name" : "bindHotKeys",
+        "desc" : "Expects a config table in the form of {\"hyperKey\" = {mods, key}}."
+      },
+      {
+        "doc" : "Ensures the bundleId's application is running, then sends the \"hyper-chord\"\n(⌘+⌥+⌃+⇧) plus whatever you set as `key`.\n\nReturns:\n * self",
+        "parameters" : [
+
+        ],
+        "stripped_doc" : [
+          "Ensures the bundleId's application is running, then sends the \"hyper-chord\"",
+          "(⌘+⌥+⌃+⇧) plus whatever you set as `key`.",
+          ""
+        ],
+        "def" : "Hyper:bindPassThrough(key, bundleId) -> hs.hotkey.modal",
+        "notes" : [
+
+        ],
+        "signature" : "Hyper:bindPassThrough(key, bundleId) -> hs.hotkey.modal",
+        "type" : "Method",
+        "returns" : [
+          " * self"
+        ],
+        "name" : "bindPassThrough",
+        "desc" : "Ensures the bundleId's application is running, then sends the \"hyper-chord\""
+      }
+    ],
+    "items" : [
+      {
+        "doc" : "Expects a config table in the form of {\"hyperKey\" = {mods, key}}.\n\nReturns:\n * self",
+        "parameters" : [
+
+        ],
+        "stripped_doc" : [
+          "Expects a config table in the form of {\"hyperKey\" = {mods, key}}.",
+          ""
+        ],
+        "def" : "Hyper:bindHotKeys(table) -> hs.hotkey.modal",
+        "notes" : [
+
+        ],
+        "signature" : "Hyper:bindHotKeys(table) -> hs.hotkey.modal",
+        "type" : "Method",
+        "returns" : [
+          " * self"
+        ],
+        "name" : "bindHotKeys",
+        "desc" : "Expects a config table in the form of {\"hyperKey\" = {mods, key}}."
+      },
+      {
+        "doc" : "Ensures the bundleId's application is running, then sends the \"hyper-chord\"\n(⌘+⌥+⌃+⇧) plus whatever you set as `key`.\n\nReturns:\n * self",
+        "parameters" : [
+
+        ],
+        "stripped_doc" : [
+          "Ensures the bundleId's application is running, then sends the \"hyper-chord\"",
+          "(⌘+⌥+⌃+⇧) plus whatever you set as `key`.",
+          ""
+        ],
+        "def" : "Hyper:bindPassThrough(key, bundleId) -> hs.hotkey.modal",
+        "notes" : [
+
+        ],
+        "signature" : "Hyper:bindPassThrough(key, bundleId) -> hs.hotkey.modal",
+        "type" : "Method",
+        "returns" : [
+          " * self"
+        ],
+        "name" : "bindPassThrough",
+        "desc" : "Ensures the bundleId's application is running, then sends the \"hyper-chord\""
+      }
+    ],
+    "name" : "Hyper"
+  }
+]

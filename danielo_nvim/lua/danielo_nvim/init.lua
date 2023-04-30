@@ -527,6 +527,13 @@ Array.prototype.resize = function(self,len)
 end
 
 ___Main_Main_Fields_.new = {}
+___Main_Main_Fields_.createSiblingFile = function() 
+  local path = vim.fn.expand(_G.string.format("%s%s", "%", ":h"));
+  vim.fn.expand(_G.string.format("%s%s", "%", ":t"));
+  vim.ui.input(({completion = nil, prompt = "newFileName"}), function(filename) 
+    vim.cmd(Std.string(Std.string(Std.string("e ") .. Std.string(path)) .. Std.string("/")) .. Std.string(filename));
+  end);
+end
 ___Main_Main_Fields_.main = function() 
   vim.api.nvim_create_user_command("HaxeCmd", function(args) 
     vim.pretty_print(args);
@@ -575,12 +582,20 @@ ___Main_Main_Fields_.main = function()
   vim.api.nvim_create_user_command("CopyMessagesToClipboard", function(args) 
     ___Main_Main_Fields_.copy_messages_to_clipboard(args.args);
   end, ({bang = false, complete = nil, desc = "Copy the n number of messages to clipboard", force = true, nargs = 1, range = true}));
+  vim.api.nvim_create_user_command("CreateSiblingFile", function(_) 
+    ___Main_Main_Fields_.createSiblingFile();
+  end, ({bang = false, complete = nil, desc = "Create a file next to the current one", force = true, nargs = 0, range = true}));
   vim.api.nvim_create_user_command("GetPluginVersion", function(args) 
     local version = __packer__Packer_Packer_Fields_.get_plugin_version(args.args);
     vim.pretty_print(version);
     vimx.copyToClipboard(version);
   end, ({bang = false, complete = nil, desc = "Gets the git version of a installed packer plugin", force = true, nargs = 1, range = true}));
+  local nargs = nil;
+  vim.api.nvim_create_user_command("Scratch", function(_) 
+    vim.api.nvim_win_set_buf(0, vim.api.nvim_create_buf(false, true));
+  end, ({bang = false, complete = nil, desc = "creates a scratch buffer", force = true, nargs = nargs, range = true}));
   vim.keymap.set("n", "tl", ___Main_Main_Fields_.nexTab, ({desc = "Go to next tab", expr = false, silent = true}));
+  vim.keymap.set("n", "<c-m-f>", ":FzfLua lines<cr>", ({desc = "Search in open files", expr = false, silent = true}));
   vim.o.inccommand = "split";
 end
 ___Main_Main_Fields_.runGh = function(args) 
@@ -622,6 +637,7 @@ ___Main_Main_Fields_.copyGhUrl = function(line)
   end;
 end
 ___Main_Main_Fields_.setup = function() 
+  ___Main_Main_Fields_.main();
   vim.pretty_print("ran setup");
 end
 _hx_exports["setup"] = ___Main_Main_Fields_.setup

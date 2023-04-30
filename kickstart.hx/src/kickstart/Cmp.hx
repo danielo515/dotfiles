@@ -1,5 +1,6 @@
 package kickstart;
 
+import vim.plugin.Plugin.VimPlugin;
 import plugins.Plugins.Luasnip;
 import lua.Table;
 
@@ -19,11 +20,32 @@ extern class Preset {
   function insert(arg:Dict):Dict;
 }
 
-@:luaRequire('cmp')
-extern class Cmp {
-  static final mapping:{preset:Preset};
-  static function setup(config:CmpConfig):Void;
-  static inline function getMappings():Dict {
+/*
+   This class is meant to be used as a namespace to be used within
+   Cmp , and be annotated with `@:native('setup')`.
+   The lua code looks like this, where setup is both a function and a table:
+   ```lua
+    cmp.setup.cmdline(':', {
+      mapping = cmp.mapping.preset.cmdline(),
+      sources = cmp.config.sources({
+        { name = 'path' }
+      }, {
+        { name = 'cmdline' }
+      })
+    })
+  ```
+ */
+extern class Setup {
+  @:luaDotMethod
+  function cmdline(cmd:String, config:CmpConfig):Void;
+}
+
+extern class Cmp implements VimPlugin {
+  inline static final libName = 'cmp';
+  final mapping:{preset:Preset};
+  @:luaDotMethod function setup(config:CmpConfig):Void;
+  @:native('setup') final setups:Setup;
+  static inline function getMappings(cmp:Cmp):Dict {
     final ls = Luasnip.require();
     return untyped __lua__(
       "
@@ -55,17 +77,30 @@ extern class Cmp {
     end, { 'i', 's' }),
   }
       ",
-      Cmp,
+      cmp,
       ls
     );
   }
   static public inline function configure():Void {
-    final mapping = Cmp.mapping.preset.insert(getMappings());
+    final cmp = Cmp.require();
+    if (cmp == null)
+      return;
+    final mapping = cmp.mapping.preset.insert(Cmp.getMappings(cmp));
     final ls = Luasnip.require();
-    Cmp.setup({
+    cmp.setup({
       snippet: {expand: (args:Dynamic) -> ls!.lsp_expand(args.body)},
       mapping: mapping,
-      sources: [{name: 'luasnip'}, {name: 'nvim_lsp'}]
+      sources: [
+        {name: 'luasnip'},
+        {name: 'nvim_lsp'},
+        {name: 'rg'},
+        {name: 'tmux'}
+      ]
+    });
+    // Use cmdline & path source for ':' (if you enabled `native_menu`, this won't work anymore).
+    cmp.setups.cmdline(':', {
+      mapping: mapping,
+      sources: [{name: 'path'}, {name: 'cmdline'}]
     });
   }
 }

@@ -1,3 +1,6 @@
 [submodule "zsh/custom/plugins/zsh-nvm"]
 	path = zsh/custom/plugins/zsh-nvm
 	url = https://github.com/lukechilds/zsh-nvm
+[submodule "chezmoi/dot_hammerspoon/Spoons/StreamDeckButton.spoon"]
+	path = chezmoi/dot_hammerspoon/Spoons/StreamDeckButton.spoon
+	url = git@github.com:danielo515/StreamDeckButton.spoon.git

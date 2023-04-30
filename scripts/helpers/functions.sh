@@ -1,9 +1,16 @@
 #!/bin/bash
+# This is a litlle collection of util functions. They are basically mini commands
+# that I want to use in my scritps or in my shell sessions.
 # Functions
 
 # Can be used in if conditions to check the existence of something
 exists() {
   type "$1" >/dev/null 2>/dev/null
+}
+
+
+favs() {
+  fd . $(chezmoi source-path) | fzf --preview 'bat --color=always --style=header,grid --line-range :500 {}'
 }
 
 echo_header() {

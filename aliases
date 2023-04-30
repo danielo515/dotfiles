@@ -40,6 +40,7 @@ alias gac='ga && gcm'
 alias push='git push'
 alias pushu='git push -u origin HEAD'
 alias gundo='git reset --soft HEAD~1'
+alias cdsub='cd $(git submodule --quiet foreach "echo \$path" | fzf)' # cd to git submodule with fzf
 
 function git_grep_file() {
   #git_grep_file filename str
@@ -119,3 +120,4 @@ check_command() {
 if [[ $(check_command exa) ]]; then
 alias ls='exa'
 fi
+alias sloc='scc'

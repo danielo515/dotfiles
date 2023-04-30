@@ -1,6 +1,7 @@
 import:
   - ./keys.yml
 window:
+  option_as_alt: Both
   position:
     x: 550
     y: 0
@@ -13,7 +14,7 @@ window:
   # Values for `decorations` (macOS only):
   #     - transparent: Title bar, transparent background and title bar buttons
   #     - buttonless: Title bar, transparent background and no title bar buttons
-  decorations: transparent
+  decorations: buttonless
   opacity: 1.0
   # Spread additional padding evenly around the terminal content.
   dynamic_padding: true
@@ -27,19 +28,19 @@ scrolling:
 
 # Font configuration
 font:
-  size: 12.5
+  size: 12.0
   normal:
-    family: "Hack Nerd Font Mono"
+    family: "Inconsolata Nerd Font"
     style: Regular
 
   # Bold font face
   bold:
-    family: "VictorMono Nerd Font" 
+    family: "Iosevka Nerd Font Mono"
     style: Bold
 
   # Italic font face
   italic:
-    family: "VictorMono Nerd Font"
+    family: "Iosevka Nerd Font Mono"
     style: ExtraLight
     # Bold italic font face
     #bold_italic:
@@ -85,14 +86,13 @@ cursor:
     blinking: On
 # Live config reload (changes require restart)
 live_config_reload: true
-alt_send_esc: true
 
 key_bindings:
   # (macOS only)
   # make <C-6> work in NVim (CTRL-^)
   - { key: Key6, mods: Control, chars: "\x1e" }
   # Map alt on mac to proper key code
-  - { key: K, mods: Option, chars: "\ek" }
+  - { key: P, mods: Command, chars: "\x02)" }
   - { key: Key9, mods: Command, action: ResetFontSize }
   - { key: Equals, mods: Command, action: IncreaseFontSize }
   - { key: Plus, mods: Command, action: IncreaseFontSize }

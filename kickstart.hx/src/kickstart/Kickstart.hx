@@ -1,5 +1,7 @@
 package kickstart;
 
+import plugins.Plugins.TmuxNavigation;
+import plugins.Plugins.NeoTree;
 import plugins.FzfLua;
 import plugins.LspConfig.Lspconfig;
 
@@ -28,6 +30,17 @@ function main() {
     {name: "wbthomason/packer.nvim"},
     {name: "kylechui/nvim-surround"},
     {name: "folke/which-key.nvim"},
+    {name: "nvim-lua/plenary.nvim"},
+    {
+      name: "nvim-neo-tree/neo-tree.nvim",
+      branch: "v2.x",
+      requires: t([
+        "nvim-lua/plenary.nvim",
+        "nvim-tree/nvim-web-devicons",
+        "MunifTanjim/nui.nvim",
+      ]),
+      config: NeoTree.configure,
+    },
     { // LSP Configuration & Plugins
       name: "neovim/nvim-lspconfig",
       requires: t([
@@ -42,10 +55,16 @@ function main() {
         "folke/neodev.nvim",
       ]),
     },
-    { // Autocompletion
+    // -- Autocompletion
+    {
       name: "hrsh7th/nvim-cmp",
       requires: t(["hrsh7th/cmp-nvim-lsp", "L3MON4D3/LuaSnip", "saadparwaiz1/cmp_luasnip"]),
     },
+
+    {name: "lukas-reineke/cmp-rg"},
+    {name: "hrsh7th/cmp-cmdline", commit: "9c0e331"},
+    {name: "andersevenrud/cmp-tmux"},
+    // -- Autocompletion end
     { // Highlight, edit, and navigate code
       name: "nvim-treesitter/nvim-treesitter",
       run: 'pcall(require("nvim-treesitter.install").update({ with_sync = true }))'
@@ -73,7 +92,8 @@ function main() {
       requires: t(["nvim-tree/nvim-web-devicons"]),
       config: plugins.FzfLua.configure
     },
-    {name: "jdonaldson/vaxe"}
+    {name: "jdonaldson/vaxe"},
+    {name: "alexghergh/nvim-tmux-navigation"},
   ];
 
   final is_bootstrap = Packer.init(plugins);
@@ -95,6 +115,8 @@ function main() {
   setupPlugins();
   vimOptions();
   autoCommands();
+  // Is not very well know, but it is true that my personal config exist within haxe-nvim
+  Main.setup();
 }
 
 function autoCommands() {
@@ -153,16 +175,8 @@ function onAttach(x:Dynamic, bufnr:Buffer):Void {
   // nmap('gr', require('telescope.builtin').lsp_references, '[G]oto [R]eferences');
   nmap('gI', LspBuf.implementation, '[G]oto [I]mplementation');
   nmap('<leader>D', LspBuf.type_definition, 'Type [D]efinition');
-  // nmap(
-  //   '<leader>ds',
-  //   require('telescope.builtin').lsp_document_symbols,
-  //   '[D]ocument [S]ymbols'
-  // );
-  // nmap(
-  //   '<leader>ws',
-  //   require('telescope.builtin').lsp_dynamic_workspace_symbols,
-  //   '[W]orkspace [S]ymbols'
-  // ); // See `:help K` for why this keymap
+  nmap('<leader>ds', ':FzfLua lsp_document_symbols<cr>', '[D]ocument [S]ymbols');
+  nmap('<leader>wd', ':FzfLua diagnostics_workspace<CR>', '[W]orkspace [D]iagnostics');
 
   nmap('K', LspBuf.hover, 'Hover Documentation');
   // imap('<C-k>', LspBuf.signature_help, 'Signature Documentation'); // Lesser used LSP functionality
@@ -195,6 +209,7 @@ function setupPlugins() {
   Mason.require()!.setup();
   Fidget.require()!.setup();
   Cmp.configure();
+  TmuxNavigation.configure();
 
   final capabilities = Cmp_nvim_lsp.require()!.default_capabilities(
     vim.Lsp.Protocol.make_client_capabilities()
@@ -356,9 +371,17 @@ function keymaps() {
       "<Cmd>lua require('fzf-lua').help_tags()<CR>",
       {desc: 'Find help tags', silent: true}
     );
-    Keymap.set(t([Normal]), '<c-k>', "<c-w>k", {desc: 'Move to window up', silent: true});
-    Keymap.set(t([Normal]), '<c-j>', "<c-w>j", {desc: 'Move to window down', silent: true});
-    Keymap.set(t([Normal]), '<c-h>', "<c-w>h", {desc: 'Move to window left', silent: true});
-    Keymap.set(t([Normal]), '<c-l>', "<c-w>l", {desc: 'Move to window right', silent: true});
+    // Keymap.set(t([Normal]), '<c-k>', "<c-w>k", {desc: 'Move to window up', silent: true});
+    // Keymap.set(t([Normal]), '<c-j>', "<c-w>j", {desc: 'Move to window down', silent: true});
+    // Keymap.set(t([Normal]), '<c-h>', "<c-w>h", {desc: 'Move to window left', silent: true});
+    // Keymap.set(t([Normal]), '<c-l>', "<c-w>l", {desc: 'Move to window right', silent: true});
+    NeoTree.require().run(_ -> {
+      Keymap.set(
+        Normal,
+        '<leader>e',
+        ":Neotree filesystem reveal left toggle<cr>",
+        {desc: 'Toggle NeoTree', silent: true, expr: false}
+      );
+    });
   }
 }

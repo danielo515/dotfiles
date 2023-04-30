@@ -1,0 +1,6 @@
+git:
+  paging:
+    colorArg: always
+    pager: diff-so-fancy
+showIcons: true
+

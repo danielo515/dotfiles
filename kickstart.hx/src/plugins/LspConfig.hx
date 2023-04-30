@@ -1,7 +1,6 @@
 package plugins;
 
 import vim.plugin.Plugin.VimPlugin;
-import vim.Vimx;
 import vim.VimTypes;
 
 extern class LspConfigSetupFn {

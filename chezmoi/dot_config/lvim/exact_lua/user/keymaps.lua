@@ -23,7 +23,8 @@ end, "FZF find files")
 lvim.keys.normal_mode["<Tab>"] = "<cmd>lua require('user.telescope').buffers()<cr>"
 lvim.keys.normal_mode["<S-Tab>"] = ":Neotree float reveal<cr>"
 -- Other
-lvim.keys.normal_mode["<A-k>"] = ":Telescope command_center<CR>"
+lvim.keys.normal_mode["<A-k>"] = false
+lvim.keys.normal_mode["<M-k>"] = false
 lvim.keys.normal_mode["<C-N>"] = ":NvimTreeFindFile<cr>"
 lvim.keys.normal_mode["<C-;>"] = ":Telescope command_history<cr>"
 lvim.keys.normal_mode[",n"] = "<cmd>lua vim.diagnostic.goto_next()<cr>"
@@ -81,8 +82,10 @@ nmap("<C-C>", bind(vim.api.nvim_win_close, 0, false), "Close current window")
 nmap("<C-P>", ":Telescope command_center<cr>", "Open command center")
 nmap("<C-s>", ":%s/\\v", "Search and replace whole file", false)
 nmap("<M-Tab>", ":b#<cr>", "Alternate file", true)
+nmap("<c-g>", ":cnext!<cr>", "Next in quickfix", true)
+nmap("<A-k>", ":cnext!<cr>", "Next in quickfix", true)
 nmap(",h", ":Gitsigns next_hunk<cr>", "Next git hunk")
-nmap(",c", ":cNext!<cr>", "Next item in quickfix")
+nmap(",c", ":cNext!<cr>", "Prev item in quickfix")
 nmap(",s", ":s/\\v", "Search/replace local line", false)
 vmap(",s", ":s/\\v", "Search/replace local line", false)
 

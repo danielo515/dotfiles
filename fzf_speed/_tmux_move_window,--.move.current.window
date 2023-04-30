@@ -1,0 +1,13 @@
+#!/usr/bin/env sh
+# This only works with named sessions, index based ones does not work
+# tmux list-sessions formating
+TARGET_SPEC="#{session_name}"
+
+FZF_COMMAND() {
+  fzf -e -i --prompt="Select a session to move the window to: " --info=default --layout=reverse --tiebreak=index
+}
+
+# select window
+SESSION="$(tmux list-sessions -F "$TARGET_SPEC" | FZF_COMMAND)" || exit 0
+
+tmux move-window -t "$SESSION" && tmux switch-client -t "$SESSION"

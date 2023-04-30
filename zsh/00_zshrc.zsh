@@ -66,15 +66,15 @@ unsetopt auto_name_dirs
 zstyle ':completion:*:*:vim:*:*files' ignored-patterns '*.class'
 
 # -- Command History -----------------------------------------------------------
-export HISTSIZE=900
-export SAVEHIST=900
+export HISTSIZE=2000
+export SAVEHIST=2000
 
 # -- Options -------------------------------------------------------------------
 unsetopt correct_all
 unsetopt correct
 
 # -- Variables -----------------------------------------------------------------
-export EDITOR="$(brew --prefix)/bin/nvim"
+export EDITOR="nvim"
 alias vim=nvim
 alias vi=nvim
 
@@ -134,18 +134,6 @@ export PATH="$PATH:$DOTFILES/bin"
 if [[ -f "$HOME/.xsh" ]]; then
     source $HOME/.xsh
 fi
-
-# -- fzf -----------------------------------------------------------------------
-if [ -f ~/.fzf.zsh ]; then
-    source ~/.fzf.zsh
-    export FZF_TMUX=1
-    export FZF_DEFAULT_OPTS="--color 16,info:6,hl:13,hl+:13"
-    export FZF_DEFAULT_COMMAND="rg --files-with-matches --no-messages -F ''"
-    export FZF_CTRL_T_COMMAND="rg --files-with-matches --no-messages --hidden -F '' | grep -v .git/"
-    # fzf-tab opens in a nice popup
-    zstyle ':fzf-tab:*' fzf-command ftb-tmux-popup
-fi
-
 # -- asdf ---------------------------------------------------------------------
 if [[ -d "$HOME/.asdf" ]]; then
     source $HOME/.asdf/asdf.sh
@@ -207,7 +195,6 @@ export PATH="/usr/local/opt/ruby/bin:$PATH"
 # added by travis gem
 [ ! -s /Users/danielo/.travis/travis.sh ] || source /Users/danielo/.travis/travis.sh
 export PATH="/usr/local/opt/ruby/bin:$PATH"
-
 # opam configuration
 [[ ! -r /Users/danielo/.opam/opam-init/init.zsh ]] || source /Users/danielo/.opam/opam-init/init.zsh  > /dev/null 2> /dev/null
 

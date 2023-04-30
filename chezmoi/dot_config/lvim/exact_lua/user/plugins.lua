@@ -34,25 +34,23 @@ local plugins = {
   require "user.plugins.dial-config",
   require "user.plugins.fzf-config",
   -- require "user.plugins.pomodoro-config",
-  require "user.plugins.neogit-config",
+  -- require "user.plugins.neogit-config", -- Did not liked it much
   require "user.plugins.git-conflict-config",
   require "user.plugins.search-replace",
   require "user.plugins.copilot-config",
   -- Awesome diff view
   require "user.diffview",
-  require "user.plugins.cheat",
   require "user.plugins.fidget-config",
   { "mtdl9/vim-log-highlighting", ft = { "text", "log" } },
-  { -- Navigation by jumping to LSP objects like hop.nvim
-    "ziontee113/syntax-tree-surfer",
-    config = function()
-      require "user.syntax_tree_surfer"
-    end,
-  },
+  -- { -- Navigation by jumping to LSP objects like hop.nvim
+  --   "ziontee113/syntax-tree-surfer",
+  --   config = function()
+  --     require "user.syntax_tree_surfer"
+  --   end,
+  -- },
   require "user.plugins.trouble", -- some lsp diagnosis
 
   -- better surround options
-  -- { "tpope/vim-surround" },
   require "user.plugins.nvim-surround",
   "wellle/targets.vim",
   { "tpope/vim-repeat" },
@@ -109,6 +107,7 @@ local plugins = {
       require("user.neoclip").config()
     end,
   },
+  "hrsh7th/cmp-copilot",
   -- powerful search and replace
   {
     "windwp/nvim-spectre",
