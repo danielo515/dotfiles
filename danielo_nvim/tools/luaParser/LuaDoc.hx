@@ -196,7 +196,7 @@ class LuaDocParser extends hxparse.Parser< hxparse.LexerTokenSource< DocToken >,
 
   public function parseType(acc = '') {
     return switch stream {
-      case [Lparen, t = parseType()]: // This is ridiculous, but neovim people thinks is nice
+      case [Lparen, t = parseType()]: // This is ridiculous, but neovim people think it's nice
         Log.print("Hey within parens");
         switch stream {
           case [OptionalMod]: '?$t';
@@ -216,12 +216,16 @@ class LuaDocParser extends hxparse.Parser< hxparse.LexerTokenSource< DocToken >,
           case [Lparen, t = parseFunctionArgs()]: '$t';
           case _: 'Function';
         }
-      case [Pipe, e = parseEither(acc)]: parseType(e);
+      case [Pipe]:
+        var e = parseEither(acc);
+        parseType(e);
       case [DocType(t)]:
         switch stream {
           case [ArrayMod]: 'Array<$t>';
           case [OptionalMod]: '?$t';
-          case [Pipe, e = parseEither('$t')]: e;
+          case [Pipe]:
+            var e = parseEither('$t');
+            parseType(e);
           case _: '$t';
         }
       case _: acc;
