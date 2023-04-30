@@ -12,6 +12,8 @@ import haxe.Json;
 import tools.luaParser.LuaDoc;
 import hxparse.ParserError.ParserError;
 
+using StringTools;
+
 typedef FunctionDefinition = {
   name:String,
   namespace:Array< String >,
@@ -170,7 +172,7 @@ class LuaParser extends hxparse.Parser< hxparse.LexerTokenSource< Token >, Token
         luaDoc.push(paramParsed);
         parseBlockComment(description, luaDoc);
       case [{tok: LuaDocReturn(content)}]:
-        final returnParsed = new LuaDocParser(ByteData.ofString(content)).parseReturn();
+        final returnParsed = new LuaDocParser(ByteData.ofString(content.trim())).parseReturn();
         {description: description.join('\n'), luaDoc: luaDoc, returnDoc: returnParsed}
       case _: {description: description.join('\n'), luaDoc: luaDoc, returnDoc: null};
     }

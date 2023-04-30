@@ -178,7 +178,8 @@ class ParserTest extends buddy.BuddySuite {
             description.should.be(expected.description);
             isPrivate.should.be(expected.isPrivate);
             rt.description.should.be("Array of lines, or string when end_lnum is omitted");
-            rt.type.should.be("Either<String, Table<String>>");
+            rt.type.should.be("Either<Table<String>, String>");
+            rt.description.should.be("Array of lines, or string when end_lnum is omitted");
           case _: fail("Expected function with docs");
         }
       });

@@ -8,19 +8,6 @@ import hxparse.ParserError.ParserError;
 using StringTools;
 using Safety;
 
-class ParseErrorDetail extends hxparse.ParserError {
-  public final message:String;
-
-  public function new(pos:hxparse.Position, msg:String) {
-    super(pos);
-    this.message = msg;
-  }
-
-  override function toString() {
-    return "Parse error: " + message;
-  }
-}
-
 typedef Param = {
   final type:String;
   final description:String;
@@ -201,6 +188,9 @@ class LuaDocParser extends hxparse.Parser< hxparse.LexerTokenSource< DocToken >,
       case [SPC]:
         parseReturn();
       case [t = parseType()]:
+        if (peek(0) == SPC) {
+          junk();
+        }
         stream.ruleset = LuaDocLexer.desc;
         final text = parseDesc();
         return {type: t, description: text};
@@ -240,7 +230,8 @@ class LuaDocParser extends hxparse.Parser< hxparse.LexerTokenSource< DocToken >,
           case [Pipe]:
             var e = parseEither('$t');
             parseType(e);
-          case _: '$t';
+          case _:
+            '$t';
         }
       case _: acc;
     }
