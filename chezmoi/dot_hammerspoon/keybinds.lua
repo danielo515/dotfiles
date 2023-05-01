@@ -15,6 +15,16 @@ local function mainAppToGrid()
 	ws.arrangeAppWindowsInGrid(mainAppName)
 end
 
+-- Puts the 3 most recen windows in a nice grid
+local function gridRecents()
+	hs.grid.setGrid("10x10")
+	local windows = hs.window.filter.new():getWindows()
+	local screen = hs.screen.mainScreen()
+	hs.grid.set(windows[1], { x = 5, y = 0, w = 5, h = 10 }, screen)
+	hs.grid.set(windows[2], { x = 0, y = 0, w = 5, h = 5 }, screen)
+	hs.grid.set(windows[3], { x = 0, y = 5, w = 5, h = 5 }, screen)
+end
+
 -- toggle the hammerspoon console, focusing on the previous app when hidden
 local lastApp = nil
 local function toggleConsole()
@@ -65,6 +75,7 @@ local hyperApps = {
 	{ key = "g", callback = mainAppToGrid },
 	{ key = "c", callback = toggleConsole },
 	{ key = "i", callback = ws.debugWindow },
+	{ key = "f", callback = gridRecents },
 }
 
 local hyper = { "cmd", "shift", "alt", "ctrl" }
