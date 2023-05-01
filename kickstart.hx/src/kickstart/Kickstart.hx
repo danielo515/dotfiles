@@ -1,5 +1,6 @@
 package kickstart;
 
+import plugins.Plugins.KylechuiNvimSurround;
 import plugins.Plugins.TmuxNavigation;
 import plugins.Plugins.NeoTree;
 import plugins.FzfLua;
@@ -28,7 +29,6 @@ import vim.VimTypes;
 function main() {
   final plugins:Array< Plugin > = [
     {name: "wbthomason/packer.nvim"},
-    {name: "kylechui/nvim-surround"},
     {name: "folke/which-key.nvim"},
     {name: "nvim-lua/plenary.nvim"},
     {
@@ -94,6 +94,10 @@ function main() {
     },
     {name: "jdonaldson/vaxe"},
     {name: "alexghergh/nvim-tmux-navigation"},
+    {
+      name: "kylechui/nvim-surround",
+      tag: '*'
+    },
   ];
 
   final is_bootstrap = Packer.init(plugins);
@@ -208,6 +212,7 @@ function setupPlugins() {
   Neodev.require()!.setup();
   Mason.require()!.setup();
   Fidget.require()!.setup();
+  KylechuiNvimSurround.require()!.setup();
   Cmp.configure();
   TmuxNavigation.configure();
 

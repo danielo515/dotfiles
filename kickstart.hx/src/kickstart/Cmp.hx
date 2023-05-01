@@ -102,5 +102,9 @@ extern class Cmp implements VimPlugin {
       mapping: mapping,
       sources: [{name: 'path'}, {name: 'cmdline'}]
     });
+    cmp.setups.cmdline('/', {
+      mapping: mapping,
+      sources: [{name: 'buffer'}, {name: 'cmdline_history'}]
+    });
   }
 }

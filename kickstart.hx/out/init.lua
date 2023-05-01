@@ -601,6 +601,7 @@ ___Main_Main_Fields_.main = function()
     vim.api.nvim_win_set_buf(0, vim.api.nvim_create_buf(false, true));
   end, ({bang = false, complete = nil, desc = "creates a scratch buffer", force = true, nargs = nargs, range = true}));
   vim.keymap.set("n", "tl", ___Main_Main_Fields_.nexTab, ({desc = "Go to next tab", expr = false, silent = true}));
+  vim.keymap.set("c", "<C-A>", "<Home>", ({desc = "Home in cmd", expr = false, silent = true}));
   vim.keymap.set("n", "<c-m-f>", ":FzfLua lines<cr>", ({desc = "Search in open files", expr = false, silent = true}));
   vim.o.inccommand = "split";
 end
@@ -930,7 +931,7 @@ __kickstart__Kickstart_Kickstart_Fields_.main = function()
         module=spec.module,
         module_pattern=spec.module_pattern
       }
-  local spec = _hx_o({__fields__={name=true},name="kylechui/nvim-surround"});
+  local spec = _hx_o({__fields__={name=true},name="folke/which-key.nvim"});
   local plugins1 = { 
         spec.name, 
         disable=spec.disable,
@@ -959,7 +960,7 @@ __kickstart__Kickstart_Kickstart_Fields_.main = function()
         module=spec.module,
         module_pattern=spec.module_pattern
       }
-  local spec = _hx_o({__fields__={name=true},name="folke/which-key.nvim"});
+  local spec = _hx_o({__fields__={name=true},name="nvim-lua/plenary.nvim"});
   local plugins2 = { 
         spec.name, 
         disable=spec.disable,
@@ -988,7 +989,7 @@ __kickstart__Kickstart_Kickstart_Fields_.main = function()
         module=spec.module,
         module_pattern=spec.module_pattern
       }
-  local spec = _hx_o({__fields__={name=true},name="nvim-lua/plenary.nvim"});
+  local spec = _hx_o({__fields__={name=true,branch=true,requires=true,config=true},name="nvim-neo-tree/neo-tree.nvim",branch="v2.x",requires=({"nvim-lua/plenary.nvim","nvim-tree/nvim-web-devicons","MunifTanjim/nui.nvim"}),config=function(_,...) return __plugins__Plugins_Plugins_Impl_.configure(...) end});
   local plugins3 = { 
         spec.name, 
         disable=spec.disable,
@@ -1017,7 +1018,7 @@ __kickstart__Kickstart_Kickstart_Fields_.main = function()
         module=spec.module,
         module_pattern=spec.module_pattern
       }
-  local spec = _hx_o({__fields__={name=true,branch=true,requires=true,config=true},name="nvim-neo-tree/neo-tree.nvim",branch="v2.x",requires=({"nvim-lua/plenary.nvim","nvim-tree/nvim-web-devicons","MunifTanjim/nui.nvim"}),config=function(_,...) return __plugins__Plugins_Plugins_Impl_.configure(...) end});
+  local spec = _hx_o({__fields__={name=true,requires=true},name="neovim/nvim-lspconfig",requires=({"williamboman/mason.nvim","williamboman/mason-lspconfig.nvim","j-hui/fidget.nvim","folke/neodev.nvim"})});
   local plugins4 = { 
         spec.name, 
         disable=spec.disable,
@@ -1046,7 +1047,7 @@ __kickstart__Kickstart_Kickstart_Fields_.main = function()
         module=spec.module,
         module_pattern=spec.module_pattern
       }
-  local spec = _hx_o({__fields__={name=true,requires=true},name="neovim/nvim-lspconfig",requires=({"williamboman/mason.nvim","williamboman/mason-lspconfig.nvim","j-hui/fidget.nvim","folke/neodev.nvim"})});
+  local spec = _hx_o({__fields__={name=true,requires=true},name="hrsh7th/nvim-cmp",requires=({"hrsh7th/cmp-nvim-lsp","L3MON4D3/LuaSnip","saadparwaiz1/cmp_luasnip"})});
   local plugins5 = { 
         spec.name, 
         disable=spec.disable,
@@ -1075,7 +1076,7 @@ __kickstart__Kickstart_Kickstart_Fields_.main = function()
         module=spec.module,
         module_pattern=spec.module_pattern
       }
-  local spec = _hx_o({__fields__={name=true,requires=true},name="hrsh7th/nvim-cmp",requires=({"hrsh7th/cmp-nvim-lsp","L3MON4D3/LuaSnip","saadparwaiz1/cmp_luasnip"})});
+  local spec = _hx_o({__fields__={name=true},name="lukas-reineke/cmp-rg"});
   local plugins6 = { 
         spec.name, 
         disable=spec.disable,
@@ -1104,7 +1105,7 @@ __kickstart__Kickstart_Kickstart_Fields_.main = function()
         module=spec.module,
         module_pattern=spec.module_pattern
       }
-  local spec = _hx_o({__fields__={name=true},name="lukas-reineke/cmp-rg"});
+  local spec = _hx_o({__fields__={name=true,commit=true},name="hrsh7th/cmp-cmdline",commit="9c0e331"});
   local plugins7 = { 
         spec.name, 
         disable=spec.disable,
@@ -1133,7 +1134,7 @@ __kickstart__Kickstart_Kickstart_Fields_.main = function()
         module=spec.module,
         module_pattern=spec.module_pattern
       }
-  local spec = _hx_o({__fields__={name=true,commit=true},name="hrsh7th/cmp-cmdline",commit="9c0e331"});
+  local spec = _hx_o({__fields__={name=true},name="andersevenrud/cmp-tmux"});
   local plugins8 = { 
         spec.name, 
         disable=spec.disable,
@@ -1162,7 +1163,7 @@ __kickstart__Kickstart_Kickstart_Fields_.main = function()
         module=spec.module,
         module_pattern=spec.module_pattern
       }
-  local spec = _hx_o({__fields__={name=true},name="andersevenrud/cmp-tmux"});
+  local spec = _hx_o({__fields__={name=true,run=true},name="nvim-treesitter/nvim-treesitter",run="pcall(require(\"nvim-treesitter.install\").update({ with_sync = true }))"});
   local plugins9 = { 
         spec.name, 
         disable=spec.disable,
@@ -1191,7 +1192,7 @@ __kickstart__Kickstart_Kickstart_Fields_.main = function()
         module=spec.module,
         module_pattern=spec.module_pattern
       }
-  local spec = _hx_o({__fields__={name=true,run=true},name="nvim-treesitter/nvim-treesitter",run="pcall(require(\"nvim-treesitter.install\").update({ with_sync = true }))"});
+  local spec = _hx_o({__fields__={name=true},name="b0o/schemastore.nvim"});
   local plugins10 = { 
         spec.name, 
         disable=spec.disable,
@@ -1220,7 +1221,7 @@ __kickstart__Kickstart_Kickstart_Fields_.main = function()
         module=spec.module,
         module_pattern=spec.module_pattern
       }
-  local spec = _hx_o({__fields__={name=true},name="b0o/schemastore.nvim"});
+  local spec = _hx_o({__fields__={name=true},name="tpope/vim-fugitive"});
   local plugins11 = { 
         spec.name, 
         disable=spec.disable,
@@ -1249,7 +1250,7 @@ __kickstart__Kickstart_Kickstart_Fields_.main = function()
         module=spec.module,
         module_pattern=spec.module_pattern
       }
-  local spec = _hx_o({__fields__={name=true},name="tpope/vim-fugitive"});
+  local spec = _hx_o({__fields__={name=true},name="tpope/vim-rhubarb"});
   local plugins12 = { 
         spec.name, 
         disable=spec.disable,
@@ -1278,7 +1279,7 @@ __kickstart__Kickstart_Kickstart_Fields_.main = function()
         module=spec.module,
         module_pattern=spec.module_pattern
       }
-  local spec = _hx_o({__fields__={name=true},name="tpope/vim-rhubarb"});
+  local spec = _hx_o({__fields__={name=true},name="lewis6991/gitsigns.nvim"});
   local plugins13 = { 
         spec.name, 
         disable=spec.disable,
@@ -1307,7 +1308,7 @@ __kickstart__Kickstart_Kickstart_Fields_.main = function()
         module=spec.module,
         module_pattern=spec.module_pattern
       }
-  local spec = _hx_o({__fields__={name=true},name="lewis6991/gitsigns.nvim"});
+  local spec = _hx_o({__fields__={name=true},name="navarasu/onedark.nvim"});
   local plugins14 = { 
         spec.name, 
         disable=spec.disable,
@@ -1336,7 +1337,7 @@ __kickstart__Kickstart_Kickstart_Fields_.main = function()
         module=spec.module,
         module_pattern=spec.module_pattern
       }
-  local spec = _hx_o({__fields__={name=true},name="navarasu/onedark.nvim"});
+  local spec = _hx_o({__fields__={name=true},name="nvim-lualine/lualine.nvim"});
   local plugins15 = { 
         spec.name, 
         disable=spec.disable,
@@ -1365,7 +1366,7 @@ __kickstart__Kickstart_Kickstart_Fields_.main = function()
         module=spec.module,
         module_pattern=spec.module_pattern
       }
-  local spec = _hx_o({__fields__={name=true},name="nvim-lualine/lualine.nvim"});
+  local spec = _hx_o({__fields__={name=true},name="lukas-reineke/indent-blankline.nvim"});
   local plugins16 = { 
         spec.name, 
         disable=spec.disable,
@@ -1394,7 +1395,7 @@ __kickstart__Kickstart_Kickstart_Fields_.main = function()
         module=spec.module,
         module_pattern=spec.module_pattern
       }
-  local spec = _hx_o({__fields__={name=true},name="lukas-reineke/indent-blankline.nvim"});
+  local spec = _hx_o({__fields__={name=true},name="numToStr/Comment.nvim"});
   local plugins17 = { 
         spec.name, 
         disable=spec.disable,
@@ -1423,7 +1424,7 @@ __kickstart__Kickstart_Kickstart_Fields_.main = function()
         module=spec.module,
         module_pattern=spec.module_pattern
       }
-  local spec = _hx_o({__fields__={name=true},name="numToStr/Comment.nvim"});
+  local spec = _hx_o({__fields__={name=true},name="tpope/vim-sleuth"});
   local plugins18 = { 
         spec.name, 
         disable=spec.disable,
@@ -1452,7 +1453,7 @@ __kickstart__Kickstart_Kickstart_Fields_.main = function()
         module=spec.module,
         module_pattern=spec.module_pattern
       }
-  local spec = _hx_o({__fields__={name=true},name="tpope/vim-sleuth"});
+  local spec = _hx_o({__fields__={name=true,cmd=true,event=true,config=true},name="zbirenbaum/copilot.lua",cmd="Copilot",event=__vim__VimTypes_LuaArray_Impl_.from(_hx_tab_array({[0]="InsertEnter"}, 1)),config=function(_,...) return __plugins__Copilot_Copilot_Fields_.configure(...) end});
   local plugins19 = { 
         spec.name, 
         disable=spec.disable,
@@ -1481,7 +1482,7 @@ __kickstart__Kickstart_Kickstart_Fields_.main = function()
         module=spec.module,
         module_pattern=spec.module_pattern
       }
-  local spec = _hx_o({__fields__={name=true,cmd=true,event=true,config=true},name="zbirenbaum/copilot.lua",cmd="Copilot",event=__vim__VimTypes_LuaArray_Impl_.from(_hx_tab_array({[0]="InsertEnter"}, 1)),config=function(_,...) return __plugins__Copilot_Copilot_Fields_.configure(...) end});
+  local spec = _hx_o({__fields__={name=true,requires=true,config=true},name="ibhagwan/fzf-lua",requires=({"nvim-tree/nvim-web-devicons"}),config=function(_,...) return __plugins__FzfLua_FzfLua_Fields_.configure(...) end});
   local plugins20 = { 
         spec.name, 
         disable=spec.disable,
@@ -1510,7 +1511,7 @@ __kickstart__Kickstart_Kickstart_Fields_.main = function()
         module=spec.module,
         module_pattern=spec.module_pattern
       }
-  local spec = _hx_o({__fields__={name=true,requires=true,config=true},name="ibhagwan/fzf-lua",requires=({"nvim-tree/nvim-web-devicons"}),config=function(_,...) return __plugins__FzfLua_FzfLua_Fields_.configure(...) end});
+  local spec = _hx_o({__fields__={name=true},name="jdonaldson/vaxe"});
   local plugins21 = { 
         spec.name, 
         disable=spec.disable,
@@ -1539,7 +1540,7 @@ __kickstart__Kickstart_Kickstart_Fields_.main = function()
         module=spec.module,
         module_pattern=spec.module_pattern
       }
-  local spec = _hx_o({__fields__={name=true},name="jdonaldson/vaxe"});
+  local spec = _hx_o({__fields__={name=true},name="alexghergh/nvim-tmux-navigation"});
   local plugins22 = { 
         spec.name, 
         disable=spec.disable,
@@ -1568,7 +1569,7 @@ __kickstart__Kickstart_Kickstart_Fields_.main = function()
         module=spec.module,
         module_pattern=spec.module_pattern
       }
-  local spec = _hx_o({__fields__={name=true},name="alexghergh/nvim-tmux-navigation"});
+  local spec = _hx_o({__fields__={name=true,tag=true},name="kylechui/nvim-surround",tag="*"});
   local plugins = _hx_tab_array({[0]=plugins, plugins1, plugins2, plugins3, plugins4, plugins5, plugins6, plugins7, plugins8, plugins9, plugins10, plugins11, plugins12, plugins13, plugins14, plugins15, plugins16, plugins17, plugins18, plugins19, plugins20, plugins21, plugins22, { 
         spec.name, 
         disable=spec.disable,
@@ -1682,6 +1683,10 @@ __kickstart__Kickstart_Kickstart_Fields_.setupPlugins = function()
   if (_v_ ~= nil) then 
     _v_.setup();
   end;
+  local _v_ = vimx.safeRequire("kylechui/nvim-surround");
+  if (_v_ ~= nil) then 
+    _v_.setup();
+  end;
   local cmp = vimx.safeRequire("cmp");
   if (cmp ~= nil) then 
     local cmp1 = cmp.mapping.preset;
@@ -1723,6 +1728,7 @@ __kickstart__Kickstart_Kickstart_Fields_.setupPlugins = function()
       end;
     end}), sources = ({({name = "luasnip"}),({name = "nvim_lsp"}),({name = "rg"}),({name = "tmux"})})}));
     cmp.setup.cmdline(":", ({mapping = mapping, snippet = nil, sources = ({({name = "path"}),({name = "cmdline"})})}));
+    cmp.setup.cmdline("/", ({mapping = mapping, snippet = nil, sources = ({({name = "buffer"}),({name = "cmdline_history"})})}));
   end;
   local _v_ = vimx.safeRequire("nvim-tmux-navigation");
   if (_v_ ~= nil) then 

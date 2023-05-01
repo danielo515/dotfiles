@@ -99,3 +99,8 @@ extern class TmuxNavigation implements VimPlugin {
     });
   }
 }
+
+extern class KylechuiNvimSurround implements VimPlugin {
+  inline static final libName = 'kylechui/nvim-surround';
+  @:luaDotMethod function setup():Void;
+}
