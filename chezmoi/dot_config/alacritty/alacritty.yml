@@ -28,19 +28,19 @@ scrolling:
 
 # Font configuration
 font:
-  size: 12.0
+  size: 11.0
   normal:
-    family: "Inconsolata Nerd Font"
+    family: "Hack Nerd Font"
     style: Regular
 
   # Bold font face
   bold:
-    family: "Iosevka Nerd Font Mono"
+    family: "Hack Nerd Font Mono"
     style: Bold
 
   # Italic font face
   italic:
-    family: "Iosevka Nerd Font Mono"
+    family: "Hack Nerd Font Mono"
     style: ExtraLight
     # Bold italic font face
     #bold_italic:
@@ -92,7 +92,9 @@ key_bindings:
   # make <C-6> work in NVim (CTRL-^)
   - { key: Key6, mods: Control, chars: "\x1e" }
   # Map alt on mac to proper key code
-  - { key: P, mods: Command, chars: "\x02)" }
+  - { key: P, mods: Command, chars: "\x02)" } # Tmux next session
+  - { key: L, mods: Command, chars: "\x02l" } # Tmux alt window
+  - { key: K, mods: Command, chars: "\x1bg" } # Tmux next window
   - { key: Key9, mods: Command, action: ResetFontSize }
   - { key: Equals, mods: Command, action: IncreaseFontSize }
   - { key: Plus, mods: Command, action: IncreaseFontSize }
