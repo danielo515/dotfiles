@@ -1,0 +1,8 @@
+#!/usr/bin/env sh
+chedir=$(chezmoi source-path)
+TARGET=$(fd '.' "$chedir" | fzf --reverse --preview 'bat -n --color=always {}')
+cmd="chezmoi apply $TARGET"
+echo "$cmd"
+if gum confirm; then
+eval "$cmd"
+fi
