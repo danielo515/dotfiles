@@ -122,5 +122,9 @@ alias ls='exa'
 fi
 alias sloc='scc'
 # --- Neovim flavours ----------
-alias nvchad='NVIM_APPNAME=nvchad nvim'
-alias nvlazy='NVIM_APPNAME=Lazy nvim'
+nvchad(){
+  NVIM_APPNAME=nvchad nvim "$@"
+}
+nvlazy(){
+  NVIM_APPNAME=Lazy nvim "$@"
+}
