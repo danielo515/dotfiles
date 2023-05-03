@@ -59,10 +59,11 @@ hs.hotkey.bind({ "cmd", "shift" }, "P", function()
 		hs.appfinder.appFromName("Preview"):selectMenuItem({ "Tools", "Annotate", "Arrow" })
 	end)
 end)
+
 local US_LAYOUT = "com.apple.keylayout.US"
 local hyperApps = {
 	{ key = "1", appName = "Slack", layout = US_LAYOUT },
-	{ key = "2", appName = "Kitty", layout = US_LAYOUT },
+	{ key = "2", appName = { "Alacritty", "Kitty" }, layout = US_LAYOUT },
 	{ key = "3", callback = focusCenterChrome },
 	{ key = "4", appName = "Arc" },
 	{
@@ -86,14 +87,25 @@ hs.fnutils.each(hyperApps, function(item)
 		return
 	end
 	hs.hotkey.bind(hyper, item.key, function()
-		hs.application.launchOrFocus(item.appName)
-		local app = hs.appfinder.appFromName(item.app)
-		if app then
-			app:activate()
-			app:unhide()
+		-- if appName is a list, then first look for opened windows of the provided list
+		-- and focus the first we find. If not, then fall back to activate the first app in the list
+		local appName = item.appName -- shortcut and also re-used below for the table fallback
+		if type(item.appName) ~= "table" then
+			appName = { item.appName }
 		end
-		if item.layout ~= nil then
-			hs.keycodes.setLayout(item.layout)
+		for _, name in ipairs(appName) do
+			local app = hs.appfinder.appFromName(name)
+			if app then
+				print("found app open", name)
+				app:activate()
+				app:unhide()
+				if item.layout ~= nil then
+					hs.keycodes.setLayout(item.layout)
+				end
+				return
+			end
 		end
+		-- fallback to launch or focus
+		hs.application.launchOrFocus(appName[1])
 	end)
 end)
