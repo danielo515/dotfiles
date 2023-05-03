@@ -122,9 +122,21 @@ alias ls='exa'
 fi
 alias sloc='scc'
 # --- Neovim flavours ----------
-nvchad(){
+chadvim(){
   NVIM_APPNAME=nvchad nvim "$@"
 }
-nvlazy(){
+
+lazyvim(){
   NVIM_APPNAME=Lazy nvim "$@"
+}
+s(){
+  source "$0"
+}
+# When you are in a git repository, add the repository you say as remote
+# it uses github cli to ask for the url
+function ghadd {
+    curdir=$(pwd)
+    defaultName=$(basename $curdir)
+    repo=$(gum input --prompt "Repo name: " --value $defaultName)
+    git remote add origin $(gh repo view $repo --json sshUrl --jq .sshUrl)
 }
