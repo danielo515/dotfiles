@@ -130,13 +130,28 @@ lazyvim(){
   NVIM_APPNAME=Lazy nvim "$@"
 }
 s(){
-  source "$0"
+  source "$1"
 }
 # When you are in a git repository, add the repository you say as remote
 # it uses github cli to ask for the url
 function ghadd {
+  git status &> /dev/null
+  if [ $? -ne 0 ]; then
+    echo "Not a git repository"
+    return 1
+  fi
+    
     curdir=$(pwd)
     defaultName=$(basename $curdir)
     repo=$(gum input --prompt "Repo name: " --value $defaultName)
     git remote add origin $(gh repo view $repo --json sshUrl --jq .sshUrl)
+}
+
+# takes a file containing a list of newline separated files and zips them all
+function zip_list {
+  if [ $# -ne 2 ]; then
+    echo "Usage: zip_list <zipfile> <listfile>"
+    return 1
+  fi
+  zip "$1" -@ < "$2"
 }
