@@ -28,9 +28,10 @@ scrolling:
 
 # Font configuration
 font:
-  size: 11.0
+  size: 12.0
   normal:
-    family: "Hack Nerd Font"
+    family: "Hack Nerd Font Mono"
+    # family: "Inconsolata Nerd Font Mono"
     style: Regular
 
   # Bold font face
@@ -94,21 +95,14 @@ key_bindings:
   # Map alt on mac to proper key code
   - { key: P, mods: Command, chars: "\x02)" } # Tmux next session
   - { key: L, mods: Command, chars: "\x02l" } # Tmux alt window
-  - { key: K, mods: Command, chars: "\x1bg" } # Tmux next window
+  - { key: K, mods: Command, chars: "\x1bg" } # Tmux next window prefix+b alt+g
+  - { key: J, mods: Command, chars: "\x02\x1bj" } # Tmux jump window script
   - { key: Key9, mods: Command, action: ResetFontSize }
   - { key: Equals, mods: Command, action: IncreaseFontSize }
   - { key: Plus, mods: Command, action: IncreaseFontSize }
-  - {
-      key: NumpadAdd,
-      mods: Command,
-      action: IncreaseFontSize
-    }
+  - { key: NumpadAdd, mods: Command, action: IncreaseFontSize }
   - { key: Minus, mods: Command, action: DecreaseFontSize }
-  - {
-      key: NumpadSubtract,
-      mods: Command,
-      action: DecreaseFontSize
-    }
+  - { key: NumpadSubtract, mods: Command, action: DecreaseFontSize }
   - { key: V, mods: Command, action: Paste }
   - { key: C, mods: Command, action: Copy }
 
@@ -145,7 +139,8 @@ hints:
   #   - MoveViModeCursor
   #       Move the vi mode cursor to the beginning of the hint.
   enabled:
-    - regex: "(ipfs:|ipns:|magnet:|mailto:|gemini:|gopher:|https:|http:|news:|file:|g\
+    - regex:
+        "(ipfs:|ipns:|magnet:|mailto:|gemini:|gopher:|https:|http:|news:|file:|g\
         it:|ssh:|ftp:)[^\0-\x1f-<>\"\\s{-}\\^⟨⟩`]+"
       command: open
       post_processing: false
@@ -226,37 +221,37 @@ hints:
   normal:
     #  black:   '#1d1f21'
     #  red:     '#cc6666'
-    green: '#59e858'
-    yellow: '#ffea7f'
-    blue: '#0fc9e4'
-    magenta: '#b392f0'
-    cyan: '#73e3ff'
-    white: '#666666'
+    green: "#59e858"
+    yellow: "#ffea7f"
+    blue: "#0fc9e4"
+    magenta: "#b392f0"
+    cyan: "#73e3ff"
+    white: "#666666"
 
   # Bright colors
   bright:
-    black: '#656687'
-    red: '#d54e54'
-    green: '#85e89d'
-    yellow: '#ffea7f'
-    blue: '#1e90ff'
-    magenta: '#b392f0'
-    cyan: '#1e90ff'
-    white: '#f6f8fa'
+    black: "#656687"
+    red: "#d54e54"
+    green: "#85e89d"
+    yellow: "#ffea7f"
+    blue: "#1e90ff"
+    magenta: "#b392f0"
+    cyan: "#1e90ff"
+    white: "#f6f8fa"
 
   # Dim colors
   #
   # If the dim colors are not set, they will be calculated automatically based
   # on the `normal` colors.
   dim:
-    black: '#131415'
-    red: '#864343'
-    green: '#777c44'
-    yellow: '#9e824c'
-    blue: '#556a7d'
-    magenta: '#75617b'
-    cyan: '#5b7d78'
-    white: '#cecece'
+    black: "#131415"
+    red: "#864343"
+    green: "#777c44"
+    yellow: "#9e824c"
+    blue: "#556a7d"
+    magenta: "#75617b"
+    cyan: "#5b7d78"
+    white: "#cecece"
   # Indexed Colors
   #
   # The indexed colors include all colors from 16 to 256.
@@ -269,28 +264,28 @@ hints:
 colors:
   # Default colors
   primary:
-    background: '#282a36'
-    foreground: '#f8f8f2'
+    background: "#282a36"
+    foreground: "#f8f8f2"
 
   # Normal colors
   normal:
-    black: '#000000'
-    red: '#ff5555'
-    green: '#50fa7b'
-    yellow: '#f1fa8c'
-    blue: '#caa9fa'
-    magenta: '#ff79c6'
-    cyan: '#8be9fd'
-    white: '#bfbfbf'
+    black: "#000000"
+    red: "#ff5555"
+    green: "#50fa7b"
+    yellow: "#f1fa8c"
+    blue: "#caa9fa"
+    magenta: "#ff79c6"
+    cyan: "#8be9fd"
+    white: "#bfbfbf"
 
   # Bright colors
   bright:
-    black: '#575b70'
-    red: '#ff6e67'
-    green: '#5af78e'
-    yellow: '#f4f99d'
-    blue: '#caa9fa'
-    magenta: '#ff92d0'
-    cyan: '#9aedfe'
-    white: '#e6e6e6'
+    black: "#575b70"
+    red: "#ff6e67"
+    green: "#5af78e"
+    yellow: "#f4f99d"
+    blue: "#caa9fa"
+    magenta: "#ff92d0"
+    cyan: "#9aedfe"
+    white: "#e6e6e6"
 theme: Dracula
