@@ -20,6 +20,7 @@ secrets.start("secrets.json")
 
 local retina = "Built-in Retina Display"
 local primaryScreen = hs.screen.primaryScreen()
+local statusbar = hs.menubar.new()
 local featherWindowTitle = "Feather.*"
 local chrome_app_name = "Google Chrome"
 local wf = hs.window.filter
@@ -34,6 +35,7 @@ Danielo = { timer = nil }
 local vercel = hs.settings.get("secrets").tella.vercel
 WatchVercel.start(function(status)
 	StreamDeck.setTitle("vercelStatus", status)
+	statusbar:setTitle("🚦" .. status)
 end, vercel.teamId, vercel.token)
 
 -- Windows
