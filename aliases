@@ -126,7 +126,8 @@ chadvim(){
   NVIM_APPNAME=nvchad nvim "$@"
 }
 
-lazyvim(){
+# previously it was lazyvim,
+lzvim(){
   NVIM_APPNAME=Lazy nvim "$@"
 }
 s(){
@@ -155,3 +156,7 @@ function zip_list {
   fi
   zip "$1" -@ < "$2"
 }
+favs() {
+  fd . "$(chezmoi source-path)/.." | fzf --preview 'bat --color=always --style=header,grid --line-range :500 {}'
+}
+

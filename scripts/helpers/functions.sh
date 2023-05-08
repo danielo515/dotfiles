@@ -9,10 +9,6 @@ exists() {
 }
 
 
-favs() {
-  fd . $(chezmoi source-path) | fzf --preview 'bat --color=always --style=header,grid --line-range :500 {}'
-}
-
 echo_header() {
   echo "     === $1 ==="
 }
