@@ -160,3 +160,6 @@ favs() {
   fd . "$(chezmoi source-path)/.." | fzf --preview 'bat --color=always --style=header,grid --line-range :500 {}'
 }
 
+rgi() {
+  rg --no-ignore --hidden "$@"
+}
