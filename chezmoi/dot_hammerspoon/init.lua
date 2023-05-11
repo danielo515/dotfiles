@@ -13,6 +13,8 @@ StreamDeck:onWillAppear("vercelStatus", function(context, params)
 end)
 hs.loadSpoon("EmmyLua")
 hs.grid.setGrid("10x6")
+local stateMachine = require("lib.stateMachine")
+WorkStates = stateMachine({ "Morning", "Workout", "Lunch" })
 local secrets = require("secrets")
 --[[ I specify not a hidden file because it is out of source control
 In reality it lives encrypted in the chezmoi repo, and copied there on init ]]
