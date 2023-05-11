@@ -48,7 +48,6 @@ local sources = {
     end,
   },
 
-  { name = "cmp_tabnine" },
   { name = "calc" },
   { name = "emoji" },
   { name = "crates" },
