@@ -12,11 +12,11 @@ else
   filter="$default_filter"
 fi
 
-# Create an array of all image files in the current directory and its subdirectories
-images=( $(fd -e jpg -e jpeg -e png -e gif -e svg $filter) )
-
 # Set the number of columns (default: 4)
 columns=${3:-4}
+
+# Create an array of all image files in the current directory and its subdirectories
+images=( $(fd -e jpg -e jpeg -e png -e gif -e svg $filter) )
 
 # Declare HTML sections as separate strings enclosed within parentheses
 html_start=$(cat << HTML
@@ -28,8 +28,9 @@ html_start=$(cat << HTML
 }
 .grid-container {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(50px, 1fr));
+  grid-template-columns: repeat(var(--column-count), 1fr);
   grid-gap: 10px;
+  max-width: 100%;
 }
 .image-container img {
   width: 50px;
@@ -72,3 +73,12 @@ html_content+="${html_grid_end}${html_end}"
 
 # Write the HTML content to the file
 echo "$html_content" > "$output_path"
+
+# Open the generated HTML file
+if command -v xdg-open >/dev/null 2>&1; then
+  xdg-open "$output_path" >/dev/null 2>&1
+elif command -v open >/dev/null 2>&1; then
+  open "$output_path" >/dev/null 2>&1
+else
+  echo "Unable to open the file. Please open '$output_path' manually."
+fi
