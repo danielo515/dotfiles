@@ -14,7 +14,26 @@ end)
 hs.loadSpoon("EmmyLua")
 hs.grid.setGrid("10x6")
 local stateMachine = require("lib.stateMachine")
-WorkStates = stateMachine({ "Morning", "Workout", "Lunch" })
+
+WorkStates = stateMachine({
+	{ name = "Morning", icon = "~/.config/icons/cool.svg" },
+	{ name = "Workout", icon = "~/.config/icons/workout.svg" },
+	{ name = "Lunch", icon = "~/.config/icons/burguer.svg" },
+})
+
+StreamDeck:onWillAppear("routine", function(context, params)
+	local state = WorkStates.getCurrentState()
+	local message = StreamDeck.getImageMessage(context, state.icon)
+	StreamDeck.setTitle("routine", state.name)
+	return message
+end)
+
+StreamDeck:onKeyDown("routine", function(context, params)
+	local state = WorkStates()
+	StreamDeck.setTitle("routine", state.name)
+	return StreamDeck.getImageMessage(context, state.icon)
+end)
+
 local secrets = require("secrets")
 --[[ I specify not a hidden file because it is out of source control
 In reality it lives encrypted in the chezmoi repo, and copied there on init ]]
