@@ -21,10 +21,14 @@ local function createStateMachine(states)
 		currentStateIndex = 1
 	end
 
+	local function getCurrentState()
+		return states[currentStateIndex]
+	end
+
 	-- Return a callable table with both the stateMachine function and the reset method
 	return setmetatable({}, {
 		__call = stateMachine,
-		__index = { reset = reset },
+		__index = { reset = reset, getCurrentState = getCurrentState },
 	})
 end
 
