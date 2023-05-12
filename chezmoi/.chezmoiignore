@@ -1,3 +1,5 @@
 .oh-my-zsh/cache/
 **/*.zwc
 key.txt.age
+*.hx
+DS_Store
