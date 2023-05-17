@@ -63,4 +63,20 @@ local reason_react_helpers = {
   },
 }
 
+function createInterfaceFile()
+  local path = vim.api.nvim_buf_get_name(0)
+
+  if vim.fn.filereadable(path .. "i") == 1 then
+    print "Interface file already exists"
+  else
+    -- print("Create interface file")
+
+    vim.lsp.buf_request(0, "textDocument/createInterface", { uri = "file://" .. path }, function()
+      print "Interface file created"
+    end)
+  end
+end
+
+vim.cmd "command RescriptCreateInterfaceFile lua createInterfaceFile()"
+
 null_ls.register { reason_react_helpers, open_lets }
