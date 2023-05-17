@@ -3,7 +3,7 @@ local Job = require "plenary.job"
 local has_chezmoi = vim.fn.executable "chezmoi" == 1
 local M = { has_chezmoi = has_chezmoi }
 
-local function executeChezmoi(args)
+function M.executeChezmoi(args)
   local result, _ = Job:new({
     command = "chezmoi",
     args = args,
@@ -19,7 +19,7 @@ local function executeChezmoi(args)
 end
 
 function M.get_chezmoi_dir()
-  local results = executeChezmoi { "source-path" }
+  local results = M.executeChezmoi { "source-path" }
   local path = results[1]
   log:debug("Using " .. path .. " as chezmoi path", { title = "Danielo" })
   return path
@@ -53,6 +53,6 @@ function M.re_add(path)
 end
 
 _G.re_add = M.re_add
-_G.executeChezmoi = executeChezmoi
+_G.executeChezmoi = M.executeChezmoi
 
 return M
