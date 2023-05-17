@@ -2,4 +2,6 @@
 **/*.zwc
 key.txt.age
 *.hx
+*/*.hx
+*/*/*.hx
 DS_Store
