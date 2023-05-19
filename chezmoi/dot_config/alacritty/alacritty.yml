@@ -104,6 +104,7 @@ key_bindings:
   - { key: NumpadSubtract, mods: Command, action: DecreaseFontSize }
   - { key: V, mods: Command, action: Paste }
   - { key: C, mods: Command, action: Copy }
+  - { key: F5, mods: None, chars: "\x1b[15;5~" }
 
 # Regex hints
 #

@@ -23,15 +23,15 @@ WorkStates = stateMachine({
 
 StreamDeck:onWillAppear("routine", function(context, params)
 	local state = WorkStates.getCurrentState()
-	local message = StreamDeck.getImageMessage(context, state.icon)
-	StreamDeck.setTitle("routine", state.name)
+	local message = StreamDeck:getImageMessage(context, state.icon)
+	StreamDeck:setTitle("routine", state.name)
 	return message
 end)
 
 StreamDeck:onKeyDown("routine", function(context, params)
 	local state = WorkStates()
-	StreamDeck.setTitle("routine", state.name)
-	return StreamDeck.getImageMessage(context, state.icon)
+	StreamDeck:setTitle("routine", state.name)
+	return StreamDeck:getImageMessage(context, state.icon)
 end)
 
 local secrets = require("secrets")
@@ -55,7 +55,7 @@ Chrome = require("browser")("Google Chrome")
 Danielo = { timer = nil }
 local vercel = hs.settings.get("secrets").tella.vercel
 WatchVercel.start(function(status)
-	StreamDeck.setTitle("vercelStatus", status)
+	StreamDeck:setTitle("vercelStatus", status)
 	statusbar:setTitle("🚦" .. status)
 end, vercel.teamId, vercel.token)
 
