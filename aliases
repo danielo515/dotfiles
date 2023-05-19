@@ -149,6 +149,22 @@ function ghadd {
     git remote add origin $(gh repo view $repo --json sshUrl --jq .sshUrl)
 }
 
+# adds a github repository as a submodule
+function ghsub {
+  git status &> /dev/null
+  if [ $? -ne 0 ]; then
+    echo "Not a git repository"
+    return 1
+  fi
+  repo=$(gum input --prompt "Repo name: ")
+  git submodule add $(gh repo view $repo --json sshUrl --jq .sshUrl)
+}
+# create a new repo in github
+function ghnew {
+  repo=$(gum input --prompt "Repo name: ")
+  gh repo create $repo -l MIT --public
+}
+
 # takes a file containing a list of newline separated files and zips them all
 function zip_list {
   if [ $# -ne 2 ]; then
