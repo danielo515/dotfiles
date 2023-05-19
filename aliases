@@ -117,8 +117,10 @@ check_command() {
    fi
 }
 # --- Better UNIX commands ---------- 
+if  check_command exa; then
 alias ls='exa'
 alias l='exa -la'
+fi
 alias sloc='scc'
 # --- Neovim flavours ----------
 chadvim(){
