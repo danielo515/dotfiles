@@ -5,7 +5,7 @@ StreamDeck = hs.loadSpoon("StreamDeckButton")
 StreamDeck:start()
 StreamDeck:onWillAppear("vercelStatus", function(context, params)
 	print("vercelStatus willAppear", context)
-	return StreamDeck.getImageMessage(
+	return StreamDeck:getImageMessage(
 		context,
 		-- "~/Pictures/danielo515_programmer_fighting_blasphemy_5303f07b-4184-87fb-f043d10e18c2.png"
 		"~/Pictures/tv-test.png"
