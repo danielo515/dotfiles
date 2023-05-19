@@ -7,3 +7,6 @@
 [submodule "haxe-nvim"]
 	path = haxe-nvim
 	url = git@github.com:danielo515/haxe-nvim.git
+[submodule "hammerspoon-hx"]
+	path = hammerspoon-hx
+	url = git@github.com:danielo515/hammerspoon-hx.git
