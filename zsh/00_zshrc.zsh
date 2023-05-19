@@ -78,14 +78,6 @@ export EDITOR="nvim"
 alias vim=nvim
 alias vi=nvim
 
-# -- Aliases -------------------------------------------------------------------
-if [[ -f "$DOTFILES/aliases" ]]; then
-    source $DOTFILES/aliases
-fi
-
-if [[ -f "$HOME/.aliases" ]]; then
-    source $HOME/.aliases
-fi
 
 alias reload='source $DOTFILES/zsh/zshrc'
 
@@ -201,6 +193,15 @@ export PATH="/usr/local/opt/ruby/bin:$PATH"
 function p10k-on-pre-prompt() {
   p10k display '1/right/command_execution_time'=show
 }
+
+# -- Aliases -------------------------------------------------------------------
+if [[ -f "$DOTFILES/aliases" ]]; then
+    source $DOTFILES/aliases
+fi
+
+if [[ -f "$HOME/.aliases" ]]; then
+    source $HOME/.aliases
+fi
 
 # - Powerlevel10k load
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
