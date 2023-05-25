@@ -182,4 +182,4 @@ rgi() {
 }
 
 ## Add a symlink into chezmoi creating the appropriate template
-alias chezmoiln = 'chezmoi add --template-symlinks '
+alias chezmoln='chezmoi add --template-symlinks '
