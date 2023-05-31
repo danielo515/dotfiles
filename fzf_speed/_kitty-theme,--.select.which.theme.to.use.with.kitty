@@ -1,0 +1,6 @@
+#!/usr/bin/env sh
+chedir=$(chezmoi source-path)
+ThemesFolder="$chedir/dot_config/kitty/kitty-themes/"
+theme=$(ls "$ThemesFolder" | fzf --reverse)
+echo "About to set $theme"
+gum confirm && ln -s -f "$ThemesFolder/$theme" "$HOME/.config/kitty/theme.conf" && kitty @ set-colors -a "$HOME/.config/kitty/theme.conf"
