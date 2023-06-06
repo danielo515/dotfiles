@@ -16,6 +16,13 @@ hs.grid.setGrid("10x6")
 local stateMachine = require("lib.stateMachine")
 local slack = require("lib.slack")
 
+local function isMonitorBig()
+  local windowWidth = hs.screen.mainScreen():frame().w;
+  if windowWidth < 2000 then
+    return false
+  end
+end
+
 WorkStates = stateMachine({
   { name = "Morning", icon = "~/.config/icons/cool.svg" },
   { name = "Workout", icon = "~/.config/icons/workout.svg" },
@@ -77,6 +84,9 @@ end
 subscribeToFocus(chrome_app_name, locateFeather, { allowTitles = featherWindowTitle })
 -- Slack listener
 subscribeToFocus("Slack", function(window)
+  if not isMonitorBig() then
+    return
+  end
   local layout = {
     { nil, window, primaryScreen, hs.geometry.rect(0.3, 0, 0.45, 0.95), nil, nil },
   }
