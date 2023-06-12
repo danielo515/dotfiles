@@ -5,4 +5,13 @@ git:
     colorArg: always
     pager: diff-so-fancy
 showIcons: true
-
+customCommands:
+  - key: 's'
+    context: 'files'
+    command: "git stash push {{if .SelectedFile.HasStagedChanges}} --staged {{else}} --include-untracked {{end}} -m '{{.Form.Msg}}'"
+    description: 'Stash staged or everything'
+    prompts:
+      - type: 'input'
+        title: 'Stash message'
+        key: 'Msg'
+        initialValue: ''
