@@ -182,6 +182,10 @@ defaults write com.apple.dock autohide -bool true
 
 # Don’t show recent applications in Dock
 defaults write com.apple.dock show-recents -bool false
+# Set more rows and columsns in Launchpad
+defaults write com.apple.dock springboard-columns -int 8;
+defaults write com.apple.dock springboard-rows -int 7;
+defaults write com.apple.dock ResetLaunchPad -bool TRUE;
 
 for app in "Activity Monitor" \
 	"Calendar" \
