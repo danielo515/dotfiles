@@ -65,10 +65,16 @@ function fuzzy_cat(){
   fd "$1" ../ -x cat {}
 }
 
-function fuzzy_kill() {
- line=$(ps -ef | fzf -q "'$1" -1 --height 40% --layout reverse -d 20)
- echo $line
+function fzfkill() {
+ line=$(ps -ef | fzf -q "$1" -1 --height 40% --layout reverse -d 20)
+ processnumber=$(echo $line | awk '{print $2}')
+  if [ -n "$processnumber" ]; then
+    kill -9 $processnumber
+  fi
 }
+
+alias fkill='fzfkill'
+alias fzkill='fzfkill'
 
 
 # ---- NPM
@@ -173,6 +179,7 @@ function zip_list {
   fi
   zip "$1" -@ < "$2"
 }
+
 favs() {
   fd . "$(chezmoi source-path)/.." | fzf --preview 'bat --color=always --style=header,grid --line-range :500 {}'
 }
