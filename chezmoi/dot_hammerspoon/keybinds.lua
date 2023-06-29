@@ -64,7 +64,7 @@ local US_LAYOUT = "com.apple.keylayout.US"
 local hyperApps = {
   { key = "1", appName = "Slack",                  layout = US_LAYOUT },
   { key = "2", appName = { "Alacritty", "Kitty" }, layout = US_LAYOUT },
-  { key = "3", callback = focusCenterChrome },
+  { key = "3", appName = "Google Chrome" },
   { key = "4", appName = "Arc" },
   {
     key = "w",
@@ -73,6 +73,7 @@ local hyperApps = {
     end,
   },
   { key = "space", callback = ws.referenceChooser },
+  { key = "v",     callback = ws.window_menu },
   { key = "g",     callback = mainAppToGrid },
   { key = "c",     callback = toggleConsole },
   { key = "i",     callback = ws.debugWindow },
@@ -95,6 +96,13 @@ hs.fnutils.each(hyperApps, function(item)
       appName = { item.appName }
     end
     for _, name in ipairs(appName) do
+      -- We prefer to use an already existing window in the current space if possible
+      local appWindows = hs.window.filter.new(false):setAppFilter(name, { currentSpace = true }):getWindows()
+      if #appWindows > 0 then
+        print("found app window in current space", name)
+        appWindows[1]:focus()
+        return
+      end
       local app = hs.appfinder.appFromName(name)
       if app then
         print("found app open", name)
