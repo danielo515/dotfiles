@@ -27,5 +27,17 @@ local node_ops = { node_ext_ops = ext_opts }
 return {
   s({ trig = "sst", dscr = "static string", regTrig = false },
     fmt("&'static str{}", i(0))),
-  s({ trig = "deder", dscr = "default derive" },
-    fmt("#[derive(Debug, Clone{})]", i(0))) }
+  s({ trig = "deride", dscr = "default derive" },
+    fmt("#[derive(Debug, Clone{})]", i(0))),
+  s({ trig = "derifu", dscr = "complete derive" },
+    fmt("#[derive(Debug, Clone, PartialEq, PartialOrd, Eq, Hash, Ord{})]", i(0))),
+  s(
+    { trig = "enum", dscr = "complete enum" },
+    fmta([[
+    #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash, PartialOrd, Ord)]
+    pub enum <> {
+        <>
+    }
+    ]], { i(1), i(0) })
+  ),
+}
