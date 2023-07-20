@@ -196,16 +196,20 @@ local Enum = _hx_e();
 
 local _hx_exports = _hx_exports or {}
 local Array = _hx_e()
+local Lambda = _hx_e()
 ___Main_Main_Fields_ = _hx_e()
 local Math = _hx_e()
 local String = _hx_e()
 local Std = _hx_e()
+local StringTools = _hx_e()
 local Test = _hx_e()
+__haxe_Log = _hx_e()
 __haxe_iterators_ArrayIterator = _hx_e()
 __haxe_iterators_ArrayKeyValueIterator = _hx_e()
 __vim_plugin_VimPlugin = _hx_e()
 __kickstart__Kickstart_Kickstart_Fields_ = _hx_e()
 __kickstart__Untyped_Untyped_Fields_ = _hx_e()
+__lua_PairTools = _hx_e()
 __lua_StringMap = _hx_e()
 __packer__Packer_Packer_Fields_ = _hx_e()
 __plenary_Job = _G.require("plenary.job")
@@ -532,6 +536,18 @@ Array.prototype.resize = function(self,len)
   end;
 end
 
+Lambda.new = {}
+Lambda.find = function(it,f) 
+  local v = it:iterator();
+  while (v:hasNext()) do 
+    local v = v:next();
+    if (f(v)) then 
+      do return v end;
+    end;
+  end;
+  do return nil end;
+end
+
 ___Main_Main_Fields_.new = {}
 ___Main_Main_Fields_.createSiblingFile = function() 
   local path = vim.fn.expand(_G.string.format("%s%s", "%", ":h"));
@@ -539,6 +555,183 @@ ___Main_Main_Fields_.createSiblingFile = function()
   vim.ui.input(({completion = nil, prompt = "newFileName"}), function(filename) 
     vim.cmd(Std.string(Std.string(Std.string("e ") .. Std.string(path)) .. Std.string("/")) .. Std.string(filename));
   end);
+end
+___Main_Main_Fields_.add_missing_derive = function(toAdd) 
+  local length = nil;
+  local tab = __lua_PairTools.copy(vim.api.nvim_buf_get_lines(0, 0, -1, false));
+  local length = length;
+  local lines;
+  if (length == nil) then 
+    length = _hx_table.maxn(tab);
+    if (length > 0) then 
+      local head = tab[1];
+      _G.table.remove(tab, 1);
+      tab[0] = head;
+      lines = _hx_tab_array(tab, length);
+    else
+      lines = _hx_tab_array({}, 0);
+    end;
+  else
+    lines = _hx_tab_array(tab, length);
+  end;
+  local _g = _hx_tab_array({}, 0);
+  local _g1 = 0;
+  local _g2 = lines;
+  while (_g1 < _g2.length) do 
+    local i = _g2[_g1];
+    _g1 = _g1 + 1;
+    local startIndex = nil;
+    if (startIndex == nil) then 
+      startIndex = 1;
+    else
+      startIndex = startIndex + 1;
+    end;
+    local r = _G.string.find(i, "#[derive(", startIndex, true);
+    if ((function() 
+      local _hx_1
+      if ((r ~= nil) and (r > 0)) then 
+      _hx_1 = r - 1; else 
+      _hx_1 = -1; end
+      return _hx_1
+    end )() ~= -1) then 
+      _g:push(i);
+    end;
+  end;
+  local deriveLines = _g;
+  local _g = _hx_tab_array({}, 0);
+  local _g1 = 0;
+  while (_g1 < deriveLines.length) do 
+    local line = deriveLines[_g1];
+    _g1 = _g1 + 1;
+    local idx = 1;
+    local ret = _hx_tab_array({}, 0);
+    while (idx ~= nil) do 
+      local newidx = 0;
+      if (#"derive(" > 0) then 
+        newidx = _G.string.find(line, "derive(", idx, true);
+      else
+        if (idx >= #line) then 
+          newidx = nil;
+        else
+          newidx = idx + 1;
+        end;
+      end;
+      if (newidx ~= nil) then 
+        ret:push(_G.string.sub(line, idx, newidx - 1));
+        idx = newidx + #"derive(";
+      else
+        ret:push(_G.string.sub(line, idx, #line));
+        idx = nil;
+      end;
+    end;
+    local _this = ret[1];
+    local idx = 1;
+    local ret = _hx_tab_array({}, 0);
+    while (idx ~= nil) do 
+      local newidx = 0;
+      if (#")" > 0) then 
+        newidx = _G.string.find(_this, ")", idx, true);
+      else
+        if (idx >= #_this) then 
+          newidx = nil;
+        else
+          newidx = idx + 1;
+        end;
+      end;
+      if (newidx ~= nil) then 
+        ret:push(_G.string.sub(_this, idx, newidx - 1));
+        idx = newidx + #")";
+      else
+        ret:push(_G.string.sub(_this, idx, #_this));
+        idx = nil;
+      end;
+    end;
+    local content = ret[0];
+    local idx = 1;
+    local ret = _hx_tab_array({}, 0);
+    while (idx ~= nil) do 
+      local newidx = 0;
+      if (#"," > 0) then 
+        newidx = _G.string.find(content, ",", idx, true);
+      else
+        if (idx >= #content) then 
+          newidx = nil;
+        else
+          newidx = idx + 1;
+        end;
+      end;
+      if (newidx ~= nil) then 
+        ret:push(_G.string.sub(content, idx, newidx - 1));
+        idx = newidx + #",";
+      else
+        ret:push(_G.string.sub(content, idx, #content));
+        idx = nil;
+      end;
+    end;
+    local _g1 = _hx_tab_array({}, 0);
+    local _g2 = 0;
+    local _g3 = ret;
+    while (_g2 < _g3.length) do 
+      local i = _g3[_g2];
+      _g2 = _g2 + 1;
+      _g1:push(StringTools.trim(i));
+    end;
+    _g:push(_hx_o({__fields__={line=true,elements=true},line=line,elements=_g1}));
+  end;
+  local derives = _g;
+  __haxe_Log.trace(derives, _hx_o({__fields__={fileName=true,lineNumber=true,className=true,methodName=true},fileName="Main.hx",lineNumber=46,className="_Main.Main_Fields_",methodName="add_missing_derive"}));
+  local _g = _hx_tab_array({}, 0);
+  local _g1 = 0;
+  local _g2 = derives;
+  while (_g1 < _g2.length) do 
+    local i = _g2[_g1];
+    _g1 = _g1 + 1;
+    if (not i.elements:contains(toAdd)) then 
+      _g:push(i);
+    end;
+  end;
+  local _g1 = _hx_tab_array({}, 0);
+  local _g2 = 0;
+  local _g = _g;
+  while (_g2 < _g.length) do 
+    local i = _g[_g2];
+    _g2 = _g2 + 1;
+    _g1:push(_hx_o({__fields__={line=true,elements=true},line=i.line,elements=i.elements:concat(_hx_tab_array({[0]=toAdd}, 1))}));
+  end;
+  local newDeriveList = _g1;
+  __haxe_Log.trace(newDeriveList, _hx_o({__fields__={fileName=true,lineNumber=true,className=true,methodName=true},fileName="Main.hx",lineNumber=53,className="_Main.Main_Fields_",methodName="add_missing_derive"}));
+  local _g = _hx_tab_array({}, 0);
+  local _g1 = 0;
+  local _g2 = lines;
+  while (_g1 < _g2.length) do 
+    local i = _g2[_g1];
+    _g1 = _g1 + 1;
+    local x = _hx_tab_array({[0]=i}, 1);
+    local match = Lambda.find(newDeriveList, (function(x) 
+      do return function(y) 
+        do return y.line == x[0] end;
+      end end;
+    end)(x));
+    local tmp;
+    if (match ~= nil) then 
+      local newDerive = Std.string(Std.string("#[derive(") .. Std.string(match.elements:join(", "))) .. Std.string(")]");
+      __haxe_Log.trace(newDerive, _hx_o({__fields__={fileName=true,lineNumber=true,className=true,methodName=true},fileName="Main.hx",lineNumber=58,className="_Main.Main_Fields_",methodName="add_missing_derive"}));
+      tmp = newDerive;
+    else
+      tmp = x[0];
+    end;
+    _g:push(tmp);
+  end;
+  local newLines = _g;
+  local ret = ({});
+  local _g = 0;
+  local _g1 = newLines.length;
+  while (_g < _g1) do 
+    _g = _g + 1;
+    local idx = _g - 1;
+    ret[idx + 1] = newLines[idx];
+  end;
+  vim.api.nvim_buf_set_lines(0, 0, -1, false, ret);
 end
 ___Main_Main_Fields_.main = function() 
   vim.api.nvim_create_user_command("HaxeCmd", function(args) 
@@ -588,6 +781,9 @@ ___Main_Main_Fields_.main = function()
   vim.api.nvim_create_user_command("CopyMessagesToClipboard", function(args) 
     ___Main_Main_Fields_.copy_messages_to_clipboard(args.args);
   end, ({bang = false, complete = nil, desc = "Copy the n number of messages to clipboard", force = true, nargs = 1, range = true}));
+  vim.api.nvim_create_user_command("AddMissingDerive", function(args) 
+    ___Main_Main_Fields_.add_missing_derive(args.args);
+  end, ({bang = false, complete = nil, desc = "Add a missing derive to the current file", force = true, nargs = 1, range = true}));
   vim.api.nvim_create_user_command("CreateSiblingFile", function(_) 
     ___Main_Main_Fields_.createSiblingFile();
   end, ({bang = false, complete = nil, desc = "Create a file next to the current one", force = true, nargs = 0, range = true}));
@@ -603,6 +799,9 @@ ___Main_Main_Fields_.main = function()
   vim.keymap.set("n", "tl", ___Main_Main_Fields_.nexTab, ({desc = "Go to next tab", expr = false, silent = true}));
   vim.keymap.set("c", "<C-A>", "<Home>", ({desc = "Home in cmd", expr = false, silent = true}));
   vim.keymap.set("n", "<c-m-f>", ":FzfLua lines<cr>", ({desc = "Search in open files", expr = false, silent = true}));
+  vim.keymap.set("n", "<leader>sl", ":FzfLua lines<cr>", ({desc = "Search [l]ines in open files", expr = false, silent = true}));
+  vim.keymap.set("n", "<C-s>", ":%s/\\v", ({desc = "Search and replace whole file", expr = false, silent = true}));
+  vim.keymap.set("n", "<M-Tab>", ":b#<cr>", ({desc = "Alternate file", expr = false, silent = true}));
   vim.o.inccommand = "split";
 end
 ___Main_Main_Fields_.runGh = function(args) 
@@ -857,6 +1056,69 @@ Std.int = function(x)
   end;
 end
 
+StringTools.new = {}
+StringTools.isSpace = function(s,pos) 
+  if (((#s == 0) or (pos < 0)) or (pos >= #s)) then 
+    do return false end;
+  end;
+  local c = _G.string.byte(s, pos + 1);
+  if (not ((c > 8) and (c < 14))) then 
+    do return c == 32 end;
+  else
+    do return true end;
+  end;
+end
+StringTools.ltrim = function(s) 
+  local l = #s;
+  local r = 0;
+  while ((r < l) and StringTools.isSpace(s, r)) do 
+    r = r + 1;
+  end;
+  if (r > 0) then 
+    local pos = r;
+    local len = l - r;
+    if ((len == nil) or (len > (pos + #s))) then 
+      len = #s;
+    else
+      if (len < 0) then 
+        len = #s + len;
+      end;
+    end;
+    if (pos < 0) then 
+      pos = #s + pos;
+    end;
+    if (pos < 0) then 
+      pos = 0;
+    end;
+    do return _G.string.sub(s, pos + 1, pos + len) end;
+  else
+    do return s end;
+  end;
+end
+StringTools.rtrim = function(s) 
+  local l = #s;
+  local r = 0;
+  while ((r < l) and StringTools.isSpace(s, (l - r) - 1)) do 
+    r = r + 1;
+  end;
+  if (r > 0) then 
+    local len = l - r;
+    if ((len == nil) or (len > #s)) then 
+      len = #s;
+    else
+      if (len < 0) then 
+        len = #s + len;
+      end;
+    end;
+    do return _G.string.sub(s, 1, len) end;
+  else
+    do return s end;
+  end;
+end
+StringTools.trim = function(s) 
+  do return StringTools.ltrim(StringTools.rtrim(s)) end;
+end
+
 Test.new = {}
 Test["or"] = function(v,fallback) 
   if (v ~= nil) then 
@@ -864,6 +1126,29 @@ Test["or"] = function(v,fallback)
   else
     do return fallback end;
   end;
+end
+
+__haxe_Log.new = {}
+__haxe_Log.formatOutput = function(v,infos) 
+  local str = Std.string(v);
+  if (infos == nil) then 
+    do return str end;
+  end;
+  local pstr = Std.string(Std.string(infos.fileName) .. Std.string(":")) .. Std.string(infos.lineNumber);
+  if (infos.customParams ~= nil) then 
+    local _g = 0;
+    local _g1 = infos.customParams;
+    while (_g < _g1.length) do 
+      local v = _g1[_g];
+      _g = _g + 1;
+      str = Std.string(str) .. Std.string((Std.string(", ") .. Std.string(Std.string(v))));
+    end;
+  end;
+  do return Std.string(Std.string(pstr) .. Std.string(": ")) .. Std.string(str) end;
+end
+__haxe_Log.trace = function(v,infos) 
+  local str = __haxe_Log.formatOutput(v, infos);
+  _hx_print(str);
 end
 
 __haxe_iterators_ArrayIterator.new = function(array) 
@@ -901,6 +1186,8 @@ end
 __vim_plugin_VimPlugin.new = {}
 
 __kickstart__Kickstart_Kickstart_Fields_.new = {}
+__kickstart__Kickstart_Kickstart_Fields_.config_nvim_surround = function() 
+end
 __kickstart__Kickstart_Kickstart_Fields_.main = function() 
   local spec = _hx_o({__fields__={name=true},name="wbthomason/packer.nvim"});
   local plugins = { 
@@ -960,7 +1247,7 @@ __kickstart__Kickstart_Kickstart_Fields_.main = function()
         module=spec.module,
         module_pattern=spec.module_pattern
       }
-  local spec = _hx_o({__fields__={name=true},name="nvim-lua/plenary.nvim"});
+  local spec = _hx_o({__fields__={name=true},name="psliwka/vim-smoothie"});
   local plugins2 = { 
         spec.name, 
         disable=spec.disable,
@@ -989,7 +1276,7 @@ __kickstart__Kickstart_Kickstart_Fields_.main = function()
         module=spec.module,
         module_pattern=spec.module_pattern
       }
-  local spec = _hx_o({__fields__={name=true,branch=true,requires=true,config=true},name="nvim-neo-tree/neo-tree.nvim",branch="v2.x",requires=({"nvim-lua/plenary.nvim","nvim-tree/nvim-web-devicons","MunifTanjim/nui.nvim"}),config=function(_,...) return __plugins__Plugins_Plugins_Impl_.configure(...) end});
+  local spec = _hx_o({__fields__={name=true},name="nvim-lua/plenary.nvim"});
   local plugins3 = { 
         spec.name, 
         disable=spec.disable,
@@ -1018,7 +1305,7 @@ __kickstart__Kickstart_Kickstart_Fields_.main = function()
         module=spec.module,
         module_pattern=spec.module_pattern
       }
-  local spec = _hx_o({__fields__={name=true,requires=true},name="neovim/nvim-lspconfig",requires=({"williamboman/mason.nvim","williamboman/mason-lspconfig.nvim","j-hui/fidget.nvim","folke/neodev.nvim"})});
+  local spec = _hx_o({__fields__={name=true,branch=true,requires=true,config=true},name="nvim-neo-tree/neo-tree.nvim",branch="v2.x",requires=({"nvim-lua/plenary.nvim","nvim-tree/nvim-web-devicons","MunifTanjim/nui.nvim"}),config=function(_,...) return __plugins__Plugins_Plugins_Impl_.configure(...) end});
   local plugins4 = { 
         spec.name, 
         disable=spec.disable,
@@ -1047,7 +1334,7 @@ __kickstart__Kickstart_Kickstart_Fields_.main = function()
         module=spec.module,
         module_pattern=spec.module_pattern
       }
-  local spec = _hx_o({__fields__={name=true,requires=true},name="hrsh7th/nvim-cmp",requires=({"hrsh7th/cmp-nvim-lsp","L3MON4D3/LuaSnip","saadparwaiz1/cmp_luasnip"})});
+  local spec = _hx_o({__fields__={name=true,requires=true},name="neovim/nvim-lspconfig",requires=({"williamboman/mason.nvim","williamboman/mason-lspconfig.nvim","j-hui/fidget.nvim","folke/neodev.nvim"})});
   local plugins5 = { 
         spec.name, 
         disable=spec.disable,
@@ -1076,7 +1363,7 @@ __kickstart__Kickstart_Kickstart_Fields_.main = function()
         module=spec.module,
         module_pattern=spec.module_pattern
       }
-  local spec = _hx_o({__fields__={name=true},name="lukas-reineke/cmp-rg"});
+  local spec = _hx_o({__fields__={name=true,requires=true},name="hrsh7th/nvim-cmp",requires=({"hrsh7th/cmp-nvim-lsp","L3MON4D3/LuaSnip","saadparwaiz1/cmp_luasnip"})});
   local plugins6 = { 
         spec.name, 
         disable=spec.disable,
@@ -1105,7 +1392,7 @@ __kickstart__Kickstart_Kickstart_Fields_.main = function()
         module=spec.module,
         module_pattern=spec.module_pattern
       }
-  local spec = _hx_o({__fields__={name=true,commit=true},name="hrsh7th/cmp-cmdline",commit="9c0e331"});
+  local spec = _hx_o({__fields__={name=true},name="lukas-reineke/cmp-rg"});
   local plugins7 = { 
         spec.name, 
         disable=spec.disable,
@@ -1134,7 +1421,7 @@ __kickstart__Kickstart_Kickstart_Fields_.main = function()
         module=spec.module,
         module_pattern=spec.module_pattern
       }
-  local spec = _hx_o({__fields__={name=true},name="andersevenrud/cmp-tmux"});
+  local spec = _hx_o({__fields__={name=true,commit=true},name="hrsh7th/cmp-cmdline",commit="9c0e331"});
   local plugins8 = { 
         spec.name, 
         disable=spec.disable,
@@ -1163,7 +1450,7 @@ __kickstart__Kickstart_Kickstart_Fields_.main = function()
         module=spec.module,
         module_pattern=spec.module_pattern
       }
-  local spec = _hx_o({__fields__={name=true,run=true},name="nvim-treesitter/nvim-treesitter",run="pcall(require(\"nvim-treesitter.install\").update({ with_sync = true }))"});
+  local spec = _hx_o({__fields__={name=true},name="andersevenrud/cmp-tmux"});
   local plugins9 = { 
         spec.name, 
         disable=spec.disable,
@@ -1192,7 +1479,7 @@ __kickstart__Kickstart_Kickstart_Fields_.main = function()
         module=spec.module,
         module_pattern=spec.module_pattern
       }
-  local spec = _hx_o({__fields__={name=true},name="b0o/schemastore.nvim"});
+  local spec = _hx_o({__fields__={name=true,run=true},name="nvim-treesitter/nvim-treesitter",run="pcall(require(\"nvim-treesitter.install\").update({ with_sync = true }))"});
   local plugins10 = { 
         spec.name, 
         disable=spec.disable,
@@ -1221,7 +1508,7 @@ __kickstart__Kickstart_Kickstart_Fields_.main = function()
         module=spec.module,
         module_pattern=spec.module_pattern
       }
-  local spec = _hx_o({__fields__={name=true},name="tpope/vim-fugitive"});
+  local spec = _hx_o({__fields__={name=true},name="b0o/schemastore.nvim"});
   local plugins11 = { 
         spec.name, 
         disable=spec.disable,
@@ -1250,7 +1537,7 @@ __kickstart__Kickstart_Kickstart_Fields_.main = function()
         module=spec.module,
         module_pattern=spec.module_pattern
       }
-  local spec = _hx_o({__fields__={name=true},name="tpope/vim-rhubarb"});
+  local spec = _hx_o({__fields__={name=true},name="tpope/vim-fugitive"});
   local plugins12 = { 
         spec.name, 
         disable=spec.disable,
@@ -1279,7 +1566,7 @@ __kickstart__Kickstart_Kickstart_Fields_.main = function()
         module=spec.module,
         module_pattern=spec.module_pattern
       }
-  local spec = _hx_o({__fields__={name=true},name="lewis6991/gitsigns.nvim"});
+  local spec = _hx_o({__fields__={name=true},name="tpope/vim-rhubarb"});
   local plugins13 = { 
         spec.name, 
         disable=spec.disable,
@@ -1308,7 +1595,7 @@ __kickstart__Kickstart_Kickstart_Fields_.main = function()
         module=spec.module,
         module_pattern=spec.module_pattern
       }
-  local spec = _hx_o({__fields__={name=true},name="navarasu/onedark.nvim"});
+  local spec = _hx_o({__fields__={name=true},name="lewis6991/gitsigns.nvim"});
   local plugins14 = { 
         spec.name, 
         disable=spec.disable,
@@ -1337,7 +1624,7 @@ __kickstart__Kickstart_Kickstart_Fields_.main = function()
         module=spec.module,
         module_pattern=spec.module_pattern
       }
-  local spec = _hx_o({__fields__={name=true},name="nvim-lualine/lualine.nvim"});
+  local spec = _hx_o({__fields__={name=true},name="navarasu/onedark.nvim"});
   local plugins15 = { 
         spec.name, 
         disable=spec.disable,
@@ -1366,7 +1653,7 @@ __kickstart__Kickstart_Kickstart_Fields_.main = function()
         module=spec.module,
         module_pattern=spec.module_pattern
       }
-  local spec = _hx_o({__fields__={name=true},name="lukas-reineke/indent-blankline.nvim"});
+  local spec = _hx_o({__fields__={name=true},name="nvim-lualine/lualine.nvim"});
   local plugins16 = { 
         spec.name, 
         disable=spec.disable,
@@ -1395,7 +1682,7 @@ __kickstart__Kickstart_Kickstart_Fields_.main = function()
         module=spec.module,
         module_pattern=spec.module_pattern
       }
-  local spec = _hx_o({__fields__={name=true},name="numToStr/Comment.nvim"});
+  local spec = _hx_o({__fields__={name=true},name="lukas-reineke/indent-blankline.nvim"});
   local plugins17 = { 
         spec.name, 
         disable=spec.disable,
@@ -1424,7 +1711,7 @@ __kickstart__Kickstart_Kickstart_Fields_.main = function()
         module=spec.module,
         module_pattern=spec.module_pattern
       }
-  local spec = _hx_o({__fields__={name=true},name="tpope/vim-sleuth"});
+  local spec = _hx_o({__fields__={name=true},name="numToStr/Comment.nvim"});
   local plugins18 = { 
         spec.name, 
         disable=spec.disable,
@@ -1453,7 +1740,7 @@ __kickstart__Kickstart_Kickstart_Fields_.main = function()
         module=spec.module,
         module_pattern=spec.module_pattern
       }
-  local spec = _hx_o({__fields__={name=true,cmd=true,event=true,config=true},name="zbirenbaum/copilot.lua",cmd="Copilot",event=__vim__VimTypes_LuaArray_Impl_.from(_hx_tab_array({[0]="InsertEnter"}, 1)),config=function(_,...) return __plugins__Copilot_Copilot_Fields_.configure(...) end});
+  local spec = _hx_o({__fields__={name=true},name="tpope/vim-sleuth"});
   local plugins19 = { 
         spec.name, 
         disable=spec.disable,
@@ -1482,7 +1769,7 @@ __kickstart__Kickstart_Kickstart_Fields_.main = function()
         module=spec.module,
         module_pattern=spec.module_pattern
       }
-  local spec = _hx_o({__fields__={name=true,requires=true,config=true},name="ibhagwan/fzf-lua",requires=({"nvim-tree/nvim-web-devicons"}),config=function(_,...) return __plugins__FzfLua_FzfLua_Fields_.configure(...) end});
+  local spec = _hx_o({__fields__={name=true,cmd=true,event=true,config=true},name="zbirenbaum/copilot.lua",cmd="Copilot",event=__vim__VimTypes_LuaArray_Impl_.from(_hx_tab_array({[0]="InsertEnter"}, 1)),config=function(_,...) return __plugins__Copilot_Copilot_Fields_.configure(...) end});
   local plugins20 = { 
         spec.name, 
         disable=spec.disable,
@@ -1511,7 +1798,7 @@ __kickstart__Kickstart_Kickstart_Fields_.main = function()
         module=spec.module,
         module_pattern=spec.module_pattern
       }
-  local spec = _hx_o({__fields__={name=true},name="jdonaldson/vaxe"});
+  local spec = _hx_o({__fields__={name=true,requires=true,config=true},name="ibhagwan/fzf-lua",requires=({"nvim-tree/nvim-web-devicons"}),config=function(_,...) return __plugins__FzfLua_FzfLua_Fields_.configure(...) end});
   local plugins21 = { 
         spec.name, 
         disable=spec.disable,
@@ -1540,7 +1827,7 @@ __kickstart__Kickstart_Kickstart_Fields_.main = function()
         module=spec.module,
         module_pattern=spec.module_pattern
       }
-  local spec = _hx_o({__fields__={name=true},name="alexghergh/nvim-tmux-navigation"});
+  local spec = _hx_o({__fields__={name=true},name="jdonaldson/vaxe"});
   local plugins22 = { 
         spec.name, 
         disable=spec.disable,
@@ -1569,8 +1856,8 @@ __kickstart__Kickstart_Kickstart_Fields_.main = function()
         module=spec.module,
         module_pattern=spec.module_pattern
       }
-  local spec = _hx_o({__fields__={name=true,tag=true},name="kylechui/nvim-surround",tag="*"});
-  local plugins = _hx_tab_array({[0]=plugins, plugins1, plugins2, plugins3, plugins4, plugins5, plugins6, plugins7, plugins8, plugins9, plugins10, plugins11, plugins12, plugins13, plugins14, plugins15, plugins16, plugins17, plugins18, plugins19, plugins20, plugins21, plugins22, { 
+  local spec = _hx_o({__fields__={name=true},name="alexghergh/nvim-tmux-navigation"});
+  local plugins23 = { 
         spec.name, 
         disable=spec.disable,
         as=spec.as,
@@ -1597,7 +1884,36 @@ __kickstart__Kickstart_Kickstart_Fields_.main = function()
         cond=spec.cond,
         module=spec.module,
         module_pattern=spec.module_pattern
-      }}, 24);
+      }
+  local spec = _hx_o({__fields__={name=true,tag=true,requires=true,config=true},name="kylechui/nvim-surround",tag="*",requires=({"wellle/targets.vim"}),config=function(_,...) return __kickstart__Kickstart_Kickstart_Fields_.config_nvim_surround(...) end});
+  local plugins = _hx_tab_array({[0]=plugins, plugins1, plugins2, plugins3, plugins4, plugins5, plugins6, plugins7, plugins8, plugins9, plugins10, plugins11, plugins12, plugins13, plugins14, plugins15, plugins16, plugins17, plugins18, plugins19, plugins20, plugins21, plugins22, plugins23, { 
+        spec.name, 
+        disable=spec.disable,
+        as=spec.as,
+        installer=spec.installer,
+        updater=spec.updater,
+        after=spec.after,
+        rtp=spec.rtp,
+        opt=spec.opt,
+        bufread=spec.bufread,
+        branch=spec.branch,
+        tag=spec.tag,
+        commit=spec.commit,
+        lock=spec.lock,
+        run=spec.run,
+        requires=spec.requires,
+        rocks=spec.rocks,
+        config=spec.config,
+        setup=spec.setup,
+        cmd=spec.cmd,
+        ft=spec.ft,
+        keys=spec.keys,
+        event=spec.event,
+        fn=spec.fn,
+        cond=spec.cond,
+        module=spec.module,
+        module_pattern=spec.module_pattern
+      }}, 25);
   local is_bootstrap = __packer__Packer_Packer_Fields_.ensureInstalled();
   local packer = _G.require("packer");
   packer.startup(function(use) 
@@ -1862,6 +2178,13 @@ __kickstart__Untyped_Untyped_Fields_.higlightOnYank = function()
   do return vim.highlight.on_yank() end;
 end
 
+__lua_PairTools.new = {}
+__lua_PairTools.copy = function(table1) 
+  local ret = ({});
+  for k,v in _G.pairs(table1) do ret[k] = v end;
+  do return ret end;
+end
+
 __lua_StringMap.new = function() 
   local self = _hx_new(__lua_StringMap.prototype)
   __lua_StringMap.super(self)
@@ -2098,6 +2421,8 @@ local _hx_static_init = function()
   
   
 end
+
+_hx_print = print or (function() end)
 
 _hx_box_mr = function(x,nt)
     res = _hx_o({__fields__={}})

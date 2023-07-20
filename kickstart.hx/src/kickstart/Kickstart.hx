@@ -26,10 +26,15 @@ import packer.Packer;
 import vim.Vim;
 import vim.VimTypes;
 
+function config_nvim_surround() {
+  untyped {lua: "require('nvim-surround').setup{}"}
+}
+
 function main() {
   final plugins:Array< Plugin > = [
     {name: "wbthomason/packer.nvim"},
     {name: "folke/which-key.nvim"},
+    {name: "psliwka/vim-smoothie"},
     {name: "nvim-lua/plenary.nvim"},
     {
       name: "nvim-neo-tree/neo-tree.nvim",
@@ -96,7 +101,11 @@ function main() {
     {name: "alexghergh/nvim-tmux-navigation"},
     {
       name: "kylechui/nvim-surround",
-      tag: '*'
+      tag: '*',
+      requires: t(
+        ["wellle/targets.vim"]
+      ), // Adds more targets to vim's built-in text object motions
+      config: config_nvim_surround
     },
   ];
 
