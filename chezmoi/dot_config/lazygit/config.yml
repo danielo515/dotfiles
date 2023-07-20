@@ -15,3 +15,7 @@ customCommands:
         title: 'Stash message'
         key: 'Msg'
         initialValue: ''
+  - key: 'p'
+    context: 'files'
+    command: "git pull origin --rebase"
+    description: 'Pull rebase'
