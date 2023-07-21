@@ -35,6 +35,10 @@ function main() {
     {name: "wbthomason/packer.nvim"},
     {name: "folke/which-key.nvim"},
     {name: "psliwka/vim-smoothie"},
+    {
+      name: "kdheepak/lazygit.nvim",
+      requires: t(["nvim-lua/plenary.nvim"]),
+    },
     {name: "nvim-lua/plenary.nvim"},
     {
       name: "nvim-neo-tree/neo-tree.nvim",
