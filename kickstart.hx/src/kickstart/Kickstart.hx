@@ -88,7 +88,10 @@ function main() {
     {name: "navarasu/onedark.nvim"}, // Theme inspired by Atom
     {name: "nvim-lualine/lualine.nvim"}, // Fancier statusline
     {name: "lukas-reineke/indent-blankline.nvim"}, // Add indentation guides even on blank lines
-    {name: "numToStr/Comment.nvim"}, // "gc" to comment visual regions/lines
+    {
+      name: "numToStr/Comment.nvim",
+      config: Comment.configure_comment
+    }, // "gc" to comment visual regions/lines
     {name: "tpope/vim-sleuth"}, // Detect tabstop and shiftwidth automatically
     {
       name: "zbirenbaum/copilot.lua",
@@ -217,7 +220,6 @@ function onAttach(x:Dynamic, bufnr:Buffer):Void {
 }
 
 function setupPlugins() {
-  Comment.require()!.setup();
   IndentBlankline.require()!.setup(t({
     char: '┊',
     show_trailing_blankline_indent: false,
@@ -363,6 +365,8 @@ function keymaps() {
     "<Cmd>wa<CR>",
     {desc: 'Write all files', silent: true}
   );
+
+  Keymap.set(t([Normal]), '<leader>gg', "<Cmd>LazyGit<CR>", {desc: 'LazyGit', silent: true});
   final fzf = FzfLua.require();
   if (fzf != null) {
     Keymap.set(

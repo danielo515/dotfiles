@@ -19,6 +19,15 @@ extern class IndentBlankline implements VimPlugin {
 extern class Comment implements VimPlugin {
   inline static final libName = 'Comment';
   @:luaDotMethod function setup():Void;
+  inline static function configure_comment():Void {
+    Comment.require()!.setup();
+    untyped __lua__(
+      "
+      local ft = require('Comment.ft')
+      ft.haxe = {'//%s', '/*%s*/'}
+      "
+    );
+  }
 }
 
 extern class Neodev implements VimPlugin {

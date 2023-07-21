@@ -1740,7 +1740,7 @@ __kickstart__Kickstart_Kickstart_Fields_.main = function()
         module=spec.module,
         module_pattern=spec.module_pattern
       }
-  local spec = _hx_o({__fields__={name=true},name="numToStr/Comment.nvim"});
+  local spec = _hx_o({__fields__={name=true,config=true},name="numToStr/Comment.nvim",config=function(_,...) return __plugins__Plugins_Plugins_Impl_.configure_comment(...) end});
   local plugins19 = { 
         spec.name, 
         disable=spec.disable,
@@ -2008,10 +2008,6 @@ __kickstart__Kickstart_Kickstart_Fields_.onAttach = function(x,bufnr)
   end, ({bang = false, desc = "Format current buffer with LSP", force = true, nargs = 0, range = false}));
 end
 __kickstart__Kickstart_Kickstart_Fields_.setupPlugins = function() 
-  local _v_ = vimx.safeRequire("Comment");
-  if (_v_ ~= nil) then 
-    _v_.setup();
-  end;
   local _v_ = vimx.safeRequire("indent_blankline");
   if (_v_ ~= nil) then 
     _v_.setup(({char = "┊", show_trailing_blankline_indent = false}));
@@ -2191,6 +2187,7 @@ __kickstart__Kickstart_Kickstart_Fields_.keymaps = function()
   vim.keymap.set(({"n"}), "k", "v:count == 0 ? 'gk' : 'k'", ({desc = "up when word-wrap", expr = true, silent = true}));
   vim.keymap.set(({"n"}), "j", "v:count == 0 ? 'gj' : 'j'", ({desc = "down when word-wrap", expr = true, silent = true}));
   vim.keymap.set(({"n"}), "<leader>w", "<Cmd>wa<CR>", ({desc = "Write all files", expr = nil, silent = true}));
+  vim.keymap.set(({"n"}), "<leader>gg", "<Cmd>LazyGit<CR>", ({desc = "LazyGit", expr = nil, silent = true}));
   if (vimx.safeRequire("fzf-lua") ~= nil) then 
     vim.keymap.set(({"n"}), "<leader>ff", "<Cmd>lua require('fzf-lua').files()<CR>", ({desc = "Find files", expr = nil, silent = true}));
     vim.keymap.set(({"n"}), "<leader>fg", "<Cmd>lua require('fzf-lua').grep()<CR>", ({desc = "Grep files", expr = nil, silent = true}));
@@ -2284,6 +2281,16 @@ __plugins__FzfLua_FzfLua_Fields_.configure = function()
 end
 
 __plugins__Plugins_Plugins_Impl_.new = {}
+__plugins__Plugins_Plugins_Impl_.configure_comment = function() 
+  local _v_ = vimx.safeRequire("Comment");
+  if (_v_ ~= nil) then 
+    _v_.setup();
+  end;
+  
+      local ft = require('Comment.ft')
+      ft.haxe = {'//%s', '/*%s*/'}
+      ;
+end
 __plugins__Plugins_Plugins_Impl_.configure = function() 
   local _v_ = vimx.safeRequire("neo-tree");
   if (_v_ ~= nil) then 
