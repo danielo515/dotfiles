@@ -1973,6 +1973,7 @@ __kickstart__Kickstart_Kickstart_Fields_.main = function()
   vim.o.undofile = true;
   vim.wo.number = true;
   vim.o.inccommand = "split";
+  vim.o.clipboard = "unnamedplus";
   __kickstart__Kickstart_Kickstart_Fields_.autoCommands();
   ___Main_Main_Fields_.setup();
 end

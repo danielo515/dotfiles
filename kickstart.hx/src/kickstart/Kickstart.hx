@@ -180,6 +180,7 @@ inline function vimOptions() {
   Vim.wo.Number = true;
   // show the effects of a search / replace in a live preview window
   Vim.o.inccommand = "split";
+  Vim.o.clipboard = "unnamedplus";
 }
 
 // LSP settings.
