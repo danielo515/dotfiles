@@ -66,6 +66,7 @@ local hyperApps = {
   { key = "2", appName = { "Alacritty", "Kitty" }, layout = US_LAYOUT },
   { key = "3", appName = "Google Chrome" },
   { key = "4", appName = "Arc" },
+  { key = "o", appName = "Obsidian" },
   {
     key = "w",
     callback = function()

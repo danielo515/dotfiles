@@ -4,7 +4,7 @@ local plugins = {
   -- themes
   -- "folke/tokyonight.nvim", -- builtin in lunarvim
   { "Mofiqul/dracula.nvim" },
-  { "catppuccin/nvim", as = "catppuccin" },
+  { "catppuccin/nvim",            as = "catppuccin" },
   { "marko-cerovac/material.nvim" },
   -- require "user.plugins.filetype-config", -- faster and lua way of setting custom filetypes deprecated on modern vim versions
   -- sessions management
@@ -79,9 +79,6 @@ local plugins = {
       }
     end,
   },
-  --[[ Lunarvim builtin now
-   { "SmiteshP/nvim-navic", requires = "neovim/nvim-lspconfig" }, -- shows your position using treesitter
-  -- ]]
   -- Indent guides on every line
   --[[ Lunarvim builtin now
   --{
@@ -236,5 +233,5 @@ treesitter.config()
 local inject_sha = require("user.util.plugins").inject_snapshot_commit
 local snapshot_path = join_paths(get_config_dir(), "snapshots", "default.json")
 local plugins =
-  inject_sha(concat_lists(plugins, unpack(treesitter.plugins), require "user.telescope.settings"), snapshot_path)
+    inject_sha(concat_lists(plugins, unpack(treesitter.plugins), require "user.telescope.settings"), snapshot_path)
 return plugins

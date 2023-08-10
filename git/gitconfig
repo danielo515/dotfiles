@@ -164,4 +164,4 @@
   user = danielo515
 
 [credential]
-  helper = osxkeychain
+	helper = osxkeychain
