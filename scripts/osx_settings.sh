@@ -188,6 +188,9 @@ defaults write com.apple.dock show-recents -bool false
 defaults write com.apple.dock springboard-columns -int 8;
 defaults write com.apple.dock springboard-rows -int 7;
 defaults write com.apple.dock ResetLaunchPad -bool TRUE;
+# https://superuser.com/questions/670252/cmdtab-app-switcher-is-on-the-wrong-monitor
+defaults write com.apple.dock appswitcher-all-displays -bool true
+
 
 for app in "Activity Monitor" \
 	"Calendar" \
