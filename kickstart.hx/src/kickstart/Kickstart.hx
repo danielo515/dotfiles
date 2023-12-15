@@ -86,7 +86,7 @@ function main() {
     {name: "lewis6991/gitsigns.nvim"},
 
     {name: "navarasu/onedark.nvim"}, // Theme inspired by Atom
-    {name: "nvim-lualine/lualine.nvim"}, // Fancier statusline
+    // {name: "nvim-lualine/lualine.nvim"}, // Fancier statusline
     {name: "lukas-reineke/indent-blankline.nvim"}, // Add indentation guides even on blank lines
     {
       name: "numToStr/Comment.nvim",

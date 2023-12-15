@@ -735,24 +735,24 @@ ___Main_Main_Fields_.add_missing_derive = function(toAdd)
 end
 ___Main_Main_Fields_.main = function() 
   vim.api.nvim_create_user_command("HaxeCmd", function(args) 
-    vim.pretty_print(args);
-    vim.pretty_print(vim.spell.check("Hello bru! Hau are you?")[1][1]);
+    vim.print(args);
+    vim.print(vim.spell.check("Hello bru! Hau are you?")[1][1]);
     vim.ui.select(({"a"}), ({prompt = "Pick one sexy option"}), function(choice,_) 
-      vim.pretty_print(choice);
+      vim.print(choice);
     end);
   end, ({bang = true, complete = Std.string("customlist,v:lua.") .. Std.string("require'packer'.plugin_complete"), desc = "Testing from haxe", force = true, nargs = 1, range = "%"}));
   vim.api.nvim_create_user_command("HaxeCmdCompletion", function(args) 
-    vim.pretty_print(args);
-    vim.pretty_print(vim.spell.check("Hello bru! Hau are you?")[1][1]);
+    vim.print(args);
+    vim.print(vim.spell.check("Hello bru! Hau are you?")[1][1]);
     vim.ui.select(({"a"}), ({prompt = "Pick one sexy option"}), function(choice,_) 
-      vim.pretty_print(choice);
+      vim.print(choice);
     end);
   end, ({bang = true, complete = function(lead,full,x) 
-    vim.pretty_print(lead, full, x);
+    vim.print(lead, full, x);
     do return ({"afa","bea",Std.string(lead) .. Std.string("bro")}) end;
   end, desc = "Testing from haxe for completion callback", force = true, nargs = "*", range = "%"}));
   local tmp = __vim_FunctionOrString.Cb(function() 
-    vim.pretty_print("Hello from axe", vim.fn.expand(_G.string.format("%s%s", "%", ":p")));
+    vim.print("Hello from axe", vim.fn.expand(_G.string.format("%s%s", "%", ":p")));
     do return true end;
   end);
   vimx.acmd("HaxeEvent", __vim__VimTypes_LuaArray_Impl_.from(_hx_tab_array({[0]="BufWritePost"}, 1)), "*.hx", "Created from haxe", tmp);
@@ -784,12 +784,15 @@ ___Main_Main_Fields_.main = function()
   vim.api.nvim_create_user_command("AddMissingDerive", function(args) 
     ___Main_Main_Fields_.add_missing_derive(args.args);
   end, ({bang = false, complete = nil, desc = "Add a missing derive to the current file", force = true, nargs = 1, range = true}));
+  vim.api.nvim_create_user_command("RustPrettier", function(_) 
+    vim.cmd("!prettier % -w");
+  end, ({bang = false, complete = nil, desc = "Format with prettier", force = true, nargs = 0, range = true}));
   vim.api.nvim_create_user_command("CreateSiblingFile", function(_) 
     ___Main_Main_Fields_.createSiblingFile();
   end, ({bang = false, complete = nil, desc = "Create a file next to the current one", force = true, nargs = 0, range = true}));
   vim.api.nvim_create_user_command("GetPluginVersion", function(args) 
     local version = __packer__Packer_Packer_Fields_.get_plugin_version(args.args);
-    vim.pretty_print(version);
+    vim.print(version);
     vimx.copyToClipboard(version);
   end, ({bang = false, complete = nil, desc = "Gets the git version of a installed packer plugin", force = true, nargs = 1, range = true}));
   local nargs = nil;
@@ -809,7 +812,7 @@ ___Main_Main_Fields_.runGh = function(args)
     do return nil end;
   end;
   local args = ({command = "gh", args = args, on_stderr = function(args,return_val) 
-    vim.pretty_print("Job got stderr", args, return_val);
+    vim.print("Job got stderr", args, return_val);
   end});
   do return __plenary_Job:new(args):sync() end;
 end
@@ -818,7 +821,7 @@ ___Main_Main_Fields_.openInGh = function(line)
 end
 ___Main_Main_Fields_.get_branch = function() 
   local args = ({command = "git", args = ({"rev-parse","--abbrev-ref","HEAD"}), on_stderr = function(args,return_val) 
-    vim.pretty_print("Something may have  failed", args, return_val);
+    vim.print("Something may have  failed", args, return_val);
   end});
   do return __plenary_Job:new(args):sync() end;
 end
@@ -836,15 +839,15 @@ end
 ___Main_Main_Fields_.copyGhUrl = function(line) 
   local lines = ___Main_Main_Fields_.runGh(__vim__VimTypes_LuaArray_Impl_.from(_hx_tab_array({[0]="browse", Std.string(vim.fn.expand(_G.string.format("%s%s", "%", ":."))) .. Std.string(line), "--no-browser", "--branch", ___Main_Main_Fields_.get_branch()[1]}, 5)));
   if (lines == nil) then 
-    vim.pretty_print("No URL");
+    vim.print("No URL");
   else
-    vim.pretty_print(lines[1]);
+    vim.print(lines[1]);
     vimx.copyToClipboard(lines[1]);
   end;
 end
 ___Main_Main_Fields_.setup = function() 
   ___Main_Main_Fields_.main();
-  vim.pretty_print("ran setup");
+  vim.print("ran setup");
 end
 _hx_exports["setup"] = ___Main_Main_Fields_.setup
 
@@ -1682,7 +1685,7 @@ __kickstart__Kickstart_Kickstart_Fields_.main = function()
         module=spec.module,
         module_pattern=spec.module_pattern
       }
-  local spec = _hx_o({__fields__={name=true},name="nvim-lualine/lualine.nvim"});
+  local spec = _hx_o({__fields__={name=true},name="lukas-reineke/indent-blankline.nvim"});
   local plugins17 = { 
         spec.name, 
         disable=spec.disable,
@@ -1711,7 +1714,7 @@ __kickstart__Kickstart_Kickstart_Fields_.main = function()
         module=spec.module,
         module_pattern=spec.module_pattern
       }
-  local spec = _hx_o({__fields__={name=true},name="lukas-reineke/indent-blankline.nvim"});
+  local spec = _hx_o({__fields__={name=true,config=true},name="numToStr/Comment.nvim",config=function(_,...) return __plugins__Plugins_Plugins_Impl_.configure_comment(...) end});
   local plugins18 = { 
         spec.name, 
         disable=spec.disable,
@@ -1740,7 +1743,7 @@ __kickstart__Kickstart_Kickstart_Fields_.main = function()
         module=spec.module,
         module_pattern=spec.module_pattern
       }
-  local spec = _hx_o({__fields__={name=true,config=true},name="numToStr/Comment.nvim",config=function(_,...) return __plugins__Plugins_Plugins_Impl_.configure_comment(...) end});
+  local spec = _hx_o({__fields__={name=true},name="tpope/vim-sleuth"});
   local plugins19 = { 
         spec.name, 
         disable=spec.disable,
@@ -1769,7 +1772,7 @@ __kickstart__Kickstart_Kickstart_Fields_.main = function()
         module=spec.module,
         module_pattern=spec.module_pattern
       }
-  local spec = _hx_o({__fields__={name=true},name="tpope/vim-sleuth"});
+  local spec = _hx_o({__fields__={name=true,cmd=true,event=true,config=true},name="zbirenbaum/copilot.lua",cmd="Copilot",event=__vim__VimTypes_LuaArray_Impl_.from(_hx_tab_array({[0]="InsertEnter"}, 1)),config=function(_,...) return __plugins__Copilot_Copilot_Fields_.configure(...) end});
   local plugins20 = { 
         spec.name, 
         disable=spec.disable,
@@ -1798,7 +1801,7 @@ __kickstart__Kickstart_Kickstart_Fields_.main = function()
         module=spec.module,
         module_pattern=spec.module_pattern
       }
-  local spec = _hx_o({__fields__={name=true,cmd=true,event=true,config=true},name="zbirenbaum/copilot.lua",cmd="Copilot",event=__vim__VimTypes_LuaArray_Impl_.from(_hx_tab_array({[0]="InsertEnter"}, 1)),config=function(_,...) return __plugins__Copilot_Copilot_Fields_.configure(...) end});
+  local spec = _hx_o({__fields__={name=true,requires=true,config=true},name="ibhagwan/fzf-lua",requires=({"nvim-tree/nvim-web-devicons"}),config=function(_,...) return __plugins__FzfLua_FzfLua_Fields_.configure(...) end});
   local plugins21 = { 
         spec.name, 
         disable=spec.disable,
@@ -1827,7 +1830,7 @@ __kickstart__Kickstart_Kickstart_Fields_.main = function()
         module=spec.module,
         module_pattern=spec.module_pattern
       }
-  local spec = _hx_o({__fields__={name=true,requires=true,config=true},name="ibhagwan/fzf-lua",requires=({"nvim-tree/nvim-web-devicons"}),config=function(_,...) return __plugins__FzfLua_FzfLua_Fields_.configure(...) end});
+  local spec = _hx_o({__fields__={name=true},name="jdonaldson/vaxe"});
   local plugins22 = { 
         spec.name, 
         disable=spec.disable,
@@ -1856,7 +1859,7 @@ __kickstart__Kickstart_Kickstart_Fields_.main = function()
         module=spec.module,
         module_pattern=spec.module_pattern
       }
-  local spec = _hx_o({__fields__={name=true},name="jdonaldson/vaxe"});
+  local spec = _hx_o({__fields__={name=true},name="alexghergh/nvim-tmux-navigation"});
   local plugins23 = { 
         spec.name, 
         disable=spec.disable,
@@ -1885,37 +1888,8 @@ __kickstart__Kickstart_Kickstart_Fields_.main = function()
         module=spec.module,
         module_pattern=spec.module_pattern
       }
-  local spec = _hx_o({__fields__={name=true},name="alexghergh/nvim-tmux-navigation"});
-  local plugins24 = { 
-        spec.name, 
-        disable=spec.disable,
-        as=spec.as,
-        installer=spec.installer,
-        updater=spec.updater,
-        after=spec.after,
-        rtp=spec.rtp,
-        opt=spec.opt,
-        bufread=spec.bufread,
-        branch=spec.branch,
-        tag=spec.tag,
-        commit=spec.commit,
-        lock=spec.lock,
-        run=spec.run,
-        requires=spec.requires,
-        rocks=spec.rocks,
-        config=spec.config,
-        setup=spec.setup,
-        cmd=spec.cmd,
-        ft=spec.ft,
-        keys=spec.keys,
-        event=spec.event,
-        fn=spec.fn,
-        cond=spec.cond,
-        module=spec.module,
-        module_pattern=spec.module_pattern
-      }
   local spec = _hx_o({__fields__={name=true,tag=true,requires=true,config=true},name="kylechui/nvim-surround",tag="*",requires=({"wellle/targets.vim"}),config=function(_,...) return __kickstart__Kickstart_Kickstart_Fields_.config_nvim_surround(...) end});
-  local plugins = _hx_tab_array({[0]=plugins, plugins1, plugins2, plugins3, plugins4, plugins5, plugins6, plugins7, plugins8, plugins9, plugins10, plugins11, plugins12, plugins13, plugins14, plugins15, plugins16, plugins17, plugins18, plugins19, plugins20, plugins21, plugins22, plugins23, plugins24, { 
+  local plugins = _hx_tab_array({[0]=plugins, plugins1, plugins2, plugins3, plugins4, plugins5, plugins6, plugins7, plugins8, plugins9, plugins10, plugins11, plugins12, plugins13, plugins14, plugins15, plugins16, plugins17, plugins18, plugins19, plugins20, plugins21, plugins22, plugins23, { 
         spec.name, 
         disable=spec.disable,
         as=spec.as,
@@ -1942,7 +1916,7 @@ __kickstart__Kickstart_Kickstart_Fields_.main = function()
         cond=spec.cond,
         module=spec.module,
         module_pattern=spec.module_pattern
-      }}, 26);
+      }}, 25);
   local is_bootstrap = __packer__Packer_Packer_Fields_.ensureInstalled();
   local packer = _G.require("packer");
   packer.startup(function(use) 
@@ -1957,11 +1931,11 @@ __kickstart__Kickstart_Kickstart_Fields_.main = function()
     packer.sync();
   end;
   if (is_bootstrap) then 
-    vim.pretty_print("==================================");
-    vim.pretty_print("    Plugins are being installed");
-    vim.pretty_print("    Wait until Packer completes,");
-    vim.pretty_print("       then restart nvim");
-    vim.pretty_print("==================================");
+    vim.print("==================================");
+    vim.print("    Plugins are being installed");
+    vim.print("    Wait until Packer completes,");
+    vim.print("       then restart nvim");
+    vim.print("==================================");
     do return end;
   end;
   __kickstart__Kickstart_Kickstart_Fields_.keymaps();
@@ -2002,7 +1976,7 @@ __kickstart__Kickstart_Kickstart_Fields_.onAttach = function(x,bufnr)
   nmap("<leader>wa", vim.lsp.buf.add_workspace_folder, "[W]orkspace [A]dd Folder");
   nmap("<leader>wr", vim.lsp.buf.remove_workspace_folder, "[W]orkspace [R]emove Folder");
   nmap("<leader>wl", function() 
-    vim.pretty_print(vim.lsp.buf.list_workspace_folders());
+    vim.print(vim.lsp.buf.list_workspace_folders());
   end, "[W]orkspace [L]ist Folders");
   vim.api.nvim_buf_create_user_command(bufnr, "Format", function(_) 
     vim.lsp.buf.format();
@@ -2176,7 +2150,7 @@ __kickstart__Kickstart_Kickstart_Fields_.setupPlugins = function()
       settings = config_settings,
       capabilities = config_capabilities,
     });else
-          vim.pretty_print(Std.string("Ignoring ") .. Std.string(server_name)); end;
+          vim.print(Std.string("Ignoring ") .. Std.string(server_name)); end;
         end}));
       end;
     end;
@@ -2240,7 +2214,7 @@ __packer__Packer_Packer_Fields_.new = {}
 __packer__Packer_Packer_Fields_.get_plugin_version = function(name) 
   if (_G.packer_plugins ~= nil) then 
     local args = ({command = "git", cwd = _G.packer_plugins[name].path, args = ({"rev-parse","--short","HEAD"}), on_stderr = function(args,return_val) 
-      vim.pretty_print("Job got stderr", args, return_val);
+      vim.print("Job got stderr", args, return_val);
     end});
     do return __plenary_Job:new(args):sync()[1] end;
   else
