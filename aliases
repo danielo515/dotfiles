@@ -190,3 +190,13 @@ rgi() {
 
 ## Add a symlink into chezmoi creating the appropriate template
 alias chezmoln='chezmoi add --template-symlinks '
+ALIASES_FOLDER="$HOME/.config/aliases"
+## If there are files under an alias folder, source all of them that end with _aliases
+if [ -d "$ALIASES_FOLDER" ]; then
+  for file in $ALIASES_FOLDER/*_aliases; do
+    if [ -f "$file" ]; then
+      echo "Sourcing $file"
+      source "$file"
+    fi
+  done
+fi

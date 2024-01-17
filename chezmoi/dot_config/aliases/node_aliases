@@ -1,0 +1,11 @@
+## Runs pnpm install in the provided nested package directory
+## Usage: pnpmi <nested-package-dir> package name
+## If only one argument is provided, it is assumed to be the package name
+pmi(){
+  if [ $# -eq 1 ]; then
+    pnpm install $1
+  else
+    pnpm install add --prefix $1 $2
+  fi
+}
+

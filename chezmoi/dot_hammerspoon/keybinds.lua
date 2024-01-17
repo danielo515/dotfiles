@@ -81,9 +81,9 @@ local hyperApps = {
 	{ key = "f", callback = gridRecents },
 	{ key = "p", callback = editClipboardImage },
 }
-
+-- Define the combination that is considered the hyper key
 local hyper = { "cmd", "shift", "alt", "ctrl" }
-
+-- Bind all the actions to the different hyper key combinations
 hs.fnutils.each(hyperApps, function(item)
 	if item.callback ~= nil then
 		hs.hotkey.bind(hyper, item.key, item.callback)
