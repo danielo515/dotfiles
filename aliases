@@ -195,7 +195,6 @@ ALIASES_FOLDER="$HOME/.config/aliases"
 if [ -d "$ALIASES_FOLDER" ]; then
   for file in $ALIASES_FOLDER/*_aliases; do
     if [ -f "$file" ]; then
-      echo "Sourcing $file"
       source "$file"
     fi
   done

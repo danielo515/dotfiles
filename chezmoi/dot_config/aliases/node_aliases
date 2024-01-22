@@ -5,7 +5,7 @@ pmi(){
   if [ $# -eq 1 ]; then
     pnpm install $1
   else
-    pnpm install add --prefix $1 $2
+    pnpm install --prefix $1 $2
   fi
 }
 
