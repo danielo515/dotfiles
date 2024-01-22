@@ -63,7 +63,7 @@ end
 local US_LAYOUT = "com.apple.keylayout.US"
 local hyperApps = {
 	{ key = "s", appName = "Slack", layout = US_LAYOUT },
-	{ key = "2", appName = { "Alacritty", "Kitty" }, layout = US_LAYOUT },
+	{ key = "t", appName = { "Alacritty", "Kitty" }, layout = US_LAYOUT },
 	{ key = "3", appName = "Google Chrome" },
 	{ key = "4", appName = "Firefox" },
 	{ key = "o", appName = "Obsidian" },
