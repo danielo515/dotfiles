@@ -60,9 +60,14 @@ local function editClipboardImage()
 	end)
 end
 
+local function slackWeb()
+	Chrome.jump("slack")
+end
+
 local US_LAYOUT = "com.apple.keylayout.US"
 local hyperApps = {
-	{ key = "s", appName = "Slack", layout = US_LAYOUT },
+	-- { key = "s", appName = "Slack", layout = US_LAYOUT },
+	{ key = "s", callback = slackWeb, layout = US_LAYOUT },
 	{ key = "t", appName = { "Alacritty", "Kitty" }, layout = US_LAYOUT },
 	{ key = "3", appName = "Google Chrome" },
 	{ key = "4", appName = "Firefox" },
