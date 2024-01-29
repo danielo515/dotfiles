@@ -70,14 +70,24 @@ WatchVercel.start(function(status)
 end, vercel.teamId, vercel.token)
 ]]
 
+local function secondaryDisplay()
+	local secondary = hs.screen.find(retina)
+	if secondary == nil then
+		secondary = hs.screen.find("sidecar")
+	end
+	return secondary
+end
+
 -- Windows
+-- Locates feather icons window and makes it big when you focus it
 local function locateFeather(window)
 	local windowLayout = {
-		{ nil, window, retina, hs.layout.left50, nil, nil },
+		{ nil, window, hs.screen.mainScreen(), hs.layout.left50, nil, nil },
 	}
 	hs.layout.apply(windowLayout)
 end
 
+-- Subscribes to focus events on a given app, and calls a callback when it happens
 local function subscribeToFocus(appName, callback, filterOptions)
 	local options = filterOptions or {}
 	wf.new(false):setAppFilter(appName, options):subscribe(hs.window.filter.windowFocused, callback, true)
@@ -95,6 +105,25 @@ subscribeToFocus("Slack", function(window)
 	hs.layout.apply(layout)
 end, { rejectTitles = "Huddle" })
 
+local function find_chrome_window_looking_like_dev_env()
+	-- Search a chrome tab containing something that looks like a dev-environment
+	local dev_env_matches = { ":%d+", "dev", "development", "debug", "localhost" }
+
+	local chrome_window = nil
+	for _, match in ipairs(dev_env_matches) do
+		chrome_window = hs.window.find(chrome_app_name, { allowTitles = match })
+		if chrome_window ~= nil then
+			break
+		end
+	end
+
+	if chrome_window == nil then
+		chrome_window = hs.window.find(chrome_app_name)
+		print("No chrome dev window found in", chrome_app_name)
+	end
+	return chrome_window
+end
+
 -- Whenever we focus the terminal of choice, we position chrome to the right so we can see references
 -- or the web app we are working with
 subscribeToFocus("Alacritty", function(window)
@@ -107,11 +136,13 @@ subscribeToFocus("Alacritty", function(window)
 		return
 	end
 
+	local chrome_window = find_chrome_window_looking_like_dev_env()
+
 	local layout = {
 		{ nil, window, primaryScreen, hs.layout.right70, nil, nil },
-		{ chrome_app_name, nil, primaryScreen, positions.left34, nil, nil },
-		{ "time tracker", nil, retina, positions.right30, nil, nil },
-		{ "Slack", "Huddle", retina, positions.left70, nil, nil },
+		{ nil, chrome_window, primaryScreen, positions.left34, nil, nil },
+		{ "time tracker", nil, secondaryDisplay(), positions.right30, nil, nil },
+		-- { "Slack", "Huddle", retina, positions.left70, nil, nil }, -- If slack is not open, this layout will fail, wtf??
 	}
 	-- slack.gotoChat();
 	hs.layout.apply(layout, notHuddle)
@@ -127,7 +158,7 @@ hs.loadSpoon("Hyper")
 App = hs.application
 Hyper = spoon.Hyper
 
-Hyper:bindHotKeys({ hyperKey = { {}, "F1" } })
+Hyper:bindHotKeys({ hyperKey = { {}, "F9" } })
 
 Hyper:bind({}, "j", function()
 	App.launchOrFocusByBundleID("net.kovidgoyal.kitty")
