@@ -7,6 +7,7 @@ hs.loadSpoon("EmmyLua")
 hs.grid.setGrid("10x6")
 local stateMachine = require("lib.stateMachine")
 local slack = require("lib.slack")
+hs.application.enableSpotlightForNameSearches(true)
 
 local function isMonitorBig()
 	local windowWidth = hs.screen.mainScreen():frame().w
@@ -107,19 +108,20 @@ end, { rejectTitles = "Huddle" })
 
 local function find_chrome_window_looking_like_dev_env()
 	-- Search a chrome tab containing something that looks like a dev-environment
-	local dev_env_matches = { ":%d+", "dev", "development", "debug", "localhost" }
+	local dev_env_matches = { "http.*:%d+", "dev", "development", "debug", "localhost", "slack", "vercel", "calendar" }
 
 	local chrome_window = nil
 	for _, match in ipairs(dev_env_matches) do
-		chrome_window = hs.window.find(chrome_app_name, { allowTitles = match })
+		chrome_window = hs.window.find(match)
 		if chrome_window ~= nil then
+			print("Found window for", match)
 			break
 		end
+		print("No window for", match)
 	end
 
 	if chrome_window == nil then
 		chrome_window = hs.window.find(chrome_app_name)
-		print("No chrome dev window found in", chrome_app_name)
 	end
 	return chrome_window
 end
