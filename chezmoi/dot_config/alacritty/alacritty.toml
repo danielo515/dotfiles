@@ -1,6 +1,6 @@
-import = ["./keys.yml"]
+import = ["~/.config/alacritty/keys.toml"]
 live_config_reload = true
-theme = "Dracula"
+# theme = "Dracula"
 
 [colors]
 draw_bold_text_with_bright_colors = false
@@ -51,33 +51,33 @@ style = "Regular"
 [hints]
 alphabet = "jfkdls;ahgurieowpq"
 
-[hints.bright]
-black = "#656687"
-blue = "#1e90ff"
-cyan = "#1e90ff"
-green = "#85e89d"
-magenta = "#b392f0"
-red = "#d54e54"
-white = "#f6f8fa"
-yellow = "#ffea7f"
+# [hints.bright]
+# black = "#656687"
+# blue = "#1e90ff"
+# cyan = "#1e90ff"
+# green = "#85e89d"
+# magenta = "#b392f0"
+# red = "#d54e54"
+# white = "#f6f8fa"
+# yellow = "#ffea7f"
+#
+# [hints.dim]
+# black = "#131415"
+# blue = "#556a7d"
+# cyan = "#5b7d78"
+# green = "#777c44"
+# magenta = "#75617b"
+# red = "#864343"
+# white = "#cecece"
+# yellow = "#9e824c"
 
-[hints.dim]
-black = "#131415"
-blue = "#556a7d"
-cyan = "#5b7d78"
-green = "#777c44"
-magenta = "#75617b"
-red = "#864343"
-white = "#cecece"
-yellow = "#9e824c"
-
-[hints.normal]
-blue = "#0fc9e4"
-cyan = "#73e3ff"
-green = "#59e858"
-magenta = "#b392f0"
-white = "#666666"
-yellow = "#ffea7f"
+# [hints.normal]
+# blue = "#0fc9e4"
+# cyan = "#73e3ff"
+# green = "#59e858"
+# magenta = "#b392f0"
+# white = "#666666"
+# yellow = "#ffea7f"
 
 [[keyboard.bindings]]
 chars = "\u001E"
