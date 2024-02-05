@@ -1,0 +1,13 @@
+{{- if eq .chezmoi.os "darwin" -}}
+#!/bin/bash
+# Individual installations of brew things
+# Brew Formulae
+## Sketchybar
+brew tap FelixKratz/formulae
+brew install sketchybar
+mkdir -p $HOME/.config/sketchybar/plugins
+brew services start sketchybar
+## Others
+brew install sf-symbols
+brew install starship
+{{ end }}
