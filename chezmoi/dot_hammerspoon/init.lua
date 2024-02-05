@@ -5,6 +5,7 @@ StreamDeck = hs.loadSpoon("StreamDeckButton")
 StreamDeck:start()
 hs.loadSpoon("EmmyLua")
 hs.grid.setGrid("10x6")
+require('keyboard.yabai')
 local stateMachine = require("lib.stateMachine")
 local slack = require("lib.slack")
 hs.application.enableSpotlightForNameSearches(true)
@@ -35,7 +36,7 @@ StreamDeck:onKeyDown("routine", function(context, params)
 	slack.gotoChat()
 	return StreamDeck:getImageMessage(context, state.icon)
 end)
-
+	
 local secrets = require("secrets")
 --[[ I specify not a hidden file because it is out of source control
 In reality it lives encrypted in the chezmoi repo, and copied there on init ]]
