@@ -79,11 +79,12 @@ local hyperApps = {
 		end,
 	},
 	{ key = "space", callback = ws.referenceChooser },
-	{ key = "v", callback = ws.window_menu },
-	{ key = "g", callback = mainAppToGrid },
+	-- { key = "v", callback = ws.window_menu },
+	 { key = "v", appName = "Code" },
+	-- { key = "g", callback = mainAppToGrid },-- yabai is handling grid now
 	{ key = "c", callback = toggleConsole },
 	{ key = "i", callback = ws.debugWindow },
-	{ key = "f", callback = gridRecents },
+	-- { key = "f", callback = gridRecents }, -- yabai is handling grid now
 	{ key = "p", callback = editClipboardImage },
 }
 -- Define the combination that is considered the hyper key
