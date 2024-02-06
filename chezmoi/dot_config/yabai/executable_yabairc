@@ -19,14 +19,16 @@ yabai -m space 5 --label re
 yabai -m rule --add app="^Mail$" space=mail
 yabai -m rule --add app="^Safari$" space=web
 yabai -m rule --add app="^Notes$" space=notes
-yabai -m rule --add app="^ida64$" space=re
-yabai -m rule --add app="^Transmission$" space=media
-yabai -m rule --add app="^Spotify$" space=media
-yabai -m rule --add app="^Discord$" space=social grid=1:1:0:0:1:1 manage=off
-yabai -m rule --add app="^Steam$" space=games manage=off
+#yabai -m rule --add app="^Spotify$" space=media
+#yabai -m rule --add app="^Discord$" space=social grid=1:1:0:0:1:1 manage=off
+# Exclude problematic apps from being managed:
+yabai -m rule --add app="^(LuLu|Calculator|Software Update|Dictionary|VLC|System Preferences|System Settings|zoom.us|Photo Booth|Archive Utility|Python|LibreOffice|App Store|Steam|Alfred|Activity Monitor)$" manage=off
+yabai -m rule --add label="Finder" app="^Finder$" title="(Co(py|nnect)|Move|Info|Pref)" manage=off
+#yabai -m rule --add label="Safari" app="^Safari$" title="^(General|(Tab|Password|Website|Extension)s|AutoFill|Se(arch|curity)|Privacy|Advance)$" manage=off
+yabai -m rule --add label="About This Mac" app="System Information" title="About This Mac" manage=off
+yabai -m rule --add label="Select file to save to" app="^Inkscape$" title="Select file to save to" manage=off
 yabai -m rule --add app="^(Calculator|System Preferences|Archive Utility)$" manage=off
 yabai -m rule --add app="^(Hammerspoon|System Settings)" manage=off
-yabai -m rule --add app="^mpv$" manage=off border=off sticky=on layer=above opacity=1.0 grid=8:8:6:0:2:2
 
 # signals
 yabai -m signal --add event=window_destroyed active=yes action="yabai -m query --windows --window &> /dev/null || yabai -m window --focus mouse &> /dev/null || yabai -m window --focus \$(yabai -m query --windows --space | jq .[0].id) &> /dev/null"
@@ -38,7 +40,7 @@ yabai -m signal --add event=window_minimized active=yes action="if \$(yabai -m q
 
 # global settings
 yabai -m config                              \
-    external_bar                off:41:0     \
+    external_bar                all:20:0     \
     mouse_follows_focus         on           \
     focus_follows_mouse         autoraise    \
     window_placement            second_child \
@@ -60,7 +62,7 @@ yabai -m config                              \
     split_ratio                 0.50         \
     split_type                  auto         \
     auto_balance                on          \
-    top_padding                 10           \
+    top_padding                 8           \
     left_padding                10           \
     right_padding               10           \
     bottom_padding              10           \
