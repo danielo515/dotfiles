@@ -32,6 +32,10 @@ local function yabai1(command)
 	return all_ok == 0
 end
 
+function yabaiQuery(command)
+	local result = hs.execute(yabaiPath .. " -m query --" .. command)
+	return hs.json.decode(result)
+end
 
 -- executes yabai commands
 -- If a command fails, it will try to execute the alt command
@@ -58,6 +62,7 @@ end
 
 -- alpha
 alt("f", { "window --toggle zoom-fullscreen" })
+alt("z", { "window --toggle zoom-parent" })
 alt("m", { "space --toggle mission-control" })
 alt("g", { "space --toggle padding", "space --toggle gap" })
 alt("r", { "space --rotate 90" })
@@ -68,9 +73,9 @@ alt("'", { "space --layout stack" })
 alt(";", { "space --layout bsp" })
 alt("tab", { "space --focus recent" })
 
-local function altShift(key, commands)
+local function altShift(key, commands, alt)
 	hs.hotkey.bind({ "alt", "shift" }, key, function()
-		yabai(commands)
+		yabai(commands, alt)
 	end)
 end
 
@@ -84,10 +89,17 @@ for i = 1, 9 do
 	altShiftNumber(num)
 end
 
--- NOTE: use as arrow keys
+-- This allows to set a different alternative command for the l and h, which will be easier than handling that in the loop
+alt('l', { "window --focus east"}, "window --focus first")
+alt('h', { "window --focus west"}, "window --focus last")
+alt('j', { "window --focus south"}, "window --focus north")
+alt('k', { "window --focus north"}, "window --focus south")
+altShift("l", { "window --swap east"   }, "window --swap first")
+altShift("h", { "window --swap west"   }, "window --swap last")
+altShift("j", { "window --swap south"  }, "window --swap north")
+altShift("k", { "window --swap north"  }, "window --swap south")
+-- VIM style hjkl window movement
 local homeRow = { h = "west", j = "south", k = "north", l = "east" }
-
-for key, direction in pairs(homeRow) do
-	alt(key, { "window --focus " .. direction }, "window --focus last")
-	altShift(key, { "window --swap " .. direction })
-end
+--for key, direction in pairs(homeRow) do
+	--altShift(key, { "window --swap " .. direction }, "window --space next")
+--end
