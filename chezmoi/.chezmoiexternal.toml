@@ -50,3 +50,9 @@ executable = true
 [".config/Lazy"]
 type = "git-repo"
 url = "https://github.com/danielo515/lazyvim"
+## Hammerspoon lsp helppers
+[".hammerspoon/Spoons/EmmyLua.spoon"]
+type = "archive"
+url = "https://github.com/Hammerspoon/Spoons/raw/master/Spoons/EmmyLua.spoon.zip"
+exact = true
+stripComponents = 1

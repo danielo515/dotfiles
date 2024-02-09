@@ -17,7 +17,7 @@ end
 local yabaiPath = hs.execute('which yabai')
 
 if yabaiPath == '' or yabaiPath == nil then
-    alert.show('yabai not found')
+    hs.alert.show('yabai not found')
     return
 end
 
