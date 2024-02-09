@@ -14,7 +14,7 @@ local function trim(str)
     return str:gsub("^%s+", ""):gsub("%s+$", "")
 end
 
-local yabaiPath = hs.execute('which yabai')
+local yabaiPath = hs.execute('which yabai',true)
 
 if yabaiPath == '' or yabaiPath == nil then
     hs.alert.show('yabai not found')
