@@ -47,3 +47,6 @@ exact = true
 type = "file"
 url = 'https://github.com/direnv/direnv/releases/download/{{( gitHubLatestRelease "direnv/direnv").TagName }}/direnv.{{ .chezmoi.os }}-{{ .chezmoi.arch }}'
 executable = true
+[".config/Lazy"]
+type = "git-repo"
+url = "https://github.com/danielo515/lazyvim"
