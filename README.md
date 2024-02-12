@@ -26,12 +26,14 @@ I hate `CAPSLOCK` and don't find it useful at all. However, is _does_ occupy a r
 ## Chezmoi
 
 Files in this repository are managed using chezmoi.
-Here are the particular specific things about my chezmoi configuration
+Here are the **particular specific things about my chezmoi configuration**
 
 - I use a subfolder called chezmoi for the chezmoi files
 - I have some scripts that run once to setup some environment things
+- chezmoi has the option to set configuration data in a `chezmoi.toml` file, and the documentation usually references that file. However this repository uses the `yaml` version instead, and it is templated, so the file is called `chezmoi.yaml.tmpl`
+  - [here are the docs](https://www.chezmoi.io/reference/special-files-and-directories/chezmoi-format-tmpl/)
 
-## How chezmoi builds my zshrc
+### How chezmoi builds my zshrc
 
 Every file in the zsh that ends up in `.zsh` is concatenated in the file name order to the zshrc everytime chezmoi apply is executed
 
