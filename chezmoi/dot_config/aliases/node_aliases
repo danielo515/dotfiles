@@ -9,3 +9,4 @@ pmi(){
   fi
 }
 
+alias pn='pnpm'
