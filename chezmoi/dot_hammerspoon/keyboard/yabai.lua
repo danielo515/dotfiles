@@ -38,6 +38,10 @@ function yabaiQuery(command)
 	return hs.json.decode(result)
 end
 
+function yabaiWindows()
+	return yabaiQuery("windows --window")
+end
+
 -- executes yabai commands
 -- If a command fails, it will try to execute the alt command
 -- @param commands table
@@ -62,9 +66,23 @@ local function alt(key, commands, alt)
 	end)
 end
 
+local hyperKey = { "cmd", "shift", "alt", "ctrl" }
+
+local function hyper(key, commands, al)
+	if not hs.hotkey.assignable(hyperKey, key) then
+		hs.alert.show("Conflicting hyeper key " .. key)
+		return
+	end
+	hs.hotkey.bind(hyperKey, key, function()
+		yabai(commands, alt)
+	end)
+end
+
 -- alpha
-alt("f", { "window --toggle zoom-fullscreen" })
-alt("z", { "window --toggle zoom-parent" })
+hyper("f", { "window --toggle zoom-fullscreen" })
+hyper("z", { "window --toggle zoom-parent" })
+hyper("g", { "window --toggle float --grid 2:2:1:1:1:1" })
+hyper("l", { "window --resize right:20:0" })
 alt("m", { "space --toggle mission-control" })
 alt("g", { "space --toggle padding", "space --toggle gap" })
 alt("r", { "space --rotate 90" })
@@ -108,4 +126,3 @@ local homeRow = { h = "west", j = "south", k = "north", l = "east" }
 --for key, direction in pairs(homeRow) do
 --altShift(key, { "window --swap " .. direction }, "window --space next")
 --end
-
