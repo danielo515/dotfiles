@@ -68,23 +68,23 @@ end
 
 local hyperKey = { "cmd", "shift", "alt", "ctrl" }
 
-local function hyper(key, commands, al)
+local function hyper(key, commands, fallback)
 	if not hs.hotkey.assignable(hyperKey, key) then
 		hs.alert.show("Conflicting hyeper key " .. key)
 		return
 	end
 	hs.hotkey.bind(hyperKey, key, function()
-		yabai(commands, alt)
+		yabai(commands, fallback)
 	end)
 end
 
 -- alpha
 hyper("f", { "window --toggle zoom-fullscreen" })
 hyper("z", { "window --toggle zoom-parent" })
-hyper("g", { "window --toggle float --grid 2:2:1:1:1:1" })
-hyper("l", { "window --resize right:20:0" })
+hyper("g", { "window --toggle float", "window --grid 2:2:1:1:1:1" })
+hyper("right", { "window --east --resize right:50:0" }, "window --resize right:50:0")
+hyper("left", { "window --west --resize right:-50:0" }, "window --resize right:-50:0")
 alt("m", { "space --toggle mission-control" })
-alt("g", { "space --toggle padding", "space --toggle gap" })
 alt("r", { "space --rotate 90" })
 alt("t", { "window --toggle float", "window --grid 4:4:1:1:2:2" })
 
