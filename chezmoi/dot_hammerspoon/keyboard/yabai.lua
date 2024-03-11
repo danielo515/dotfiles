@@ -25,14 +25,15 @@ yabaiPath = trim(yabaiPath)
 
 -- Helper function to execute yabai commands
 -- and return true if the command was successful
--- @param command string
--- @return boolean
+---@param command string
+---@return boolean, string
 local function yabai1(command)
 	local cmd = yabaiPath .. " -m " .. command
 	local _, _, all_ok = os.execute(cmd)
 	return all_ok == 0, cmd
 end
 
+---@param command string
 function yabaiQuery(command)
 	local result = hs.execute(yabaiPath .. " -m query --" .. command)
 	return hs.json.decode(result)
@@ -44,15 +45,15 @@ end
 
 -- executes yabai commands
 -- If a command fails, it will try to execute the alt command
--- @param commands table
--- @param alt string an alternative command to execute if the first fails
+---@param commands string[]
+---@param alt string? an alternative command to execute if the first fails
 function yabai(commands, alt)
 	-- print("yabaiPath", yabaiPath)
 	for _, cmd in ipairs(commands) do
 		local status, fullCmd = yabai1(cmd)
 		if not status then
 			if alt ~= nil then
-				yabai1(alt)
+				yabai({ alt })
 			else
 				hs.alert.show("yabai command failed: " .. fullCmd)
 			end
@@ -60,9 +61,13 @@ function yabai(commands, alt)
 	end
 end
 
-local function alt(key, commands, alt)
+---comment
+---@param key string
+---@param commands string[]
+---@param fallback string?
+local function alt(key, commands, fallback)
 	hs.hotkey.bind({ "alt" }, key, function()
-		yabai(commands, alt)
+		yabai(commands, fallback)
 	end)
 end
 
@@ -93,9 +98,12 @@ alt("'", { "space --layout stack" })
 alt(";", { "space --layout bsp" })
 alt("tab", { "space --focus recent" })
 
-local function altShift(key, commands, alt)
+---@param key string
+---@param commands string[]
+---@param fallback string?
+local function altShift(key, commands, fallback)
 	hs.hotkey.bind({ "alt", "shift" }, key, function()
-		yabai(commands, alt)
+		yabai(commands, fallback)
 	end)
 end
 
