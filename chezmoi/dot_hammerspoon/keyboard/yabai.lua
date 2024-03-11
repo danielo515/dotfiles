@@ -52,7 +52,7 @@ function yabai(commands, alt)
 		local status, fullCmd = yabai1(cmd)
 		if not status then
 			if alt ~= nil then
-				os.execute(fullCmd)
+				yabai1(alt)
 			else
 				hs.alert.show("yabai command failed: " .. fullCmd)
 			end
