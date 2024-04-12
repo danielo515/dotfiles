@@ -33,8 +33,8 @@ setup_space 7 "other"
 setup_space 8 "scrap"
 
 # window rules
-#yabai -m rule --add app="^Obsidian$" space=notes
 #yabai -m rule --add app="^Firefox$" space=web
+yabai -m rule --add app="^Obsidian$" space=notes
 yabai -m rule --add app="^time tracker" space=personal
 # Exclude problematic apps from being managed:
 yabai -m rule --add app="^(LuLu|Calculator|Software Update|Dictionary|VLC|System Preferences|System Settings|zoom.us|Photo Booth|Archive Utility|Python|LibreOffice|App Store|Steam|Alfred|Activity Monitor)$" manage=off
