@@ -73,6 +73,9 @@ end
 
 local hyperKey = { "cmd", "shift", "alt", "ctrl" }
 
+---@param key string
+---@param commands string[]
+---@param fallback string?
 local function hyper(key, commands, fallback)
 	if not hs.hotkey.assignable(hyperKey, key) then
 		hs.alert.show("Conflicting hyeper key " .. key)
@@ -90,7 +93,7 @@ hyper("g", { "window --toggle float", "window --grid 2:2:1:1:1:1" })
 hyper("right", { "window --east --resize right:50:0" }, "window --resize right:50:0")
 hyper("left", { "window --west --resize right:-50:0" }, "window --resize right:-50:0")
 alt("m", { "space --toggle mission-control" })
-alt("r", { "space --rotate 90" })
+-- alt("r", { "space --rotate 90" })
 alt("t", { "window --toggle float", "window --grid 4:4:1:1:2:2" })
 
 -- special characters
