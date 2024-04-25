@@ -1,0 +1,5 @@
+yabai-query-windows(){
+  yabai -m query --windows | jq -r '.[] | "\(.id) | \(.app) | \(.title)"' | fzf;
+}
+
+alias ywin='yabai-query-windows'
