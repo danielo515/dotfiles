@@ -1,3 +1,4 @@
+source "$HOME/.config/colors.sh"
 # This is a demo config to show some of the most important commands more easily.
 # This is meant to be changed and configured, as it is intentionally kept sparse.
 # For a more advanced configuration example see my dotfiles:
@@ -27,14 +28,19 @@ sketchybar --bar height=20        \
 
 sketchybar --default icon.font="Hack Nerd Font:Bold:14.0"  \
                      icon.color=0xffffffff                 \
-                     label.font="Hack Nerd Font:Bold:12.0" \
-                     label.color=0xffffffff                \
                      padding_left=5                        \
                      padding_right=5                       \
-                     label.padding_left=4                  \
-                     label.padding_right=4                 \
-                     icon.padding_left=4                   \
-                     icon.padding_right=4
+\
+                     label.font="Hack Nerd Font:Bold:12.0" \
+                     label.color=0xffffffff                \
+                     label.padding_left=2                  \
+                     label.padding_right=6                 \
+\
+                     background.border_width=2             \
+                     background.corner_radius=12           \
+\
+                     icon.padding_left=6                   \
+                     icon.padding_right=2
 
 ##### Adding Mission Control Space Indicators #####
 # Now we add some mission control spaces:
@@ -97,6 +103,10 @@ sketchybar --add item clock right                              \
            --set battery script="$PLUGIN_DIR/battery.sh"       \
                          update_freq=120                       \
            --subscribe battery system_woke power_source_change
+
+sketchybar --add bracket clock time date                          \
+           --set         clock background.color=$COLOR_BACKGROUND \
+                               background.border_color=$COLOR_RED
 
 ##### Finalizing Setup #####
 # The below command is only needed at the end of the initial configuration to
