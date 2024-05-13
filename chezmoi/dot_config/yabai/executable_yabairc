@@ -5,7 +5,7 @@
 sudo yabai --load-sa
 yabai -m signal --add event=dock_did_restart action="sudo yabai --load-sa"
 
-# Configure space with a label and an index
+Configure space with a label and an index
 # If the space already exists, only sets the name
 # if the space does not exist, creates it
 setup_space() {
@@ -44,7 +44,7 @@ yabai -m rule --add label="About This Mac" app="System Information" title="About
 yabai -m rule --add label="Select file to save to" app="^Inkscape$" title="Select file to save to" manage=off
 yabai -m rule --add app="^(Calculator|System Preferences|Archive Utility)$" manage=off
 yabai -m rule --add app="^(Hammerspoon)" manage=off
-yabai -m rule --add app="^(Arc)" title="Danielo" manage=off
+# yabai -m rule --add app="^(Arc)" title="Danielo" manage=off
 
 # signals
 yabai -m signal --add event=window_destroyed active=yes action="yabai -m query --windows --window &> /dev/null || yabai -m window --focus mouse &> /dev/null || yabai -m window --focus \$(yabai -m query --windows --space | jq .[0].id) &> /dev/null"
@@ -61,7 +61,7 @@ yabai -m signal --add event=window_destroyed action="sketchybar -m --trigger win
 yabai -m config \
 	external_bar all:20:0 \
 	mouse_follows_focus on \
-	focus_follows_mouse false \
+	focus_follows_mouse off \
 	window_placement second_child \
 	window_shadow off \
 	window_animation_duration 0.0 \
