@@ -1,5 +1,5 @@
 -- Automatically copy firmwares to the keyboard
-local sourceFilePath = "/Users/danielo/GIT/glove80-zmk-config/combined/glove80.uf2"
+local sourceFilePath = "/Users/danielo/GIT/glove80-zmk-config/glove80.uf2"
 local destinationVolumePath = "/Volumes/GLV80LHBOOT"
 
 local function cpyGlove80uf2(data)
