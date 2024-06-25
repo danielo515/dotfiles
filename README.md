@@ -35,7 +35,7 @@ Here are the **particular specific things about my chezmoi configuration**
 
 ### How chezmoi builds my zshrc
 
-Every file in the zsh that ends up in `.zsh` is concatenated in the file name order to the zshrc everytime chezmoi apply is executed
+Every file in the `zsh` folder that ends up in `.zsh` is concatenated in the file name order to the zshrc everytime chezmoi apply is executed
 
 ## Aliases
 
