@@ -1,3 +1,7 @@
+### NOTE ###
+# Do not add more aliases to this file
+# The way I handle aliases now is by creating a dedicated file for each set of aliases
+# Check the folder chezmoi/dot_config/aliases
 alias reload='source ~/.bashrc'
 alias please='__executeLastCommandAsSuperUser'
 alias dotvim='(cd ~/.dotfiles && vim nvim/init.vim)'
