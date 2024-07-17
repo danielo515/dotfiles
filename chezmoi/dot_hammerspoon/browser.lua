@@ -5,13 +5,13 @@ return function(browserName)
 	local function jump(url)
 		local script = ([[(function() {
       var browser = Application('%s');
-      browser.activate();
 
       for (win of browser.windows()) {
         var tabIndex =
           win.tabs().findIndex(tab => tab.url().match(/%s/));
 
         if (tabIndex != -1) {
+          browser.activate();
           win.activeTabIndex = (tabIndex + 1);
           win.index = 1;
         }
