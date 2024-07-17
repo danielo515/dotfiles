@@ -35,12 +35,17 @@ end
 
 ---@param command string
 function yabaiQuery(command)
-	local result = hs.execute(yabaiPath .. " -m query --" .. command)
+	local result = hs.execute(yabaiPath .. " -m query " .. command)
 	return hs.json.decode(result)
 end
 
 function yabaiWindows()
-	return yabaiQuery("windows --window")
+	return yabaiQuery("--windows id,app,title")
+end
+
+---Queries yabai for the current  space
+function yabaiSpace()
+	return yabaiQuery("--spaces --space")
 end
 
 -- executes yabai commands
@@ -61,12 +66,18 @@ function yabai(commands, alt)
 	end
 end
 
----comment
+---binds a key to a yabai command using the default modifiers
+---that I have chosen for yabai
 ---@param key string
 ---@param commands string[]
 ---@param fallback string?
 local function bind(key, commands, fallback)
-	hs.hotkey.bind({ "alt", "control", "shift" }, key, function()
+	local modifiers = { "alt", "control", "shift" }
+	if not hs.hotkey.assignable(modifiers, key) then
+		hs.alert.show("Conflicting yabai keymap " .. key)
+		return
+	end
+	hs.hotkey.bind(modifiers, key, function()
 		yabai(commands, fallback)
 	end)
 end
@@ -105,7 +116,12 @@ bind("tab", { "space --focus recent" })
 ---@param commands string[]
 ---@param fallback string?
 local function altShift(key, commands, fallback)
-	hs.hotkey.bind({ "alt", "shift" }, key, function()
+	local modifiers = { "alt", "shift" }
+	if not hs.hotkey.assignable(modifiers, key) then
+		hs.alert.show("Conflicting altShift key " .. key)
+		return
+	end
+	hs.hotkey.bind(modifiers, key, function()
 		yabai(commands, fallback)
 	end)
 end
