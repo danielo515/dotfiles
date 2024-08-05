@@ -71,7 +71,7 @@ end
 ---@param key string
 ---@param commands string[]
 ---@param fallback string?
-local function bind(key, commands, fallback)
+local function bindYabai(key, commands, fallback)
 	local modifiers = { "alt", "control", "shift" }
 	if not hs.hotkey.assignable(modifiers, key) then
 		hs.alert.show("Conflicting yabai keymap " .. key)
@@ -103,20 +103,20 @@ hyper("z", { "window --toggle zoom-parent" })
 hyper("g", { "window --toggle float", "window --grid 2:2:1:1:1:1" })
 hyper("right", { "window --east --resize right:50:0" }, "window --resize right:50:0")
 hyper("left", { "window --west --resize right:-50:0" }, "window --resize right:-50:0")
-bind("m", { "space --toggle mission-control" })
+bindYabai("m", { "space --toggle mission-control" })
 -- alt("r", { "space --rotate 90" })
-bind("t", { "window --toggle float", "window --grid 4:4:1:1:2:2" })
+bindYabai("t", { "window --toggle float", "window --grid 4:4:1:1:2:2" })
 
 -- special characters
-bind("'", { "space --layout stack" })
-bind(";", { "space --layout bsp" })
-bind("tab", { "space --focus recent" })
+bindYabai("'", { "space --layout stack" })
+bindYabai(";", { "space --layout bsp" })
+bindYabai("tab", { "space --focus recent" })
 
 ---@param key string
 ---@param commands string[]
 ---@param fallback string?
-local function altShift(key, commands, fallback)
-	local modifiers = { "alt", "shift" }
+local function altControl(key, commands, fallback)
+	local modifiers = { "alt", "control" }
 	if not hs.hotkey.assignable(modifiers, key) then
 		hs.alert.show("Conflicting altShift key " .. key)
 		return
@@ -126,28 +126,31 @@ local function altShift(key, commands, fallback)
 	end)
 end
 
-local function altShiftNumber(number)
-	altShift(number, { "window --space " .. number, "space --focus " .. number })
+---Binds a number to a yabai command that sends the current window to that space
+---@param number "1" | "2" | "3" | "4" | "5" | "6" | "7" | "8" | "9" | "0"
+local function yabaiSendToSpace(number)
+	local dest = number == "0" and "10" or number
+	altControl(number, { "window --space " .. dest, "space --focus " .. dest })
 end
 
-for i = 1, 9 do
+for i = 0, 9 do
 	local num = tostring(i)
-	bind(num, { "space --focus " .. num })
-	altShiftNumber(num)
+	bindYabai(num, { "space --focus " .. num })
+	yabaiSendToSpace(num)
 end
 
 -- This allows to set a different alternative command for the l and h, which will be easier than handling that in the loop
-bind("l", { "window --focus east" }, "window --focus first")
-bind("h", { "window --focus west" }, "window --focus last")
-bind("j", { "window --focus south" }, "window --focus north")
-bind("k", { "window --focus north" }, "window --focus south")
-altShift("l", { "window --swap east" }, "window --swap first")
-altShift("h", { "window --swap west" }, "window --swap last")
-altShift("j", { "window --swap south" }, "window --swap north")
-altShift("k", { "window --swap north" }, "window --swap south")
+bindYabai("l", { "window --focus east" }, "window --focus first")
+bindYabai("h", { "window --focus west" }, "window --focus last")
+bindYabai("j", { "window --focus south" }, "window --focus north")
+bindYabai("k", { "window --focus north" }, "window --focus south")
+altControl("l", { "window --swap east" }, "window --swap first")
+altControl("h", { "window --swap west" }, "window --swap last")
+altControl("j", { "window --swap south" }, "window --swap north")
+altControl("k", { "window --swap north" }, "window --swap south")
 -- Split window horizontaly
-altShift("s", { "window --warp south" }, "window --warp north")
-altShift("w", { "window --warp west" })
+altControl("s", { "window --warp south" }, "window --warp north")
+altControl("w", { "window --warp west" })
 -- VIM style hjkl window movement
 local homeRow = { h = "west", j = "south", k = "north", l = "east" }
 --for key, direction in pairs(homeRow) do

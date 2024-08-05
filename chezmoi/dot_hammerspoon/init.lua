@@ -131,6 +131,7 @@ end
 -- Whenever we focus the terminal of choice, we position chrome to the right so we can see references
 -- or the web app we are working with
 subscribeToFocus("Alacritty", function(window)
+	-- Disabled because this is now handled by yabai
 	if true then
 		return
 	end
@@ -158,7 +159,8 @@ end)
 require("keybinds")
 -- require("auto_tile")
 require("auto_flasher")
-require("watch_files")
+-- Watches a file and updates when was it modified. I don't use it anymore
+-- require("watch_files")
 
 hs.loadSpoon("Hyper")
 
