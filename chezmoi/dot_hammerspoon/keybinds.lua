@@ -71,7 +71,7 @@ local hyperApps = {
 	{ key = "t", appName = { "Alacritty", "Kitty" }, layout = US_LAYOUT },
 	{ key = "3", appName = "Google Chrome" },
 	{ key = "4", appName = "Firefox" },
-	{ key = "o", appName = "Obsidian" },
+	{ key = "o", appName = "Obsidian", title = "Ipad" },
 	{
 		key = "w",
 		callback = function()
@@ -103,13 +103,14 @@ hs.fnutils.each(hyperApps, function(item)
 			appName = { item.appName }
 		end
 		for _, name in ipairs(appName) do
-			-- We prefer to use an already existing window in the current space if possible
-			local appWindows = hs.window.filter.new(false):setAppFilter(name, { currentSpace = true }):getWindows()
+			-- We prefer to use an already existing window
+			local appWindows = hs.window.filter.new(false):setAppFilter(name, { allowTitles = item.title }):getWindows()
 			if #appWindows > 0 then
-				print("found app window in current space", name)
+				print("found app window using filter ", name)
 				appWindows[1]:focus()
 				return
 			end
+			hs.alert("No window found using  filter")
 			local app = hs.appfinder.appFromName(name)
 			if app then
 				print("found app open", name)
