@@ -149,7 +149,7 @@ altControl("h", { "window --swap west" }, "window --swap last")
 altControl("j", { "window --swap south" }, "window --swap north")
 altControl("k", { "window --swap north" }, "window --swap south")
 -- Split window horizontaly
-altControl("s", { "window --warp south" }, "window --warp north")
+-- altControl("s", { "window --warp south" }, "window --warp north")
 altControl("w", { "window --warp west" })
 -- VIM style hjkl window movement
 local homeRow = { h = "west", j = "south", k = "north", l = "east" }
