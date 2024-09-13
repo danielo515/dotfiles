@@ -32,6 +32,7 @@ alias chr='chmod 644'
 alias l='ls -l'
 alias ll='ls -la'
 alias lsh='ls -lhXG'
+alias lr='ls -ltr'
 #--------------
 # ---- Git ----
 #--------------
