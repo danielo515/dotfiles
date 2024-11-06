@@ -38,6 +38,30 @@ StreamDeck:onKeyDown("routine", function(context, params)
 	return StreamDeck:getImageMessage(context, state.icon)
 end)
 
+--[[
+-- File watcher section
+-- ]]
+FileWatcher = hs.loadSpoon("FileWatcher")
+local rules = {
+	{
+		pattern = "%.pdf$",
+		destination = "~/Documents/PDFs",
+		action = "move",
+	},
+	{
+		pattern = "%.jpg$|%.png$",
+		destination = "~/Pictures/Downloads",
+		action = "move",
+	},
+	{
+		pattern = "%.stl$",
+		destination = "~/Documents/3D-print",
+		action = "move",
+	},
+}
+
+FileWatcher:watchDirectory("~/Downloads", rules)
+
 local secrets = require("secrets")
 --[[ I specify not a hidden file because it is out of source control
 In reality it lives encrypted in the chezmoi repo, and copied there on init ]]
