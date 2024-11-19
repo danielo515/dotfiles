@@ -14,9 +14,13 @@ obj.author = "Hammerspoon"
 obj.homepage = "https://github.com/Hammerspoon/Spoons"
 obj.license = "MIT - https://opensource.org/licenses/MIT"
 
+---@class WatchMode
+---@field type "event"|"schedule"
+---@field interval? number # Required for schedule type, interval in seconds
+
 ---@class FileWatcher
 ---@field logger hs.logger
----@field watchers table<string, { watcher: hs.pathwatcher, rules: Rule[] }>
+---@field watchers table<string, { watcher?: hs.pathwatcher, timer?: hs.timer, rules: Rule[], mode: WatchMode }>
 ---@field name string
 ---@field version string
 ---@field author string
@@ -102,6 +106,21 @@ local function createDirectory(path)
 	return os.execute('mkdir -p "' .. path .. '"') == 0
 end
 
+---Lists all files in a directory
+---@param path string # Directory path to scan
+---@return string[] # Array of full file paths
+local function listFiles(path)
+	local files = {}
+	local handle = io.popen('find "' .. path .. '" -type f -maxdepth 1')
+	if handle then
+		for file in handle:lines() do
+			table.insert(files, file)
+		end
+		handle:close()
+	end
+	return files
+end
+
 ---Initialize the spoon
 ---@return FileWatcher
 function obj:init()
@@ -159,20 +178,30 @@ function obj:processFile(file, rules)
 	return false
 end
 
----Start watching a directory with the specified rules
+---Scan directory and process all files
+---@param directory string # Directory path to scan
+---@param rules Rule[] # Array of rules to apply
+function obj:scanDirectory(directory, rules)
+	local files = listFiles(directory)
+	for _, file in ipairs(files) do
+		self:processFile(file, rules)
+	end
+end
+
+---Watch a directory using event-based monitoring
 ---@param directory string # Directory path to watch
 ---@param rules Rule[] # Array of rules to apply to matching files
 ---@return FileWatcher # The FileWatcher instance
 function obj:watchDirectory(directory, rules)
-	-- Expand the directory path
 	directory = expandTilde(directory)
 	directory = ensureTrailingSlash(directory)
-	self.logger.i("Attemtp to watch directory: " .. directory)
+
+	-- Stop any existing watcher for this directory
+	self:stopWatching(directory)
 
 	-- Create watcher for the directory
 	local watcher = hs.pathwatcher.new(directory, function(files)
 		for _, file in ipairs(files) do
-			-- Check if it's a file (not a directory) using io.open
 			local f = io.open(file, "r")
 			if f then
 				f:close()
@@ -184,14 +213,67 @@ function obj:watchDirectory(directory, rules)
 	-- Start the watcher
 	watcher:start()
 
-	-- Store the watcher
+	-- Store the watcher configuration
 	self.watchers[directory] = {
 		watcher = watcher,
 		rules = rules,
+		mode = { type = "event" },
 	}
 
-	self.logger.i(string.format("Started watching %s", directory))
+	-- Do initial scan
+	self:scanDirectory(directory, rules)
+
+	self.logger.i(string.format("Started event-based watching of %s", directory))
 	return self
+end
+
+---Watch a directory using scheduled scanning
+---@param directory string # Directory path to watch
+---@param rules Rule[] # Array of rules to apply to matching files
+---@param interval number # Interval in seconds between scans
+---@return FileWatcher # The FileWatcher instance
+function obj:watchDirectoryWithSchedule(directory, rules, interval)
+	if not interval or interval <= 0 then
+		error("Interval must be a positive number of seconds")
+	end
+
+	directory = expandTilde(directory)
+	directory = ensureTrailingSlash(directory)
+
+	-- Stop any existing watcher for this directory
+	self:stopWatching(directory)
+
+	-- Create and start timer
+	local timer = hs.timer.new(interval, function()
+		self:scanDirectory(directory, rules)
+	end)
+	timer:start()
+
+	-- Store the timer configuration
+	self.watchers[directory] = {
+		timer = timer,
+		rules = rules,
+		mode = { type = "schedule", interval = interval },
+	}
+
+	-- Do initial scan
+	self:scanDirectory(directory, rules)
+
+	self.logger.i(string.format("Started scheduled watching of %s every %d seconds", directory, interval))
+	return self
+end
+
+---Get the current watch mode for a directory
+---@param directory string # Directory path to check
+---@return WatchMode? # The current watch mode, or nil if not watching
+function obj:getWatchMode(directory)
+	directory = expandTilde(directory)
+	directory = ensureTrailingSlash(directory)
+
+	if self.watchers[directory] then
+		return self.watchers[directory].mode
+	end
+	return nil
 end
 
 ---Stop watching a directory
@@ -202,7 +284,16 @@ function obj:stopWatching(directory)
 	directory = ensureTrailingSlash(directory)
 
 	if self.watchers[directory] then
-		self.watchers[directory].watcher:stop()
+		-- Stop the pathwatcher if it exists
+		if self.watchers[directory].watcher then
+			self.watchers[directory].watcher:stop()
+		end
+
+		-- Stop the timer if it exists
+		if self.watchers[directory].timer then
+			self.watchers[directory].timer:stop()
+		end
+
 		self.watchers[directory] = nil
 		self.logger.i(string.format("Stopped watching %s", directory))
 	end

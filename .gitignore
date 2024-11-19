@@ -10,3 +10,21 @@ zsh/custom/plugins
 danielo_nvim/nvim-api.msgpack
 kickstart.hx/dump
 .session
+# Devenv
+.devenv*
+devenv.local.nix
+
+# direnv
+.direnv
+
+# pre-commit
+.pre-commit-config.yaml
+# Devenv
+.devenv*
+devenv.local.nix
+
+# direnv
+.direnv
+
+# pre-commit
+.pre-commit-config.yaml

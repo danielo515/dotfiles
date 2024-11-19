@@ -49,7 +49,7 @@ local rules = {
 		action = "move",
 	},
 	{
-		pattern = "%.jpg$|%.png$",
+		pattern = "%.(?:jpg|png)$",
 		destination = "~/Pictures/Downloads",
 		action = "move",
 	},
@@ -60,7 +60,7 @@ local rules = {
 	},
 }
 
-FileWatcher:watchDirectory("~/Downloads", rules)
+FileWatcher:watchDirectoryWithSchedule("~/Downloads", rules, 300)
 
 local secrets = require("secrets")
 --[[ I specify not a hidden file because it is out of source control

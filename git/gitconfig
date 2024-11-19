@@ -142,11 +142,16 @@
   trustExitCode = true
 
 [diff]
-  tool = Kaleidoscope
-  compactionHeuristic = true
+  external = difft
 
-[difftool "Kaleidoscope"]
-  cmd = ksdiff --partial-changeset --relative-path \"$MERGED\" -- \"$LOCAL\" \"$REMOTE\"
+[difftool]
+        prompt = false
+
+[difftool "difftastic"]
+        cmd = difft "$LOCAL" "$REMOTE"
+
+[pager]
+        difftool = true
 
 [core]
   excludesfile = ~/.gitignore_global
