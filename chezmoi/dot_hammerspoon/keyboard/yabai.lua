@@ -14,11 +14,14 @@ local function trim(str)
 	return str:gsub("^%s+", ""):gsub("%s+$", "")
 end
 
-local yabaiPath = hs.execute("which yabai", true)
+local yabaiPath = hs.execute("which yabai", false)
 
 if yabaiPath == "" or yabaiPath == nil then
 	hs.alert.show("yabai not found")
 	return
+else
+	yabaiPath = trim(yabaiPath)
+	print("Yabai found at", yabaiPath)
 end
 
 yabaiPath = trim(yabaiPath)
@@ -60,6 +63,7 @@ function yabai(commands, alt)
 			if alt ~= nil then
 				yabai({ alt })
 			else
+				print(fullCmd)
 				hs.alert.show("yabai command failed: " .. fullCmd)
 			end
 		end
