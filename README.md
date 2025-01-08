@@ -47,3 +47,20 @@ and are sourced to create the global aliases.
 ### Local aliases
 
 if a file named `.aliases` is found in the home folder, it is also sourced by ZSH and BASH. If you want to have some machine specific aliases, just put them there.
+
+## Experimental nix
+
+~~I am testing the usage of `devenv` and `nix` to manage my machine.
+Until I am convinced, the installation should be done manually.
+To install nix and devenv:~~
+devenv is a pay software, and I don't yet see the value it adds for me, so I will not be using it.
+However, I am liking `direnv + nix`, so I will stick to those two.
+
+### MacOS
+
+This command uses a workaround defined in https://github.com/NixOS/experimental-nix-installer/issues/26#issuecomment-2517795557
+
+```bash
+# Install nix
+curl -L https://raw.githubusercontent.com/NixOS/experimental-nix-installer/main/nix-installer.sh | sh -s install --nix-build-user-id-base 350
+```
