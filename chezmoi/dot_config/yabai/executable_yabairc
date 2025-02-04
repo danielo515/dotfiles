@@ -31,14 +31,13 @@ setup_space 5 "chat"
 setup_space 6 "media"
 setup_space 7 "other"
 setup_space 8 "scrap"
-setup_space 8 "games"
 
 # window rules
 #yabai -m rule --add app="^Firefox$" space=web
 yabai -m rule --add app="^Obsidian$" title="Ipad" space=notes
 yabai -m rule --add app="^time tracker" space=personal
 # Exclude problematic apps from being managed:
-yabai -m rule --add app="^(LuLu|Calculator|Software Update|Dictionary|VLC|System Preferences|System Settings|zoom.us|Photo Booth|Archive Utility|Python|LibreOffice|App Store|Steam|Alfred|Activity Monitor)$" manage=off
+yabai -m rule --add app="^(LuLu|Calculator|Software Update|Dictionary|System Preferences|System Settings|zoom.us|Photo Booth|Archive Utility|Python|LibreOffice|App Store|Steam|Alfred|Activity Monitor)$" manage=off
 yabai -m rule --add label="Finder" app="^Finder$" title="(Co(py|nnect)|Move|Info|Pref)" manage=off
 #yabai -m rule --add label="Safari" app="^Safari$" title="^(General|(Tab|Password|Website|Extension)s|AutoFill|Se(arch|curity)|Privacy|Advance)$" manage=off
 yabai -m rule --add label="About This Mac" app="System Information" title="About This Mac" manage=off
@@ -68,7 +67,7 @@ yabai -m config \
   window_animation_duration 0.0 \
   window_opacity_duration 0.0 \
   active_window_opacity 1.0 \
-  normal_window_opacity 0.95 \
+  normal_window_opacity 1.00 \
   window_opacity on \
   insert_feedback_color 0xaad75f5f \
   split_ratio 0.50 \
