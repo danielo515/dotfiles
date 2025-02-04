@@ -28,7 +28,6 @@ plugins=(
   # zsh-nvm
   git 
   npm 
-  bower 
   vi-mode # vim bindings for the shell
   pj 
   zsh-navigation-tools
